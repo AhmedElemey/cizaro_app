@@ -14,13 +14,33 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  ProductDetailsModel productList;
+  ProductDetailsModel productDetails;
   int _selectedCard = -1;
+  String productName, imgUrl, productDescription;
+  double productPrice, productStar;
+  List<RelatedProducts> productRelated = [];
+  List<MultiImages> productImages = [];
+  List<Values> productSpecs = [];
+
   Future getHomeData() async {
     final getProduct = Provider.of<ListViewModel>(context, listen: false);
-    await getProduct.fetchProductDetailsList().then((response) {
-      productList = response;
-      print(productList.data.products.length);
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    await getProduct
+        .fetchProductDetailsList(arguments['product_id'])
+        .then((response) {
+      productDetails = response;
+      productName = productDetails.data.name;
+      imgUrl = productDetails.data.mainImg;
+      productPrice = productDetails.data.price;
+      productStar = productDetails.data.stars;
+      productDescription = productDetails.data.shortDescription;
+      //
+      productRelated = productDetails.data.relatedProducts;
+//
+      productImages = productDetails.data.multiImages;
+      //
+      productSpecs = productDetails.data.specs.values;
+      // print(productList.data.relatedProducts.length);
     });
   }
 
@@ -73,14 +93,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Column(
                       children: [
                         Text(
-                          "Red Heels with silver strases ",
+                          productName ?? "",
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
                         ),
                         Row(
                           children: [
                             Text(
-                              "49.99 LE ",
+                              productPrice.toString(),
                               textScaleFactor:
                                   MediaQuery.of(context).textScaleFactor * 1.1,
                             ),
@@ -101,7 +121,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     padding: EdgeInsets.only(left: 5),
                                   ),
                                   Text(
-                                    "4.9",
+                                    productStar.toString(),
                                     style: TextStyle(color: Colors.white),
                                     textScaleFactor:
                                         MediaQuery.of(context).textScaleFactor *
@@ -132,11 +152,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     dotBgColor: Colors.white,
                     autoplay: false,
                     dotIncreasedColor: Color(0xff727C8E),
-                    images: [
-                      Image.asset("assets/images/hot.png"),
-                      Image.asset("assets/images/boots.png"),
-                      Image.asset("assets/images/discount.png"),
-                    ],
+                    images: [Image.asset("assets/images/hot.png")],
                   )),
             ),
             Container(
@@ -156,10 +172,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Column(
                 children: [
                   Text(
-                    "It was popularised in the 1960s with the release of "
-                    "Letraset sheets containing Lorem Ipsum passages,and"
-                    " more recently with desktop publishing software like Aldus"
-                    " PageMaker including versions of Lorem Ipsum ",
+                    productDescription ?? "",
                     textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                     style: TextStyle(color: Color(0xff707070)),
                   ),
@@ -214,7 +227,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 padding: EdgeInsets.only(top: 10, left: 10),
                 height: MediaQuery.of(context).size.height * .06,
                 child: GridView.builder(
-                  itemCount: 6,
+                  itemCount: productSpecs.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 1.3,
                       crossAxisCount: 6,
@@ -230,7 +243,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       child: Container(
                         padding: EdgeInsets.only(left: 5),
                         child: Text(
-                          "4.5",
+                          productSpecs[index].value,
                           style: TextStyle(
                             color: _selectedCard == index
                                 ? Color(0xffE7A646)
@@ -296,16 +309,16 @@ class _ProductDetailsState extends State<ProductDetails> {
               padding: EdgeInsets.only(top: 10, left: 5),
               height: MediaQuery.of(context).size.height * .3,
               child: ListView.builder(
-                  itemCount: productList.data.products.length,
+                  itemCount: productRelated.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (ctx, index) => GestureDetector(
                         onTap: () => Navigator.of(context)
                             .pushNamed(ProductDetails.routeName),
                         child: ProductDetailItem(
-                          imgUrl: productList.data.products[index].mainImg,
-                          productName: productList.data.products[index].name,
-                          productPrice: productList.data.products[index].price,
-                          productStar: productList.data.products[index].stars,
+                          imgUrl: productRelated[index].mainImg,
+                          productName: productRelated[index].name ?? "",
+                          productPrice: productRelated[index].price ?? 0.0,
+                          productStar: productRelated[index].stars ?? 0.0,
                         ),
                       )),
             )

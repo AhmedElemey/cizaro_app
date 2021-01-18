@@ -4,7 +4,9 @@ import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
+
 import 'package:cizaro_app/screens/profile_screen.dart';
+import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -6,6 +6,7 @@ import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
+import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/screens/splash_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -48,6 +49,7 @@ void main() {
             ProductDetails.routeName: (ctx) => ProductDetails(),
             FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
             MycartScreen.routeName: (ctx) => MycartScreen(),
+            ShopScreen.routeName: (ctx) => ShopScreen(),
           },
         ),
       ),

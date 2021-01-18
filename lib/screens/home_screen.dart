@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/collection_item.dart';
 import 'package:cizaro_app/widgets/hotDeals_item.dart';
@@ -20,8 +21,13 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Collections> collectionsList = [];
   List<NewArrivals> newArrivalsList = [];
   Home home;
+  bool _isLoading = false;
 
   Future getHomeData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
     final getHome = Provider.of<ListViewModel>(context, listen: false);
     await getHome.fetchHomeList().then((response) {
       home = response;
@@ -34,6 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
       newArrivalsList = home.data.newArrivals;
       print(newArrivalsList.length);
     });
+    if (this.mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -53,108 +64,120 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return DefaultTabController(
       length: 5,
-      child: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height * .4,
-          width: MediaQuery.of(context).size.width * .9,
-          child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(30.0),
-              child: AppBar(
-                elevation: 0.0,
-                backgroundColor: Colors.white,
-                bottom: TabBar(
-                  labelPadding:
-                      const EdgeInsets.only(right: 10, left: 30, bottom: 5),
-                  indicatorWeight: 4,
-                  indicatorColor: Color(0xff294794),
-                  labelColor: Color(0xff294794),
-                  unselectedLabelColor: Colors.grey,
-                  isScrollable: true,
-                  tabs: <Widget>[
-                    Text("Top",
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text("bags",
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text("skirts",
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text("t-shirts",
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text("pants",
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                  ],
+      child: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height * .4,
+                width: MediaQuery.of(context).size.width * .9,
+                child: Scaffold(
+                  appBar: PreferredSize(
+                    preferredSize: Size.fromHeight(30.0),
+                    child: AppBar(
+                      elevation: 0.0,
+                      backgroundColor: Colors.white,
+                      bottom: TabBar(
+                        labelPadding: const EdgeInsets.only(
+                            right: 10, left: 30, bottom: 5),
+                        indicatorWeight: 4,
+                        indicatorColor: Color(0xff294794),
+                        labelColor: Color(0xff294794),
+                        unselectedLabelColor: Colors.grey,
+                        isScrollable: true,
+                        tabs: <Widget>[
+                          Text("Top",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text("bags",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text("skirts",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text("t-shirts",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          Text("pants",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  body: TabBarView(
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        height: MediaQuery.of(context).size.height * .25,
+                        child: ListView.builder(
+                            itemCount: newArrivalsList.length.compareTo(0),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (ctx, index) => GestureDetector(
+                                  onTap: () => Navigator.of(context).pushNamed(
+                                      ProductDetails.routeName,
+                                      arguments: {
+                                        'product_id': newArrivalsList[index]
+                                            .products[index]
+                                            .id
+                                      }),
+                                  child: ProductItem(
+                                    // newArrivalsList[index]?.products[index].id,
+                                    productText: newArrivalsList[index]
+                                        ?.products[index]
+                                        ?.name,
+                                    //newArrivalsList[index]?.products[index].name,
+                                    imgUrl: newArrivalsList[index]
+                                        ?.products[index]
+                                        ?.mainImg,
+                                    //newArrivalsList[index]?.products[index].mainImg,
+                                    productPrice: newArrivalsList[index]
+                                        ?.products[index]
+                                        ?.price,
+                                    //newArrivalsList[index]?.products[index].price,
+                                  ),
+                                )),
+                      ),
+                      Container(
+                        child: Text(
+                          "Second View",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          "Third View",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          "forth View",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          "fifth View",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            body: TabBarView(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 10),
-                  height: MediaQuery.of(context).size.height * .25,
-                  child: ListView.builder(
-                      itemCount: newArrivalsList.length.compareTo(0),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index) => GestureDetector(
-                            onTap: () => Navigator.of(context).pushNamed(
-                                ProductDetails.routeName,
-                                arguments: {
-                                  'product_id': newArrivalsList[index].id
-                                }),
-                            child: ProductItem(
-                              // newArrivalsList[index]?.products[index].id,
-                              productText:
-                                  newArrivalsList[index]?.products[index]?.name,
-                              //newArrivalsList[index]?.products[index].name,
-                              imgUrl: newArrivalsList[index]
-                                  ?.products[index]
-                                  ?.mainImg,
-                              //newArrivalsList[index]?.products[index].mainImg,
-                              productPrice: newArrivalsList[index]
-                                  ?.products[index]
-                                  ?.price,
-                              //newArrivalsList[index]?.products[index].price,
-                            ),
-                          )),
-                ),
-                Container(
-                  child: Text(
-                    "Second View",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    "Third View",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    "forth View",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    "fifth View",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 
@@ -185,92 +208,99 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(top: 5),
-                child: Text(
-                  "Hot Deals",
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Color(0xff294794)),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 5),
-              height: MediaQuery.of(context).size.height * .2,
-              width: double.infinity,
-              child: ListView.builder(
-                  itemCount: hotDealsList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (ctx, index) => GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(ProductDetails.routeName),
-                        child: HotDealsItem(
-                          id: hotDealsList[index].id,
-                          //   itemText: hotDealsList[index].offer.type.name,
-                        ),
-                      )),
-            ),
-            Container(
-              child: Center(
-                child: Container(
-                  padding: EdgeInsets.only(top: 10),
-                  child: Text(
-                    "Collections",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Color(0xff294794)),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  Center(
+                    child: Container(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Text(
+                        "Hot Deals",
+                        textScaleFactor:
+                            MediaQuery.of(context).textScaleFactor * 1.2,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Color(0xff294794)),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 10),
-              height: MediaQuery.of(context).size.height * .3,
-              child: ListView.builder(
-                  itemCount: collectionsList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (ctx, index) => GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(ProductDetails.routeName),
-                        child: CollectionItem(
-                          id: collectionsList[index].id,
-                          itemText: collectionsList[index].name,
-                          imgUrl: collectionsList[index].imageBanner,
-                        ),
-                      )),
-            ),
-            Container(
-              child: Center(
-                child: Container(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Text(
-                    " New Arrivals",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Color(0xff294794)),
+                  Container(
+                    padding: EdgeInsets.only(top: 5),
+                    height: MediaQuery.of(context).size.height * .2,
+                    width: double.infinity,
+                    child: ListView.builder(
+                        itemCount: hotDealsList.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index) => GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed(ProductDetails.routeName),
+                              child: HotDealsItem(
+                                  id: hotDealsList[index].id,
+                                  itemText: hotDealsList[index].name,
+                                  imgUrl: hotDealsList[index].offer.image),
+                            )),
                   ),
-                ),
+                  Container(
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Text(
+                          "Collections",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.2,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Color(0xff294794)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 10),
+                    height: MediaQuery.of(context).size.height * .3,
+                    child: ListView.builder(
+                        itemCount: collectionsList.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index) => GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .pushNamed(ShopScreen.routeName, arguments: {
+                                'collectionId': collectionsList[index].id
+                              }),
+                              child: CollectionItem(
+                                id: collectionsList[index].id,
+                                itemText: collectionsList[index].name,
+                                imgUrl: collectionsList[index].imageBanner,
+                              ),
+                            )),
+                  ),
+                  Container(
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Text(
+                          " New Arrivals",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.1,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Color(0xff294794)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                      height: MediaQuery.of(context).size.height * .4,
+                      child: tabsWidgets())
+                ],
               ),
             ),
-            Container(
-                height: MediaQuery.of(context).size.height * .4,
-                child: tabsWidgets())
-          ],
-        ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: [

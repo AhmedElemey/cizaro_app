@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailItem extends StatelessWidget {
-  final String productName, imgUrl, productStar;
-  final double productPrice;
+  final String productName, imgUrl;
+  final double productPrice, productStar;
   const ProductDetailItem(
       {this.productName, this.imgUrl, this.productPrice, this.productStar});
   @override
@@ -59,7 +59,7 @@ class ProductDetailItem extends StatelessWidget {
                             padding: EdgeInsets.only(left: 5),
                           ),
                           Text(
-                            productStar,
+                            productStar.toString(),
                             style: TextStyle(color: Colors.white),
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1,

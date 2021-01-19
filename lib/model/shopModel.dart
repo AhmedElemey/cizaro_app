@@ -136,8 +136,8 @@ class Category {
 
 class Offer {
   String type;
-  int discount;
-  int afterPrice;
+  double discount;
+  double afterPrice;
 
   Offer({this.type, this.discount, this.afterPrice});
 

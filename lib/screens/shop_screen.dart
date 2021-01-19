@@ -27,12 +27,18 @@ class _ShopScreenState extends State<ShopScreen> {
 
     final getProducts = Provider.of<ListViewModel>(context, listen: false);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-    await getProducts.fetchShop(arguments['collectionId']).then((response) {
+    await getProducts.fetchShop(arguments['collection_id']).then((response) {
       shopModel = response;
       productList = shopModel.data.products;
       print(productList.length);
       // print(productList.data.relatedProducts.length);
     });
+  }
+
+  @override
+  void initState() {
+    Future.microtask(() => getShopData());
+    super.initState(); // de 3ashan awel lama aload el screen t7mel el data
   }
 
   @override
@@ -48,8 +54,8 @@ class _ShopScreenState extends State<ShopScreen> {
             )),
         title: Center(
             child: Image.asset(
-          "assets/images/cizaro_logo.png",
-          height: MediaQuery.of(context).size.height * .1,
+          "assets/images/logo.png",
+          height: MediaQuery.of(context).size.height * .07,
         )),
         actions: [
           Container(
@@ -70,7 +76,7 @@ class _ShopScreenState extends State<ShopScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.only(top: 10),
-                    height: MediaQuery.of(context).size.height * .8,
+                    height: MediaQuery.of(context).size.height * .7,
                     child: ListView.builder(
                       itemCount: productList.length,
                       itemBuilder: (ctx, index) => ShopItem(

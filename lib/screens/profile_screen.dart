@@ -12,11 +12,8 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: Container(
             padding: EdgeInsets.only(left: 10),
-            child: Container(
-              color: Colors.white,
-              child: Image.asset(
-                "assets/images/cizaro_logo2.png",
-              ),
+            child: Image.asset(
+              "assets/images/logo.png",
             )),
         title: Center(
           child: Text("Profile"),
@@ -52,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                   child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Color(0xffE7A646),
+                  color: Color(0xff3A559F),
                 ),
                 height: MediaQuery.of(context).size.height * .05,
                 width: MediaQuery.of(context).size.width * .4,

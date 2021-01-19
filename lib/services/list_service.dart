@@ -28,7 +28,8 @@ class ListServices {
   }
 
   Future<ShopModel> fetchShop(int collectionId) async {
-    final response = await http.get(API + '/products/$collectionId');
+    final response =
+        await http.get(API + '/products/?collection=$collectionId');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       return ShopModel.fromJson(body);

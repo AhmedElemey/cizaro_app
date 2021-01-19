@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
@@ -50,6 +51,7 @@ void main() {
             FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
             MycartScreen.routeName: (ctx) => MycartScreen(),
             ShopScreen.routeName: (ctx) => ShopScreen(),
+            CheckoutScreen.routeName: (ctx) => CheckoutScreen(),
           },
         ),
       ),

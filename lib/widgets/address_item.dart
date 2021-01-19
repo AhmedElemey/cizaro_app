@@ -12,20 +12,21 @@ class AddressItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(5),
       child: Card(
         elevation: 3,
         child: Container(
-          height: MediaQuery.of(context).size.height * .2,
-          padding: EdgeInsets.only(left: 5, top: 10),
+          height: MediaQuery.of(context).size.height * .15,
+          padding: EdgeInsets.only(left: 5, top: 5),
           child: Row(children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 5, left: 10),
                   width: MediaQuery.of(context).size.width * .3,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         strName,
@@ -64,7 +65,9 @@ class AddressItem extends StatelessWidget {
               child: GestureDetector(
                 child: Text(
                   "Edit",
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 2,
+                  style: TextStyle(color: Color(0xff3A559F)),
+                  textScaleFactor:
+                      MediaQuery.of(context).textScaleFactor * 1.35,
                 ),
               ),
             )

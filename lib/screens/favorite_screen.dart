@@ -9,11 +9,8 @@ class FavoriteScreen extends StatelessWidget {
       appBar: AppBar(
         leading: Container(
             padding: EdgeInsets.only(left: 10),
-            child: Container(
-              color: Colors.white,
-              child: Image.asset(
-                "assets/images/cizaro_logo2.png",
-              ),
+            child: Image.asset(
+              "assets/images/logo.png",
             )),
         title: Center(
           child: Text("Wishlist"),

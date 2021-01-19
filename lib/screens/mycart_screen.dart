@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class MycartScreen extends StatelessWidget {
   static final routeName = '/mycart-screen';
-  var total;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +12,7 @@ class MycartScreen extends StatelessWidget {
         leading: Container(
             padding: EdgeInsets.all(10),
             child: Image.asset(
-              "assets/images/cizaro_logo.png",
+              "assets/images/logo.png",
               height: MediaQuery.of(context).size.height * .1,
             )),
         title: Center(
@@ -33,7 +33,6 @@ class MycartScreen extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 10),
               height: MediaQuery.of(context).size.height * .65,
               child: ListView.builder(
                 itemCount: 7,

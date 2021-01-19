@@ -1,4 +1,5 @@
 import 'package:cizaro_app/widgets/address_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddressBookScreen extends StatelessWidget {
@@ -9,11 +10,8 @@ class AddressBookScreen extends StatelessWidget {
       appBar: AppBar(
         leading: Container(
             padding: EdgeInsets.only(left: 10),
-            child: Container(
-              color: Colors.white,
-              child: Image.asset(
-                "assets/images/cizaro_logo2.png",
-              ),
+            child: Image.asset(
+              "assets/images/logo.png",
             )),
         title: Center(
           child: Text("Address Book"),
@@ -36,7 +34,7 @@ class AddressBookScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * .1,
+              height: MediaQuery.of(context).size.height * .15,
               padding: EdgeInsets.only(left: 5, top: 15),
               child: Column(
                 children: [
@@ -65,7 +63,7 @@ class AddressBookScreen extends StatelessWidget {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .6,
+              height: MediaQuery.of(context).size.height * .55,
               child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (ctx, index) => AddressItem(
@@ -75,6 +73,32 @@ class AddressBookScreen extends StatelessWidget {
                         cityName: "City Name",
                         countryName: "Country",
                       )),
+            ),
+            Row(
+              children: [
+                SizedBox(),
+                Spacer(),
+                Container(
+                  margin: EdgeInsets.only(right: 20, top: 10),
+                  width: MediaQuery.of(context).size.width * .16,
+                  height: MediaQuery.of(context).size.height * .06,
+                  decoration: BoxDecoration(
+                      color: Color(0xff3A559F),
+                      borderRadius: BorderRadius.circular(20.0)),
+                  child: Container(
+                    margin: new EdgeInsets.all(10),
+                    child: Center(
+                      child: Text(
+                        "ADD",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

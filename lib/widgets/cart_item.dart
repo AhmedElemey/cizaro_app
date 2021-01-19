@@ -18,12 +18,12 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+      padding: EdgeInsets.only(left: 20, right: 20),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
           child: Container(
-            height: MediaQuery.of(context).size.height * .18,
+            height: MediaQuery.of(context).size.height * .14,
             padding: EdgeInsets.only(left: 10, right: 10, top: 5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,25 +41,30 @@ class CartItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        child: Text(
-                          productName,
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.5,
-                        ),
+                      Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              productName,
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.5,
+                            ),
+                          ),
+                          Spacer(),
+                          Container(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text(
+                              productPrice.toString() + ' LE',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                            ),
+                          )
+                        ],
                       ),
                       Container(
                         child: Text(
                           productCategory,
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.1,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          '\$' + productPrice.toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
                         ),
@@ -75,13 +80,10 @@ class CartItem extends StatelessWidget {
                                     child: CircleAvatar(
                                       radius: 15,
                                       backgroundColor: Colors.black12,
-                                      child: Container(
-                                        padding: EdgeInsets.only(bottom: 25),
-                                        child: Icon(
-                                          Icons.minimize,
-                                          size: 20,
-                                          color: Color(0xff707070),
-                                        ),
+                                      child: Icon(
+                                        Icons.minimize_outlined,
+                                        size: 25,
+                                        color: Color(0xff707070),
                                       ),
                                     ),
                                   ),
@@ -90,13 +92,10 @@ class CartItem extends StatelessWidget {
                                     child: CircleAvatar(
                                       radius: 15,
                                       backgroundColor: Colors.black12,
-                                      child: Container(
-                                        padding: EdgeInsets.only(bottom: 15),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 20,
-                                          color: Color(0xff707070),
-                                        ),
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 25,
+                                        color: Color(0xff707070),
                                       ),
                                     ),
                                   )
@@ -117,7 +116,7 @@ class CartItem extends StatelessWidget {
                                   ),
                                   Container(
                                     child: Text(
-                                      '\$' + totalPrice.toString(),
+                                      totalPrice.toString() + ' LE',
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
                                           1.2,

@@ -191,19 +191,20 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Icon(
               Icons.menu,
               color: Colors.white,
-              size: 30,
             )),
         title: Center(
             child: Image.asset(
-          "assets/images/cizaro_logo.png",
-          height: MediaQuery.of(context).size.height * .1,
+          "assets/images/logo.png",
+          height: MediaQuery.of(context).size.height * .07,
         )),
         actions: [
           Container(
             padding: EdgeInsets.all(10.0),
             child: CircleAvatar(
               backgroundColor: Colors.white,
-              child: Icon(Icons.search),
+              child: Icon(
+                Icons.search,
+              ),
             ),
           )
         ],
@@ -270,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         itemBuilder: (ctx, index) => GestureDetector(
                               onTap: () => Navigator.of(context)
                                   .pushNamed(ShopScreen.routeName, arguments: {
-                                'collectionId': collectionsList[index].id
+                                'collection_id': collectionsList[index].id
                               }),
                               child: CollectionItem(
                                 id: collectionsList[index].id,

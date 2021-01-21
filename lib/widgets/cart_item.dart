@@ -1,12 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class CartItem extends StatelessWidget {
-  final String productName, imgUrl, productCategory, iconAdd, iconMinus;
-  final double totalPrice, productPrice;
-  final int productQuantity;
+class CartItem extends StatefulWidget {
+  String productName,
+      imgUrl,
+      productCategory,
+      iconAdd,
+      iconMinus,
+      productQuanitity;
+  double totalPrice, productPrice;
 
-  const CartItem(
+  CartItem(
       {this.productName,
       this.imgUrl,
       this.productPrice,
@@ -14,7 +19,21 @@ class CartItem extends StatelessWidget {
       this.iconAdd,
       this.iconMinus,
       this.totalPrice,
-      this.productQuantity});
+      this.productQuanitity});
+
+  @override
+  _CartItemState createState() => _CartItemState();
+}
+
+class _CartItemState extends State<CartItem> {
+  TextEditingController quantityController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.productQuanitity = quantityController.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,7 +42,7 @@ class CartItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
           child: Container(
-            height: MediaQuery.of(context).size.height * .14,
+            height: MediaQuery.of(context).size.height * .15,
             padding: EdgeInsets.only(left: 10, right: 10, top: 5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +52,7 @@ class CartItem extends StatelessWidget {
                       EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
-                    child: Image.asset(imgUrl),
+                    child: Image.asset(widget.imgUrl),
                   ),
                 ),
                 Container(
@@ -45,7 +64,7 @@ class CartItem extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              productName,
+                              widget.productName,
                               textScaleFactor:
                                   MediaQuery.of(context).textScaleFactor * 1.5,
                             ),
@@ -54,7 +73,7 @@ class CartItem extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.only(top: 10),
                             child: Text(
-                              productPrice.toString() + ' LE',
+                              widget.productPrice.toString() + ' LE',
                               style: TextStyle(fontWeight: FontWeight.bold),
                               textScaleFactor:
                                   MediaQuery.of(context).textScaleFactor * 1.1,
@@ -64,7 +83,7 @@ class CartItem extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          productCategory,
+                          widget.productCategory,
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
                         ),
@@ -73,29 +92,71 @@ class CartItem extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
+                              width: MediaQuery.of(context).size.width * .3,
                               child: Row(
                                 children: [
-                                  Container(
-                                    padding: EdgeInsets.only(right: 5),
-                                    child: CircleAvatar(
-                                      radius: 15,
-                                      backgroundColor: Colors.black12,
-                                      child: Icon(
-                                        Icons.minimize_outlined,
-                                        size: 25,
-                                        color: Color(0xff707070),
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        int value =
+                                            int.parse(quantityController.text) -
+                                                1;
+                                        widget.productQuanitity =
+                                            value.toString();
+                                      });
+                                    },
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          .07,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .07,
+                                      padding:
+                                          EdgeInsets.only(right: 5, bottom: 17),
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.minimize_outlined,
+                                          size: 25,
+                                          color: Color(0xff707070),
+                                        ),
                                       ),
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(right: 5),
-                                    child: CircleAvatar(
-                                      radius: 15,
-                                      backgroundColor: Colors.black12,
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 25,
-                                        color: Color(0xff707070),
+                                    padding: EdgeInsets.only(left: 5),
+                                    width:
+                                        MediaQuery.of(context).size.width * .1,
+                                    child: TextField(
+                                      controller: quantityController,
+                                      keyboardType: TextInputType.number,
+                                      autofocus: true,
+                                    ),
+                                  ),
+                                  Container(
+                                    padding:
+                                        EdgeInsets.only(right: 5, left: 10),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          int value = int.parse(
+                                                  quantityController.text) +
+                                              1;
+                                          widget.productQuanitity =
+                                              value.toString();
+                                        });
+                                      },
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Colors.black12,
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 25,
+                                          color: Color(0xff707070),
+                                        ),
                                       ),
                                     ),
                                   )
@@ -116,7 +177,7 @@ class CartItem extends StatelessWidget {
                                   ),
                                   Container(
                                     child: Text(
-                                      totalPrice.toString() + ' LE',
+                                      widget.totalPrice.toString() + ' LE',
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
                                           1.2,

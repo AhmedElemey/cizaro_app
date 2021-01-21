@@ -48,6 +48,10 @@ class _ProductDetailsState extends State<ProductDetails> {
       print(productRelated.length);
       // print(productList.data.relatedProducts.length);
     });
+    if (this.mounted)
+      setState(() {
+        _isLoading = false;
+      });
   }
 
   @override
@@ -93,10 +97,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.arrow_back_ios_rounded,
-                          size: 20,
-                          color: Color(0xffFB2733),
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios_rounded,
+                            size: 20,
+                            color: Color(0xff3A559F),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
                         ),
                         Container(
                           child: Column(

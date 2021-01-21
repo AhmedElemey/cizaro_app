@@ -9,14 +9,27 @@ class HotDealsItem extends StatelessWidget {
     return Container(
       child: Stack(children: [
         Container(
+          padding: EdgeInsets.only(left: 1, right: 1),
           child: Image.network(
             imgUrl,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .2,
-            fit: BoxFit.fill,
+            width: MediaQuery.of(context).size.width * .99,
+            height: MediaQuery.of(context).size.height * .3,
+            fit: BoxFit.fitWidth,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                          loadingProgress.expectedTotalBytes
+                      : null,
+                ),
+              );
+            },
           ),
         ),
-        Positioned(top: 1, left: 10, child: Image.network(imgUrl)),
+        // Positioned(top: 1, left: 10, child: Image.network(imgUrl)),
         Positioned(
             bottom: 1,
             right: 10,

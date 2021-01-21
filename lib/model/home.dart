@@ -47,7 +47,7 @@ class Data {
       });
     }
     if (json['product_offers'] != null) {
-      productOffers = new List<Null>();
+      productOffers = new List<ProductOffers>();
       json['product_offers'].forEach((v) {
         productOffers.add(new ProductOffers.fromJson(v));
       });
@@ -65,7 +65,7 @@ class Data {
       });
     }
     if (json['top_selling'] != null) {
-      topSelling = new List<Null>();
+      topSelling = new List<TopSelling>();
       json['top_selling'].forEach((v) {
         topSelling.add(new TopSelling.fromJson(v));
       });
@@ -275,7 +275,7 @@ class Products {
   String name;
   String mainImg;
   double price;
-  Null stars;
+  double stars;
   Category category;
   bool specs;
   Offer offer;

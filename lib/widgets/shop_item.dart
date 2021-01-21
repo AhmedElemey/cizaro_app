@@ -33,7 +33,21 @@ class ShopItem extends StatelessWidget {
                       EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
-                    child: Image.asset(imgUrl),
+                    child: Image.network(
+                      imgUrl,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Container(
@@ -50,7 +64,7 @@ class ShopItem extends StatelessWidget {
                       ),
                       Container(
                         child: Text(
-                          productCategory,
+                          productCategory ?? '',
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
                         ),

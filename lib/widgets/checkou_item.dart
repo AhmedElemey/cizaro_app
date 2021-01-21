@@ -69,14 +69,27 @@ class CheckoutItem extends StatelessWidget {
                                   MediaQuery.of(context).textScaleFactor * 1.1,
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Text(
-                              productSpecs.toString(),
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                "Size: ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.1,
+                              ),
+                              Container(
+                                child: Text(
+                                  productSpecs.toString(),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff3A559F)),
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1.1,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),

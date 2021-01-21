@@ -33,6 +33,18 @@ class ProductItem extends StatelessWidget {
                   )),
               Image.network(
                 imgUrl,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                          : null,
+                    ),
+                  );
+                },
                 width: MediaQuery.of(context).size.width * .3,
                 height: MediaQuery.of(context).size.height * .2,
                 fit: BoxFit.contain,

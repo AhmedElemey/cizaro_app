@@ -56,9 +56,9 @@ class Data {
   int brand;
   List<RelatedProducts> relatedProducts;
   List<Null> productReviews;
-  Null type;
-  Null discount;
-  Null afterPrice;
+  String type;
+  double discount;
+  double afterPrice;
 
   Data(
       {this.id,
@@ -239,8 +239,8 @@ class RelatedProducts {
   String name;
   double price;
   String mainImg;
-  Null stars;
-  Null offer;
+  double stars;
+  Offer offer;
   int availability;
 
   RelatedProducts(
@@ -281,3 +281,61 @@ class RelatedProducts {
     return data;
   }
 }
+
+// class Offer {
+//   String type;
+//   double discount;
+//   double afterPrice;
+//
+//   Offer({this.type, this.discount, this.afterPrice});
+//
+//   Offer.fromJson(Map<String, dynamic> json) {
+//     type = json['type'];
+//     discount = json['discount'];
+//     afterPrice = json['after_price'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['type'] = this.type;
+//     data['discount'] = this.discount;
+//     data['after_price'] = this.afterPrice;
+//     return data;
+//   }
+// }
+class Offer {
+  String type;
+  double discount;
+  double afterPrice;
+  Offer({this.type, this.discount, this.afterPrice});
+
+  Offer.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    discount = json['discount'];
+    afterPrice = json['afterPrice'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['discount'] = this.discount;
+    data['afterPrice'] = this.afterPrice;
+    return data;
+  }
+}
+
+// class Type {
+//   String name;
+//
+//   Type({this.name});
+//
+//   Type.fromJson(Map<String, dynamic> json) {
+//     name = json['name'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['name'] = this.name;
+//     return data;
+//   }
+// }

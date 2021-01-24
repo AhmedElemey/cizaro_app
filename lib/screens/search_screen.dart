@@ -3,6 +3,7 @@ import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -25,12 +26,11 @@ class _SearchScreenState extends State<SearchScreen> {
       });
 
     final getProducts = Provider.of<ListViewModel>(context, listen: false);
-    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-    await getProducts.fetchSearch(arguments['txt']).then((response) {
+    // final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    await getProducts.fetchSearch().then((response) {
       searchModel = response;
       productList = searchModel.data.products;
       print(productList.length);
-      // print(productList.data.relatedProducts.length);
     });
     if (this.mounted)
       setState(() {
@@ -56,40 +56,76 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: [
                   GradientAppBar(""),
                   Container(
-                    padding: EdgeInsets.only(top: 10),
+                    height: MediaQuery.of(context).size.height * .1,
+                    child: Row(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              width: MediaQuery.of(context).size.width * .25,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    productList?.length.toString() ?? '',
+                                    style: TextStyle(color: Colors.red),
+                                    textScaleFactor:
+                                        MediaQuery.textScaleFactorOf(context) *
+                                            1.5,
+                                  ),
+                                  Text(
+                                    " Items",
+                                    textScaleFactor:
+                                        MediaQuery.textScaleFactorOf(context) *
+                                            1.5,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 200),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/images/arrow.svg',
+                                    width: MediaQuery.of(context).size.width *
+                                        0.035,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.025,
+                                    color: Colors.black,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Icon(
+                                      Icons.filter_alt_outlined,
+                                      size: 30,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
                     height: MediaQuery.of(context).size.height,
+                    width: double.infinity,
                     child: ListView.builder(
-                      itemCount: productList.length,
+                      itemCount: productList?.length ?? '',
                       itemBuilder: (ctx, index) => SearchItem(
                         imgUrl: productList[index].mainImg,
                         productName: productList[index].name,
                         productPrice: productList[index].price,
                         productCategory: productList[index].category.name,
+                        //  productQuantity: ,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 35), label: 'Home'),
-          new BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                size: 35,
-              ),
-              label: 'Search'),
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, size: 35), label: 'Cart'),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 35),
-            label: 'Profile',
-          ),
-        ],
-      ),
     );
   }
 }

@@ -49,7 +49,7 @@ class ProductDetailItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '\$' + productPrice.toString(),
+                      productPrice.toString() + " LE",
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 1.2,

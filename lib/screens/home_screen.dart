@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Text(
                             "There Is no Hot Deals for Now ! ",
                             textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.5,
+                                MediaQuery.of(context).textScaleFactor * 1.4,
                           );
                         } else {
                           return GestureDetector(

@@ -26,24 +26,27 @@ class SearchModel {
 }
 
 class Data {
-  List<Products> products;
-  List<Null> filterSpecs;
+  List<SearchProducts> products;
+  // List<Null> filterSpecs;
 
-  Data({this.products, this.filterSpecs});
+  Data({
+    this.products,
+    //this.filterSpecs
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['products'] != null) {
-      products = new List<Products>();
+      products = new List<SearchProducts>();
       json['products'].forEach((v) {
-        products.add(new Products.fromJson(v));
+        products.add(new SearchProducts.fromJson(v));
       });
     }
-    if (json['filter_specs'] != null) {
-      filterSpecs = new List<Null>();
-      json['filter_specs'].forEach((v) {
-        filterSpecs.add(new Null.fromJson(v));
-      });
-    }
+    // if (json['filter_specs'] != null) {
+    //   filterSpecs = new List<Null>();
+    //   json['filter_specs'].forEach((v) {
+    //     filterSpecs.add(new Null.fromJson(v));
+    //   });
+    // }
   }
 
   Map<String, dynamic> toJson() {
@@ -51,25 +54,25 @@ class Data {
     if (this.products != null) {
       data['products'] = this.products.map((v) => v.toJson()).toList();
     }
-    if (this.filterSpecs != null) {
-      data['filter_specs'] = this.filterSpecs.map((v) => v.toJson()).toList();
-    }
+    // if (this.filterSpecs != null) {
+    //   data['filter_specs'] = this.filterSpecs.map((v) => v.toJson()).toList();
+    // }
     return data;
   }
 }
 
-class Products {
+class SearchProducts {
   int id;
   String name;
   String mainImg;
-  int price;
+  double price;
   Null stars;
   Category category;
   bool specs;
   Null offer;
   int availability;
 
-  Products(
+  SearchProducts(
       {this.id,
       this.name,
       this.mainImg,
@@ -80,7 +83,7 @@ class Products {
       this.offer,
       this.availability});
 
-  Products.fromJson(Map<String, dynamic> json) {
+  SearchProducts.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     mainImg = json['main_img'];

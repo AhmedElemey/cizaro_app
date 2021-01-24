@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/shopModel.dart';
@@ -33,6 +34,16 @@ class ListServices {
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       return ShopModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<SearchModel> fetchSearch(String txt) async {
+    final response = await http.get(API + '/products/?search=$txt');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }

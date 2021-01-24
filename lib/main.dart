@@ -49,7 +49,7 @@ void main() {
             AddressBookScreen.routeName: (ctx) => AddressBookScreen(),
             ProductDetails.routeName: (ctx) => ProductDetails(),
             FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
-            MycartScreen.routeName: (ctx) => MycartScreen(),
+            MyCartScreen.routeName: (ctx) => MyCartScreen(),
             ShopScreen.routeName: (ctx) => ShopScreen(),
             CheckoutScreen.routeName: (ctx) => CheckoutScreen(),
           },

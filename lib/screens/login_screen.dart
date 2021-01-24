@@ -1,14 +1,6 @@
 import 'dart:io';
-
-import 'package:cizaro_app/model/home.dart';
-import 'package:cizaro_app/screens/addressbook_screen.dart';
-import 'package:cizaro_app/screens/checkout_screen.dart';
-import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
-import 'package:cizaro_app/screens/mycart_screen.dart';
-
-import 'package:cizaro_app/screens/profile_screen.dart';
-import 'package:cizaro_app/screens/shop_screen.dart';
+import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -106,8 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: CupertinoButton(
                                       color: Theme.of(context).primaryColor,
                                       child: Text('Login'),
-                                      onPressed: () => Navigator.of(context)
-                                          .pushNamed(HomeScreen.routeName))),
+                                      onPressed: () => Navigator.of(context).pushNamed(TabsScreen.routeName))),
                               const SizedBox(height: 10),
                               Text('Forgot your password?',
                                   textScaleFactor:
@@ -213,7 +204,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   Expanded(
                                       child: Container(
-                                    padding: const EdgeInsets.only(left: 20),
+                                    padding: const EdgeInsets.only(left: 23,top: 10),
                                     child: TextFieldBuild(
                                         obscureText: false,
                                         readOnly: false,
@@ -227,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Expanded(
                                       child: Container(
                                     padding: const EdgeInsets.only(
-                                        right: 20, left: 10),
+                                        right: 23, left: 10,top: 10),
                                     child: TextFieldBuild(
                                         obscureText: false,
                                         readOnly: false,
@@ -240,6 +231,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   )),
                                 ],
                               ),
+                              const SizedBox(height: 10),
                               TextFieldBuild(
                                   obscureText: true,
                                   readOnly: false,
@@ -249,6 +241,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   textEditingController:
                                       _passwordSignUpController,
                                   icon: CupertinoIcons.eye),
+                              const SizedBox(height: 10),
                               TextFieldBuild(
                                   obscureText: true,
                                   readOnly: false,
@@ -257,6 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   lineCount: 1,
                                   textEditingController:
                                       _confirmPasswordController),
+                              const SizedBox(height: 10),
                               Row(
                                 children: [
                                   // Expanded(
@@ -416,7 +410,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: CupertinoButton(
                                       color: Theme.of(context).primaryColor,
                                       child: Text('SignUp'),
-                                      onPressed: () {})),
+                                      onPressed: () => Navigator.of(context).pushNamed(TabsScreen.routeName))),
                               const SizedBox(height: 10),
                               Divider(
                                   thickness: 0.8,

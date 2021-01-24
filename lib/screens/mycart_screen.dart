@@ -2,8 +2,8 @@ import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MycartScreen extends StatelessWidget {
-  static final routeName = '/mycart-screen';
+class MyCartScreen extends StatelessWidget {
+  static final routeName = '/my-cart-screen';
 
   @override
   Widget build(BuildContext context) {
@@ -116,25 +116,6 @@ class MycartScreen extends StatelessWidget {
             )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 35), label: 'Home'),
-          new BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                size: 35,
-              ),
-              label: 'Search'),
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, size: 35), label: 'Cart'),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 35),
-            label: 'Profile',
-          ),
-        ],
       ),
     );
   }

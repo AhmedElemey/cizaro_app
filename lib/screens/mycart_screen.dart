@@ -43,7 +43,7 @@ class MyCartScreen extends StatelessWidget {
                   productCategory: "men fashion",
                   productPrice: 65,
                   totalPrice: 49.99,
-                  productQuanitity: 3.toString(),
+                  productQuantity: 3.toString(),
                 ),
               ),
             ),

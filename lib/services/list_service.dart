@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
@@ -39,11 +40,22 @@ class ListServices {
     }
   }
 
-  Future<SearchModel> fetchSearch(String txt) async {
-    final response = await http.get(API + '/products/?search=$txt');
+  Future<SearchModel> fetchSearch() async {
+    final response = await http.get(API + '/products/?search');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       return SearchModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<ContactUsModel> fetchContacts() async {
+    final response = await http.get(API + '/contact-us/');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      //  print(response.body);
+      return ContactUsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }

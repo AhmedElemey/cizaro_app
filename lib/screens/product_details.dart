@@ -355,25 +355,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ],
               ),
             ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 35), label: 'Home'),
-          new BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                size: 35,
-              ),
-              label: 'Search'),
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, size: 35), label: 'Cart'),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 35),
-            label: 'Profile',
-          ),
-        ],
-      ),
     );
   }
 }

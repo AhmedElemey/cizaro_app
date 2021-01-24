@@ -8,7 +8,7 @@ class CartItem extends StatefulWidget {
       productCategory,
       iconAdd,
       iconMinus,
-      productQuanitity;
+      productQuantity;
   double totalPrice, productPrice;
 
   CartItem(
@@ -19,7 +19,7 @@ class CartItem extends StatefulWidget {
       this.iconAdd,
       this.iconMinus,
       this.totalPrice,
-      this.productQuanitity});
+      this.productQuantity});
 
   @override
   _CartItemState createState() => _CartItemState();
@@ -31,7 +31,7 @@ class _CartItemState extends State<CartItem> {
   @override
   void initState() {
     super.initState();
-    widget.productQuanitity = quantityController.text;
+    widget.productQuantity = quantityController.text;
   }
 
   @override
@@ -101,7 +101,7 @@ class _CartItemState extends State<CartItem> {
                                         int value =
                                             int.parse(quantityController.text) -
                                                 1;
-                                        widget.productQuanitity =
+                                        widget.productQuantity =
                                             value.toString();
                                       });
                                     },
@@ -133,7 +133,6 @@ class _CartItemState extends State<CartItem> {
                                     child: TextField(
                                       controller: quantityController,
                                       keyboardType: TextInputType.number,
-                                      autofocus: true,
                                     ),
                                   ),
                                   Container(
@@ -145,7 +144,7 @@ class _CartItemState extends State<CartItem> {
                                           int value = int.parse(
                                                   quantityController.text) +
                                               1;
-                                          widget.productQuanitity =
+                                          widget.productQuantity =
                                               value.toString();
                                         });
                                       },

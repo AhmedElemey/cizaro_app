@@ -1,6 +1,6 @@
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/widgets/shop_item.dart';
-import 'package:flutter/material.dart ';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';

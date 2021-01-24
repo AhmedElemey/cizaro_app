@@ -12,7 +12,7 @@ class HotDealsItem extends StatelessWidget {
           padding: EdgeInsets.only(left: 1, right: 1),
           child: Image.network(
             imgUrl,
-            width: MediaQuery.of(context).size.width * .99,
+            width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * .3,
             fit: BoxFit.fitWidth,
             loadingBuilder: (BuildContext context, Widget child,

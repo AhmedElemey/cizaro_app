@@ -129,14 +129,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: double.infinity,
                     child: CarouselSlider.builder(
                       itemCount: hotDealsList.length,
-                      itemBuilder: (ctx, index) => GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(ProductDetails.routeName),
-                        child: HotDealsItem(
-                            id: hotDealsList[index].id,
-                            itemText: hotDealsList[index].name,
-                            imgUrl: hotDealsList[index].offer.image),
-                      ),
+                      itemBuilder: (ctx, index) {
+                        if (hotDealsList.length == 0) {
+                          return Text(
+                            "There Is no Hot Deals for Now ! ",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.5,
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(ProductDetails.routeName),
+                            child: HotDealsItem(
+                                id: hotDealsList[index].id,
+                                itemText: hotDealsList[index].name,
+                                imgUrl: hotDealsList[index].offer.image),
+                          );
+                        }
+                      },
                       options: CarouselOptions(
                         aspectRatio: 16 / 9,
                         viewportFraction: 0.8,

@@ -60,7 +60,7 @@ class ProductItem extends StatelessWidget {
                 padding: EdgeInsets.only(top: 5, right: 10),
                 child: Text(
                   '\$' + productPrice.toString(),
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.5,
+                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                 ),
               ),
             ],

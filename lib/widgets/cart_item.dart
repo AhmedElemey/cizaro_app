@@ -133,7 +133,7 @@ class _CartItemState extends State<CartItem> {
                                     child: TextField(
                                       controller: quantityController,
                                       keyboardType: TextInputType.number,
-                                      autofocus: true,
+                                      autofocus: false,
                                     ),
                                   ),
                                   Container(

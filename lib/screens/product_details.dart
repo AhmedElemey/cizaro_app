@@ -14,10 +14,10 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  bool _isLoading = false;
+  bool _isLoading = false,_isColor = false;
   ProductDetailsModel productDetails;
   int _selectedCard = -1;
-  String productName, imgUrl, productDescription;
+  String productName, imgUrl, productDescription,specTitle;
   double productPrice, productStar;
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
@@ -39,6 +39,8 @@ class _ProductDetailsState extends State<ProductDetails> {
       productPrice = productDetails.data.price;
       productStar = productDetails.data.stars;
       productDescription = productDetails.data.shortDescription;
+      _isColor = productDetails.data.specs.isColor;
+      specTitle = productDetails.data.specs.name;
       //
       productRelated = productDetails.data.relatedProducts;
 //
@@ -210,7 +212,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Row(
                       children: [
                         Text(
-                          "SELECT COLOR",
+                          "Select $specTitle".toUpperCase(),
                           style: TextStyle(color: Color(0xff515C6F)),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1,
@@ -218,46 +220,38 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ],
                     ),
                   ),
-                  Container(
+                  _isColor == true ? Container(
                       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
                       height: MediaQuery.of(context).size.height * .09,
                       child: GridView.builder(
-                        itemCount: 6,
+                        itemCount: productSpecs.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 1.3,
+                            childAspectRatio: 1.5,
                             crossAxisCount: 6,
                             crossAxisSpacing: 5,
                             mainAxisSpacing: 5),
                         itemBuilder: (BuildContext context, int index) {
-                          return new GridTile(
+                          return  GridTile(
                               child: GestureDetector(
+                                onTap: () {
+                                  setState(() => _selectedCard = index);
+                                },
                             child: CircleAvatar(
-                              radius: .5,
-                              backgroundColor: Colors.black26,
+                              radius: .3,
+                              child:  _selectedCard == index ? Center(child: Icon(Icons.check,color: Theme.of(context).primaryColor)) : Text(''),
+                              foregroundColor: Color(int.parse('0xff'+ productSpecs[index].value.split('#').last)),
+                              backgroundColor: Color(int.parse('0xff'+ productSpecs[index].value.split('#').last))
                             ),
                           ));
                         },
-                      )),
-                  Container(
-                    padding: EdgeInsets.only(left: 10, top: 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          "SELECT SIZE (US)",
-                          style: TextStyle(color: Color(0xff515C6F)),
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
+                      )) : Container(
                       padding: EdgeInsets.only(top: 10, left: 10),
                       height: MediaQuery.of(context).size.height * .06,
                       child: GridView.builder(
                         itemCount: productSpecs.length,
+                        padding: const EdgeInsets.only(right: 8,left: 8),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 1.3,
+                            childAspectRatio: 2,
                             crossAxisCount: 6,
                             crossAxisSpacing: 5,
                             mainAxisSpacing: 5),
@@ -278,13 +272,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       : Color(0xff707070),
                                 ),
                                 textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.2,
+                                MediaQuery.of(context).textScaleFactor *
+                                    1.2,
                               ),
                             ),
                           );
                         },
                       )),
+                  // Container(
+                  //   padding: EdgeInsets.only(left: 10, top: 10),
+                  //   child: Row(
+                  //     children: [
+                  //       Text(
+                  //         "SELECT SIZE (US)",
+                  //         style: TextStyle(color: Color(0xff515C6F)),
+                  //         textScaleFactor:
+                  //             MediaQuery.of(context).textScaleFactor * 1,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                   Container(
                     width: MediaQuery.of(context).size.width * .44,
                     height: MediaQuery.of(context).size.height * .066,
@@ -355,25 +362,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ],
               ),
             ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: [
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.home, size: 35), label: 'Home'),
-          new BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                size: 35,
-              ),
-              label: 'Search'),
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart, size: 35), label: 'Cart'),
-          new BottomNavigationBarItem(
-            icon: Icon(Icons.person, size: 35),
-            label: 'Profile',
-          ),
-        ],
-      ),
     );
   }
 }

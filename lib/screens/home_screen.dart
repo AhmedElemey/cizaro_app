@@ -1,10 +1,9 @@
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cizaro_app/model/home.dart';
-import 'package:cizaro_app/screens/mycart_screen.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/collection_item.dart';
+import 'package:cizaro_app/widgets/custom_tab_bar.dart';
 import 'package:cizaro_app/widgets/hotDeals_item.dart';
 import 'package:cizaro_app/widgets/product_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,10 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
   List<HotDeals> hotDealsList = [];
   List<Collections> collectionsList = [];
   List<NewArrivals> newArrivalsList = [];
+  List<Products> newArrivalsProducts = [];
   Home home;
+  int initPosition = 0;
   bool _isLoading = false;
-
-  _HomeScreenState();
 
   Future getHomeData() async {
     if (this.mounted)
@@ -39,13 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
     await getHome.fetchHomeList().then((response) {
       home = response;
       hotDealsList = home.data.hotDeals;
-      print(hotDealsList.length);
-
       collectionsList = home.data.collections;
-      print(collectionsList.length);
-
       newArrivalsList = home.data.newArrivals;
-      print(newArrivalsList.length);
     });
     if (this.mounted) {
       setState(() {
@@ -61,26 +55,35 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget tabsWidgets() {
-    return Container(
-      height: MediaQuery.of(context).size.height * .35,
-      child: ListView.builder(
-          itemCount: newArrivalsList.length.compareTo(0),
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (ctx, index) => GestureDetector(
+    return Padding(
+      padding: const EdgeInsets.only(right: 8,left: 8),
+      child: CustomTabView(
+        initPosition: initPosition,
+        itemCount: newArrivalsList?.length ?? 0,
+        tabBuilder: (context, index) => Tab(text: newArrivalsList[index].name),
+        pageBuilder: (context, index) => Container(
+          height: MediaQuery.of(context).size.height * .38,
+          child: ListView.builder(
+            padding: const EdgeInsets.only(right: 5,left: 5,top: 5),
+              itemCount: newArrivalsList[index]?.products?.length ?? 0,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (ctx, index) => GestureDetector(
                 onTap: () => Navigator.of(context)
                     .pushNamed(ProductDetails.routeName, arguments: {
-                  'product_id': newArrivalsList[index].products[index].id
+                  'product_id': newArrivalsList[0].products[index].id
                 }),
                 child: ProductItem(
-                  // newArrivalsList[index]?.products[index].id,
-                  productText: newArrivalsList[index]?.products[index]?.name,
-                  //newArrivalsList[index]?.products[index].name,
-                  imgUrl: newArrivalsList[index]?.products[index]?.mainImg,
-                  //newArrivalsList[index]?.products[index].mainImg,
-                  productPrice: newArrivalsList[index]?.products[index]?.price,
-                  //newArrivalsList[index]?.products[index].price,
+                  productText: newArrivalsList[0]?.products[index]?.name ?? '',
+                  imgUrl: newArrivalsList[0]?.products[index]?.mainImg ?? '',
+                  productPrice: newArrivalsList[0]?.products[index]?.price ?? 0.0
                 ),
               )),
+        ),
+        onPositionChange: (index){
+          initPosition = index;
+        },
+        onScroll: (position) => print('$position'),
+      ),
     );
   }
 
@@ -107,6 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : SingleChildScrollView(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GradientAppBar(""),
                   Center(
@@ -216,32 +220,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Column(
-                      children: [
-                        Container(
-                          child: Center(
-                            child: Container(
-                              child: Text(
-                                " New Arrivals",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.1,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                    color: Color(0xff294794)),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Container(
-                            height: MediaQuery.of(context).size.height * .4,
-                            child: tabsWidgets())
-                      ],
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Text(
+                        " New Arrivals",
+                        textScaleFactor:
+                            MediaQuery.of(context).textScaleFactor *
+                                1.1,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Color(0xff294794)),
+                      ),
                     ),
-                  )
+                  ),
+                  Container(
+                      height: MediaQuery.of(context).size.height * .4,
+                      child: tabsWidgets())
                 ],
               ),
             ),
@@ -309,18 +305,18 @@ class CustomTabBar extends StatelessWidget {
     return Container(
       height: 50,
       decoration: BoxDecoration(color: Color(0xff3A559F)),
-      child: Row(
-        children: [
-          Expanded(
+      child: Container(
+        height: MediaQuery.of(context).size.height * 0.2,
+        width: double.infinity,
+          child: Expanded(
               child: CustomTabBarButton(
             text: "CHATS",
             textColor: Colors.white,
             borderColor: Colors.transparent,
             borderWidth: 0.0,
-          ))
-        ],
-      ),
-    );
+          )),
+        ),
+      );
   }
 }
 

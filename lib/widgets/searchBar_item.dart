@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class SearchItem extends StatefulWidget {
+class SearchBarItem extends StatefulWidget {
   final String productName, imgUrl, productCategory, iconAdd, iconMinus;
   final double totalPrice, productPrice;
   int productAvailability;
   String productQuantity;
-  SearchItem(
+  SearchBarItem(
       {this.productName,
       this.imgUrl,
       this.productPrice,
@@ -22,7 +22,7 @@ class SearchItem extends StatefulWidget {
   _SearchItemState createState() => _SearchItemState();
 }
 
-class _SearchItemState extends State<SearchItem> {
+class _SearchItemState extends State<SearchBarItem> {
   TextEditingController quantityController = TextEditingController();
 
   @override

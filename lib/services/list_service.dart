@@ -50,6 +50,17 @@ class ListServices {
     }
   }
 
+  Future<SearchModel> fetchSearchBar(String searchTxt) async {
+    final response = await http.get(API + '/products/?search=$searchTxt');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return SearchModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
   Future<ContactUsModel> fetchContacts() async {
     final response = await http.get(API + '/contact-us/');
     if (response.statusCode == 200) {

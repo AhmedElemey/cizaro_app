@@ -31,6 +31,12 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
+  Future<SearchModel> fetchSearchBar(String searchTxt) async {
+    final result = await ListServices().fetchSearchBar(searchTxt);
+    notifyListeners();
+    return result;
+  }
+
   Future<ContactUsModel> fetchContacts() async {
     final result = await ListServices().fetchContacts();
     notifyListeners();

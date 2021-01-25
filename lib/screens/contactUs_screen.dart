@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatefulWidget {
   static final routeName = '/contactUs-screen';
@@ -15,10 +16,18 @@ class ContactUsScreen extends StatefulWidget {
 class _ContactUsScreenState extends State<ContactUsScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  List<String> _address = [];
 
   bool _isLoading = false;
   ContactUsModel contactUsModel;
-  String contactAddress, contactEmail, contactPhone, contactPostalCode;
+  String contactAddress,
+      contactEmail,
+      contactPhone,
+      contactPostalCode,
+      contactFaceBook,
+      contactInstagram,
+      contactYoutube,
+      contactTwitter;
   List<Data> contactList = [];
   int index = 0;
 
@@ -37,6 +46,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       contactPhone = contactList[index].phone;
       contactEmail = contactList[index].email;
       contactPostalCode = contactList[index].postalCode;
+      //
+      contactFaceBook = contactList[index].facebook;
+      contactYoutube = contactList[index].youtube;
+      contactInstagram = contactList[index].instagram;
+      contactTwitter = contactList[index].twitter;
+      //
+      _address = contactList[index].address.split(",");
+
+      //
     });
     if (this.mounted)
       setState(() {
@@ -48,6 +66,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   void initState() {
     Future.microtask(() => getContactUsData());
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -83,16 +109,22 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Address:   ",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              // Text.rich()
-                            ],
+                          child: RichText(
+                            text: TextSpan(
+                              text: "Address:   ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.black),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: contactAddress,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black38))
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
@@ -185,6 +217,73 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   MediaQuery.textScaleFactorOf(context) * 1.8,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 100, right: 30),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactFaceBook);
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/facebook.png",
+                                    width: MediaQuery.of(context).size.width *
+                                        0.09,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.09,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactYoutube);
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/youtube.png",
+                                    width: MediaQuery.of(context).size.width *
+                                        0.14,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.14,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactInstagram);
+                                  },
+                                  child: Image.asset(
+                                      "assets/images/instgram.jpg",
+                                      width: MediaQuery.of(context).size.width *
+                                          0.09,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.09),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactTwitter);
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/twitter.png",
+                                    width: MediaQuery.of(context).size.width *
+                                        0.13,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.13,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         Padding(

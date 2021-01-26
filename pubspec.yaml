@@ -19,7 +19,7 @@ dependencies:
   shared_preferences: ^0.5.8
   flutter_svg:
   device_preview: ^0.4.8
-  fluttertoast: ^3.0.3
+  fluttertoast: ^7.1.6
   intl: ^0.16.1
   cached_network_image: ^2.2.0+1
   custom_navigator: ^0.3.0

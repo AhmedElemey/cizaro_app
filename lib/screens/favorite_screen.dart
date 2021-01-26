@@ -1,36 +1,38 @@
 import 'package:cizaro_app/widgets/favorite_item.dart';
 import 'package:flutter/material.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class FavoriteScreen extends StatelessWidget {
   static final routeName = '/favorite-screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-            padding: EdgeInsets.only(left: 10),
-            child: Image.asset(
-              "assets/images/logo.png",
-            )),
-        title: Center(
-          child: Text("Wishlist"),
-        ),
-        actions: [
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-            ),
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   leading: Container(
+      //       padding: EdgeInsets.only(left: 10),
+      //       child: Image.asset(
+      //         "assets/images/logo.png",
+      //       )),
+      //   title: Center(
+      //     child: Text("Wishlist"),
+      //   ),
+      //   actions: [
+      //     Container(
+      //       padding: EdgeInsets.all(10.0),
+      //       child: CircleAvatar(
+      //         backgroundColor: Colors.white,
+      //         child: Icon(
+      //           Icons.search,
+      //           color: Colors.black,
+      //         ),
+      //       ),
+      //     )
+      //   ],
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            GradientAppBar("My Favorite"),
             Container(
               padding: EdgeInsets.only(left: 10, top: 25),
               width: MediaQuery.of(context).size.width,

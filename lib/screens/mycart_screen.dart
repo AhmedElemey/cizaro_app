@@ -1,25 +1,61 @@
 import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class MyCartScreen extends StatelessWidget {
+class MyCartScreen extends StatefulWidget {
   static final routeName = '/my-cart-screen';
 
   @override
-  Widget build(BuildContext context) {
+  _MyCartScreenState createState() => _MyCartScreenState();
+}
 
+class _MyCartScreenState extends State<MyCartScreen> {
+  FToast fToast;
+
+  @override
+  void initState() {
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
+
+  showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.greenAccent,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check),
+          SizedBox(
+            width: 12.0,
+          ),
+          Text("This is a Custom Toast"),
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      // positionedToastBuilder: (context, child) {
+      //   return Positioned(
+      //     child: child,
+      //     bottom: 16.0,
+      //     left: 16.0,
+      //   );
+      // } da law 3ayz tezbat el postion ele hayzhar feh
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: Container(
-      //       padding: EdgeInsets.all(10),
-      //       child: Image.asset(
-      //         "assets/images/logo.png",
-      //         height: MediaQuery.of(context).size.height * .1,
-      //       )),
-      //   title: Center(
-      //     child: Text("My Cart"),
-      //   ),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -40,7 +76,7 @@ class MyCartScreen extends StatelessWidget {
                 itemCount: 7,
                 itemBuilder: (ctx, index) => CartItem(
                   imgUrl: "assets/images/collection.png",
-                  productName: "Treecode",
+                  productName: "TreeCode",
                   productCategory: "men fashion",
                   productPrice: 65,
                   totalPrice: 49.99,
@@ -75,41 +111,54 @@ class MyCartScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(right: 10),
-                    width: MediaQuery.of(context).size.width * .4,
-                    height: MediaQuery.of(context).size.height * .06,
-                    decoration: BoxDecoration(
-                        color: Color(0xff3A559F),
-                        borderRadius: BorderRadius.circular(25.0)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            margin: new EdgeInsets.all(10),
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "CHECKOUT",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
+                  GestureDetector(
+                    onTap: () {
+                      return showToast();
+                      // Fluttertoast.showToast(
+                      //   msg: "This is Center Short Toast",
+                      //   toastLength: Toast.LENGTH_SHORT,
+                      //   gravity: ToastGravity.BOTTOM,
+                      //   backgroundColor: Colors.red,
+                      //   timeInSecForIosWeb: 1,
+                      //   textColor: Colors.white,
+                      //   fontSize: 16.0);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(right: 10),
+                      width: MediaQuery.of(context).size.width * .4,
+                      height: MediaQuery.of(context).size.height * .06,
+                      decoration: BoxDecoration(
+                          color: Color(0xff3A559F),
+                          borderRadius: BorderRadius.circular(25.0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              margin: new EdgeInsets.all(10),
+                              child: Container(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "CHECKOUT",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )),
+                          Container(
+                            padding: EdgeInsets.only(right: 5),
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 15,
+                                color: Color(0xff3A559F),
                               ),
-                            )),
-                        Container(
-                          padding: EdgeInsets.only(right: 5),
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 15,
-                              color: Color(0xff3A559F),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -118,127 +167,6 @@ class MyCartScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class GradientAppBar extends StatelessWidget {
-  final String title;
-  final double barHeight = 50.0;
-
-  GradientAppBar(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    final double statusbarHeight = MediaQuery.of(context).padding.top;
-
-    return new Container(
-      padding: EdgeInsets.only(top: statusbarHeight),
-      height: statusbarHeight + barHeight,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                Image.asset(
-                  "assets/images/logo.png",
-                  height: MediaQuery.of(context).size.height * .06,
-                )
-              ],
-            ),
-          ),
-          Spacer(),
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          Spacer(),
-          Container(
-            padding: EdgeInsets.all(7.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  showSearch(context: context, delegate: Search());
-                },
-              ),
-            ),
-          )
-        ],
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xff395A9A), Color(0xff0D152A)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.0, 1.0]),
-      ),
-    );
-  }
-}
-
-class Search extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        });
-  }
-
-  String selectedResult;
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(selectedResult),
-      ),
-    );
-  }
-
-  List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList
-            .addAll(recentList.where((element) => element.contains(query)));
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(suggestionList[index]),
-          onTap: () {
-            selectedResult = suggestionList[index];
-            showResults(context);
-          },
-        );
-      },
     );
   }
 }

@@ -1,4 +1,6 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:cizaro_app/helper/database_helper.dart';
+import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/product_details_item.dart';
@@ -16,7 +18,7 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   bool _isLoading = false,_isColor = false;
   ProductDetailsModel productDetails;
-  int _selectedCard = -1;
+  int _selectedCard = -1,productId,productAvailability;
   String productName, imgUrl, productDescription,specTitle;
   double productPrice, productStar;
   List<RelatedProducts> productRelated = [];
@@ -34,12 +36,14 @@ class _ProductDetailsState extends State<ProductDetails> {
         .fetchProductDetailsList(arguments['product_id'])
         .then((response) {
       productDetails = response;
+      productId = productDetails.data.id;
+      productAvailability = productDetails.data.availability;
       productName = productDetails.data.name;
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
       productStar = productDetails.data.stars;
       productDescription = productDetails.data.shortDescription;
-      _isColor = productDetails.data.specs.isColor;
+      _isColor = productDetails.data.specs?.isColor ?? false;
       specTitle = productDetails.data.specs.name;
       //
       productRelated = productDetails.data.relatedProducts;
@@ -301,18 +305,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                            margin: new EdgeInsets.all(10),
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "ADD TO CART",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )),
+                        GestureDetector(
+                          onTap: () {
+                            print('preessed');
+                            var dbHelper = DataBaseHelper.db;
+                            final productCart = ProductCart(
+                                id: productId,
+                                name: productName,
+                                mainImg: imgUrl,
+                                price: productPrice,
+                                categoryName: productName,
+                                quantity: 1,
+                                availability: productAvailability
+                            );
+                            dbHelper.addProductToCart(productCart).then((value) {
+                              print('insert it');
+                            }).catchError((error)=> print(error));
+                          },
+                          child: Container(
+                              margin: new EdgeInsets.all(10),
+                              child: Container(
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "ADD TO CART",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )),
+                        ),
                         Container(
                           padding: EdgeInsets.only(right: 5),
                           child: CircleAvatar(

@@ -3,23 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CartItem extends StatefulWidget {
-  String productName,
+   final String productName,
       imgUrl,
       productCategory,
       iconAdd,
-      iconMinus,
-      productQuantity;
-  double totalPrice, productPrice;
+      iconMinus;
+   int productQuantity;
+  final double totalPrice, productPrice;
+  var myController = TextEditingController();
+  final VoidCallback onDelete;
+  final VoidCallback onPlusQuantity;
+  final VoidCallback onMinusQuantity;
+   final VoidCallback onUpdateQuantity;
 
   CartItem(
-      {this.productName,
+      {Key key,
+      this.productName,
       this.imgUrl,
       this.productPrice,
       this.productCategory,
       this.iconAdd,
+      this.myController,
       this.iconMinus,
       this.totalPrice,
-      this.productQuantity});
+      this.productQuantity,
+      this.onDelete,
+      this.onMinusQuantity,
+        this.onUpdateQuantity,
+      this.onPlusQuantity}): super(key: key);
 
   @override
   _CartItemState createState() => _CartItemState();
@@ -31,170 +42,179 @@ class _CartItemState extends State<CartItem> {
   @override
   void initState() {
     super.initState();
-    widget.productQuantity = quantityController.text;
+    widget.myController.addListener(_printLatestValue);
+  }
+
+  _printLatestValue() {
+    print("Second text field: ${widget.myController.text}");
+  }
+
+  @override
+  void dispose() {
+    widget.myController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15.0),
-        child: Card(
-          child: Container(
-            height: MediaQuery.of(context).size.height * .15,
-            padding: EdgeInsets.only(left: 10, right: 10, top: 5),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(80.0),
-                    child: Image.asset(widget.imgUrl),
-                  ),
+      padding: const EdgeInsets.only(left: 15, right: 15),
+      child: Card(
+        elevation: 5,
+        child: Container(
+          height: MediaQuery.of(context).size.height * .24,
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.only(left: 10, top: 5,bottom: 15),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image.network(widget.imgUrl)
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * .5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            child: Text(
-                              widget.productName,
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.5,
-                            ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * .6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          child: Text(
+                            widget.productName,
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.3,
                           ),
-                          Spacer(),
-                          Container(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Text(
-                              widget.productPrice.toString() + ' LE',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        child: Text(
-                          widget.productCategory,
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.1,
                         ),
+                        Spacer(),
+                        Container(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            widget.productPrice.toString() + ' LE',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.1,
+                          ),
+                        )
+                      ],
+                    ),
+                    Container(
+                      child: Text(
+                        widget.productCategory,
+                        textScaleFactor:
+                            MediaQuery.of(context).textScaleFactor * 1.1,
+                        style: const TextStyle(color: Colors.blueGrey),
                       ),
-                      Container(
-                        child: Row(
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Size : 34 , Color : Red'),
+                        IconButton(icon: Icon(Icons.delete,size: MediaQuery.of(context).size.width * 0.08,color: Colors.red), onPressed: widget.onDelete)
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * .3,
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        int value =
-                                            int.parse(quantityController.text) -
-                                                1;
-                                        widget.productQuantity =
-                                            value.toString();
-                                      });
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          .07,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .07,
-                                      padding:
-                                          EdgeInsets.only(right: 5, bottom: 17),
-                                      decoration: BoxDecoration(
-                                        color: Colors.black12,
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Center(
-                                        child: Icon(
-                                          Icons.minimize_outlined,
-                                          size: 25,
-                                          color: Color(0xff707070),
-                                        ),
-                                      ),
-                                    ),
+                            GestureDetector(
+                              onTap: widget.onMinusQuantity,
+                              child: Container(
+                                width: MediaQuery.of(context).size.width *
+                                    .07,
+                                height:
+                                    MediaQuery.of(context).size.height *
+                                        .07,
+                                padding:
+                                    EdgeInsets.only(right: 5, bottom: 17),
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    Icons.minimize_outlined,
+                                    size: 25,
+                                    color: Color(0xff707070),
                                   ),
-                                  Container(
-                                    padding: EdgeInsets.only(left: 5),
-                                    width:
-                                        MediaQuery.of(context).size.width * .1,
-                                    child: TextField(
-                                      controller: quantityController,
-                                      keyboardType: TextInputType.number
-                                    ),
-                                  ),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.only(right: 5, left: 10),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          int value = int.parse(
-                                                  quantityController.text) +
-                                              1;
-                                          widget.productQuantity =
-                                              value.toString();
-                                        });
-                                      },
-                                      child: CircleAvatar(
-                                        radius: 15,
-                                        backgroundColor: Colors.black12,
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 25,
-                                          color: Color(0xff707070),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
                             ),
-                            Spacer(),
                             Container(
-                              padding: EdgeInsets.only(top: 5),
-                              height: MediaQuery.of(context).size.height * .06,
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "TOTAL",
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            .7,
+                              padding: EdgeInsets.only(left: 5),
+                              width:
+                                  MediaQuery.of(context).size.width * .09,
+                              child: TextField(enableInteractiveSelection: true,
+                                controller: widget.myController,
+                                keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: widget.productQuantity.toString(),
+                                  hintStyle: const TextStyle(color: Colors.black)
+                                ),
+                                onChanged: (value) {
+                                widget.productQuantity = int.parse(value);
+                                widget.myController.text = value;
+                                // widget.onUpdateQuantity();
+                                },
+                                onSubmitted: (value) {
+                                  widget.productQuantity = int.parse(value);
+                                  widget.myController.text = value;
+                                  // widget.onUpdateQuantity();
+                                },
+                              ),
+                            ),
+                            Container(
+                              padding:
+                                  EdgeInsets.only(right: 5, left: 10),
+                              child: GestureDetector(
+                                onTap: widget.onPlusQuantity,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.black12,
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 25,
+                                    color: Color(0xff707070),
                                   ),
-                                  Container(
-                                    child: Text(
-                                      widget.totalPrice.toString() + ' LE',
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1.2,
-                                      style:
-                                          TextStyle(color: Color(0xff3A559F)),
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
                             )
                           ],
                         ),
-                      )
-                    ],
-                  ),
+                        const SizedBox(width: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15,left: 35),
+                          child: Column(
+                            children: [
+                              Text(
+                                "TOTAL",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        .8
+                              ),
+                              Text(
+                                widget.totalPrice.toString() + ' LE',
+                                textScaleFactor: MediaQuery.of(context)
+                                        .textScaleFactor *
+                                    1,
+                                style:
+                                    TextStyle(color: Color(0xff3A559F)),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    )
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

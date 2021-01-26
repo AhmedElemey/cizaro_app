@@ -13,7 +13,6 @@ class MyCartScreen extends StatefulWidget {
 
 class _MyCartScreenState extends State<MyCartScreen> {
   FToast fToast;
-
   @override
   void initState() {
     super.initState();

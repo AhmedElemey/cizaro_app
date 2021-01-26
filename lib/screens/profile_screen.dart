@@ -1,7 +1,9 @@
 import 'dart:ffi';
 
+import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
+import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -286,13 +288,17 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.black26,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 10,
-                              color: Colors.black45,
+                          GestureDetector(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(PolicesTermsScreen.routeName),
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.black26,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 10,
+                                color: Colors.black45,
+                              ),
                             ),
                           )
                         ],
@@ -315,13 +321,17 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.black26,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 10,
-                              color: Colors.black45,
+                          GestureDetector(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(AboutUsScreen.routeName),
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.black26,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 10,
+                                color: Colors.black45,
+                              ),
                             ),
                           )
                         ],

@@ -1,7 +1,9 @@
+import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  var valueCollection, valueCategory;
+  Home home;
+  List<Collections> collectionsList = [];
+  List<NewArrivals> newArrivalsList = [];
+
   SearchModel searchModel;
   String productName, imgUrl;
   double productPrice;
@@ -43,6 +50,146 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     Future.microtask(() => getShopData());
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  Future getHomeData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
+    final getHome = Provider.of<ListViewModel>(context, listen: false);
+    await getHome.fetchHomeList().then((response) {
+      home = response;
+      collectionsList = home.data.collections;
+      newArrivalsList = home.data.newArrivals;
+    });
+    if (this.mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    displayBottomSheet(context);
+  }
+
+  displayBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) {
+          return StatefulBuilder(builder: (BuildContext context,
+              StateSetter setState /*You can rename this!*/) {
+            return Container(
+              height: MediaQuery.of(context).size.height * .8,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, top: 10),
+                    child: Text(
+                      "Filter By:  ",
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * 2,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, top: 10),
+                          child: Text(
+                            "Filter By Collections :",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1,
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .1,
+                          width: MediaQuery.of(context).size.width * .5,
+                          padding: EdgeInsets.only(top: 20, left: 10),
+                          child: DropdownButton(
+                            hint: Text("Select Collection "),
+                            value: valueCollection,
+                            items: collectionsList.map((e) {
+                              return DropdownMenuItem(
+                                child: Text(e.name),
+                                value: e.id,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                valueCollection = value;
+                              });
+                            },
+                            isExpanded: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            "Filter By Category :",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1,
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .1,
+                          width: MediaQuery.of(context).size.width * .5,
+                          padding: EdgeInsets.only(top: 30, left: 10),
+                          child: DropdownButton(
+                            hint: Text("Select Category"),
+                            value: valueCategory,
+                            items: newArrivalsList.map((e) {
+                              return DropdownMenuItem(
+                                child: Text(e.name),
+                                value: e.id,
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                valueCategory = newValue;
+                              });
+                            },
+                            isExpanded: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30, left: 150),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * .3,
+                      height: MediaQuery.of(context).size.height * .06,
+                      decoration: BoxDecoration(
+                          color: Color(0xff3A559F),
+                          borderRadius: BorderRadius.circular(25.0)),
+                      child: Container(
+                        margin: new EdgeInsets.all(10),
+                        padding: EdgeInsets.only(left: 30),
+                        child: Text(
+                          "Filter",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
+        });
   }
 
   @override
@@ -87,19 +234,31 @@ class _SearchScreenState extends State<SearchScreen> {
                               padding: EdgeInsets.only(left: 200),
                               child: Row(
                                 children: [
-                                  SvgPicture.asset(
-                                    'assets/images/arrow.svg',
-                                    width: MediaQuery.of(context).size.width *
-                                        0.035,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.025,
-                                    color: Colors.black,
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        productList =
+                                            productList.reversed.toList();
+                                      });
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/images/arrow.svg',
+                                      width: MediaQuery.of(context).size.width *
+                                          0.035,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.025,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
-                                    child: Icon(
-                                      Icons.filter_alt_outlined,
-                                      size: 30,
+                                    child: GestureDetector(
+                                      onTap: () => getHomeData(),
+                                      child: Icon(
+                                        Icons.filter_alt_outlined,
+                                        size: 30,
+                                      ),
                                     ),
                                   )
                                 ],

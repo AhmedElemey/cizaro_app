@@ -40,14 +40,15 @@ class _ProductDetailsState extends State<ProductDetails> {
       productPrice = productDetails.data.price;
       productStar = productDetails.data.stars;
       productDescription = productDetails.data.shortDescription;
-      _isColor = productDetails.data.specs.isColor;
-      specTitle = productDetails.data.specs.name;
+
+      _isColor = productDetails?.data.specs?.isColor ?? false;
+      specTitle = productDetails?.data.specs?.name ?? "";
       //
       productRelated = productDetails.data.relatedProducts;
 //
       productImages = productDetails.data.multiImages;
       //
-      productSpecs = productDetails.data.specs.values;
+      productSpecs = productDetails?.data.specs?.values ?? [];
       print(productRelated.length);
       // print(productList.data.relatedProducts.length);
     });

@@ -1,4 +1,6 @@
+import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
@@ -31,8 +33,26 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
+  Future<SearchModel> fetchSearchBar(String searchTxt) async {
+    final result = await ListServices().fetchSearchBar(searchTxt);
+    notifyListeners();
+    return result;
+  }
+
   Future<ContactUsModel> fetchContacts() async {
     final result = await ListServices().fetchContacts();
+    notifyListeners();
+    return result;
+  }
+
+  Future<AboutUsModel> fetchAboutUs() async {
+    final result = await ListServices().fetchAboutUs();
+    notifyListeners();
+    return result;
+  }
+
+  Future<PolicesTermsModel> fetchPolicy() async {
+    final result = await ListServices().fetchPolicy();
     notifyListeners();
     return result;
   }

@@ -1,10 +1,13 @@
-import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
+import 'package:cizaro_app/model/searchModel.dart';
+import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class SearchScreen extends StatefulWidget {
   static final routeName = '/search-screen';
@@ -13,6 +16,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  var valueCollection, valueCategory;
+  Home home;
+  List<Collections> collectionsList = [];
+  List<NewArrivals> newArrivalsList = [];
+
   SearchModel searchModel;
   String productName, imgUrl;
   double productPrice;
@@ -44,6 +52,146 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
   }
 
+  Future getHomeData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
+    final getHome = Provider.of<ListViewModel>(context, listen: false);
+    await getHome.fetchHomeList().then((response) {
+      home = response;
+      collectionsList = home.data.collections;
+      newArrivalsList = home.data.newArrivals;
+    });
+    if (this.mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    displayBottomSheet(context);
+  }
+
+  displayBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) {
+          return StatefulBuilder(builder: (BuildContext context,
+              StateSetter setState /*You can rename this!*/) {
+            return Container(
+              height: MediaQuery.of(context).size.height * .8,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, top: 10),
+                    child: Text(
+                      "Filter By:  ",
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * 2,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10, top: 10),
+                          child: Text(
+                            "Filter By Collections :",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1,
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .1,
+                          width: MediaQuery.of(context).size.width * .5,
+                          padding: EdgeInsets.only(top: 20, left: 10),
+                          child: DropdownButton(
+                            hint: Text("Select Collection "),
+                            value: valueCollection,
+                            items: collectionsList.map((e) {
+                              return DropdownMenuItem(
+                                child: Text(e.name),
+                                value: e.id,
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                valueCollection = value;
+                              });
+                            },
+                            isExpanded: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Text(
+                            "Filter By Category :",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1,
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .1,
+                          width: MediaQuery.of(context).size.width * .5,
+                          padding: EdgeInsets.only(top: 30, left: 10),
+                          child: DropdownButton(
+                            hint: Text("Select Category"),
+                            value: valueCategory,
+                            items: newArrivalsList.map((e) {
+                              return DropdownMenuItem(
+                                child: Text(e.name),
+                                value: e.id,
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                valueCategory = newValue;
+                              });
+                            },
+                            isExpanded: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 30, left: 150),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * .3,
+                      height: MediaQuery.of(context).size.height * .06,
+                      decoration: BoxDecoration(
+                          color: Color(0xff3A559F),
+                          borderRadius: BorderRadius.circular(25.0)),
+                      child: Container(
+                        margin: new EdgeInsets.all(10),
+                        padding: EdgeInsets.only(left: 30),
+                        child: Text(
+                          "Filter",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          });
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +210,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.only(left: 10),
-                              width: MediaQuery.of(context).size.width * .25,
+                              padding: EdgeInsets.only(left: 5),
+                              width: MediaQuery.of(context).size.width * .24,
                               child: Row(
                                 children: [
                                   Text(
@@ -86,19 +234,31 @@ class _SearchScreenState extends State<SearchScreen> {
                               padding: EdgeInsets.only(left: 200),
                               child: Row(
                                 children: [
-                                  SvgPicture.asset(
-                                    'assets/images/arrow.svg',
-                                    width: MediaQuery.of(context).size.width *
-                                        0.035,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.025,
-                                    color: Colors.black,
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        productList =
+                                            productList.reversed.toList();
+                                      });
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/images/arrow.svg',
+                                      width: MediaQuery.of(context).size.width *
+                                          0.035,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.025,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10),
-                                    child: Icon(
-                                      Icons.filter_alt_outlined,
-                                      size: 30,
+                                    child: GestureDetector(
+                                      onTap: () => getHomeData(),
+                                      child: Icon(
+                                        Icons.filter_alt_outlined,
+                                        size: 30,
+                                      ),
                                     ),
                                   )
                                 ],
@@ -113,7 +273,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: MediaQuery.of(context).size.height,
                     width: double.infinity,
                     child: ListView.builder(
-                      itemCount: productList?.length ?? '',
+                      itemCount: productList?.length ?? 0,
                       itemBuilder: (ctx, index) => SearchItem(
                         imgUrl: productList[index].mainImg,
                         productName: productList[index].name,
@@ -130,123 +290,56 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-class GradientAppBar extends StatelessWidget {
-  final String title;
-  final double barHeight = 50.0;
-
-  GradientAppBar(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    final double statusbarHeight = MediaQuery.of(context).padding.top;
-
-    return new Container(
-      padding: EdgeInsets.only(top: statusbarHeight),
-      height: statusbarHeight + barHeight,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                Image.asset(
-                  "assets/images/logo.png",
-                  height: MediaQuery.of(context).size.height * .06,
-                )
-              ],
-            ),
-          ),
-          Spacer(),
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          Spacer(),
-          Container(
-            padding: EdgeInsets.all(7.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  showSearch(context: context, delegate: Search());
-                },
-              ),
-            ),
-          )
-        ],
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xff395A9A), Color(0xff0D152A)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.0, 1.0]),
-      ),
-    );
-  }
-}
-
-class Search extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        });
-  }
-
-  String selectedResult;
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(selectedResult),
-      ),
-    );
-  }
-
-  List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList
-            .addAll(recentList.where((element) => element.contains(query)));
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(suggestionList[index]),
-          onTap: () {
-            selectedResult = suggestionList[index];
-            showResults(context);
-          },
-        );
-      },
-    );
-  }
-}
+// class Search extends SearchDelegate {
+//   @override
+//   List<Widget> buildActions(BuildContext context) {
+//     return <Widget>[
+//       IconButton(
+//           icon: Icon(Icons.close),
+//           onPressed: () {
+//             query = "";
+//           })
+//     ];
+//   }
+//
+//   @override
+//   Widget buildLeading(BuildContext context) {
+//     return IconButton(
+//         icon: Icon(Icons.arrow_back),
+//         onPressed: () {
+//           Navigator.pop(context);
+//         });
+//   }
+//
+//   String selectedResult;
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     return Container(
+//       child: Center(
+//         child: Text(selectedResult),
+//       ),
+//     );
+//   }
+//
+//   List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     List<String> suggestionList = [];
+//     query.isEmpty
+//         ? suggestionList = recentList
+//         : suggestionList
+//             .addAll(recentList.where((element) => element.contains(query)));
+//     return ListView.builder(
+//       itemCount: suggestionList.length,
+//       itemBuilder: (context, index) {
+//         return ListTile(
+//           title: Text(suggestionList[index]),
+//           onTap: () {
+//             selectedResult = suggestionList[index];
+//             showResults(context);
+//           },
+//         );
+//       },
+//     );
+//   }
+// }

@@ -1,38 +1,18 @@
 import 'package:cizaro_app/widgets/address_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class AddressBookScreen extends StatelessWidget {
   static final routeName = '/addressbook-screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-            padding: EdgeInsets.only(left: 10),
-            child: Image.asset(
-              "assets/images/logo.png",
-            )),
-        title: Center(
-          child: Text("Address Book"),
-        ),
-        actions: [
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-            ),
-          )
-        ],
-      ),
       body: Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            GradientAppBar(""),
             Container(
               height: MediaQuery.of(context).size.height * .15,
               padding: EdgeInsets.only(left: 5, top: 15),

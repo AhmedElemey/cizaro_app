@@ -7,6 +7,7 @@ import 'package:cizaro_app/widgets/product_details_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class ProductDetails extends StatefulWidget {
   static final routeName = '/productDetails-screen';
@@ -16,7 +17,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  bool _isLoading = false,_isColor = false;
+  bool _isLoading = false, _isColor = false;
   ProductDetailsModel productDetails;
   int _selectedCard = -1,productId,productAvailability;
   String productName, imgUrl, productDescription,specTitle;
@@ -45,12 +46,15 @@ class _ProductDetailsState extends State<ProductDetails> {
       productDescription = productDetails.data.shortDescription;
       _isColor = productDetails.data.specs?.isColor ?? false;
       specTitle = productDetails.data.specs.name;
+
+      _isColor = productDetails?.data.specs?.isColor ?? false;
+      specTitle = productDetails?.data.specs?.name ?? "";
       //
       productRelated = productDetails.data.relatedProducts;
 //
       productImages = productDetails.data.multiImages;
       //
-      productSpecs = productDetails.data.specs.values;
+      productSpecs = productDetails?.data.specs?.values ?? [];
       print(productRelated.length);
       // print(productList.data.relatedProducts.length);
     });
@@ -69,28 +73,6 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Container(
-            padding: EdgeInsets.all(10),
-            child: Icon(
-              Icons.menu,
-              color: Colors.white,
-            )),
-        title: Center(
-            child: Image.asset(
-          "assets/images/logo.png",
-          height: MediaQuery.of(context).size.height * .07,
-        )),
-        actions: [
-          Container(
-            padding: EdgeInsets.all(10.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: Icon(Icons.search),
-            ),
-          )
-        ],
-      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -98,6 +80,7 @@ class _ProductDetailsState extends State<ProductDetails> {
           : SingleChildScrollView(
               child: Column(
                 children: [
+                  GradientAppBar(""),
                   Container(
                     padding: EdgeInsets.all(10),
                     child: Row(
@@ -224,65 +207,82 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ],
                     ),
                   ),
-                  _isColor == true ? Container(
-                      padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                      height: MediaQuery.of(context).size.height * .09,
-                      child: GridView.builder(
-                        itemCount: productSpecs.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 1.5,
-                            crossAxisCount: 6,
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5),
-                        itemBuilder: (BuildContext context, int index) {
-                          return  GridTile(
-                              child: GestureDetector(
+                  _isColor == true
+                      ? Container(
+                          padding:
+                              EdgeInsets.only(top: 10, left: 10, right: 10),
+                          height: MediaQuery.of(context).size.height * .09,
+                          child: GridView.builder(
+                            itemCount: productSpecs.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 1.5,
+                                    crossAxisCount: 6,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 5),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GridTile(
+                                  child: GestureDetector(
                                 onTap: () {
                                   setState(() => _selectedCard = index);
                                 },
-                            child: CircleAvatar(
-                              radius: .3,
-                              child:  _selectedCard == index ? Center(child: Icon(Icons.check,color: Theme.of(context).primaryColor)) : Text(''),
-                              foregroundColor: Color(int.parse('0xff'+ productSpecs[index].value.split('#').last)),
-                              backgroundColor: Color(int.parse('0xff'+ productSpecs[index].value.split('#').last))
-                            ),
-                          ));
-                        },
-                      )) : Container(
-                      padding: EdgeInsets.only(top: 10, left: 10),
-                      height: MediaQuery.of(context).size.height * .06,
-                      child: GridView.builder(
-                        itemCount: productSpecs.length,
-                        padding: const EdgeInsets.only(right: 8,left: 8),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 2,
-                            crossAxisCount: 6,
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5),
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedCard = index;
-                              });
+                                child: CircleAvatar(
+                                    radius: .3,
+                                    child: _selectedCard == index
+                                        ? Center(
+                                            child: Icon(Icons.check,
+                                                color: Theme.of(context)
+                                                    .primaryColor))
+                                        : Text(''),
+                                    foregroundColor: Color(int.parse('0xff' +
+                                        productSpecs[index]
+                                            .value
+                                            .split('#')
+                                            .last)),
+                                    backgroundColor: Color(int.parse('0xff' +
+                                        productSpecs[index]
+                                            .value
+                                            .split('#')
+                                            .last))),
+                              ));
                             },
-                            child: Container(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Text(
-                                productSpecs[index].value,
-                                style: TextStyle(
-                                  color: _selectedCard == index
-                                      ? Color(0xffE7A646)
-                                      : Color(0xff707070),
+                          ))
+                      : Container(
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          height: MediaQuery.of(context).size.height * .06,
+                          child: GridView.builder(
+                            itemCount: productSpecs.length,
+                            padding: const EdgeInsets.only(right: 8, left: 8),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 2,
+                                    crossAxisCount: 6,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 5),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedCard = index;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(left: 5),
+                                  child: Text(
+                                    productSpecs[index].value,
+                                    style: TextStyle(
+                                      color: _selectedCard == index
+                                          ? Color(0xffE7A646)
+                                          : Color(0xff707070),
+                                    ),
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor *
+                                            1.2,
+                                  ),
                                 ),
-                                textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor *
-                                    1.2,
-                              ),
-                            ),
-                          );
-                        },
-                      )),
+                              );
+                            },
+                          )),
                   // Container(
                   //   padding: EdgeInsets.only(left: 10, top: 10),
                   //   child: Row(

@@ -1,6 +1,10 @@
 import 'dart:convert';
+import 'dart:html';
 
+import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/policesTermsModel.dart';
+import 'package:cizaro_app/model/searchFilter.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
@@ -23,6 +27,7 @@ class ListServices {
     final response = await http.get(API + '/products/$productId');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
+      print(response.body);
       return ProductDetailsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -50,6 +55,17 @@ class ListServices {
     }
   }
 
+  Future<SearchModel> fetchSearchBar(String searchTxt) async {
+    final response = await http.get(API + '/products/?search=$searchTxt');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return SearchModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
   Future<ContactUsModel> fetchContacts() async {
     final response = await http.get(API + '/contact-us/');
     if (response.statusCode == 200) {
@@ -58,6 +74,40 @@ class ListServices {
       return ContactUsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<AboutUsModel> fetchAboutUs() async {
+    final response = await http.get(API + '/more/?model=AboutUs');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      //print(response.body);
+      return AboutUsModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<PolicesTermsModel> fetchPolicy() async {
+    final response = await http.get(API + '/more/?model=PrivacyPolicy');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      //print(response.body);
+      return PolicesTermsModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  // POST
+
+  Future<SearchFilterModel> fetchFilterItems(
+      SearchFilterModel searchFilterModel) async {
+    final response = await http.post(API + '/send-filter/',
+        body: jsonEncode(searchFilterModel.toJson()));
+    if (response.statusCode == 200) {
+    } else {
+      Exception("");
     }
   }
 }

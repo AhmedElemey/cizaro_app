@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class ContactUsScreen extends StatefulWidget {
   static final routeName = '/contactUs-screen';
@@ -18,7 +20,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   bool _isLoading = false;
   ContactUsModel contactUsModel;
-  String contactAddress, contactEmail, contactPhone, contactPostalCode;
+  String contactAddress,
+      contactEmail,
+      contactPhone,
+      contactPostalCode,
+      contactFaceBook,
+      contactInstagram,
+      contactYoutube,
+      contactTwitter;
   List<Data> contactList = [];
   int index = 0;
 
@@ -37,6 +46,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       contactPhone = contactList[index].phone;
       contactEmail = contactList[index].email;
       contactPostalCode = contactList[index].postalCode;
+      //
+      contactFaceBook = contactList[index].facebook;
+      contactYoutube = contactList[index].youtube;
+      contactInstagram = contactList[index].instagram;
+      contactTwitter = contactList[index].twitter;
+      //
+
+      //
     });
     if (this.mounted)
       setState(() {
@@ -48,6 +65,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   void initState() {
     Future.microtask(() => getContactUsData());
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -83,16 +108,22 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Address:   ",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              // Text.rich()
-                            ],
+                          child: RichText(
+                            text: TextSpan(
+                              text: "Address:   ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.black),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: contactAddress ?? "",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black38))
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
@@ -106,7 +137,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                contactPhone,
+                                contactPhone ?? "",
                                 textScaleFactor:
                                     MediaQuery.textScaleFactorOf(context) * 1.3,
                               ),
@@ -124,7 +155,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                contactEmail,
+                                contactEmail ?? "",
                                 textScaleFactor:
                                     MediaQuery.textScaleFactorOf(context) * 1.3,
                               ),
@@ -157,7 +188,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           padding: const EdgeInsets.only(top: 10),
                           child: TextField(
                             controller: emailController,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(hintText: "Your Email"),
                           ),
                         ),
@@ -165,7 +196,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           padding: const EdgeInsets.only(top: 40),
                           child: TextField(
                             controller: emailController,
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             decoration:
                                 InputDecoration(hintText: "Your Message"),
                           ),
@@ -185,6 +216,73 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   MediaQuery.textScaleFactorOf(context) * 1.8,
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(left: 100, right: 30),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactFaceBook);
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/facebook.png",
+                                    width: MediaQuery.of(context).size.width *
+                                        0.09,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.09,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactYoutube);
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/youtube.png",
+                                    width: MediaQuery.of(context).size.width *
+                                        0.14,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.14,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactInstagram);
+                                  },
+                                  child: Image.asset(
+                                      "assets/images/instgram.jpg",
+                                      width: MediaQuery.of(context).size.width *
+                                          0.09,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.09),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 5),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    launchURL(contactTwitter);
+                                  },
+                                  child: Image.asset(
+                                    "assets/images/twitter.png",
+                                    width: MediaQuery.of(context).size.width *
+                                        0.13,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.13,
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         Padding(
@@ -215,127 +313,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 ],
               ),
             ),
-    );
-  }
-}
-
-class GradientAppBar extends StatelessWidget {
-  final String title;
-  final double barHeight = 50.0;
-
-  GradientAppBar(this.title);
-
-  @override
-  Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-
-    return new Container(
-      padding: EdgeInsets.only(top: statusBarHeight),
-      height: statusBarHeight + barHeight,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                Image.asset(
-                  "assets/images/logo.png",
-                  height: MediaQuery.of(context).size.height * .06,
-                )
-              ],
-            ),
-          ),
-          Spacer(),
-          Text(
-            title,
-            style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          Spacer(),
-          Container(
-            padding: EdgeInsets.all(7.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  showSearch(context: context, delegate: Search());
-                },
-              ),
-            ),
-          )
-        ],
-      ),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-            colors: [Color(0xff395A9A), Color(0xff0D152A)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            stops: [0.0, 1.0]),
-      ),
-    );
-  }
-}
-
-class Search extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        });
-  }
-
-  String selectedResult;
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(selectedResult),
-      ),
-    );
-  }
-
-  List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList
-            .addAll(recentList.where((element) => element.contains(query)));
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(suggestionList[index]),
-          onTap: () {
-            selectedResult = suggestionList[index];
-            showResults(context);
-          },
-        );
-      },
     );
   }
 }

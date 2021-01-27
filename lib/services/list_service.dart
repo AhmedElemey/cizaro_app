@@ -38,6 +38,7 @@ class ListServices {
         await http.get(API + '/products/?collection=$collectionId');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
+      print(response.body);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");

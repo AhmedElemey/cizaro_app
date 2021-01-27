@@ -72,7 +72,7 @@ class ShopItem extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(top: 10),
                         child: Text(
-                          '\$' + productPrice.toString(),
+                          productPrice.toString() + ' LE',
                           style: TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,

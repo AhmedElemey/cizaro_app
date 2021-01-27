@@ -46,11 +46,11 @@ class ProductItem extends StatelessWidget {
                   );
                 },
                 width: MediaQuery.of(context).size.width * .3,
-                height: MediaQuery.of(context).size.height * .2,
+                height: MediaQuery.of(context).size.height * .19,
                 fit: BoxFit.contain,
               ),
               Container(
-                padding: EdgeInsets.only(top: 10, right: 10),
+                padding: EdgeInsets.only(top: 5, right: 10),
                 child: Text(
                   productText,
                   textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
@@ -59,8 +59,8 @@ class ProductItem extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: 5, right: 10),
                 child: Text(
-                  '\$' + productPrice.toString(),
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
+                  productPrice.toString() + ' LE',
+                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.1,
                 ),
               ),
             ],

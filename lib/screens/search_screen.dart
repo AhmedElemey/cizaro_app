@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/searchModel.dart';
+import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
@@ -272,12 +273,17 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: double.infinity,
                     child: ListView.builder(
                       itemCount: productList?.length ?? 0,
-                      itemBuilder: (ctx, index) => SearchItem(
-                        imgUrl: productList[index].mainImg,
-                        productName: productList[index].name,
-                        productPrice: productList[index].price,
-                        productCategory: productList[index].category.name,
-                        //  productQuantity: ,
+                      itemBuilder: (ctx, index) => GestureDetector(
+                        onTap: () => Navigator.of(context).pushNamed(
+                            ProductDetails.routeName,
+                            arguments: {'product_id': productList[index].id}),
+                        child: SearchItem(
+                          imgUrl: productList[index].mainImg,
+                          productName: productList[index].name,
+                          productPrice: productList[index].price,
+                          productCategory: productList[index].category.name,
+                          //  productQuantity: ,
+                        ),
                       ),
                     ),
                   ),

@@ -86,7 +86,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: 10, top: 10),
                     child: Text(
-                      "Filter By:  ",
+                      "Filter By :",
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 2,
                     ),
@@ -95,21 +95,20 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: const EdgeInsets.only(top: 10, left: 10),
                     child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, top: 10),
-                          child: Text(
-                            "Filter By Collections :",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1,
-                          ),
+                        Text(
+                          "Filter By Collections :",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.3,
                         ),
+                        Spacer(),
                         Container(
                           height: MediaQuery.of(context).size.height * .1,
                           width: MediaQuery.of(context).size.width * .5,
-                          padding: EdgeInsets.only(top: 20, left: 10),
+                          padding: EdgeInsets.only(top: 10, right: 40),
                           child: DropdownButton(
                             hint: Text("Select Collection "),
                             value: valueCollection,
+                            dropdownColor: Colors.grey.shade400,
                             items: collectionsList.map((e) {
                               return DropdownMenuItem(
                                 child: Text(e.name),
@@ -131,21 +130,20 @@ class _SearchScreenState extends State<SearchScreen> {
                     padding: const EdgeInsets.only(top: 10, left: 10),
                     child: Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            "Filter By Category :",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1,
-                          ),
+                        Text(
+                          "Filter By Category :",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.5,
                         ),
+                        Spacer(),
                         Container(
                           height: MediaQuery.of(context).size.height * .1,
                           width: MediaQuery.of(context).size.width * .5,
-                          padding: EdgeInsets.only(top: 30, left: 10),
+                          padding: EdgeInsets.only(top: 10, right: 40),
                           child: DropdownButton(
                             hint: Text("Select Category"),
                             value: valueCategory,
+                            dropdownColor: Colors.grey.shade400,
                             items: newArrivalsList.map((e) {
                               return DropdownMenuItem(
                                 child: Text(e.name),

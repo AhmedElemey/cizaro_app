@@ -6,3 +6,4 @@ final String columnCategoryName = 'category_name';
 final String columnQuantity = 'quantity';
 final String columnMainImag = 'main_imag';
 final String columnAvailability = 'availability';
+final String columnTotalPrice = 'total_price';

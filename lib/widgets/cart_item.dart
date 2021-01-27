@@ -41,12 +41,12 @@ class _CartItemState extends State<CartItem> {
 
   @override
   void initState() {
+    widget.myController.addListener((){
+      print("value: ${widget.myController.text}");
+      widget.productQuantity = int.parse(widget.myController.text);
+      setState(() {});
+    });
     super.initState();
-    widget.myController.addListener(_printLatestValue);
-  }
-
-  _printLatestValue() {
-    print("Second text field: ${widget.myController.text}");
   }
 
   @override
@@ -149,7 +149,7 @@ class _CartItemState extends State<CartItem> {
                               padding: EdgeInsets.only(left: 5),
                               width:
                                   MediaQuery.of(context).size.width * .09,
-                              child: TextField(enableInteractiveSelection: true,
+                              child: TextField(
                                 controller: widget.myController,
                                 keyboardType: TextInputType.number,
                                 decoration: InputDecoration(
@@ -158,11 +158,24 @@ class _CartItemState extends State<CartItem> {
                                   hintStyle: const TextStyle(color: Colors.black)
                                 ),
                                 onChanged: (value) {
-                                widget.productQuantity = int.parse(value);
-                                widget.myController.text = value;
+                                  widget.myController.addListener((){
+                                    print("value: ${widget.myController.text}");
+                                    widget.productQuantity = int.parse(value);
+                                    print(widget.productQuantity);
+                                    setState(() {});
+                                  });
+                                  setState(() {
+                                    widget.productQuantity = int.parse(widget.myController.text);
+                                    widget.myController.text = value;
+                                  });
                                 // widget.onUpdateQuantity();
                                 },
                                 onSubmitted: (value) {
+                                  widget.myController.addListener((){
+                                    print("value: ${widget.myController.text}");
+                                    widget.productQuantity = int.parse(value);
+                                    setState(() {});
+                                  });
                                   widget.productQuantity = int.parse(value);
                                   widget.myController.text = value;
                                   // widget.onUpdateQuantity();

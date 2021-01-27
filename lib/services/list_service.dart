@@ -97,6 +97,20 @@ class ListServices {
     }
   }
 
+  Future<Specs> fetchSpaces(int specValueId) async {
+    final response = await http.post(API + '/send-product-spec-value-id/',
+        body: jsonEncode(specValueId)
+    );
+    final body = jsonDecode(response.body);
+    print(response.body);
+    if (response.statusCode ==200 || body['message'] == '') {
+      return Specs.fromJson(body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
   // POST
 
   Future<SearchFilterModel> fetchFilterItems(

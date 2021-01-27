@@ -15,12 +15,17 @@ class MyCartScreen extends StatefulWidget {
 
 class _MyCartScreenState extends State<MyCartScreen> {
   List<ProductCart> cartItemsList = [];
+  double totalPrice;
+  List priceList;
 
   Widget getCartItems(){
     return FutureBuilder(
         future: _getData(),
         builder: (context,snapshot) {
-          return createListView(context,snapshot);
+          return cartItemsList.isEmpty ? Container(
+            height: MediaQuery.of(context).size.height * 0.7,
+              padding: const EdgeInsets.all(25),
+              child: Center(child: Text('Cart is Empty, please Search and Add your Product.',textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3))) : createListView(context,snapshot);
         });
   }
 
@@ -47,6 +52,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   createListView(BuildContext context, AsyncSnapshot snapshot) {
     cartItemsList = snapshot.data;
 
@@ -56,29 +66,33 @@ class _MyCartScreenState extends State<MyCartScreen> {
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: cartItemsList?.length ?? 0,
-          itemBuilder: (ctx, index) => StatefulBuilder(builder: (BuildContext context, StateSetter setStateUpdate)
-            {return  CartItem(
-              key: UniqueKey(),
+          itemBuilder: (ctx, index) => StatefulBuilder(builder: (BuildContext context, StateSetter setStateUpdate) {
+            return  CartItem(
+              // key: UniqueKey(),
               imgUrl: cartItemsList[index].mainImg ??  "",
               productName: cartItemsList[index].name ?? "Treecode",
               productCategory:  cartItemsList[index].categoryName ?? "men fashion",
               productPrice: cartItemsList[index].price ?? 65,
-              totalPrice: cartItemsList[index].price * cartItemsList[index].quantity ?? 49.99,
+              totalPrice: cartItemsList[index].price * cartItemsList[index].quantity ?? 00.00,
               productQuantity: cartItemsList[index].quantity ?? 1,
               myController: TextEditingController(text: cartItemsList[index].quantity.toString()),
-              onDelete: () => setStateUpdate(() {
+              onDelete: () {
+                setStateUpdate(() {
                 removeCartItem(cartItemsList[index].id);
-                cartItemsList.removeAt(index);
-              }),
+              });
+                setState(() {
+                  cartItemsList?.removeAt(index);
+                });},
               onPlusQuantity: () {
                 final productCart = ProductCart(
                     id: cartItemsList[index].id,
                     name: cartItemsList[index].name,
                     mainImg: cartItemsList[index].mainImg,
                     price: cartItemsList[index].price,
+                    totalPrice: cartItemsList[index].price * cartItemsList[index].quantity,
                     categoryName: cartItemsList[index].categoryName,
                     quantity: cartItemsList[index].quantity++,
-                    availability: cartItemsList[index].quantity
+                    availability: cartItemsList[index].availability
                 );
                 setStateUpdate(() {
                   updateCartItem(productCart);
@@ -90,9 +104,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     name: cartItemsList[index].name,
                     mainImg: cartItemsList[index].mainImg,
                     price: cartItemsList[index].price,
+                    totalPrice: cartItemsList[index].price * cartItemsList[index].quantity,
                     categoryName: cartItemsList[index].categoryName,
                     quantity: cartItemsList[index].quantity--,
-                    availability: cartItemsList[index].quantity
+                    availability: cartItemsList[index].availability
                 );
                 setStateUpdate(() {
                   updateCartItem(productCart);
@@ -104,9 +119,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     name: cartItemsList[index].name,
                     mainImg: cartItemsList[index].mainImg,
                     price: cartItemsList[index].price,
+                    totalPrice: cartItemsList[index].price * cartItemsList[index].quantity,
                     categoryName: cartItemsList[index].categoryName,
                     quantity: int.parse(cartItemsList[index].quantity.toString()),
-                    availability: cartItemsList[index].quantity
+                    availability: cartItemsList[index].availability
                 );
                 setStateUpdate(() {
                   updateCartItem(productCart);
@@ -118,7 +134,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         ),
       );
     }else {
-      Container(child: Center(child: Text('Cart is Empty, please Search and Add your Product.',textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3)));
+      return Container(child: Center(child: Text('Cart is Empty, please Search and Add your Product.',textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3)));
     }
   }
 
@@ -155,15 +171,15 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         ),
                         Spacer(),
                         Container(
-                          child: Text(
-                            '\$' + "45454",
-                            textScaleFactor:
-                            MediaQuery
-                                .of(context)
-                                .textScaleFactor * 1.4,
-                            style: TextStyle(color: Color(0xff3A559F)),
+                            child: Text(
+                              totalPrice.toString() ?? '00.00',
+                              textScaleFactor:
+                              MediaQuery
+                                  .of(context)
+                                  .textScaleFactor * 1.4,
+                              style: TextStyle(color: Color(0xff3A559F)),
+                            ),
                           ),
-                        )
                       ],
                     ),
                   ),

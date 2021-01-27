@@ -8,6 +8,7 @@ class ProductCart {
   String categoryName;
   int availability;
   int quantity;
+  double totalPrice;
 
   ProductCart(
       {this.id,
@@ -16,6 +17,7 @@ class ProductCart {
         this.price,
         this.categoryName,
         this.quantity,
+        this.totalPrice,
         this.availability});
 
   ProductCart.fromJson(Map<String, dynamic> map) {
@@ -23,6 +25,7 @@ class ProductCart {
     name = map[columnName];
     mainImg = map[columnMainImag];
     price = map[columnPrice];
+    totalPrice = map[columnTotalPrice];
     categoryName = map[columnCategoryName];
     quantity = map[columnQuantity];
     availability = map[columnAvailability];
@@ -34,6 +37,7 @@ class ProductCart {
       columnName :name,
       columnMainImag : mainImg,
       columnPrice : price,
+      columnTotalPrice : totalPrice,
       columnCategoryName : categoryName,
       columnQuantity : quantity,
       columnAvailability : availability

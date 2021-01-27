@@ -27,6 +27,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
   List<Values> productSpecs = [];
+  Specs specs;
+  List<Values> specsValuesList = [];
 
   Future getHomeData() async {
     if (this.mounted)
@@ -66,29 +68,43 @@ class _ProductDetailsState extends State<ProductDetails> {
       });
   }
 
+  Future getSpecData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
+    final getSpec = Provider.of<ListViewModel>(context, listen: false);
+    await getSpec
+        .fetchSpecValues(_selectedCard).then((response) {
+      specs = response;
+      specsValuesList = specs.values;
+    });
+    if (this.mounted)
+      setState(() {
+        _isLoading = false;
+      });
+  }
+
   @override
   void initState() {
     Future.microtask(() => getHomeData());
     super.initState();
     fToast = FToast();
-    fToast.init(context);// de 3ashan awel lama aload el screen t7mel el data
+    fToast.init(context);
   }
-
   showToast() {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Colors.green,
+        color: Color(0xff3A559F),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check),
-          SizedBox(
-            width: 12.0,
-          ),
-          Text("Added to Cart"),
+          Icon(Icons.check,color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Cart",style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -261,7 +277,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                               return GridTile(
                                   child: GestureDetector(
                                 onTap: () {
-                                  setState(() => _selectedCard = index);
+                                  setState(() {
+                                    _selectedCard = index;
+                                  });
                                 },
                                 child: CircleAvatar(
                                     radius: .3,
@@ -301,6 +319,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 onTap: () {
                                   setState(() {
                                     _selectedCard = index;
+                                    _selectedCard = productSpecs[index].id;
                                   });
                                 },
                                 child: Container(

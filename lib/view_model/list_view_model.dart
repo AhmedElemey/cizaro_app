@@ -51,6 +51,12 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
+  Future<Specs> fetchSpecValues(int specValueId) async {
+    final result = await ListServices().fetchSpaces(specValueId);
+    notifyListeners();
+    return result;
+  }
+
   Future<PolicesTermsModel> fetchPolicy() async {
     final result = await ListServices().fetchPolicy();
     notifyListeners();

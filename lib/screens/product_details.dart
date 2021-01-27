@@ -6,6 +6,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/product_details_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
@@ -19,6 +20,7 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   bool _isLoading = false, _isColor = false;
   ProductDetailsModel productDetails;
+  FToast fToast;
   int _selectedCard = -1,productId,productAvailability;
   String productName, imgUrl, productDescription,specTitle;
   double productPrice, productStar;
@@ -67,7 +69,41 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   void initState() {
     Future.microtask(() => getHomeData());
-    super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);// de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Colors.green,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check),
+          SizedBox(
+            width: 12.0,
+          ),
+          Text("Added to Cart"),
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      // positionedToastBuilder: (context, child) {
+      //   return Positioned(
+      //     child: child,
+      //     bottom: 16.0,
+      //     left: 16.0,
+      //   );
+      // } da law 3ayz tezbat el postion ele hayzhar feh
+      gravity: ToastGravity.BOTTOM,
+    );
   }
 
   @override
@@ -211,12 +247,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ? Container(
                           padding:
                               EdgeInsets.only(top: 10, left: 10, right: 10),
-                          height: MediaQuery.of(context).size.height * .09,
+                          height: MediaQuery.of(context).size.height * .1,
                           child: GridView.builder(
+                            shrinkWrap: true,
                             itemCount: productSpecs.length,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 1.5,
+                                    childAspectRatio: 1.9,
                                     crossAxisCount: 6,
                                     crossAxisSpacing: 5,
                                     mainAxisSpacing: 5),
@@ -307,7 +344,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            print('preessed');
                             var dbHelper = DataBaseHelper.db;
                             final productCart = ProductCart(
                                 id: productId,
@@ -320,6 +356,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             );
                             dbHelper.addProductToCart(productCart).then((value) {
                               print('insert it');
+                              showToast();
                             }).catchError((error)=> print(error));
                           },
                           child: Container(

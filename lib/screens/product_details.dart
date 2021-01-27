@@ -21,8 +21,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   bool _isLoading = false, _isColor = false;
   ProductDetailsModel productDetails;
   FToast fToast;
-  int _selectedCard = -1,productId,productAvailability;
-  String productName, imgUrl, productDescription,specTitle;
+  int _selectedCard = -1, productId, productAvailability;
+  String productName, imgUrl, productDescription, specTitle;
   double productPrice, productStar;
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
@@ -49,7 +49,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       productStar = productDetails.data.stars;
       productDescription = productDetails.data.shortDescription;
       _isColor = productDetails.data.specs?.isColor ?? false;
-      specTitle = productDetails.data.specs.name;
+      specTitle = productDetails?.data.specs?.name ?? "";
 
       _isColor = productDetails?.data.specs?.isColor ?? false;
       specTitle = productDetails?.data.specs?.name ?? "";
@@ -90,7 +90,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     Future.microtask(() => getHomeData());
     super.initState();
     fToast = FToast();
-    fToast.init(context);
+    fToast.init(context); // de 3ashan awel lama aload el screen t7mel el data
   }
   showToast() {
     Widget toast = Container(
@@ -371,12 +371,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 price: productPrice,
                                 categoryName: productName,
                                 quantity: 1,
-                                availability: productAvailability
-                            );
-                            dbHelper.addProductToCart(productCart).then((value) {
+                                availability: productAvailability);
+                            dbHelper
+                                .addProductToCart(productCart)
+                                .then((value) {
                               print('insert it');
                               showToast();
-                            }).catchError((error)=> print(error));
+                            }).catchError((error) => print(error));
                           },
                           child: Container(
                               margin: new EdgeInsets.all(10),
@@ -426,8 +427,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                         itemCount: productRelated.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (ctx, index) => GestureDetector(
-                              onTap: () => Navigator.of(context)
-                                  .pushNamed(ProductDetails.routeName),
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  ProductDetails.routeName,
+                                  arguments: {
+                                    'product_id': productRelated[index].id
+                                  }),
                               child: ProductDetailItem(
                                 imgUrl: productRelated[index].mainImg,
                                 productName: productRelated[index].name ?? "",

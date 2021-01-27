@@ -131,20 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Align(
-        alignment: Alignment.topLeft,
-        child: Container(
-          padding: EdgeInsets.only(top: 50, left: 10),
-          height: MediaQuery.of(context).size.height * .5,
-          width: MediaQuery.of(context).size.width * .4,
-          decoration: BoxDecoration(shape: BoxShape.circle),
-          child: Drawer(
-            child: Column(
-              children: [DrawerHeader(child: Container(child: Text("hello")))],
-            ),
-          ),
-        ),
-      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),

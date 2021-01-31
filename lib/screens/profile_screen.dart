@@ -163,6 +163,14 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(
@@ -190,6 +198,14 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
                       ),
                     ),
                     Container(
@@ -271,6 +287,14 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(
@@ -304,6 +328,14 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(
@@ -335,6 +367,14 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
                       ),
                     ),
                     Container(

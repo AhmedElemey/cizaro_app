@@ -26,7 +26,7 @@ class ListServices {
     final response = await http.get(API + '/products/$productId');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //  print(response.body);
       return ProductDetailsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -38,7 +38,7 @@ class ListServices {
         await http.get(API + '/products/?collection=$collectionId');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //  print(response.body);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -59,7 +59,7 @@ class ListServices {
     final response = await http.get(API + '/products/?search=$searchTxt');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //print(response.body);
       return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -101,11 +101,10 @@ class ListServices {
 
   Future<Specs> fetchSpaces(int specValueId) async {
     final response = await http.post(API + '/send-product-spec-value-id/',
-        body: jsonEncode(specValueId)
-    );
+        body: jsonEncode(specValueId));
     final body = jsonDecode(response.body);
     print(response.body);
-    if (response.statusCode ==200 || body['message'] == '') {
+    if (response.statusCode == 200 || body['message'] == '') {
       return Specs.fromJson(body);
     } else {
       print(response.body);

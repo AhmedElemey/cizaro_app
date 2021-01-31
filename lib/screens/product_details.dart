@@ -2,6 +2,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cizaro_app/helper/database_helper.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/product_details_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -124,6 +125,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartViewModel>(context,listen: false);
     return Scaffold(
       body: _isLoading
           ? Center(
@@ -363,7 +365,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            var dbHelper = DataBaseHelper.db;
                             final productCart = ProductCart(
                                 id: productId,
                                 name: productName,
@@ -372,12 +373,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 categoryName: productName,
                                 quantity: 1,
                                 availability: productAvailability);
-                            dbHelper
-                                .addProductToCart(productCart)
-                                .then((value) {
-                              print('insert it');
-                              showToast();
-                            }).catchError((error) => print(error));
+                            cart.addProductToCart(productCart);
+                            showToast();
                           },
                           child: Container(
                               margin: new EdgeInsets.all(10),

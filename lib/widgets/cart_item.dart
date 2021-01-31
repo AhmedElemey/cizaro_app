@@ -5,10 +5,8 @@ import 'package:flutter/services.dart';
 class CartItem extends StatefulWidget {
    final String productName,
       imgUrl,
-      productCategory,
-      iconAdd,
-      iconMinus;
-   int productQuantity;
+      productCategory;
+   int productQuantity,totalAvailability;
   final double totalPrice, productPrice;
   var myController = TextEditingController();
   final VoidCallback onDelete;
@@ -22,9 +20,8 @@ class CartItem extends StatefulWidget {
       this.imgUrl,
       this.productPrice,
       this.productCategory,
-      this.iconAdd,
+        this.totalAvailability,
       this.myController,
-      this.iconMinus,
       this.totalPrice,
       this.productQuantity,
       this.onDelete,
@@ -64,7 +61,7 @@ class _CartItemState extends State<CartItem> {
         child: Container(
           height: MediaQuery.of(context).size.height * .24,
           width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.only(left: 10, top: 5,bottom: 15),
+          padding: const EdgeInsets.only(left: 10, top: 5,bottom: 5),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -223,7 +220,8 @@ class _CartItemState extends State<CartItem> {
                           ),
                         )
                       ],
-                    )
+                    ),
+                    widget.totalAvailability < widget.productQuantity ? Center(child: Text('${widget.totalAvailability}  items Available in Stock' ?? '',style: const TextStyle(color: Colors.red,fontSize: 10))) : Container()
                   ],
                 ),
               ),

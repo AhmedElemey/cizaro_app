@@ -1,8 +1,9 @@
 import 'dart:convert';
-
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
+import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/searchFilter.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
@@ -106,6 +107,24 @@ class ListServices {
     print(response.body);
     if (response.statusCode == 200 || body['message'] == '') {
       return Specs.fromJson(body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future<List<productOffer.Data>> checkOfferInCart(String token,CheckProductsOfferInCart checkProductsOfferInCart) async {
+    final response = await http.post(API + '/shopping-cart-check-offer/',
+        headers: {'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization' : '${'Token'} $token'},
+        body: jsonEncode(checkProductsOfferInCart.toJson())
+    );
+    final body = jsonDecode(response.body);
+    print(response.body);
+    if (response.statusCode ==200 || body['message'] == '') {
+      final Iterable json = body['data'];
+      return json.map<productOffer.Data>((products) => productOffer.Data.fromJson(products)).toList();
     } else {
       print(response.body);
       throw Exception("Unable to perform request .. Try again!");

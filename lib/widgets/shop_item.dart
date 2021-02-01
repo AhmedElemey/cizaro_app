@@ -1,22 +1,67 @@
+import 'package:cizaro_app/model/favModel.dart';
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
-class ShopItem extends StatelessWidget {
-  final String productName, imgUrl, productCategory, iconAdd, iconMinus;
-  final double totalPrice, productPrice;
-  final int productQuantity;
+class ShopItem extends StatefulWidget {
+  final String productName, imgUrl, productCategory;
+  final double totalPrice, productPrice, productStars;
+  final int productQuantity, productId;
 
   const ShopItem(
       {this.productName,
+      this.productStars,
       this.imgUrl,
       this.productPrice,
       this.productCategory,
-      this.iconAdd,
-      this.iconMinus,
       this.totalPrice,
-      this.productQuantity});
+      this.productQuantity,
+      this.productId});
+
+  @override
+  _ShopItemState createState() => _ShopItemState();
+}
+
+class _ShopItemState extends State<ShopItem> {
+  FToast fToast;
+
+  @override
+  void initState() {
+    //   Future.microtask(() => getHomeData());
+    super.initState();
+    fToast = FToast();
+    fToast.init(context); // de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  showFavToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final fav = Provider.of<FavViewModel>(context, listen: false);
+
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20, top: 10),
       child: ClipRRect(
@@ -34,7 +79,7 @@ class ShopItem extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
                     child: Image.network(
-                      imgUrl,
+                      widget.imgUrl,
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
@@ -57,14 +102,14 @@ class ShopItem extends StatelessWidget {
                     children: [
                       Container(
                         child: Text(
-                          productName,
+                          widget.productName,
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.5,
                         ),
                       ),
                       Container(
                         child: Text(
-                          productCategory ?? '',
+                          widget.productCategory ?? '',
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
                         ),
@@ -72,7 +117,7 @@ class ShopItem extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.only(top: 10),
                         child: Text(
-                          productPrice.toString() + ' LE',
+                          widget.productPrice.toString() + ' LE',
                           style: TextStyle(fontWeight: FontWeight.bold),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
@@ -104,7 +149,7 @@ class ShopItem extends StatelessWidget {
                                   Container(
                                     child: Container(
                                       child: Text(
-                                        productQuantity.toString(),
+                                        widget.productQuantity.toString(),
                                         textScaleFactor: MediaQuery.of(context)
                                                 .textScaleFactor *
                                             1.5,
@@ -139,10 +184,23 @@ class ShopItem extends StatelessWidget {
                                     padding: EdgeInsets.only(right: 5, top: 5),
                                     child: Container(
                                       padding: EdgeInsets.only(bottom: 10),
-                                      child: Icon(
-                                        Icons.favorite,
-                                        size: 20,
-                                        color: Color(0xff707070),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          final productFav = ProductFav(
+                                              id: widget.productId,
+                                              name: widget.productName,
+                                              mainImg: widget.imgUrl,
+                                              price: widget.productPrice,
+                                              categoryName:
+                                                  widget.productCategory);
+                                          showFavToast();
+                                          fav.addProductToFav(productFav);
+                                        },
+                                        child: Icon(
+                                          Icons.favorite,
+                                          size: 20,
+                                          color: Color(0xff707070),
+                                        ),
                                       ),
                                     ),
                                   ),

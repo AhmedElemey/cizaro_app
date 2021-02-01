@@ -1,15 +1,72 @@
+import 'package:cizaro_app/model/favModel.dart';
+
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
-class ProductItem extends StatelessWidget {
-  final String productText, imgUrl;
+class ProductItem extends StatefulWidget {
+  final String productName, imgUrl, categoryName;
   final int productId;
   final double productPrice;
-  const ProductItem(
-      {this.productId, this.productText, this.imgUrl, this.productPrice});
+  double stars;
+  int isFav;
+  ProductItem(
+      {this.productId,
+      this.productName,
+      this.categoryName,
+      this.imgUrl,
+      this.productPrice,
+      this.stars,
+      this.isFav});
+
+  @override
+  _ProductItemState createState() => _ProductItemState();
+}
+
+class _ProductItemState extends State<ProductItem> {
+  FToast fToast;
+  int productId;
+
+  @override
+  void initState() {
+    //   Future.microtask(() => getHomeData());
+    super.initState();
+    fToast = FToast();
+    fToast.init(context);
+    // de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  showFavToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    final fav = Provider.of<FavViewModel>(context, listen: false);
+    //  List favProducts = fav.favProductModel;
+
     return Container(
       child: Card(
         elevation: 3,
@@ -25,14 +82,30 @@ class ProductItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Spacer(),
-                      Icon(
-                        Icons.favorite,
-                        color: Color(0xffFF6969),
+                      GestureDetector(
+                        onTap: () {
+                          final productFav = ProductFav(
+                              id: widget.productId,
+                              name: widget.productName,
+                              mainImg: widget.imgUrl,
+                              price: widget.productPrice,
+                              categoryName: widget.categoryName,
+                              isFav: 1);
+
+                          fav.addProductToFav(productFav);
+                          showFavToast();
+                        },
+                        child: widget.isFav == 1
+                            ? Icon(
+                                Icons.favorite,
+                                color: Color(0xffFF6969),
+                              )
+                            : Icon(Icons.favorite_border_outlined),
                       )
                     ],
                   )),
               Image.network(
-                imgUrl,
+                widget.imgUrl,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -52,14 +125,14 @@ class ProductItem extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: 5, right: 10),
                 child: Text(
-                  productText,
+                  widget.productName,
                   textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
                 ),
               ),
               Container(
                 padding: EdgeInsets.only(top: 5, right: 10),
                 child: Text(
-                  productPrice.toString() + ' LE',
+                  widget.productPrice.toString() + ' LE',
                   textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.1,
                 ),
               ),

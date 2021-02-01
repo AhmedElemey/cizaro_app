@@ -123,9 +123,32 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
+  showFavToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartViewModel>(context,listen: false);
+    final cart = Provider.of<CartViewModel>(context, listen: false);
     return Scaffold(
       body: _isLoading
           ? Center(

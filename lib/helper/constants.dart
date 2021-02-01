@@ -7,3 +7,7 @@ final String columnQuantity = 'quantity';
 final String columnMainImag = 'main_imag';
 final String columnAvailability = 'availability';
 final String columnTotalPrice = 'total_price';
+//Favorite
+final String tableFav = 'fav';
+final String columnStars = 'stars';
+final String columnIsFav = 'is_fav';

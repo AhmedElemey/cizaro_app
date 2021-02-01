@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
+import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -275,13 +276,17 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.black26,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 10,
-                              color: Colors.black45,
+                          GestureDetector(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(FavoriteScreen.routeName),
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.black26,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 10,
+                                color: Colors.black45,
+                              ),
                             ),
                           )
                         ],

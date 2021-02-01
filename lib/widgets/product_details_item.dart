@@ -52,7 +52,7 @@ class ProductDetailItem extends StatelessWidget {
                       productPrice.toString() + " LE",
                       style: TextStyle(fontWeight: FontWeight.bold),
                       textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.2,
+                          MediaQuery.of(context).textScaleFactor * 1,
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * .1,

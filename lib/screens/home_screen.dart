@@ -1,6 +1,7 @@
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/collection_item.dart';
 import 'package:cizaro_app/widgets/custom_tab_bar.dart';
@@ -56,9 +57,20 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     Future.microtask(() => getHomeData());
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+    tabsWidgets();
   }
 
   Widget tabsWidgets() {
+    final fav = Provider.of<FavViewModel>(context, listen: false);
+
+    int isFavValue() {
+      int result = 0;
+      for (int i = 0; i < fav.favProductModel.length; i++) {
+        result = fav.favProductModel[i].isFav;
+      }
+      return result;
+    }
+
     return Padding(
       padding: const EdgeInsets.only(right: 8, left: 8),
       child: CustomTabView(
@@ -77,12 +89,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       'product_id': newArrivalsList[0].products[index].id
                     }),
                     child: ProductItem(
-                        productText:
+                        productId: newArrivalsList[0]?.products[index]?.id ?? 0,
+                        productName:
                             newArrivalsList[0]?.products[index]?.name ?? '',
                         imgUrl:
                             newArrivalsList[0]?.products[index]?.mainImg ?? '',
+                        categoryName: newArrivalsList[0]
+                                ?.products[index]
+                                ?.category
+                                ?.name ??
+                            '',
                         productPrice:
-                            newArrivalsList[0]?.products[index]?.price ?? 0.0),
+                            newArrivalsList[0]?.products[index]?.price ?? 0.0,
+                        isFav: isFavValue()
+                        // fav.favProductModel.length == 0 ||
+                        //         fav.favProductModel == null
+                        //     ? 0
+                        //     : fav.favProductModel[index]?.isFav ?? 0,
+                        ),
                   )),
         ),
         onPositionChange: (index) {
@@ -94,6 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget topSellingWidgets() {
+    final fav = Provider.of<FavViewModel>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.only(right: 8, left: 8),
       child: CustomTabView(
@@ -112,12 +138,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       'product_id': topSellingList[0].products[index].id
                     }),
                     child: ProductItem(
-                        productText:
-                            topSellingList[0]?.products[index]?.name ?? '',
-                        imgUrl:
-                            topSellingList[0]?.products[index]?.mainImg ?? '',
-                        productPrice:
-                            topSellingList[0]?.products[index]?.price ?? 0.0),
+                      productId: topSellingList[0]?.products[index]?.id ?? 0,
+                      productName:
+                          topSellingList[0]?.products[index]?.name ?? '',
+                      imgUrl: topSellingList[0]?.products[index]?.mainImg ?? '',
+                      productPrice:
+                          topSellingList[0]?.products[index]?.price ?? 0.0,
+                      isFav: fav.favProductModel[index].isFav,
+                    ),
                   )),
         ),
         onPositionChange: (index) {

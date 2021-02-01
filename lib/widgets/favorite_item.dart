@@ -8,6 +8,8 @@ class FavoriteItem extends StatelessWidget {
       productCategory,
       favoriteIcon,
       removeIcon;
+  final VoidCallback unFavorite;
+
   const FavoriteItem(
       {this.productName,
       this.imgUrl,
@@ -15,7 +17,8 @@ class FavoriteItem extends StatelessWidget {
       this.productStar,
       this.productCategory,
       this.favoriteIcon,
-      this.removeIcon});
+      this.removeIcon,
+      this.unFavorite});
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -36,7 +39,7 @@ class FavoriteItem extends StatelessWidget {
                       EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
-                    child: Image.asset(imgUrl),
+                    child: Image.network(imgUrl),
                   ),
                 ),
                 Container(
@@ -49,7 +52,7 @@ class FavoriteItem extends StatelessWidget {
                         child: Text(
                           productName,
                           textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.2,
+                              MediaQuery.of(context).textScaleFactor * 1.5,
                         ),
                       ),
                       Container(
@@ -57,7 +60,7 @@ class FavoriteItem extends StatelessWidget {
                         child: Text(
                           productCategory,
                           textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.3,
+                              MediaQuery.of(context).textScaleFactor * 1.2,
                         ),
                       ),
                       Container(
@@ -65,7 +68,7 @@ class FavoriteItem extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              '\£' + productPrice,
+                              productPrice + " LE",
                               style: TextStyle(fontWeight: FontWeight.bold),
                               textScaleFactor:
                                   MediaQuery.of(context).textScaleFactor * 1.1,
@@ -109,21 +112,24 @@ class FavoriteItem extends StatelessWidget {
                 Column(
                   children: [
                     Container(
-                      child: Icon(
-                        Icons.favorite,
-                        color: Color(0xffFF6969),
-                        size: 50,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.favorite,
+                          size: MediaQuery.of(context).size.width * 0.08,
+                          color: Color(0xffFF6969),
+                        ),
+                        onPressed: unFavorite,
                       ),
                     ),
-                    Spacer(),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 5),
-                      child: Icon(
-                        Icons.delete_forever_outlined,
-                        color: Color(0xff727C8E),
-                        size: 20,
-                      ),
-                    )
+                    // Spacer(),
+                    // Container(
+                    //   padding: EdgeInsets.only(bottom: 5),
+                    //   child: Icon(
+                    //     Icons.delete_forever_outlined,
+                    //     color: Color(0xff727C8E),
+                    //     size: 20,
+                    //   ),
+                    // )
                   ],
                 )
               ],

@@ -15,26 +15,26 @@ class CheckoutItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.only(left: 8, right: 8),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
+          elevation: 1.7,
           child: Container(
             height: MediaQuery.of(context).size.height * .1,
-            padding: EdgeInsets.only(left: 10, right: 10, top: 5),
+            padding: EdgeInsets.only(left: 10,right: 10, top: 5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
+                      EdgeInsets.only(right: 10, top: 5, bottom: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
                     child: Image.asset(imgUrl),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width * .6,
+                Flexible(
                   child: Row(
                     children: [
                       Column(
@@ -44,14 +44,14 @@ class CheckoutItem extends StatelessWidget {
                             child: Text(
                               productName ?? "",
                               textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.5,
+                                  MediaQuery.of(context).textScaleFactor * 1.25,
                             ),
                           ),
                           Container(
                             child: Text(
                               productCategory ?? "",
                               textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                                  MediaQuery.of(context).textScaleFactor * 1,
                             ),
                           ),
                         ],
@@ -59,15 +59,13 @@ class CheckoutItem extends StatelessWidget {
                       Spacer(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Text(
-                              productPrice.toString() + ' LE',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
-                            ),
+                          Text(
+                            productPrice.toString() + ' LE',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.1,
                           ),
                           Row(
                             children: [
@@ -78,16 +76,14 @@ class CheckoutItem extends StatelessWidget {
                                     MediaQuery.of(context).textScaleFactor *
                                         1.1,
                               ),
-                              Container(
-                                child: Text(
-                                  productSpecs.toString(),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff3A559F)),
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1.1,
-                                ),
+                              Text(
+                                productSpecs.toString(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xff3A559F)),
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.1,
                               ),
                             ],
                           ),

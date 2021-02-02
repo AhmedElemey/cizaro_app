@@ -178,16 +178,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                             BorderRadius.circular(20)),
                                     child: Row(
                                       children: [
-                                        Container(
-                                          child: Icon(
-                                            Icons.star,
-                                            size: 10,
-                                            color: Colors.white,
-                                          ),
-                                          padding: EdgeInsets.only(left: 5),
+                                        Icon(
+                                          Icons.star,
+                                          size: 10,
+                                          color: Colors.white,
                                         ),
                                         Text(
-                                          productStar.toString(),
+                                          productStar.toString() ?? 0.0,
                                           style: TextStyle(color: Colors.white),
                                           textScaleFactor:
                                               MediaQuery.of(context)
@@ -377,20 +374,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                             showToast();
                           },
                           child: Container(
-                              margin: new EdgeInsets.all(10),
-                              child: Container(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Text(
-                                  "ADD TO CART",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              )),
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              "ADD TO CART",
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(right: 5),
+                          padding: const EdgeInsets.only(right: 5),
                           child: CircleAvatar(
                             radius: 15,
                             backgroundColor: Colors.white,
@@ -405,20 +400,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 10, left: 10),
+                    padding: const EdgeInsets.only(top: 10, left: 10),
                     child: Row(
                       children: [
                         Text(
                           "Related Products ",
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.5,
-                          style: TextStyle(color: Color(0xff3A559F)),
+                          style: const TextStyle(color: Color(0xff3A559F)),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 10, left: 5),
+                    padding: const EdgeInsets.only(top: 10, left: 5),
                     height: MediaQuery.of(context).size.height * .3,
                     child: ListView.builder(
                         itemCount: productRelated.length,

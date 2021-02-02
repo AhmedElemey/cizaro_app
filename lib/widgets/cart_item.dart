@@ -8,7 +8,7 @@ class CartItem extends StatefulWidget {
       productCategory;
    int productQuantity,totalAvailability;
   final double totalPrice, productPrice;
-  var myController = TextEditingController();
+   var myController = TextEditingController();
   final VoidCallback onDelete;
   final VoidCallback onPlusQuantity;
   final VoidCallback onMinusQuantity;
@@ -20,8 +20,8 @@ class CartItem extends StatefulWidget {
       this.imgUrl,
       this.productPrice,
       this.productCategory,
-        this.totalAvailability,
-      this.myController,
+      this.totalAvailability,
+        this.myController,
       this.totalPrice,
       this.productQuantity,
       this.onDelete,
@@ -38,62 +38,65 @@ class _CartItemState extends State<CartItem> {
 
   @override
   void initState() {
-    widget.myController.addListener((){
-      print("value: ${widget.myController.text}");
-      widget.productQuantity = int.parse(widget.myController.text);
-      setState(() {});
-    });
+    // widget.myController.addListener((){
+    //   print("value: ${widget.myController.text}");
+    //   widget.productQuantity = int.parse(widget.myController.text);
+    //   setState(() {});
+    // });
+    widget.productQuantity = int.parse(widget.myController.text);
+    quantityController.text = 1.toString();
     super.initState();
   }
 
   @override
   void dispose() {
-    widget.myController.dispose();
+    quantityController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 15, right: 15),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Card(
         elevation: 5,
         child: Container(
-          height: MediaQuery.of(context).size.height * .24,
+          height: MediaQuery.of(context).size.height * .2,
           width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.only(left: 10, top: 5,bottom: 5),
+          margin: const EdgeInsets.only(top: 5,bottom: 5),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Image.network(widget.imgUrl)
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      child: Image.network(widget.imgUrl,fit: BoxFit.fitHeight))
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * .6,
+              Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        Container(
-                          child: Text(
-                            widget.productName,
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.3,
-                          ),
+                        Text(
+                          widget.productName,
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.3
                         ),
                         Spacer(),
-                        Container(
-                          padding: EdgeInsets.only(top: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8,left: 8),
                           child: Text(
                             widget.productPrice.toString() + ' LE',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                             textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.1,
+                                MediaQuery.of(context).textScaleFactor * 1
                           ),
                         )
                       ],
@@ -114,111 +117,105 @@ class _CartItemState extends State<CartItem> {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: widget.onMinusQuantity,
-                              child: Container(
-                                width: MediaQuery.of(context).size.width *
-                                    .07,
-                                height:
-                                    MediaQuery.of(context).size.height *
-                                        .07,
-                                padding:
-                                    EdgeInsets.only(right: 5, bottom: 17),
-                                decoration: BoxDecoration(
-                                  color: Colors.black12,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.minimize_outlined,
-                                    size: 25,
-                                    color: Color(0xff707070),
-                                  ),
-                                ),
+                        Spacer(),
+                        GestureDetector(
+                          onTap: widget.onMinusQuantity,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width *
+                                .075,
+                            height:
+                                MediaQuery.of(context).size.height *
+                                    .075,
+                            padding:
+                                EdgeInsets.only(right: 5, bottom: 17),
+                            decoration: BoxDecoration(
+                              color: Colors.black12,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.minimize_outlined,
+                                size: MediaQuery.of(context).size.width * 0.07,
+                                color: Color(0xff707070),
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(left: 5),
-                              width:
-                                  MediaQuery.of(context).size.width * .09,
-                              child: TextField(
-                                controller: widget.myController,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: widget.productQuantity.toString(),
-                                  hintStyle: const TextStyle(color: Colors.black)
-                                ),
-                                onChanged: (value) {
-                                  widget.myController.addListener((){
-                                    print("value: ${widget.myController.text}");
-                                    widget.productQuantity = int.parse(value);
-                                    print(widget.productQuantity);
-                                    setState(() {});
-                                  });
-                                  setState(() {
-                                    widget.productQuantity = int.parse(widget.myController.text);
-                                    widget.myController.text = value;
-                                  });
-                                // widget.onUpdateQuantity();
-                                },
-                                onSubmitted: (value) {
-                                  widget.myController.addListener((){
-                                    print("value: ${widget.myController.text}");
-                                    widget.productQuantity = int.parse(value);
-                                    setState(() {});
-                                  });
-                                  widget.productQuantity = int.parse(value);
-                                  widget.myController.text = value;
-                                  // widget.onUpdateQuantity();
-                                },
-                              ),
-                            ),
-                            Container(
-                              padding:
-                                  EdgeInsets.only(right: 5, left: 10),
-                              child: GestureDetector(
-                                onTap: widget.onPlusQuantity,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.black12,
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 25,
-                                    color: Color(0xff707070),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                        const SizedBox(width: 20),
+                        Container(
+                          padding: EdgeInsets.only(left: 5),
+                          width:
+                              MediaQuery.of(context).size.width * .09,
+                          child: TextFormField(
+                            controller: widget.myController,
+                            keyboardType: TextInputType.numberWithOptions(
+                              decimal: false,
+                              signed: true,
+                            ),
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.only(left: 7),
+                              border: InputBorder.none,
+                              hintText: widget.productQuantity.toString(),
+                              hintStyle: const TextStyle(color: Colors.black)
+                            ),
+                            onChanged: (value) {
+                              // widget.myController.addListener((){
+                              //   print("value: ${widget.myController.text}");
+                              //   widget.productQuantity = int.parse(value);
+                              //   print(widget.productQuantity);
+                              //   setState(() {});
+                              // });
+                              setState(() {
+                                widget.myController.text = value;
+                                widget.productQuantity = int.parse(widget.myController.text);
+                              });
+                            // widget.onUpdateQuantity();
+                            },
+                          ),
+                        ),
+                        Container(
+                          padding:
+                              EdgeInsets.only(right: 5, left: 10),
+                          child: GestureDetector(
+                            onTap: widget.onPlusQuantity,
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Colors.black12,
+                              child: Icon(
+                                Icons.add,
+                                size: MediaQuery.of(context).size.width * 0.06,
+                                color: Color(0xff707070),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Spacer(),
                         Padding(
-                          padding: const EdgeInsets.only(top: 15,left: 35),
+                          padding: const EdgeInsets.only(right: 8,left: 8),
                           child: Column(
                             children: [
                               Text(
-                                "TOTAL",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        .8
+                                  "TOTAL",
+                                  textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor *
+                                      .8
                               ),
                               Text(
                                 widget.totalPrice.toString() + ' LE',
                                 textScaleFactor: MediaQuery.of(context)
-                                        .textScaleFactor *
+                                    .textScaleFactor *
                                     1,
                                 style:
-                                    TextStyle(color: Color(0xff3A559F)),
+                                const TextStyle(color: Color(0xff3A559F)),
                               )
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                     widget.totalAvailability < widget.productQuantity ? Center(child: Text('${widget.totalAvailability}  items Available in Stock' ?? '',style: const TextStyle(color: Colors.red,fontSize: 10))) : Container()

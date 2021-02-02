@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigationPageHome() {
     Navigator.of(context).pushNamedAndRemoveUntil(
-        LoginScreen.routeName, (Route<dynamic> route) => false);
+        TabsScreen.routeName, (Route<dynamic> route) => false);
   }
 
   void navigationPageWel() {

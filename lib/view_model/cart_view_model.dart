@@ -52,6 +52,9 @@ class CartViewModel extends ChangeNotifier {
   }
 
   increaseQuantity(int index) async{
+    if(_cartItemsList[index].availability < _cartItemsList[index].quantity){
+      return;
+    }
     _cartItemsList[index].quantity++;
     _totalPrice += _cartItemsList[index].price;
     await dbHelper.updateProduct(_cartItemsList[index]);
@@ -59,8 +62,8 @@ class CartViewModel extends ChangeNotifier {
   }
 
   decreaseQuantity(int index) async {
-    _cartItemsList[index].quantity--;
-    _totalPrice -= _cartItemsList[index].price;
+    _cartItemsList[index].quantity <= 1 ?  _cartItemsList[index].quantity = 1 : _cartItemsList[index].quantity--;
+    _cartItemsList[index].quantity <= 1 ? _totalPrice = _cartItemsList[index].price : _totalPrice -= _cartItemsList[index].price;
     await dbHelper.updateProduct(_cartItemsList[index]);
     notifyListeners();
   }

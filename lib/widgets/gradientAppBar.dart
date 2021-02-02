@@ -147,12 +147,15 @@ class _GradientAppBarState extends State<GradientAppBar> {
             ],
           ),
           Spacer(),
-          Text(
-            widget.title,
-            style: TextStyle(
-                fontSize: 20.0,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
+          Center(
+            child: Text(
+              widget.title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
           ),
           Spacer(),
           Container(

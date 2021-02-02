@@ -1,5 +1,6 @@
 import 'package:cizaro_app/helper/database_helper.dart';
 import 'package:cizaro_app/model/cartModel.dart';
+import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -88,50 +89,46 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               .textScaleFactor * .9,
                         ),
                         Spacer(),
-                        Container(
-                            child: Text(
-                              total.totalPrice.toString() ?? '00.00',
-                              textScaleFactor:
-                              MediaQuery
-                                  .of(context)
-                                  .textScaleFactor * 1.4,
-                              style: TextStyle(color: Color(0xff3A559F)),
-                            ),
-                          ),
+                        Text(
+                          total.totalPrice.toString() ?? '00.00',
+                          textScaleFactor:
+                          MediaQuery
+                              .of(context)
+                              .textScaleFactor * 1.4,
+                          style: TextStyle(color: Color(0xff3A559F)),
+                        ),
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(right: 10),
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width * .4,
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * .06,
-                    decoration: BoxDecoration(
-                        color: Color(0xff3A559F),
-                        borderRadius: BorderRadius.circular(25.0)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            margin: new EdgeInsets.all(10),
-                            child: Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "CHECKOUT",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )),
-                        Container(
-                          padding: EdgeInsets.only(right: 5),
-                          child: CircleAvatar(
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).pushNamed(CheckoutScreen.routeName),
+                    child: Container(
+                      padding: EdgeInsets.only(right: 10),
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width * .4,
+                      height: MediaQuery
+                          .of(context)
+                          .size
+                          .height * .06,
+                      decoration: BoxDecoration(
+                          color: Color(0xff3A559F),
+                          borderRadius: BorderRadius.circular(25.0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              "CHECKOUT",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          CircleAvatar(
                             radius: 15,
                             backgroundColor: Colors.white,
                             child: Icon(
@@ -139,9 +136,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               size: 15,
                               color: Color(0xff3A559F),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],

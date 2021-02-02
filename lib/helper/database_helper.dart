@@ -59,20 +59,6 @@ class DataBaseHelper {
     return maps.isNotEmpty ? maps.map((cart) => ProductCart.fromJson(cart)).toList() : [];
   }
 
-  Future getTotal() async {
-    var dbClient = await database;
-    var result =
-    await dbClient.rawQuery("SELECT SUM($columnTotalPrice) FROM $tableCart");
-    print(result.toString());
-    return result;
-  }
-
-  Future<List> calculateTotalPrice() async {
-    var dbClient = await database;
-    var result = await dbClient.rawQuery("SELECT * FROM $tableCart");
-    return result.toList();
-  }
-
   Future<void> deleteCartItem(int id) async{
     var dbClient = await database;
     return await dbClient.delete(tableCart,where: '$columnId = ?' ,whereArgs: [id]);

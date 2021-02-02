@@ -15,6 +15,7 @@ import 'package:cizaro_app/screens/search_screen.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/screens/splash_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
+import 'package:cizaro_app/view_model/auth_view_model.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:device_preview/device_preview.dart';
@@ -37,6 +38,7 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(value: AuthViewModel()),
         ChangeNotifierProvider.value(value: ListViewModel()),
         ChangeNotifierProvider.value(value: CartViewModel())
       ],

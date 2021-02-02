@@ -12,7 +12,7 @@ import 'package:cizaro_app/model/shopModel.dart';
 import 'package:http/http.dart' as http;
 
 class ListServices {
-  static const API = "https://cizaro.net/api/v1";
+  static const API = 'http://cizaro.tree-code.com/api/v1';
   Future<Home> fetchHome() async {
     final response = await http.get(API + '/home/');
     if (response.statusCode == 200) {

@@ -9,6 +9,7 @@ import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/shopModel.dart';
+import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:http/http.dart' as http;
 
 class ListServices {
@@ -135,6 +136,22 @@ class ListServices {
     } else {
       print(response.body);
       throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future<List<country.Data>> fetchCountries(String token) async {
+    final response = await http.get(API + '/countries/',
+        headers: {'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization' : '${'Token'} $token'});
+    print(response.body);
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      final Iterable json = body['data'];
+      return json.map<country.Data>((countries) =>
+          country.Data.fromJson(countries)).toList();
+    } else {
+      throw Exception("Unable to perform request!");
     }
   }
 

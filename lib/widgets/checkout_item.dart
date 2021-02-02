@@ -31,7 +31,7 @@ class CheckoutItem extends StatelessWidget {
                       EdgeInsets.only(right: 10, top: 5, bottom: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
-                    child: Image.asset(imgUrl),
+                    child: Image.network(imgUrl),
                   ),
                 ),
                 Flexible(

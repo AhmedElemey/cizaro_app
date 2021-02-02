@@ -7,6 +7,7 @@ import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/services/list_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cizaro_app/model/countries.dart' as country;
 
 class ListViewModel extends ChangeNotifier {
   Future<Home> fetchHomeList() async {
@@ -61,5 +62,11 @@ class ListViewModel extends ChangeNotifier {
     final result = await ListServices().fetchPolicy();
     notifyListeners();
     return result;
+  }
+
+  Future<List<country.Data>> fetchCountries(String token) async {
+    final results = await ListServices().fetchCountries(token);
+    notifyListeners();
+    return results;
   }
 }

@@ -1,9 +1,12 @@
-import 'package:cizaro_app/widgets/checkou_item.dart';
+import 'package:cizaro_app/screens/add_address_screen.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
+import 'package:cizaro_app/widgets/checkout_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:provider/provider.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static final routeName = '/checkout-screen';
@@ -29,19 +32,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartViewModel>(context,listen: true);
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: Container(
-      //       padding: EdgeInsets.all(10),
-      //       child: Image.asset(
-      //         "assets/images/logo.png",
-      //         height: MediaQuery.of(context).size.height * .1,
-      //       )),
-      //   title: Center(
-      //     child: Text(""),
-      //   ),
-      // ),
       body: SingleChildScrollView(
+        physics: ScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -68,10 +62,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Spacer(),
                   Row(
                     children: [
-                      Icon(
-                        Icons.add,
-                        size: 20,
+                      IconButton(
+                        icon : Icon(Icons.add),
+                        iconSize : 25,
                         color: Color(0xff3EC429),
+                        onPressed: () => Navigator.of(context).pushNamed(AddAddressScreen.routeName)
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
@@ -190,14 +185,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Container(
               padding: EdgeInsets.only(bottom: 10),
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .4,
+              height: MediaQuery.of(context).size.height * .35,
               child: ListView.builder(
-                itemCount: 7,
+                itemCount: cart.cartProductModel.length,
                 itemBuilder: (ctx, index) => CheckoutItem(
-                  imgUrl: "assets/images/collection.png",
-                  productName: "White Treecode",
-                  productCategory: "men fashion ",
-                  productPrice: 65,
+                  imgUrl: cart.cartProductModel[index].mainImg ?? "assets/images/collection.png",
+                  productName: cart.cartProductModel[index].name ?? "White Treecode",
+                  productCategory: cart.cartProductModel[index].categoryName ?? "men fashion ",
+                  productPrice: cart.cartProductModel[index].price ?? 65,
                   productSpecs: 34,
                 ),
               ),
@@ -217,11 +212,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                   CircleAvatar(
-                    radius: 15,
+                    radius: 13,
                     backgroundColor: Color(0xff9EA4AF),
                     child: Icon(
                       Icons.arrow_forward_ios_rounded,
-                      size: 15,
+                      size: 13,
                       color: Color(0xff3A559F),
                     ),
                   )

@@ -61,7 +61,7 @@ class _CartItemState extends State<CartItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: MediaQuery.of(context).size.height * .2,
+          height: MediaQuery.of(context).size.height * .22,
           width: MediaQuery.of(context).size.width,
           margin: const EdgeInsets.only(top: 5,bottom: 5),
           child: Row(

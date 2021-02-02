@@ -341,7 +341,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 onTap: () {
                                   setState(() {
                                     _selectedCard = index;
-                                    _selectedCard = productSpecs[index].id;
+                                    // _selectedCard = productSpecs[index].id;
                                   });
                                 },
                                 child: Container(

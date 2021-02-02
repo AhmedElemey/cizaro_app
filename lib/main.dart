@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
+import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
@@ -69,6 +70,7 @@ void main() {
             SearchBarScreen.routeName: (ctx) => SearchBarScreen(),
             AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
             PolicesTermsScreen.routeName: (ctx) => PolicesTermsScreen(),
+            AddAddressScreen.routeName: (ctx) => AddAddressScreen()
           },
         ),
       ),

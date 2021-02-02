@@ -75,8 +75,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         _isLoading = true;
       });
     final getSpec = Provider.of<ListViewModel>(context, listen: false);
-    await getSpec
-        .fetchSpecValues(_selectedCard).then((response) {
+    await getSpec.fetchSpecValues(_selectedCard).then((response) {
       specs = response;
       specsValuesList = specs.values;
     });
@@ -93,6 +92,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     fToast = FToast();
     fToast.init(context); // de 3ashan awel lama aload el screen t7mel el data
   }
+
   showToast() {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -103,9 +103,9 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check,color: Colors.white),
+          Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart",style: const TextStyle(color: Colors.white))
+          Text("Added to Cart", style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -123,9 +123,32 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
+  showFavToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartViewModel>(context,listen: false);
+    final cart = Provider.of<CartViewModel>(context, listen: false);
     return Scaffold(
       body: _isLoading
           ? Center(

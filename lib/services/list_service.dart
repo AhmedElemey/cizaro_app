@@ -12,7 +12,9 @@ import 'package:cizaro_app/model/shopModel.dart';
 import 'package:http/http.dart' as http;
 
 class ListServices {
+
   static const API = 'http://cizaro.tree-code.com/api/v1';
+
   Future<Home> fetchHome() async {
     final response = await http.get(API + '/home/');
     if (response.statusCode == 200) {
@@ -27,7 +29,7 @@ class ListServices {
     final response = await http.get(API + '/products/$productId');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //  print(response.body);
       return ProductDetailsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -39,7 +41,7 @@ class ListServices {
         await http.get(API + '/products/?collection=$collectionId');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //  print(response.body);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -60,7 +62,7 @@ class ListServices {
     final response = await http.get(API + '/products/?search=$searchTxt');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //print(response.body);
       return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -102,11 +104,10 @@ class ListServices {
 
   Future<Specs> fetchSpaces(int specValueId) async {
     final response = await http.post(API + '/send-product-spec-value-id/',
-        body: jsonEncode(specValueId)
-    );
+        body: jsonEncode(specValueId));
     final body = jsonDecode(response.body);
     print(response.body);
-    if (response.statusCode ==200 || body['message'] == '') {
+    if (response.statusCode == 200 || body['message'] == '') {
       return Specs.fromJson(body);
     } else {
       print(response.body);
@@ -114,18 +115,23 @@ class ListServices {
     }
   }
 
-  Future<List<productOffer.Data>> checkOfferInCart(String token,CheckProductsOfferInCart checkProductsOfferInCart) async {
+  Future<List<productOffer.Data>> checkOfferInCart(
+      String token, CheckProductsOfferInCart checkProductsOfferInCart) async {
     final response = await http.post(API + '/shopping-cart-check-offer/',
-        headers: {'accept': 'application/json',
+        headers: {
+          'accept': 'application/json',
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization' : '${'Token'} $token'},
-        body: jsonEncode(checkProductsOfferInCart.toJson())
-    );
+          'Authorization': '${'Token'} $token'
+        },
+        body: jsonEncode(checkProductsOfferInCart.toJson()));
     final body = jsonDecode(response.body);
     print(response.body);
-    if (response.statusCode ==200 || body['message'] == '') {
+    if (response.statusCode == 200 || body['message'] == '') {
       final Iterable json = body['data'];
-      return json.map<productOffer.Data>((products) => productOffer.Data.fromJson(products)).toList();
+      return json
+          .map<productOffer.Data>(
+              (products) => productOffer.Data.fromJson(products))
+          .toList();
     } else {
       print(response.body);
       throw Exception("Unable to perform request .. Try again!");

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
+import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -163,6 +164,14 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(
@@ -190,6 +199,14 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
                       ),
                     ),
                     Container(
@@ -259,16 +276,28 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           Spacer(),
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.black26,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 10,
-                              color: Colors.black45,
+                          GestureDetector(
+                            onTap: () => Navigator.of(context)
+                                .pushNamed(FavoriteScreen.routeName),
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.black26,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 10,
+                                color: Colors.black45,
+                              ),
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
                       ),
                     ),
                     Container(
@@ -304,6 +333,14 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
+                      ),
+                    ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(
@@ -335,6 +372,14 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           )
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
                       ),
                     ),
                     Container(

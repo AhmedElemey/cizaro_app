@@ -17,6 +17,7 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   int selectedRadio;
+  TextEditingController _promoCodeController = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
@@ -200,26 +201,36 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Container(
               width: MediaQuery.of(context).size.width * .9,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 25),
-                    child: Text(
-                      "Add Promo Code",
-                      style: TextStyle(color: Color(0xff3A559F)),
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.5,
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    margin: const EdgeInsets.only(right: 10,left: 25),
+                    child: TextField(
+                      controller: _promoCodeController,
+                      keyboardType: TextInputType.text,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding:
+                          const EdgeInsets.only(right: 15, left: 15),
+                          hintText:
+                          'Promo Code',
+                          border: OutlineInputBorder(
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)))),
                     ),
                   ),
-                  CircleAvatar(
-                    radius: 13,
-                    backgroundColor: Color(0xff9EA4AF),
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 13,
-                      color: Color(0xff3A559F),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 5,right: 5),
+                    child: Text(
+                      "Add",
+                      style: TextStyle(color: Color(0xff3A559F)),
+                      textScaleFactor:
+                      MediaQuery.of(context).textScaleFactor * 1.4,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -240,9 +251,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         const SizedBox(height: 8),
                         Container(
                           child: Text(
-                            '\$' + "45454",
+                            cart.totalPrice.toString() ?? '00.00',
                             textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.4,
+                                MediaQuery.of(context).textScaleFactor * 1.3,
                             style: TextStyle(color: Color(0xff3A559F)),
                           ),
                         )
@@ -253,7 +264,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Container(
                     padding: EdgeInsets.only(right: 10),
                     width: MediaQuery.of(context).size.width * .4,
-                    height: MediaQuery.of(context).size.height * .055,
+                    height: MediaQuery.of(context).size.height * .058,
                     decoration: BoxDecoration(
                         color: Color(0xff3A559F),
                         borderRadius: BorderRadius.circular(25.0)),

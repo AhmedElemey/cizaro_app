@@ -9,7 +9,6 @@ class ProductCart {
   int availability;
   int quantity;
   double totalPrice;
-  String specs;
 
   ProductCart(
       {this.id,
@@ -19,8 +18,7 @@ class ProductCart {
         this.categoryName,
         this.quantity,
         this.totalPrice,
-        this.availability,
-        this.specs});
+        this.availability});
 
   ProductCart.fromJson(Map<String, dynamic> map) {
     id = map[columnId];
@@ -42,8 +40,7 @@ class ProductCart {
       columnTotalPrice : totalPrice,
       columnCategoryName : categoryName,
       columnQuantity : quantity,
-      columnAvailability : availability,
-      columnSpecs : specs
+      columnAvailability : availability
     };
   }
 }

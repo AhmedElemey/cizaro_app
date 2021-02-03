@@ -1,4 +1,4 @@
-class Countries {
+class  Countries {
   int status;
   int statusCode;
   String message;

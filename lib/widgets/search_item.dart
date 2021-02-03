@@ -40,14 +40,14 @@ class _SearchItemState extends State<SearchItem> {
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
           child: Container(
-            height: MediaQuery.of(context).size.height * .2,
+            height: MediaQuery.of(context).size.height * .15,
+            width: MediaQuery.of(context).size.width * .1,
             padding: EdgeInsets.only(left: 10, right: 10),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
+                  padding: EdgeInsets.only(left: 5, right: 10, bottom: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
                     child: Image.network(
@@ -68,6 +68,7 @@ class _SearchItemState extends State<SearchItem> {
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.only(left: 10),
                   width: MediaQuery.of(context).size.width * .5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +88,6 @@ class _SearchItemState extends State<SearchItem> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 5),
                         child: Text(
                           widget.productPrice.toString() + ' LE',
                           style: TextStyle(fontWeight: FontWeight.bold),
@@ -96,81 +96,11 @@ class _SearchItemState extends State<SearchItem> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 10),
                         child: Row(
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width * .3,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          int value = int.parse(
-                                                  quantityController.text) -
-                                              1;
-                                          widget.productQuantity =
-                                              value.toString();
-                                        });
-                                      },
-                                      child: CircleAvatar(
-                                        radius: 15,
-                                        backgroundColor: Colors.black12,
-                                        child: Container(
-                                          padding: EdgeInsets.only(bottom: 10),
-                                          child: Icon(
-                                            Icons.minimize,
-                                            size: 20,
-                                            color: Color(0xff707070),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Container(
-                                      padding: EdgeInsets.only(left: 2),
-                                      width: MediaQuery.of(context).size.width *
-                                          .1,
-                                      child: TextField(
-                                        controller: quantityController,
-                                        keyboardType: TextInputType.number,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(right: 5),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          int value = int.parse(
-                                                  quantityController.text) +
-                                              1;
-                                          widget.productQuantity =
-                                              value.toString();
-                                        });
-                                      },
-                                      child: CircleAvatar(
-                                        radius: 15,
-                                        backgroundColor: Colors.black12,
-                                        child: Container(
-                                          padding: EdgeInsets.only(bottom: 2),
-                                          child: Icon(
-                                            Icons.add,
-                                            size: 20,
-                                            color: Color(0xff707070),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            Container(
                               width: MediaQuery.of(context).size.width * .2,
-                              padding: EdgeInsets.only(left: 30),
+                              padding: EdgeInsets.only(left: 10),
                               child: Row(
                                 children: [
                                   Container(

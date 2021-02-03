@@ -42,15 +42,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       contactUsModel = response;
       contactList = contactUsModel.data;
 
-      contactAddress = contactList[index].address;
-      contactPhone = contactList[index].phone;
-      contactEmail = contactList[index].email;
-      contactPostalCode = contactList[index].postalCode;
+      contactAddress = contactList[index]?.address;
+      contactPhone = contactList[index]?.phone;
+      contactEmail = contactList[index]?.email;
+      contactPostalCode = contactList[index]?.postalCode;
       //
-      contactFaceBook = contactList[index].facebook;
-      contactYoutube = contactList[index].youtube;
-      contactInstagram = contactList[index].instagram;
-      contactTwitter = contactList[index].twitter;
+      contactFaceBook = contactList[index]?.facebook;
+      contactYoutube = contactList[index]?.youtube;
+      contactInstagram = contactList[index]?.instagram;
+      contactTwitter = contactList[index]?.twitter;
       //
 
       //

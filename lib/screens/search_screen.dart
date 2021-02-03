@@ -1,7 +1,7 @@
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/searchModel.dart';
+import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
-import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,6 +18,10 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   var valueCollection, valueCategory;
+
+  ShopModel filter;
+  List filterList = [];
+
   Home home;
   List<Collections> collectionsList = [];
   List<NewArrivals> newArrivalsList = [];
@@ -53,6 +57,25 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
   }
 
+  Future getFilterData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
+    final getFilter = Provider.of<ListViewModel>(context, listen: false);
+    await getFilter
+        .fetchFilter(valueCategory, valueCollection)
+        .then((response) {
+      filter = response;
+      filterList = filter.data.products;
+    });
+    if (this.mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   Future getHomeData() async {
     if (this.mounted)
       setState(() {
@@ -69,6 +92,9 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = false;
       });
     }
+    // if (filterList.length == 0) {
+    //   displayBottomSheet(context);
+    // } else  {}
     displayBottomSheet(context);
   }
 
@@ -165,21 +191,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   Spacer(),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 30, left: 150),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * .3,
-                      height: MediaQuery.of(context).size.height * .06,
-                      decoration: BoxDecoration(
-                          color: Color(0xff3A559F),
-                          borderRadius: BorderRadius.circular(25.0)),
+                    child: GestureDetector(
+                      onTap: () => {getFilterData(), Navigator.pop(context)},
                       child: Container(
-                        margin: new EdgeInsets.all(10),
-                        padding: EdgeInsets.only(left: 30),
-                        child: Text(
-                          "Filter",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                        width: MediaQuery.of(context).size.width * .3,
+                        height: MediaQuery.of(context).size.height * .06,
+                        decoration: BoxDecoration(
+                            color: Color(0xff3A559F),
+                            borderRadius: BorderRadius.circular(25.0)),
+                        child: Container(
+                          margin: new EdgeInsets.all(10),
+                          padding: EdgeInsets.only(left: 30),
+                          child: Text(
+                            "Filter",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
@@ -199,96 +228,207 @@ class _SearchScreenState extends State<SearchScreen> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              child: Column(
-                children: [
-                  GradientAppBar(""),
-                  Container(
-                    height: MediaQuery.of(context).size.height * .1,
-                    child: Row(
+              child: filterList.length == 0
+                  ? Column(
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(left: 5),
-                              width: MediaQuery.of(context).size.width * .24,
-                              child: Row(
+                        GradientAppBar(""),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .1,
+                          child: Row(
+                            children: [
+                              Row(
                                 children: [
-                                  Text(
-                                    productList?.length.toString() ?? '',
-                                    style: TextStyle(color: Colors.red),
-                                    textScaleFactor:
-                                        MediaQuery.textScaleFactorOf(context) *
-                                            1.5,
+                                  Container(
+                                    padding: EdgeInsets.only(left: 5),
+                                    width:
+                                        MediaQuery.of(context).size.width * .24,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          productList?.length.toString() ?? '',
+                                          style: TextStyle(color: Colors.red),
+                                          textScaleFactor:
+                                              MediaQuery.textScaleFactorOf(
+                                                      context) *
+                                                  1.5,
+                                        ),
+                                        Text(
+                                          " Items",
+                                          textScaleFactor:
+                                              MediaQuery.textScaleFactorOf(
+                                                      context) *
+                                                  1.5,
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  Text(
-                                    " Items",
-                                    textScaleFactor:
-                                        MediaQuery.textScaleFactorOf(context) *
-                                            1.5,
+                                  Container(
+                                    padding: EdgeInsets.only(left: 200),
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              productList =
+                                                  productList.reversed.toList();
+                                            });
+                                          },
+                                          child: SvgPicture.asset(
+                                            'assets/images/arrow.svg',
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.035,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.025,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: GestureDetector(
+                                            onTap: () => getHomeData(),
+                                            child: Icon(
+                                              Icons.filter_alt_outlined,
+                                              size: 30,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: double.infinity,
+                          child: ListView.builder(
+                            itemCount: productList?.length ?? 0,
+                            itemBuilder: (ctx, index) => GestureDetector(
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  ProductDetails.routeName,
+                                  arguments: {
+                                    'product_id': productList[index].id
+                                  }),
+                              child: SearchItem(
+                                imgUrl: productList[index].mainImg,
+                                productName: productList[index].name,
+                                productPrice: productList[index].price,
+                                productCategory:
+                                    productList[index].category.name,
+                                //  productQuantity: ,
                               ),
                             ),
-                            Container(
-                              padding: EdgeInsets.only(left: 200),
-                              child: Row(
+                          ),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        GradientAppBar(""),
+                        Container(
+                          height: MediaQuery.of(context).size.height * .1,
+                          child: Row(
+                            children: [
+                              Row(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        productList =
-                                            productList.reversed.toList();
-                                      });
-                                    },
-                                    child: SvgPicture.asset(
-                                      'assets/images/arrow.svg',
-                                      width: MediaQuery.of(context).size.width *
-                                          0.035,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.025,
-                                      color: Colors.black,
+                                  Container(
+                                    padding: EdgeInsets.only(left: 5),
+                                    width:
+                                        MediaQuery.of(context).size.width * .24,
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          filterList?.length.toString() ?? '',
+                                          style: TextStyle(color: Colors.red),
+                                          textScaleFactor:
+                                              MediaQuery.textScaleFactorOf(
+                                                      context) *
+                                                  1.5,
+                                        ),
+                                        Text(
+                                          " Items",
+                                          textScaleFactor:
+                                              MediaQuery.textScaleFactorOf(
+                                                      context) *
+                                                  1.5,
+                                        )
+                                      ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: GestureDetector(
-                                      onTap: () => getHomeData(),
-                                      child: Icon(
-                                        Icons.filter_alt_outlined,
-                                        size: 30,
-                                      ),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 200),
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              filterList =
+                                                  filterList.reversed.toList();
+                                            });
+                                          },
+                                          child: SvgPicture.asset(
+                                            'assets/images/arrow.svg',
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.035,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.025,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: GestureDetector(
+                                            onTap: () => getHomeData(),
+                                            child: Icon(
+                                              Icons.filter_alt_outlined,
+                                              size: 30,
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   )
                                 ],
                               ),
-                            )
-                          ],
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          width: double.infinity,
+                          child: ListView.builder(
+                            itemCount: filterList?.length ?? 0,
+                            itemBuilder: (ctx, index) => GestureDetector(
+                              onTap: () => Navigator.of(context).pushNamed(
+                                  ProductDetails.routeName,
+                                  arguments: {
+                                    'product_id': filterList[index].id
+                                  }),
+                              child: SearchItem(
+                                imgUrl: filterList[index].mainImg,
+                                productName: filterList[index].name,
+                                productPrice: filterList[index].price,
+                                productCategory:
+                                    filterList[index].category.name,
+                                //  productQuantity: ,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      itemCount: productList?.length ?? 0,
-                      itemBuilder: (ctx, index) => GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(
-                            ProductDetails.routeName,
-                            arguments: {'product_id': productList[index].id}),
-                        child: SearchItem(
-                          imgUrl: productList[index].mainImg,
-                          productName: productList[index].name,
-                          productPrice: productList[index].price,
-                          productCategory: productList[index].category.name,
-                          //  productQuantity: ,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
     );
   }

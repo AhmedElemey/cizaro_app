@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/searchFilter.dart';
@@ -13,7 +14,6 @@ import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:http/http.dart' as http;
 
 class ListServices {
-
   static const API = 'http://cizaro.tree-code.com/api/v1';
 
   Future<Home> fetchHome() async {
@@ -21,6 +21,17 @@ class ListServices {
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       return Home.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<ShopModel> fetchFilterItems(int categoryId, int collectionId) async {
+    final response = await http
+        .get(API + '/products/?category=$categoryId&collection=$collectionId');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }
@@ -140,16 +151,18 @@ class ListServices {
   }
 
   Future<List<country.Data>> fetchCountries(String token) async {
-    final response = await http.get(API + '/countries/',
-        headers: {'accept': 'application/json',
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization' : '${'Token'} $token'});
-    print(response.body);
+    final response = await http.get(API + '/countries/', headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': '${'Token'} $token'
+    });
+
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       final Iterable json = body['data'];
-      return json.map<country.Data>((countries) =>
-          country.Data.fromJson(countries)).toList();
+      return json
+          .map<country.Data>((countries) => country.Data.fromJson(countries))
+          .toList();
     } else {
       throw Exception("Unable to perform request!");
     }
@@ -157,13 +170,23 @@ class ListServices {
 
   // POST
 
-  Future<SearchFilterModel> fetchFilterItems(
-      SearchFilterModel searchFilterModel) async {
-    final response = await http.post(API + '/send-filter/',
-        body: jsonEncode(searchFilterModel.toJson()));
-    if (response.statusCode == 200) {
+  Future createAddress(CreateAddress address, String token) async {
+    final response = await http.post(
+      API + '/address-book/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+      body: jsonEncode(address.toJson()),
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      jsonDecode(response.body);
     } else {
-      Exception("");
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
     }
   }
 }

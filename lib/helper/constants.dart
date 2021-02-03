@@ -7,7 +7,8 @@ final String columnQuantity = 'quantity';
 final String columnMainImag = 'main_imag';
 final String columnAvailability = 'availability';
 final String columnTotalPrice = 'total_price';
-final String columnSpecs = 'specs';
+final String columnColorSpecs = 'color';
+final String columnSizeSpecs = 'size';
 //Favorite
 final String tableFav = 'fav';
 final String columnStars = 'stars';

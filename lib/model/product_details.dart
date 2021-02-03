@@ -211,17 +211,19 @@ class Specs {
   }
 }
 
-class Values {
+class Values{
   int id;
   String value;
   int quantity;
+  bool hasRelatedSpecs;
 
-  Values({this.id, this.value, this.quantity});
+  Values({this.id, this.value, this.quantity, this.hasRelatedSpecs});
 
   Values.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     value = json['value'];
     quantity = json['quantity'];
+    hasRelatedSpecs = json['has_related_specs'];
   }
 
   Map<String, dynamic> toJson() {
@@ -229,6 +231,7 @@ class Values {
     data['id'] = this.id;
     data['value'] = this.value;
     data['quantity'] = this.quantity;
+    data['has_related_specs'] = this.hasRelatedSpecs;
     return data;
   }
 }

@@ -1,15 +1,18 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
+import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/shopModel.dart';
+import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/services/list_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 
 class ListViewModel extends ChangeNotifier {
+
   Future<Home> fetchHomeList() async {
     final result = await ListServices().fetchHome();
     notifyListeners();
@@ -52,8 +55,8 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<Specs> fetchSpecValues(int specValueId) async {
-    final result = await ListServices().fetchSpaces(specValueId);
+  Future<RelatedSpec> fetchSpecValues(Spec spec) async {
+    final result = await ListServices().fetchSpecs(spec);
     notifyListeners();
     return result;
   }

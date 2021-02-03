@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 class CartItem extends StatefulWidget {
    final String productName,
       imgUrl,
+   colorSpecValue,
+   sizeSpecValue,
       productCategory;
    int productQuantity,totalAvailability;
   final double totalPrice, productPrice;
@@ -26,6 +28,8 @@ class CartItem extends StatefulWidget {
       this.productQuantity,
       this.onDelete,
       this.onMinusQuantity,
+        this.colorSpecValue,
+        this.sizeSpecValue,
         this.onUpdateQuantity,
       this.onPlusQuantity}): super(key: key);
 
@@ -111,9 +115,15 @@ class _CartItemState extends State<CartItem> {
                       ),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Size : 34 , Color : Red'),
+                        Text('Size : ${widget.sizeSpecValue}',style: const TextStyle(color: Colors.black),),
+                        Text(' , ',style: const TextStyle(color: Colors.black)),
+                        Text('Color : ',style: const TextStyle(color: Colors.black)),
+                        CircleAvatar(
+                            radius: 10,
+                            backgroundColor: Color(int.parse('0xff${widget.colorSpecValue}')),
+                            foregroundColor: Color(int.parse('0xff${widget.colorSpecValue}'))),
+                        Spacer(),
                         IconButton(icon: Icon(Icons.delete,size: MediaQuery.of(context).size.width * 0.08,color: Colors.red), onPressed: widget.onDelete)
                       ],
                     ),

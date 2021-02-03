@@ -2,6 +2,8 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:cizaro_app/helper/database_helper.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
+import 'package:cizaro_app/model/related_spec.dart' as rs;
+import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/product_details_item.dart';
@@ -19,23 +21,20 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  bool _isLoading = false, _isColor = false;
+  bool _isLoading = false,_isLoading2 = false, _isColor = false,_isSelected = false;
   ProductDetailsModel productDetails;
   FToast fToast;
-  int _selectedCard = -1, productId, productAvailability;
-  String productName, imgUrl, productDescription, specTitle;
+  int _selectedColor = -1,_selectedSize = -1, productId,specId,productAvailability;
+  String productName, imgUrl, productDescription, specTitle,colorSpecValue,sizeSpecValue;
   double productPrice, productStar;
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
   List<Values> productSpecs = [];
-  Specs specs;
-  List<Values> specsValuesList = [];
+  List<rs.Data> relatedSpecList =[];
+  rs.RelatedSpec relatedSpec;
 
   Future getHomeData() async {
-    if (this.mounted)
-      setState(() {
-        _isLoading = true;
-      });
+    if (this.mounted) setState(() => _isLoading = true);
     final getProduct = Provider.of<ListViewModel>(context, listen: false);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     await getProduct
@@ -53,6 +52,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       specTitle = productDetails?.data.specs?.name ?? "";
 
       _isColor = productDetails?.data.specs?.isColor ?? false;
+      specId = productDetails.data.specs.id;
       specTitle = productDetails?.data.specs?.name ?? "";
       //
       productRelated = productDetails.data.relatedProducts;
@@ -63,26 +63,18 @@ class _ProductDetailsState extends State<ProductDetails> {
       print(productRelated.length);
       // print(productList.data.relatedProducts.length);
     });
-    if (this.mounted)
-      setState(() {
-        _isLoading = false;
-      });
+    if (this.mounted) setState(() => _isLoading = false);
   }
 
   Future getSpecData() async {
-    if (this.mounted)
-      setState(() {
-        _isLoading = true;
-      });
+    if (this.mounted) setState(() => _isLoading2 = true);
+    final selectedSpec = Spec(specValueId: specId);
     final getSpec = Provider.of<ListViewModel>(context, listen: false);
-    await getSpec.fetchSpecValues(_selectedCard).then((response) {
-      specs = response;
-      specsValuesList = specs.values;
+    await getSpec.fetchSpecValues(selectedSpec).then((value) {
+      relatedSpec = value;
+      relatedSpecList= relatedSpec.data;
     });
-    if (this.mounted)
-      setState(() {
-        _isLoading = false;
-      });
+    if (this.mounted) setState(() => _isLoading2 = false);
   }
 
   @override
@@ -155,6 +147,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
+        physics: ScrollPhysics(),
               child: Column(
                 children: [
                   GradientAppBar(""),
@@ -272,8 +265,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     padding: EdgeInsets.only(left: 20, top: 15),
                     child: Row(
                       children: [
-                        Text(
-                          "Select $specTitle".toUpperCase(),
+                        Text(specTitle == '' ? '': "Select $specTitle".toUpperCase(),
                           style: TextStyle(color: Color(0xff515C6F)),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1,
@@ -282,98 +274,129 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   _isColor == true
-                      ? Container(
-                          padding:
-                              EdgeInsets.only(top: 10, left: 10, right: 10),
-                          height: MediaQuery.of(context).size.height * .1,
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            itemCount: productSpecs.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 1.9,
-                                    crossAxisCount: 6,
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 5),
-                            itemBuilder: (BuildContext context, int index) {
-                              return GridTile(
-                                  child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedCard = index;
-                                  });
-                                },
-                                child: CircleAvatar(
-                                    radius: .3,
-                                    child: _selectedCard == index
-                                        ? Center(
-                                            child: Icon(Icons.check,
-                                                color: Theme.of(context)
-                                                    .primaryColor))
-                                        : Text(''),
-                                    foregroundColor: Color(int.parse('0xff' +
-                                        productSpecs[index]
-                                            .value
-                                            .split('#')
-                                            .last)),
-                                    backgroundColor: Color(int.parse('0xff' +
-                                        productSpecs[index]
-                                            .value
-                                            .split('#')
-                                            .last))),
-                              ));
+                      ? GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: productSpecs.length,
+                        gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: 1.9,
+                                crossAxisCount: 6,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5),
+                        itemBuilder: (BuildContext context, int index) {
+                          return GridTile(
+                              child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedColor = productSpecs[index].id;
+                                _selectedColor = index;
+                                _isSelected = true;
+                              });
+                              getSpecData();
                             },
-                          ))
-                      : Container(
-                          padding: EdgeInsets.only(top: 10, left: 10),
-                          height: MediaQuery.of(context).size.height * .06,
-                          child: GridView.builder(
-                            itemCount: productSpecs.length,
-                            padding: const EdgeInsets.only(right: 8, left: 8),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    childAspectRatio: 2,
-                                    crossAxisCount: 6,
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 5),
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedCard = index;
-                                    // _selectedCard = productSpecs[index].id;
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.only(left: 5),
-                                  child: Text(
-                                    productSpecs[index].value,
-                                    style: TextStyle(
-                                      color: _selectedCard == index
-                                          ? Color(0xffE7A646)
-                                          : Color(0xff707070),
-                                    ),
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.2,
-                                  ),
+                            child: CircleAvatar(
+                                radius: .3,
+                                child: _selectedColor == index
+                                    ? Center(
+                                        child: Icon(Icons.check,
+                                            color: Theme.of(context)
+                                                .primaryColor))
+                                    : Text(''),
+                                foregroundColor: Color(int.parse('0xff' +
+                                    productSpecs[index]
+                                        .value
+                                        .split('#')
+                                        .last)),
+                                backgroundColor: Color(int.parse('0xff' +
+                                    productSpecs[index]
+                                        .value
+                                        .split('#')
+                                        .last))),
+                          ));
+                        },
+                      )
+                      : GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                        itemCount: productSpecs.length,
+                        padding: const EdgeInsets.only(right: 10, left: 10,top: 10),
+                        gridDelegate:
+                            SliverGridDelegateWithFixedCrossAxisCount(
+                                childAspectRatio: 2.1,
+                                crossAxisCount: 6,
+                                crossAxisSpacing: 5,
+                                mainAxisSpacing: 5),
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: (){
+                              setState(() {
+                                _selectedSize = productSpecs[index].id;
+                                _selectedSize = index;
+                                _isSelected = true;
+                                sizeSpecValue = productSpecs[index].value;
+                                print(sizeSpecValue);
+                              });
+                              getSpecData();
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Text(
+                                productSpecs[index].value,
+                                style: TextStyle(
+                                  color: _selectedSize == index
+                                      ? Color(0xffE7A646)
+                                      : Color(0xff707070),
                                 ),
-                              );
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.2,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                  _isSelected == true ? _isLoading2 ? SizedBox(width:0,height:0,child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(Colors.white)))
+                      : GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: relatedSpecList?.length ?? 0,
+                    gridDelegate:
+                    SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 2.1,
+                        crossAxisCount: 6,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5),
+                    itemBuilder: (BuildContext context, int index) {
+                      return GridTile(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedColor = index;
+                                colorSpecValue = relatedSpecList[index].values[index].value.split('#').last;
+                              });
                             },
-                          )),
-                  // Container(
-                  //   padding: EdgeInsets.only(left: 10, top: 10),
-                  //   child: Row(
-                  //     children: [
-                  //       Text(
-                  //         "SELECT SIZE (US)",
-                  //         style: TextStyle(color: Color(0xff515C6F)),
-                  //         textScaleFactor:
-                  //             MediaQuery.of(context).textScaleFactor * 1,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                            child: CircleAvatar(
+                                radius: .3,
+                                child: _selectedColor == index
+                                    ? Center(
+                                    child: Icon(Icons.check,
+                                        color: Theme.of(context)
+                                            .primaryColor))
+                                    : Text(''),
+                                foregroundColor: Color(int.parse('0xff' +
+                                    relatedSpecList[index].values[index]
+                                        .value
+                                        .split('#')
+                                        .last)),
+                                backgroundColor: Color(int.parse('0xff' +
+                                    relatedSpecList[index].values[index]
+                                        .value
+                                        .split('#')
+                                        .last))),
+                          ));
+                    },
+                  ) : Container(),
                   Container(
                     width: MediaQuery.of(context).size.width * .44,
                     height: MediaQuery.of(context).size.height * .066,
@@ -392,7 +415,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 price: productPrice,
                                 categoryName: productName,
                                 quantity: 1,
-                                availability: productAvailability);
+                                availability: productAvailability,
+                                colorSpecValue: colorSpecValue,
+                                sizeSpecValue: sizeSpecValue);
                             cart.addProductToCart(productCart);
                             showToast();
                           },

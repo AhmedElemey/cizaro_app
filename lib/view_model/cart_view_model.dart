@@ -49,7 +49,7 @@ class CartViewModel extends ChangeNotifier {
 
   addProductToCart(ProductCart productCart) async {
     for (int i = 0; i < _cartItemsList.length; i++) {
-      if (_cartItemsList[i].id == productCart.id) {
+      if (_cartItemsList[i].id == productCart.id && _cartItemsList[i].colorSpecValue == productCart.colorSpecValue && _cartItemsList[i].sizeSpecValue == productCart.sizeSpecValue) {
         return;
       }
     }

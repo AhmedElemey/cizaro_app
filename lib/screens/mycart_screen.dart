@@ -46,6 +46,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
               totalAvailability: cart.cartProductModel[index].availability,
               totalPrice: cart.cartProductModel[index].price * cart.cartProductModel[index].quantity,
               productQuantity: cart.cartProductModel[index].quantity ?? 1,
+              sizeSpecValue: cart.cartProductModel[index]?.sizeSpecValue ?? '',
+              colorSpecValue: cart.cartProductModel[index]?.colorSpecValue ?? '',
               myController: TextEditingController(text: cart.cartProductModel[index].quantity.toString()),
               onDelete: () {
                 cart.deleteCartProduct(index,cart.cartProductModel[index].id);

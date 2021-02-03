@@ -32,8 +32,9 @@ class DataBaseHelper {
       $columnQuantity INTEGER,
       $columnMainImag TEXT NOT NULL,
       $columnAvailability INTEGER,
-      $columnTotalPrice Double
-       )
+      $columnTotalPrice Double,
+      $columnColorSpecs TEXT,
+      $columnSizeSpecs TEXT)
       ''');
     });
   }

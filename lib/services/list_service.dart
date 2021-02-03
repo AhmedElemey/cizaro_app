@@ -127,14 +127,10 @@ class ListServices {
     }
   }
 
-  Future<List<productOffer.Data>> checkOfferInCart(
-      String token, CheckProductsOfferInCart checkProductsOfferInCart) async {
+  Future<List<productOffer.Data>> checkOfferInCart(CheckProductsOfferInCart checkProductsOfferInCart) async {
     final response = await http.post(API + '/shopping-cart-check-offer/',
-        headers: {
-          'accept': 'application/json',
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': '${'Token'} $token'
-        },
+        headers: {'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8'},
         body: jsonEncode(checkProductsOfferInCart.toJson()));
     final body = jsonDecode(response.body);
     print(response.body);

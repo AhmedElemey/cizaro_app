@@ -38,11 +38,12 @@ class _CartItemState extends State<CartItem> {
 
   @override
   void initState() {
-    // widget.myController.addListener((){
-    //   print("value: ${widget.myController.text}");
-    //   widget.productQuantity = int.parse(widget.myController.text);
-    //   setState(() {});
-    // });
+    widget.myController.addListener((){
+      print("value: ${widget.myController.text}");
+      // widget.productQuantity = int.parse(widget.myController.text);
+      widget.onUpdateQuantity();
+      setState(() {});
+    });
     widget.productQuantity = int.parse(widget.myController.text);
     quantityController.text = 1.toString();
     super.initState();

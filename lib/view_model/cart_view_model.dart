@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 class CartViewModel extends ChangeNotifier {
   List<ProductCart> _cartItemsList = [];
   List<productOffer.Data> _cartItemsAfterOffer = [];
+  int productId,quantity;
 
   List<ProductCart> get cartProductModel => _cartItemsList;
   double get totalPrice => _totalPrice;
@@ -22,11 +23,18 @@ class CartViewModel extends ChangeNotifier {
   getCartProducts() async {
     _cartItemsList = await dbHelper.getCartItems();
     getTotalPrice();
+    getCartItemsAfterOffer();
     notifyListeners();
   }
 
-   getCartItemsAfterOffer(String token,CheckProductsOfferInCart checkProductsOfferInCart) async {
-   _cartItemsAfterOffer = await ListServices().checkOfferInCart(token, checkProductsOfferInCart);
+   getCartItemsAfterOffer() async {
+    List<Items> itemsList = [];
+    _cartItemsList.forEach((element) {productId = element.id ; quantity = element.quantity;
+    itemsList.add(Items(product: productId,quantity: quantity));
+    });
+
+     final checkProductsOfferInCart = CheckProductsOfferInCart(items: itemsList);
+   _cartItemsAfterOffer = await ListServices().checkOfferInCart(checkProductsOfferInCart);
    print(_cartItemsAfterOffer);
     notifyListeners();
   }
@@ -72,6 +80,12 @@ class CartViewModel extends ChangeNotifier {
     dbHelper.deleteCartItem(productId);
     _totalPrice -= _cartItemsList[index].price * _cartItemsList[index].quantity;
     await dbHelper.updateProduct(_cartItemsList[index]);
+    notifyListeners();
+  }
+
+  updateQuantity(int index,int productId) async {
+    await dbHelper.updateProduct(_cartItemsList[index]);
+    getTotalPrice();
     notifyListeners();
   }
 }

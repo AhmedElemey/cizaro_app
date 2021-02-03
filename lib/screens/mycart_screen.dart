@@ -18,9 +18,14 @@ class MyCartScreen extends StatefulWidget {
 
 class _MyCartScreenState extends State<MyCartScreen> {
 
+  getProductsOffer() async {
+    await Provider.of<CartViewModel>(context,listen: false).getCartItemsAfterOffer();
+  }
+
   @override
   void initState() {
     super.initState();
+    Future.microtask(() => getProductsOffer());
   }
 
   Widget cartProductsList() {
@@ -47,7 +52,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 setState(() {
                   cart.cartProductModel?.removeAt(index);
                 }
-                );},
+                );},onUpdateQuantity: () => cart.updateQuantity(index, cart.cartProductModel[index].id),
               onPlusQuantity: () =>
                 cart.increaseQuantity(index),
               onMinusQuantity: () =>

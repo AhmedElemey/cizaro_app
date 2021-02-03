@@ -3,8 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
-class AddressBookScreen extends StatelessWidget {
+class AddressBookScreen extends StatefulWidget {
   static final routeName = '/addressbook-screen';
+
+  @override
+  _AddressBookScreenState createState() => _AddressBookScreenState();
+}
+
+class _AddressBookScreenState extends State<AddressBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

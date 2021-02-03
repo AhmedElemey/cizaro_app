@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/searchFilter.dart';
@@ -15,7 +17,6 @@ import 'package:cizaro_app/model/specMdel.dart';
 import 'package:http/http.dart' as http;
 
 class ListServices {
-
   static const API = 'http://cizaro.tree-code.com/api/v1';
 
   Future<Home> fetchHome() async {
@@ -23,6 +24,30 @@ class ListServices {
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       return Home.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<BrandModel> fetchBrand() async {
+    final response = await http.get(API + '/brands');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return BrandModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<ShopModel> fetchFilterItems(
+      var minimum, var maximum, var brand) async {
+    final response = await http.get(
+        API + '/products/?min_price=$minimum&max_price=$maximum&brand=$brand');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }
@@ -119,10 +144,13 @@ class ListServices {
     }
   }
 
-  Future<List<productOffer.Data>> checkOfferInCart(CheckProductsOfferInCart checkProductsOfferInCart) async {
+  Future<List<productOffer.Data>> checkOfferInCart(
+      CheckProductsOfferInCart checkProductsOfferInCart) async {
     final response = await http.post(API + '/shopping-cart-check-offer/',
-        headers: {'accept': 'application/json',
-        'Content-Type': 'application/json; charset=UTF-8'},
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
         body: jsonEncode(checkProductsOfferInCart.toJson()));
     final body = jsonDecode(response.body);
     print(response.body);
@@ -139,16 +167,18 @@ class ListServices {
   }
 
   Future<List<country.Data>> fetchCountries(String token) async {
-    final response = await http.get(API + '/countries/',
-        headers: {'accept': 'application/json',
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization' : '${'Token'} $token'});
-    print(response.body);
+    final response = await http.get(API + '/countries/', headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': '${'Token'} $token'
+    });
+
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       final Iterable json = body['data'];
-      return json.map<country.Data>((countries) =>
-          country.Data.fromJson(countries)).toList();
+      return json
+          .map<country.Data>((countries) => country.Data.fromJson(countries))
+          .toList();
     } else {
       throw Exception("Unable to perform request!");
     }
@@ -156,13 +186,23 @@ class ListServices {
 
   // POST
 
-  Future<SearchFilterModel> fetchFilterItems(
-      SearchFilterModel searchFilterModel) async {
-    final response = await http.post(API + '/send-filter/',
-        body: jsonEncode(searchFilterModel.toJson()));
-    if (response.statusCode == 200) {
+  Future createAddress(CreateAddress address, String token) async {
+    final response = await http.post(
+      API + '/address-book/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+      body: jsonEncode(address.toJson()),
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      jsonDecode(response.body);
     } else {
-      Exception("");
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
     }
   }
 }

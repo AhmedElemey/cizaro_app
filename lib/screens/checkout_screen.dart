@@ -1,4 +1,5 @@
 import 'package:cizaro_app/screens/add_address_screen.dart';
+import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/checkout_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,7 +34,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartViewModel>(context,listen: true);
+    final cart = Provider.of<CartViewModel>(context, listen: true);
     return Scaffold(
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
@@ -57,27 +58,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 children: [
                   Text(
                     "SHIPPING ADDRESS",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1,
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                   ),
                   Spacer(),
                   Row(
                     children: [
                       IconButton(
-                        icon : Icon(Icons.add),
-                        iconSize : 25,
-                        color: Color(0xff3EC429),
-                        onPressed: () => Navigator.of(context).pushNamed(AddAddressScreen.routeName)
-                      ),
+                          icon: Icon(Icons.add),
+                          iconSize: 25,
+                          color: Color(0xff3EC429),
+                          onPressed: () => Navigator.of(context)
+                              .pushNamed(AddAddressScreen.routeName)),
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: CircleAvatar(
-                          radius: 15,
-                          backgroundColor: Color(0xff9EA4AF),
-                          child: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                            color: Color(0xff3A559F),
+                        child: GestureDetector(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(AddressBookScreen.routeName),
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Color(0xff9EA4AF),
+                            child: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 15,
+                              color: Color(0xff3A559F),
+                            ),
                           ),
                         ),
                       )
@@ -99,23 +103,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           color: Color(0xff515C6F))),
                   Text(
                     "No 123, Sub Street\,",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1,
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                   ),
                   Text(
                     "Main Street\,",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1,
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                   ),
                   Text(
                     "City Name, Province\,",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1,
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                   ),
                   Text(
                     "Country",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1,
+                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                   ),
                 ],
               ),
@@ -149,7 +149,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   Text("Credit Card  ",
                       textScaleFactor:
-                      MediaQuery.of(context).textScaleFactor * 1.5,
+                          MediaQuery.of(context).textScaleFactor * 1.5,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Color(0xff515C6F))),
@@ -190,9 +190,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: ListView.builder(
                 itemCount: cart.cartProductModel.length,
                 itemBuilder: (ctx, index) => CheckoutItem(
-                  imgUrl: cart.cartProductModel[index].mainImg ?? "assets/images/collection.png",
-                  productName: cart.cartProductModel[index].name ?? "White Treecode",
-                  productCategory: cart.cartProductModel[index].categoryName ?? "men fashion ",
+                  imgUrl: cart.cartProductModel[index].mainImg ??
+                      "assets/images/collection.png",
+                  productName:
+                      cart.cartProductModel[index].name ?? "White Treecode",
+                  productCategory: cart.cartProductModel[index].categoryName ??
+                      "men fashion ",
                   productPrice: cart.cartProductModel[index].price ?? 65,
                   productSpecs: 34,
                 ),
@@ -274,7 +277,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
                             "PLACE ORDER",
-                            textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),

@@ -1,5 +1,7 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/searchModel.dart';
@@ -17,6 +19,19 @@ class ListViewModel extends ChangeNotifier {
     final result = await ListServices().fetchHome();
     notifyListeners();
     return result;
+  }
+
+  Future<BrandModel> fetchBrandList() async {
+    final result = await ListServices().fetchBrand();
+    notifyListeners();
+    return result;
+  }
+
+  Future<ShopModel> fetchFilter(var minimum, var maximum, var brand) async {
+    final results =
+        await ListServices().fetchFilterItems(minimum, maximum, brand);
+    notifyListeners();
+    return results;
   }
 
   Future<ProductDetailsModel> fetchProductDetailsList(int productId) async {
@@ -69,6 +84,12 @@ class ListViewModel extends ChangeNotifier {
 
   Future<List<country.Data>> fetchCountries(String token) async {
     final results = await ListServices().fetchCountries(token);
+    notifyListeners();
+    return results;
+  }
+
+  Future fetchAddress(CreateAddress address, String token) async {
+    final results = await ListServices().createAddress(address, token);
     notifyListeners();
     return results;
   }

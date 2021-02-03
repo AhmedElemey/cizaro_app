@@ -1,4 +1,5 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
@@ -18,9 +19,15 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<ShopModel> fetchFilter(int categoryId, int collectionId) async {
+  Future<BrandModel> fetchBrandList() async {
+    final result = await ListServices().fetchBrand();
+    notifyListeners();
+    return result;
+  }
+
+  Future<ShopModel> fetchFilter(var minimum, var maximum, var brand) async {
     final results =
-        await ListServices().fetchFilterItems(categoryId, collectionId);
+        await ListServices().fetchFilterItems(minimum, maximum, brand);
     notifyListeners();
     return results;
   }

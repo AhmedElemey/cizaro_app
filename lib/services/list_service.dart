@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/createAdressModel.dart';
@@ -26,11 +27,24 @@ class ListServices {
     }
   }
 
-  Future<ShopModel> fetchFilterItems(int categoryId, int collectionId) async {
-    final response = await http
-        .get(API + '/products/?category=$categoryId&collection=$collectionId');
+  Future<BrandModel> fetchBrand() async {
+    final response = await http.get(API + '/brands');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
+      print(response.body);
+      return BrandModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<ShopModel> fetchFilterItems(
+      var minimum, var maximum, var brand) async {
+    final response = await http.get(
+        API + '/products/?min_price=$minimum&max_price=$maximum&brand=$brand');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -127,10 +141,13 @@ class ListServices {
     }
   }
 
-  Future<List<productOffer.Data>> checkOfferInCart(CheckProductsOfferInCart checkProductsOfferInCart) async {
+  Future<List<productOffer.Data>> checkOfferInCart(
+      CheckProductsOfferInCart checkProductsOfferInCart) async {
     final response = await http.post(API + '/shopping-cart-check-offer/',
-        headers: {'accept': 'application/json',
-        'Content-Type': 'application/json; charset=UTF-8'},
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
         body: jsonEncode(checkProductsOfferInCart.toJson()));
     final body = jsonDecode(response.body);
     print(response.body);

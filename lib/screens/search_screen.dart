@@ -1,9 +1,11 @@
+import 'package:cizaro_app/model/brandModel.dart' as brandData;
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
+import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,13 +19,17 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  var valueCollection, valueCategory;
+  var valueBrand;
+  TextEditingController valueMinPrice = TextEditingController();
+  TextEditingController valueMaxPrice = TextEditingController();
 
   ShopModel filter;
   List filterList = [];
 
+  brandData.BrandModel brand;
+  List<brandData.Data> brandList = [];
+
   Home home;
-  List<Collections> collectionsList = [];
   List<NewArrivals> newArrivalsList = [];
 
   SearchModel searchModel;
@@ -57,17 +63,37 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
   }
 
+  Future getBrandData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
+    final getBrand = Provider.of<ListViewModel>(context, listen: false);
+    await getBrand.fetchBrandList().then((response) {
+      brand = response;
+      brandList = response.data;
+    });
+    if (this.mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    displayBottomSheet(context);
+  }
+
   Future getFilterData() async {
     if (this.mounted)
       setState(() {
         _isLoading = true;
       });
     final getFilter = Provider.of<ListViewModel>(context, listen: false);
+
     await getFilter
-        .fetchFilter(valueCategory, valueCollection)
+        .fetchFilter(valueMinPrice.text, valueMaxPrice.text, valueBrand)
         .then((response) {
       filter = response;
       filterList = filter.data.products;
+      getBrandData();
     });
     if (this.mounted) {
       setState(() {
@@ -84,7 +110,6 @@ class _SearchScreenState extends State<SearchScreen> {
     final getHome = Provider.of<ListViewModel>(context, listen: false);
     await getHome.fetchHomeList().then((response) {
       home = response;
-      collectionsList = home.data.collections;
       newArrivalsList = home.data.newArrivals;
     });
     if (this.mounted) {
@@ -95,7 +120,6 @@ class _SearchScreenState extends State<SearchScreen> {
     // if (filterList.length == 0) {
     //   displayBottomSheet(context);
     // } else  {}
-    displayBottomSheet(context);
   }
 
   displayBottomSheet(BuildContext context) {
@@ -123,7 +147,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "Filter By Collections :",
+                          "Filter By Brands :",
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.3,
                         ),
@@ -133,10 +157,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           width: MediaQuery.of(context).size.width * .5,
                           padding: EdgeInsets.only(top: 10, right: 40),
                           child: DropdownButton(
-                            hint: Text("Select Collection "),
-                            value: valueCollection,
+                            hint: Text("Select Brand "),
+                            value: valueBrand,
                             dropdownColor: Colors.grey.shade400,
-                            items: collectionsList.map((e) {
+                            items: brandList.map((e) {
                               return DropdownMenuItem(
                                 child: Text(e.name),
                                 value: e.id,
@@ -144,7 +168,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             }).toList(),
                             onChanged: (value) {
                               setState(() {
-                                valueCollection = value;
+                                valueBrand = value;
                               });
                             },
                             isExpanded: true,
@@ -153,38 +177,85 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 10),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 10, left: 10),
+                  //   child: Row(
+                  //     children: [
+                  //       Text(
+                  //         "Filter By Category :",
+                  //         textScaleFactor:
+                  //             MediaQuery.of(context).textScaleFactor * 1.5,
+                  //       ),
+                  //       Spacer(),
+                  //       Container(
+                  //         height: MediaQuery.of(context).size.height * .1,
+                  //         width: MediaQuery.of(context).size.width * .5,
+                  //         padding: EdgeInsets.only(top: 10, right: 40),
+                  //         child: DropdownButton(
+                  //           hint: Text("Select Category"),
+                  //           value: valueCategory,
+                  //           dropdownColor: Colors.grey.shade400,
+                  //           items: newArrivalsList.map((e) {
+                  //             return DropdownMenuItem(
+                  //               child: Text(e.name),
+                  //               value: e.id,
+                  //             );
+                  //           }).toList(),
+                  //           onChanged: (newValue) {
+                  //             setState(() {
+                  //               valueCategory = newValue;
+                  //             });
+                  //           },
+                  //           isExpanded: true,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    padding: EdgeInsets.only(top: 10, left: 10),
                     child: Row(
                       children: [
                         Text(
-                          "Filter By Category :",
+                          "Minimum Price : ",
                           textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.5,
+                              MediaQuery.of(context).textScaleFactor * 1.2,
                         ),
-                        Spacer(),
                         Container(
-                          height: MediaQuery.of(context).size.height * .1,
-                          width: MediaQuery.of(context).size.width * .5,
-                          padding: EdgeInsets.only(top: 10, right: 40),
-                          child: DropdownButton(
-                            hint: Text("Select Category"),
-                            value: valueCategory,
-                            dropdownColor: Colors.grey.shade400,
-                            items: newArrivalsList.map((e) {
-                              return DropdownMenuItem(
-                                child: Text(e.name),
-                                value: e.id,
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                valueCategory = newValue;
-                              });
-                            },
-                            isExpanded: true,
-                          ),
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.04,
+                          padding: EdgeInsets.only(left: 10),
+                          child: TextFieldBuild(
+                              obscureText: false,
+                              readOnly: false,
+                              textInputType: TextInputType.number,
+                              lineCount: 1,
+                              textEditingController: valueMinPrice),
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(top: 10, left: 10),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Max Price :",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.2,
                         ),
+                        Container(
+                          padding: EdgeInsets.only(left: 10),
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          height: MediaQuery.of(context).size.height * 0.04,
+                          child: TextFieldBuild(
+                              obscureText: false,
+                              readOnly: false,
+                              lineCount: 1,
+                              textInputType: TextInputType.number,
+                              textEditingController: valueMaxPrice),
+                        )
                       ],
                     ),
                   ),
@@ -290,7 +361,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           padding:
                                               const EdgeInsets.only(left: 10),
                                           child: GestureDetector(
-                                            onTap: () => getHomeData(),
+                                            onTap: () => getBrandData(),
                                             child: Icon(
                                               Icons.filter_alt_outlined,
                                               size: 30,

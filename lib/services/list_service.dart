@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/addressBookModel.dart';
+import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
@@ -208,4 +210,45 @@ class ListServices {
       throw Exception("Unable to perform request .. Try again!");
     }
   }
+
+  Future<address.AddressModel> fetchAddresses(String token) async {
+    final response = await http.get(
+      API + '/address-book/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      final body = jsonDecode(response.body);
+      return address.AddressModel.fromJson(body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+ Future<AddressBookModel>fetchShippingAddress(String token,int addressId) async {
+    final response = await http.get(
+      API + '/address-book/$addressId/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      final body = jsonDecode(response.body);
+      return AddressBookModel.fromJson(body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
 }

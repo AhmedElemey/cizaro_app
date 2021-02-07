@@ -121,7 +121,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(0),
                                   isDense: true),
-                              items: snapshot.data[0]?.cities
+                              items: snapshot.data != null ? snapshot.data[0]?.cities
                                       ?.map((country.Cities data) {
                                     return DropdownMenuItem(
                                       value: data.id,
@@ -132,7 +132,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                       ),
                                     );
                                   })?.toList() ??
-                                  null,
+                                  [] : [],
                               onChanged: (newValueSelected) {
                                 setState(() => _currentItemSelectedCities =
                                     newValueSelected);

@@ -299,6 +299,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
+              physics: ScrollPhysics(),
               child: filterList.length == 0
                   ? Column(
                       children: [
@@ -376,25 +377,22 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: double.infinity,
-                          child: ListView.builder(
-                            itemCount: productList?.length ?? 0,
-                            itemBuilder: (ctx, index) => GestureDetector(
-                              onTap: () => Navigator.of(context).pushNamed(
-                                  ProductDetails.routeName,
-                                  arguments: {
-                                    'product_id': productList[index].id
-                                  }),
-                              child: SearchItem(
-                                imgUrl: productList[index].mainImg,
-                                productName: productList[index].name,
-                                productPrice: productList[index].price,
-                                productCategory:
-                                    productList[index].category.name,
-                                //  productQuantity: ,
-                              ),
+                        ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: productList?.length ?? 0,
+                          itemBuilder: (ctx, index) => GestureDetector(
+                            onTap: () => Navigator.of(context).pushNamed(
+                                ProductDetails.routeName,
+                                arguments: {
+                                  'product_id': productList[index].id
+                                }),
+                            child: SearchItem(
+                              imgUrl: productList[index].mainImg,
+                              productName: productList[index].name,
+                              productPrice: productList[index].price,
+                              productCategory: productList[index].category.name,
+                              //  productQuantity: ,
                             ),
                           ),
                         ),
@@ -476,25 +474,22 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                         ),
-                        Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: double.infinity,
-                          child: ListView.builder(
-                            itemCount: filterList?.length ?? 0,
-                            itemBuilder: (ctx, index) => GestureDetector(
-                              onTap: () => Navigator.of(context).pushNamed(
-                                  ProductDetails.routeName,
-                                  arguments: {
-                                    'product_id': filterList[index].id
-                                  }),
-                              child: SearchItem(
-                                imgUrl: filterList[index].mainImg,
-                                productName: filterList[index].name,
-                                productPrice: filterList[index].price,
-                                productCategory:
-                                    filterList[index].category.name,
-                                //  productQuantity: ,
-                              ),
+                        ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: filterList?.length ?? 0,
+                          itemBuilder: (ctx, index) => GestureDetector(
+                            onTap: () => Navigator.of(context).pushNamed(
+                                ProductDetails.routeName,
+                                arguments: {
+                                  'product_id': filterList[index].id
+                                }),
+                            child: SearchItem(
+                              imgUrl: filterList[index].mainImg,
+                              productName: filterList[index].name,
+                              productPrice: filterList[index].price,
+                              productCategory: filterList[index].category.name,
+                              //  productQuantity: ,
                             ),
                           ),
                         ),

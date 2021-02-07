@@ -21,16 +21,28 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
-  bool _isLoading = false,_isLoading2 = false, _isColor = false,_isSelected = false;
+  bool _isLoading = false,
+      _isLoading2 = false,
+      _isColor = false,
+      _isSelected = false;
   ProductDetailsModel productDetails;
   FToast fToast;
-  int _selectedColor = -1,_selectedSize = -1, productId,specId,productAvailability;
-  String productName, imgUrl, productDescription, specTitle,colorSpecValue,sizeSpecValue;
+  int _selectedColor = -1,
+      _selectedSize = -1,
+      productId,
+      specId,
+      productAvailability;
+  String productName,
+      imgUrl,
+      productDescription,
+      specTitle,
+      colorSpecValue,
+      sizeSpecValue;
   double productPrice, productStar;
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
   List<Values> productSpecs = [];
-  List<rs.Data> relatedSpecList =[];
+  List<rs.Data> relatedSpecList = [];
   rs.RelatedSpec relatedSpec;
 
   Future getHomeData() async {
@@ -52,7 +64,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       specTitle = productDetails?.data.specs?.name ?? "";
 
       _isColor = productDetails?.data.specs?.isColor ?? false;
-      specId = productDetails.data.specs.id;
+      specId = productDetails?.data.specs?.id ?? 1;
       specTitle = productDetails?.data.specs?.name ?? "";
       //
       productRelated = productDetails.data.relatedProducts;
@@ -72,7 +84,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final getSpec = Provider.of<ListViewModel>(context, listen: false);
     await getSpec.fetchSpecValues(selectedSpec).then((value) {
       relatedSpec = value;
-      relatedSpecList= relatedSpec.data;
+      relatedSpecList = relatedSpec.data;
     });
     if (this.mounted) setState(() => _isLoading2 = false);
   }
@@ -147,7 +159,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-        physics: ScrollPhysics(),
+              physics: ScrollPhysics(),
               child: Column(
                 children: [
                   GradientAppBar(""),
@@ -265,7 +277,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                     padding: EdgeInsets.only(left: 20, top: 15),
                     child: Row(
                       children: [
-                        Text(specTitle == '' ? '': "Select $specTitle".toUpperCase(),
+                        Text(
+                          specTitle == ''
+                              ? ''
+                              : "Select $specTitle".toUpperCase(),
                           style: TextStyle(color: Color(0xff515C6F)),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1,
@@ -275,128 +290,143 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   _isColor == true
                       ? GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: productSpecs.length,
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 1.9,
-                                crossAxisCount: 6,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 5),
-                        itemBuilder: (BuildContext context, int index) {
-                          return GridTile(
-                              child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedColor = productSpecs[index].id;
-                                _selectedColor = index;
-                                _isSelected = true;
-                              });
-                              getSpecData();
-                            },
-                            child: CircleAvatar(
-                                radius: .3,
-                                child: _selectedColor == index
-                                    ? Center(
-                                        child: Icon(Icons.check,
-                                            color: Theme.of(context)
-                                                .primaryColor))
-                                    : Text(''),
-                                foregroundColor: Color(int.parse('0xff' +
-                                    productSpecs[index]
-                                        .value
-                                        .split('#')
-                                        .last)),
-                                backgroundColor: Color(int.parse('0xff' +
-                                    productSpecs[index]
-                                        .value
-                                        .split('#')
-                                        .last))),
-                          ));
-                        },
-                      )
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: productSpecs.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 1.9,
+                                  crossAxisCount: 6,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5),
+                          itemBuilder: (BuildContext context, int index) {
+                            return GridTile(
+                                child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedColor = productSpecs[index].id;
+                                  _selectedColor = index;
+                                  _isSelected = true;
+                                });
+                                getSpecData();
+                              },
+                              child: CircleAvatar(
+                                  radius: .3,
+                                  child: _selectedColor == index
+                                      ? Center(
+                                          child: Icon(Icons.check,
+                                              color: Theme.of(context)
+                                                  .primaryColor))
+                                      : Text(''),
+                                  foregroundColor: Color(int.parse('0xff' +
+                                      productSpecs[index]
+                                          .value
+                                          .split('#')
+                                          .last)),
+                                  backgroundColor: Color(int.parse('0xff' +
+                                      productSpecs[index]
+                                          .value
+                                          .split('#')
+                                          .last))),
+                            ));
+                          },
+                        )
                       : GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                        itemCount: productSpecs.length,
-                        padding: const EdgeInsets.only(right: 10, left: 10,top: 10),
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 2.1,
-                                crossAxisCount: 6,
-                                crossAxisSpacing: 5,
-                                mainAxisSpacing: 5),
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: (){
-                              setState(() {
-                                _selectedSize = productSpecs[index].id;
-                                _selectedSize = index;
-                                _isSelected = true;
-                                sizeSpecValue = productSpecs[index].value;
-                                print(sizeSpecValue);
-                              });
-                              getSpecData();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(left: 5),
-                              child: Text(
-                                productSpecs[index].value,
-                                style: TextStyle(
-                                  color: _selectedSize == index
-                                      ? Color(0xffE7A646)
-                                      : Color(0xff707070),
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: productSpecs.length,
+                          padding: const EdgeInsets.only(
+                              right: 10, left: 10, top: 10),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 2.1,
+                                  crossAxisCount: 6,
+                                  crossAxisSpacing: 5,
+                                  mainAxisSpacing: 5),
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _selectedSize = productSpecs[index].id;
+                                  _selectedSize = index;
+                                  _isSelected = true;
+                                  sizeSpecValue = productSpecs[index].value;
+                                  print(sizeSpecValue);
+                                });
+                                getSpecData();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(left: 5),
+                                child: Text(
+                                  productSpecs[index].value,
+                                  style: TextStyle(
+                                    color: _selectedSize == index
+                                        ? Color(0xffE7A646)
+                                        : Color(0xff707070),
+                                  ),
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1.2,
                                 ),
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.2,
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                  _isSelected == true ? _isLoading2 ? SizedBox(width:0,height:0,child: CircularProgressIndicator(valueColor:AlwaysStoppedAnimation<Color>(Colors.white)))
-                      : GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: relatedSpecList?.length ?? 0,
-                    gridDelegate:
-                    SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 2.1,
-                        crossAxisCount: 6,
-                        crossAxisSpacing: 5,
-                        mainAxisSpacing: 5),
-                    itemBuilder: (BuildContext context, int index) {
-                      return GridTile(
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _selectedColor = index;
-                                colorSpecValue = relatedSpecList[index].values[index].value.split('#').last;
-                              });
-                            },
-                            child: CircleAvatar(
-                                radius: .3,
-                                child: _selectedColor == index
-                                    ? Center(
-                                    child: Icon(Icons.check,
-                                        color: Theme.of(context)
-                                            .primaryColor))
-                                    : Text(''),
-                                foregroundColor: Color(int.parse('0xff' +
-                                    relatedSpecList[index].values[index]
-                                        .value
-                                        .split('#')
-                                        .last)),
-                                backgroundColor: Color(int.parse('0xff' +
-                                    relatedSpecList[index].values[index]
-                                        .value
-                                        .split('#')
-                                        .last))),
-                          ));
-                    },
-                  ) : Container(),
+                            );
+                          },
+                        ),
+                  _isSelected == true
+                      ? _isLoading2
+                          ? SizedBox(
+                              width: 0,
+                              height: 0,
+                              child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white)))
+                          : GridView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: relatedSpecList?.length ?? 0,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      childAspectRatio: 2.1,
+                                      crossAxisCount: 6,
+                                      crossAxisSpacing: 5,
+                                      mainAxisSpacing: 5),
+                              itemBuilder: (BuildContext context, int index) {
+                                return GridTile(
+                                    child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedColor = index;
+                                      colorSpecValue = relatedSpecList[index]
+                                          .values[index]
+                                          .value
+                                          .split('#')
+                                          .last;
+                                    });
+                                  },
+                                  child: CircleAvatar(
+                                      radius: .3,
+                                      child: _selectedColor == index
+                                          ? Center(
+                                              child: Icon(Icons.check,
+                                                  color: Theme.of(context)
+                                                      .primaryColor))
+                                          : Text(''),
+                                      foregroundColor: Color(int.parse('0xff' +
+                                          relatedSpecList[index]
+                                              .values[index]
+                                              .value
+                                              .split('#')
+                                              .last)),
+                                      backgroundColor: Color(int.parse('0xff' +
+                                          relatedSpecList[index]
+                                              .values[index]
+                                              .value
+                                              .split('#')
+                                              .last))),
+                                ));
+                              },
+                            )
+                      : Container(),
                   Container(
                     width: MediaQuery.of(context).size.width * .44,
                     height: MediaQuery.of(context).size.height * .066,

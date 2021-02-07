@@ -56,9 +56,7 @@ class Data {
   int brand;
   List<RelatedProducts> relatedProducts;
   List<Null> productReviews;
-  String type;
-  double discount;
-  double afterPrice;
+  Offer offer;
 
   Data(
       {this.id,
@@ -78,9 +76,7 @@ class Data {
       this.brand,
       this.relatedProducts,
       this.productReviews,
-      this.type,
-      this.discount,
-      this.afterPrice});
+      this.offer});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -117,9 +113,7 @@ class Data {
     //     productReviews.add(new Null.fromJson(v));
     //   });
     // }
-    type = json['type'];
-    discount = json['discount'];
-    afterPrice = json['after_price'];
+    offer = json['offer'] != null ? new Offer.fromJson(json['offer']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -153,9 +147,9 @@ class Data {
     //   data['product_reviews'] =
     //       this.productReviews.map((v) => v.toJson()).toList();
     // }
-    data['type'] = this.type;
-    data['discount'] = this.discount;
-    data['after_price'] = this.afterPrice;
+    if (this.offer != null) {
+      data['offer'] = this.offer.toJson();
+    }
     return data;
   }
 }
@@ -211,7 +205,7 @@ class Specs {
   }
 }
 
-class Values{
+class Values {
   int id;
   String value;
   int quantity;
@@ -243,7 +237,7 @@ class RelatedProducts {
   double price;
   String mainImg;
   double stars;
-  Offer offer;
+  // Offer offer;
   int availability;
 
   RelatedProducts(
@@ -253,7 +247,7 @@ class RelatedProducts {
       this.price,
       this.mainImg,
       this.stars,
-      this.offer,
+      // this.offer,
       this.availability});
 
   RelatedProducts.fromJson(Map<String, dynamic> json) {
@@ -265,7 +259,7 @@ class RelatedProducts {
     price = json['price'];
     mainImg = json['main_img'];
     stars = json['stars'];
-    offer = json['offer'];
+    // offer = json['offer'];
     availability = json['availability'];
   }
 
@@ -279,33 +273,12 @@ class RelatedProducts {
     data['price'] = this.price;
     data['main_img'] = this.mainImg;
     data['stars'] = this.stars;
-    data['offer'] = this.offer;
+    // data['offer'] = this.offer;
     data['availability'] = this.availability;
     return data;
   }
 }
 
-// class Offer {
-//   String type;
-//   double discount;
-//   double afterPrice;
-//
-//   Offer({this.type, this.discount, this.afterPrice});
-//
-//   Offer.fromJson(Map<String, dynamic> json) {
-//     type = json['type'];
-//     discount = json['discount'];
-//     afterPrice = json['after_price'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['type'] = this.type;
-//     data['discount'] = this.discount;
-//     data['after_price'] = this.afterPrice;
-//     return data;
-//   }
-// }
 class Offer {
   String type;
   double discount;
@@ -326,19 +299,3 @@ class Offer {
     return data;
   }
 }
-
-// class Type {
-//   String name;
-//
-//   Type({this.name});
-//
-//   Type.fromJson(Map<String, dynamic> json) {
-//     name = json['name'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = new Map<String, dynamic>();
-//     data['name'] = this.name;
-//     return data;
-//   }
-// }

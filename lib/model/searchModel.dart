@@ -69,7 +69,7 @@ class SearchProducts {
   Null stars;
   Category category;
   bool specs;
-  Null offer;
+  // Offer offer;
   int availability;
 
   SearchProducts(
@@ -80,7 +80,7 @@ class SearchProducts {
       this.stars,
       this.category,
       this.specs,
-      this.offer,
+      // this.offer,
       this.availability});
 
   SearchProducts.fromJson(Map<String, dynamic> json) {
@@ -93,7 +93,11 @@ class SearchProducts {
         ? new Category.fromJson(json['category'])
         : null;
     specs = json['specs'];
+
     //  offer = json['offer'];
+
+    // offer = json['offer'];
+
     availability = json['availability'];
   }
 
@@ -108,7 +112,11 @@ class SearchProducts {
       data['category'] = this.category.toJson();
     }
     data['specs'] = this.specs;
+
     //   data['offer'] = this.offer;
+
+    // data['offer'] = this.offer;
+
     data['availability'] = this.availability;
     return data;
   }

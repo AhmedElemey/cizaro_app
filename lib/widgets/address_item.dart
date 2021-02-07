@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class AddressItem extends StatelessWidget {
   final String strName, strNumber, strMain, cityName, countryName;
+  final Color bgColor;
   const AddressItem(
       {this.strName,
       this.strNumber,
       this.strMain,
+        this.bgColor,
       this.cityName,
       this.countryName});
   @override
@@ -18,6 +20,7 @@ class AddressItem extends StatelessWidget {
         child: Container(
           height: MediaQuery.of(context).size.height * .15,
           padding: EdgeInsets.only(left: 5, top: 5),
+          color: bgColor,
           child: Row(children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

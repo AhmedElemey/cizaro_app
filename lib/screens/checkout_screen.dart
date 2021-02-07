@@ -1,6 +1,9 @@
+import 'package:cizaro_app/model/addressBookModel.dart';
+import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
+import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/checkout_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +11,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cizaro_app/model/addressModel.dart' as address;
 
 class CheckoutScreen extends StatefulWidget {
   static final routeName = '/checkout-screen';
@@ -17,31 +22,75 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  int selectedRadio;
+  int selectedRadio, addressId;
+  String addressName, countryName, cityName, regionName;
+  bool _isLoading = false;
+  AddressModel addressModel;
+  AddressBookModel addressBookModel;
+  List<address.Data> addressesList = [];
   TextEditingController _promoCodeController = TextEditingController();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    selectedRadio = 0;
+
+  Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 
   setSelectedRadio(int val) {
-    setState(() {
-      selectedRadio = val;
+    setState(() => selectedRadio = val);
+  }
+
+  fetchLastShippingAddress() async {
+    if (this.mounted) setState(() => _isLoading = true);
+    final getAddress = Provider.of<ListViewModel>(context, listen: false);
+    String token = await getToken();
+    print(token);
+    await getAddress.fetchAddresses(token).then((response) {
+      addressModel = response;
+      addressesList = addressModel.data;
     });
+    if (this.mounted) {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  fetchSelectedShippingAddress() async {
+    if (this.mounted) setState(() => _isLoading = true);
+    final getAddress = Provider.of<ListViewModel>(context, listen: false);
+    String token = await getToken();
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    addressId = arguments['address_id'];
+    await getAddress.fetchShippingAddress(token, addressId).then((response) {
+      addressBookModel = response;
+      addressName = addressBookModel.data.streetAddress;
+      countryName = addressBookModel.data.country.name;
+      cityName = addressBookModel.data.city.name;
+      regionName = addressBookModel.data.region;
+    });
+    if (this.mounted) {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    selectedRadio = 0;
+    Future.microtask(() => addressId == null
+        ? fetchLastShippingAddress()
+        : fetchSelectedShippingAddress());
   }
 
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartViewModel>(context, listen: true);
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     return Scaffold(
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GradientAppBar("Complete order"),
+            GradientAppBar("Complete Order"),
             Container(
               padding: EdgeInsets.only(left: 10, top: 5),
               width: MediaQuery.of(context).size.width,
@@ -90,36 +139,81 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(left: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("John Doe",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.5,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff515C6F))),
-                  Text(
-                    "No 123, Sub Street\,",
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
+            arguments == null
+                ? Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: ListView.builder(
+                      itemCount: addressesList.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) => index == 0
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    addressesList[index].streetAddress ??
+                                        "John Doe",
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor *
+                                            1.5,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xff515C6F))),
+                                Text(
+                                  addressesList[index].region ??
+                                      "Main Street\,",
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1,
+                                ),
+                                Text(
+                                  addressesList[index].city.name ??
+                                      "City Name, Province\,",
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1,
+                                ),
+                                Text(
+                                  addressesList[index].country.name ??
+                                      "Country",
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1,
+                                ),
+                              ],
+                            )
+                          : Container(),
+                    ),
+                  )
+                : Container(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(arguments['street_name'] ?? "John Doe",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.5,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff515C6F))),
+                        Text(
+                          arguments['region_name'] ?? "Main Street\,",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1,
+                        ),
+                        Text(
+                          arguments['city_name'] ?? "City Name, Province\,",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1,
+                        ),
+                        Text(
+                          arguments['country_name'] ?? "Country",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1,
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    "Main Street\,",
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
-                  ),
-                  Text(
-                    "City Name, Province\,",
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
-                  ),
-                  Text(
-                    "Country",
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
-                  ),
-                ],
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Divider(
@@ -170,6 +264,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 ],
               ),
             ),
+            selectedRadio == 1
+                ? Center(
+                    child: Text('Not Available Now!.',
+                        textScaleFactor:
+                            MediaQuery.of(context).textScaleFactor * 1))
+                : Container(),
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Divider(
@@ -209,7 +309,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.06,
                     width: MediaQuery.of(context).size.width * 0.5,
-                    margin: const EdgeInsets.only(right: 10,left: 25),
+                    margin: const EdgeInsets.only(right: 10, left: 25),
                     child: TextField(
                       controller: _promoCodeController,
                       keyboardType: TextInputType.text,
@@ -217,21 +317,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           filled: true,
                           fillColor: Colors.white,
                           contentPadding:
-                          const EdgeInsets.only(right: 15, left: 15),
-                          hintText:
-                          'Promo Code',
+                              const EdgeInsets.only(right: 15, left: 15),
+                          hintText: 'Promo Code',
                           border: OutlineInputBorder(
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(10)))),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)))),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 5,right: 5),
+                    padding: const EdgeInsets.only(left: 5, right: 5),
                     child: Text(
                       "Add",
                       style: TextStyle(color: Color(0xff3A559F)),
                       textScaleFactor:
-                      MediaQuery.of(context).textScaleFactor * 1.4,
+                          MediaQuery.of(context).textScaleFactor * 1.4,
                     ),
                   ),
                 ],

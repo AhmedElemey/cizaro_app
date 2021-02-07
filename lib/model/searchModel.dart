@@ -93,7 +93,7 @@ class SearchProducts {
         ? new Category.fromJson(json['category'])
         : null;
     specs = json['specs'];
-    offer = json['offer'];
+    //  offer = json['offer'];
     availability = json['availability'];
   }
 
@@ -108,7 +108,7 @@ class SearchProducts {
       data['category'] = this.category.toJson();
     }
     data['specs'] = this.specs;
-    data['offer'] = this.offer;
+    //   data['offer'] = this.offer;
     data['availability'] = this.availability;
     return data;
   }

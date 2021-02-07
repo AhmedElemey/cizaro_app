@@ -1,4 +1,5 @@
 import 'package:cizaro_app/model/home.dart';
+import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -281,7 +282,8 @@ class _GradientAppBarState extends State<GradientAppBar> {
                   Icons.search,
                 ),
                 onPressed: () {
-                  //    showSearch(context: context, delegate: Search());
+                  Navigator.of(context).pushNamed(SearchBarScreen
+                      .routeName); //    showSearch(context: context, delegate: Search());
                 },
               ),
             ),

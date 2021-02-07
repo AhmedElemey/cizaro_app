@@ -1,18 +1,18 @@
 import 'dart:convert';
+
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
+import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
-import 'package:cizaro_app/model/searchFilter.dart';
-import 'package:cizaro_app/model/searchModel.dart';
-import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart';
+import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
-import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:http/http.dart' as http;
 
@@ -90,7 +90,7 @@ class ListServices {
     final response = await http.get(API + '/products/?search=$searchTxt');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      //print(response.body);
+      print(response.body);
       return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -131,8 +131,11 @@ class ListServices {
   }
 
   Future<RelatedSpec> fetchSpecs(Spec spec) async {
-    final response = await http.post(API + '/send-product-spec-value-id/',headers: {'accept': 'application/json',
-      'Content-Type': 'application/json; charset=UTF-8'},
+    final response = await http.post(API + '/send-product-spec-value-id/',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
         body: jsonEncode(spec.toJson()));
     final body = jsonDecode(response.body);
     print(response.body);

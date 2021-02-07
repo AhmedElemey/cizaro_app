@@ -1,16 +1,17 @@
 import 'dart:io';
+
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
+import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
+import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/profile_screen.dart';
-import 'package:cizaro_app/screens/addressbook_screen.dart';
-import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/screens/search_screen.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
@@ -21,8 +22,8 @@ import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 //hamada
 
@@ -71,7 +72,7 @@ void main() {
             SearchBarScreen.routeName: (ctx) => SearchBarScreen(),
             AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
             PolicesTermsScreen.routeName: (ctx) => PolicesTermsScreen(),
-            AddAddressScreen.routeName: (ctx) => AddAddressScreen()
+            AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
           },
         ),
       ),

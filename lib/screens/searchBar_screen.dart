@@ -1,6 +1,8 @@
 import 'package:cizaro_app/model/searchModel.dart';
+import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/searchBar_item.dart';
+import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -110,7 +112,7 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         physics: BouncingScrollPhysics(),
 // Title is displayed on an unopened (inactive) search bar
         title: Text(
-          selectedTerm ?? 'The Search App',
+          selectedTerm ?? 'The Search ',
           style: Theme.of(context).textTheme.headline6,
         ),
 // Hint gets displayed once the search bar is tapped and opened
@@ -126,10 +128,13 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         },
         onSubmitted: (query) {
           getSearchData(query);
-          setState(() {
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
+
+          // setState(() {
+          //         addSearchTerm(query);
+          //         selectedTerm = query;
+          //
+          //
+          //       });
           controller.close();
         },
 
@@ -165,6 +170,26 @@ class _SearchBarItemState extends State<SearchBarScreen> {
                         });
                         controller.close();
                       },
+                    );
+                  } else if (productList.length != null) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: double.infinity,
+                      child: ListView.builder(
+                        itemCount: productList?.length ?? 0,
+                        itemBuilder: (ctx, index) => GestureDetector(
+                          onTap: () => Navigator.of(context).pushNamed(
+                              ProductDetails.routeName,
+                              arguments: {'product_id': productList[index].id}),
+                          child: SearchItem(
+                            imgUrl: productList[index].mainImg,
+                            productName: productList[index].name,
+                            productPrice: productList[index].price,
+                            productCategory: productList[index].category.name,
+                            //  productQuantity: ,
+                          ),
+                        ),
+                      ),
                     );
                   } else {
                     return Column(

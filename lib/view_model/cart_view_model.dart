@@ -35,6 +35,7 @@ class CartViewModel extends ChangeNotifier {
 
      final checkProductsOfferInCart = CheckProductsOfferInCart(items: itemsList);
    _cartItemsAfterOffer = await ListServices().checkOfferInCart(checkProductsOfferInCart);
+   // _cartItemsAfterOffer.forEach((element) { element.});
    print(_cartItemsAfterOffer);
     notifyListeners();
   }

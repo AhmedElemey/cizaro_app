@@ -10,6 +10,7 @@ import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/services/list_service.dart';
+import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:flutter/cupertino.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 
@@ -88,8 +89,20 @@ class ListViewModel extends ChangeNotifier {
     return results;
   }
 
+  Future<address.AddressModel> fetchAddresses(String token) async {
+    final results = await ListServices().fetchAddresses(token);
+    notifyListeners();
+    return results;
+  }
+
   Future fetchAddress(CreateAddress address, String token) async {
     final results = await ListServices().createAddress(address, token);
+    notifyListeners();
+    return results;
+  }
+
+  Future fetchShippingAddress(String token,int addressId) async {
+    final results = await ListServices().fetchShippingAddress(token, addressId);
     notifyListeners();
     return results;
   }

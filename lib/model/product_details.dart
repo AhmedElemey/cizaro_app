@@ -43,7 +43,7 @@ class Data {
   String name;
   String mainImg;
   List<MultiImages> multiImages;
-  double price;
+  double price, productPriceAfter;
   double stars;
   int reviews;
   int availability;
@@ -64,6 +64,7 @@ class Data {
       this.mainImg,
       this.multiImages,
       this.price,
+      this.productPriceAfter,
       this.stars,
       this.reviews,
       this.availability,
@@ -237,7 +238,7 @@ class RelatedProducts {
   double price;
   String mainImg;
   double stars;
-  // Offer offer;
+  Offer offer;
   int availability;
 
   RelatedProducts(
@@ -247,7 +248,7 @@ class RelatedProducts {
       this.price,
       this.mainImg,
       this.stars,
-      // this.offer,
+      this.offer,
       this.availability});
 
   RelatedProducts.fromJson(Map<String, dynamic> json) {
@@ -259,7 +260,7 @@ class RelatedProducts {
     price = json['price'];
     mainImg = json['main_img'];
     stars = json['stars'];
-    // offer = json['offer'];
+    offer = json['offer'] != null ? new Offer.fromJson(json['offer']) : null;
     availability = json['availability'];
   }
 
@@ -273,7 +274,7 @@ class RelatedProducts {
     data['price'] = this.price;
     data['main_img'] = this.mainImg;
     data['stars'] = this.stars;
-    // data['offer'] = this.offer;
+    data['offer'] = this.offer;
     data['availability'] = this.availability;
     return data;
   }
@@ -288,7 +289,7 @@ class Offer {
   Offer.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     discount = json['discount'];
-    afterPrice = json['afterPrice'];
+    afterPrice = json['after_price'];
   }
 
   Map<String, dynamic> toJson() {

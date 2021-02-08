@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class ShopItem extends StatefulWidget {
   final String productName, imgUrl, productCategory;
-  final double totalPrice, productPrice, productStars;
+  final double totalPrice, productPrice, productStars, productPriceAfter;
   final int productQuantity, productId;
 
   const ShopItem(
@@ -17,6 +17,7 @@ class ShopItem extends StatefulWidget {
       this.productPrice,
       this.productCategory,
       this.totalPrice,
+      this.productPriceAfter,
       this.productQuantity,
       this.productId});
 
@@ -78,8 +79,8 @@ class _ShopItemState extends State<ShopItem> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * .07,
-                      height: MediaQuery.of(context).size.height * .3,
+                      width: MediaQuery.of(context).size.width * .3,
+                      height: MediaQuery.of(context).size.height * .2,
                       child: Image.network(
                         widget.imgUrl,
                         loadingBuilder: (BuildContext context, Widget child,
@@ -104,6 +105,7 @@ class _ShopItemState extends State<ShopItem> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        padding: EdgeInsets.only(left: 10),
                         child: Text(
                           widget.productName,
                           textScaleFactor:
@@ -111,80 +113,124 @@ class _ShopItemState extends State<ShopItem> {
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.only(left: 10),
                         child: Text(
                           widget.productCategory ?? '',
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Text(
-                          widget.productPrice.toString() + ' LE',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.1,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width * .25,
+                      widget.productPriceAfter == widget.productPrice
+                          ? Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Text(
+                                widget.productPrice.toString() + ' LE',
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.15,
+                              ),
+                            )
+                          : Container(
                               child: Row(
-                                children: [
+                                children: <Widget>[
                                   Container(
-                                    child: CircleAvatar(
-                                      radius: 15,
-                                      backgroundColor: Colors.black12,
-                                      child: Container(
-                                        padding: EdgeInsets.only(bottom: 10),
-                                        child: Icon(
-                                          Icons.minimize,
-                                          size: 20,
-                                          color: Color(0xff707070),
-                                        ),
-                                      ),
+                                    padding: EdgeInsets.only(
+                                      top: 5,
+                                    ),
+                                    child: Text(
+                                      widget.productPrice.toString() + ' LE',
+                                      textScaleFactor: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          1.15,
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          decoration:
+                                              TextDecoration.lineThrough),
                                     ),
                                   ),
-                                  Spacer(),
                                   Container(
-                                    child: Container(
-                                      child: Text(
-                                        widget.productQuantity.toString(),
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1.5,
-                                      ),
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Container(
-                                    padding: EdgeInsets.only(right: 5),
-                                    child: CircleAvatar(
-                                      radius: 15,
-                                      backgroundColor: Colors.black12,
-                                      child: Container(
-                                        padding: EdgeInsets.only(bottom: 2),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 20,
-                                          color: Color(0xff707070),
-                                        ),
-                                      ),
+                                    padding: EdgeInsets.only(top: 5, left: 10),
+                                    child: Text(
+                                      widget.productPriceAfter.toString() +
+                                          ' LE',
+                                      textScaleFactor: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          1.15,
                                     ),
                                   )
                                 ],
                               ),
                             ),
+
+                      // Container(
+                      //   padding: EdgeInsets.only(top: 10, left: 10),
+                      //   child: Text(
+                      //     widget.productPrice.toString() + ' LE',
+                      //     style: TextStyle(fontWeight: FontWeight.bold),
+                      //     textScaleFactor:
+                      //         MediaQuery.of(context).textScaleFactor * 1.1,
+                      //   ),
+                      // ),
+                      Container(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Row(
+                          children: [
+                            // Container(
+                            //   width: MediaQuery.of(context).size.width * .25,
+                            //   child: Row(
+                            //     children: [
+                            //       Container(
+                            //         child: CircleAvatar(
+                            //           radius: 15,
+                            //           backgroundColor: Colors.black12,
+                            //           child: Container(
+                            //             padding: EdgeInsets.only(bottom: 10),
+                            //             child: Icon(
+                            //               Icons.minimize,
+                            //               size: 20,
+                            //               color: Color(0xff707070),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       Spacer(),
+                            //       Container(
+                            //         child: Container(
+                            //           child: Text(
+                            //             widget.productQuantity.toString(),
+                            //             textScaleFactor: MediaQuery.of(context)
+                            //                     .textScaleFactor *
+                            //                 1.5,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       Spacer(),
+                            //       Container(
+                            //         padding: EdgeInsets.only(right: 5),
+                            //         child: CircleAvatar(
+                            //           radius: 15,
+                            //           backgroundColor: Colors.black12,
+                            //           child: Container(
+                            //             padding: EdgeInsets.only(bottom: 2),
+                            //             child: Icon(
+                            //               Icons.add,
+                            //               size: 20,
+                            //               color: Color(0xff707070),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
                             Spacer(),
                             Container(
                               width: MediaQuery.of(context).size.width * .15,
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.only(right: 5, top: 5),
+                                    padding: EdgeInsets.only(
+                                        left: 10, right: 5, top: 5),
                                     child: Container(
                                       padding: EdgeInsets.only(bottom: 10),
                                       child: GestureDetector(

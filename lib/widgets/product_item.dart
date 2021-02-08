@@ -1,5 +1,4 @@
 import 'package:cizaro_app/model/favModel.dart';
-
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,15 +8,17 @@ import 'package:provider/provider.dart';
 class ProductItem extends StatefulWidget {
   final String productName, imgUrl, categoryName;
   final int productId;
-  final double productPrice;
+  final double productPrice, productPriceAfter;
   double stars;
   int isFav;
+
   ProductItem(
       {this.productId,
       this.productName,
       this.categoryName,
       this.imgUrl,
       this.productPrice,
+      this.productPriceAfter,
       this.stars,
       this.isFav});
 
@@ -129,13 +130,41 @@ class _ProductItemState extends State<ProductItem> {
                   textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(top: 5, right: 10),
-                child: Text(
-                  widget.productPrice.toString() + ' LE',
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.1,
-                ),
-              ),
+              widget.productPriceAfter == widget.productPrice
+                  ? Container(
+                      padding: EdgeInsets.only(top: 5, right: 10),
+                      child: Text(
+                        widget.productPrice.toString() + ' LE',
+                        textScaleFactor:
+                            MediaQuery.of(context).textScaleFactor * 1.1,
+                      ),
+                    )
+                  : Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(top: 5, right: 10),
+                            child: Text(
+                              widget.productPrice.toString() + ' LE',
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5, right: 10),
+                            child: Text(
+                              widget.productPriceAfter.toString() + ' LE',
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
             ],
           ),
         ),

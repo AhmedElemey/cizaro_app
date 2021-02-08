@@ -4,13 +4,15 @@ import 'package:flutter_svg/svg.dart';
 
 class SearchItem extends StatefulWidget {
   final String productName, imgUrl, productCategory, iconAdd, iconMinus;
-  final double totalPrice, productPrice;
+  final double totalPrice, productPrice, productPriceAfter;
   int productAvailability;
   String productQuantity;
+
   SearchItem(
       {this.productName,
       this.imgUrl,
       this.productPrice,
+      this.productPriceAfter,
       this.productCategory,
       this.iconAdd,
       this.iconMinus,
@@ -40,7 +42,7 @@ class _SearchItemState extends State<SearchItem> {
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
           child: Container(
-            height: MediaQuery.of(context).size.height * .15,
+            height: MediaQuery.of(context).size.height * .18,
             width: MediaQuery.of(context).size.width * .1,
             padding: EdgeInsets.only(left: 10, right: 10),
             child: Row(
@@ -87,14 +89,56 @@ class _SearchItemState extends State<SearchItem> {
                               MediaQuery.of(context).textScaleFactor * 1.1,
                         ),
                       ),
-                      Container(
-                        child: Text(
-                          widget.productPrice.toString() + ' LE',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.1,
-                        ),
-                      ),
+
+                      widget.productPriceAfter == widget.productPrice
+                          ? Container(
+                              padding: EdgeInsets.only(right: 10),
+                              child: Text(
+                                widget.productPrice.toString() + ' LE',
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.1,
+                              ),
+                            )
+                          : Container(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.only(top: 5, right: 10),
+                                    child: Text(
+                                      widget.productPrice.toString() + ' LE',
+                                      textScaleFactor: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          1.1,
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          decoration:
+                                              TextDecoration.lineThrough),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 5, right: 10),
+                                    child: Text(
+                                      widget.productPriceAfter.toString() +
+                                          ' LE',
+                                      textScaleFactor: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          1.1,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                      // Container(
+                      //   child: Text(
+                      //     widget.productPrice.toString() + ' LE',
+                      //     style: TextStyle(fontWeight: FontWeight.bold),
+                      //     textScaleFactor:
+                      //         MediaQuery.of(context).textScaleFactor * 1.1,
+                      //   ),
+                      // ),
                       Container(
                         child: Row(
                           children: [

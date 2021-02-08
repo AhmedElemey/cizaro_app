@@ -231,7 +231,8 @@ class ListServices {
     }
   }
 
- Future<AddressBookModel>fetchShippingAddress(String token,int addressId) async {
+  Future<AddressBookModel> fetchShippingAddress(
+      String token, int addressId) async {
     final response = await http.get(
       API + '/address-book/$addressId/',
       headers: {
@@ -250,5 +251,4 @@ class ListServices {
       throw Exception("Unable to perform request .. Try again!");
     }
   }
-
 }

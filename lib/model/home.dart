@@ -97,14 +97,14 @@ class Data {
 class HotDeals {
   int id;
   String name;
-  Offer offer;
+  OfferHot offer;
 
   HotDeals({this.id, this.name, this.offer});
 
   HotDeals.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    offer = json['offer'] != null ? new Offer.fromJson(json['offer']) : null;
+    offer = json['offer'] != null ? new OfferHot.fromJson(json['offer']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -118,16 +118,16 @@ class HotDeals {
   }
 }
 
-class Offer {
+class OfferHot {
   Type type;
   String description;
   String image;
   double discount;
 
-  Offer({this.type, this.description, this.image, this.discount});
+  OfferHot({this.type, this.description, this.image, this.discount});
 
-  Offer.fromJson(Map<String, dynamic> json) {
-    // type = json['type'] != null ? new Type.fromJson(json['type']) : null;
+  OfferHot.fromJson(Map<String, dynamic> json) {
+    type = json['type'] != null ? new Type.fromJson(json['type']) : null;
     description = json['description'];
     image = json['image'];
     discount = json['discount'];
@@ -141,6 +141,28 @@ class Offer {
     data['description'] = this.description;
     data['image'] = this.image;
     data['discount'] = this.discount;
+    return data;
+  }
+}
+
+class Offer {
+  String type;
+  double discount;
+  double afterPrice;
+
+  Offer({this.type, this.discount, this.afterPrice});
+
+  Offer.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    discount = json['discount'];
+    afterPrice = json['after_price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['discount'] = this.discount;
+    data['afterPrice'] = this.afterPrice;
     return data;
   }
 }

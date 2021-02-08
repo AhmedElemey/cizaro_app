@@ -4,13 +4,13 @@ import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class SearchScreen extends StatefulWidget {
   static final routeName = '/search-screen';
@@ -391,6 +391,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               imgUrl: productList[index].mainImg,
                               productName: productList[index].name,
                               productPrice: productList[index].price,
+                              productPriceAfter:
+                                  productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: productList[index].category.name,
                               //  productQuantity: ,
                             ),

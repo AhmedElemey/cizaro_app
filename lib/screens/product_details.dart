@@ -1,17 +1,16 @@
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:cizaro_app/helper/database_helper.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart' as rs;
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/product_details_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class ProductDetails extends StatefulWidget {
   static final routeName = '/productDetails-screen';
@@ -38,7 +37,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       specTitle,
       colorSpecValue,
       sizeSpecValue;
-  double productPrice, productStar;
+  double productPrice, productStar, productPriceAfter;
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
   List<Values> productSpecs = [];
@@ -58,7 +57,9 @@ class _ProductDetailsState extends State<ProductDetails> {
       productName = productDetails.data.name;
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
-      productStar = productDetails.data.stars;
+      productPriceAfter = productDetails.data.offer.afterPrice;
+
+      productStar = productDetails.data.stars ?? 0.0;
       productDescription = productDetails.data.shortDescription;
       _isColor = productDetails.data.specs?.isColor ?? false;
       specTitle = productDetails?.data.specs?.name ?? "";
@@ -189,13 +190,62 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                               Row(
                                 children: [
-                                  Text(
-                                    productPrice.toString(),
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.1,
-                                  ),
+                                  productPriceAfter == productPrice
+                                      ? Container(
+                                          padding: EdgeInsets.only(right: 10),
+                                          child: Text(
+                                            productPrice.toString() + ' LE',
+                                            textScaleFactor:
+                                                MediaQuery.of(context)
+                                                        .textScaleFactor *
+                                                    0.85,
+                                          ),
+                                        )
+                                      : Container(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                  top: 5,
+                                                ),
+                                                child: Text(
+                                                  productPrice.toString() +
+                                                      ' LE',
+                                                  textScaleFactor:
+                                                      MediaQuery.of(context)
+                                                              .textScaleFactor *
+                                                          0.85,
+                                                  style: TextStyle(
+                                                      color: Colors.red,
+                                                      decoration: TextDecoration
+                                                          .lineThrough),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 5),
+                                                child: Text(
+                                                  productPriceAfter.toString() +
+                                                      ' LE',
+                                                  textScaleFactor:
+                                                      MediaQuery.of(context)
+                                                              .textScaleFactor *
+                                                          0.85,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                  // Text(
+                                  //   productPrice.toString(),
+                                  //   textScaleFactor:
+                                  //       MediaQuery.of(context).textScaleFactor *
+                                  //           1.1,
+                                  // ),
                                   Container(
+                                    padding: EdgeInsets.only(left: 5),
                                     width:
                                         MediaQuery.of(context).size.width * .1,
                                     height: MediaQuery.of(context).size.height *
@@ -507,6 +557,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 productName: productRelated[index].name ?? "",
                                 productPrice:
                                     productRelated[index].price ?? 0.0,
+                                productPriceAfter:
+                                    productRelated[index]?.offer?.afterPrice ??
+                                        0.0,
                                 productStar: productRelated[index].stars ?? 0.0,
                               ),
                             )),

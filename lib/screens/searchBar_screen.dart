@@ -1,8 +1,6 @@
 import 'package:cizaro_app/model/searchModel.dart';
-import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/searchBar_item.dart';
-import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -22,10 +20,10 @@ class _SearchBarItemState extends State<SearchBarScreen> {
 
   // The "raw" history that we don't access from the UI, prefilled with values
   List<String> _searchHistory = [
-    'fuchsia',
-    'flutter',
-    'widgets',
-    'resocoder',
+    // 'fuchsia',
+    // 'flutter',
+    // 'widgets',
+    // 'resocoder',
   ];
 // The filtered & ordered history that's accessed from the UI
   List<String> filteredSearchHistory;
@@ -159,6 +157,29 @@ class _SearchBarItemState extends State<SearchBarScreen> {
                         style: Theme.of(context).textTheme.caption,
                       ),
                     );
+                    // Container(
+                    //    height: MediaQuery.of(context).size.height,
+                    //    width: double.infinity,
+                    //    child: ListView.builder(
+                    //      itemCount: productList?.length ?? 0,
+                    //      itemBuilder: (ctx, index) => GestureDetector(
+                    //        onTap: () => Navigator.of(context).pushNamed(
+                    //            ProductDetails.routeName,
+                    //            arguments: {
+                    //              'product_id': productList[index].id
+                    //            }),
+                    //        child: SearchItem(
+                    //          imgUrl: productList[index].mainImg,
+                    //          productName: productList[index].name,
+                    //          productPrice: productList[index].price,
+                    //          productCategory:
+                    //              productList[index].category.name,
+                    //          //  productQuantity: ,
+                    //        ),
+                    //      ),
+                    //    ),
+                    //  );
+
                   } else if (filteredSearchHistory.isEmpty) {
                     return ListTile(
                       title: Text(controller.query),
@@ -170,26 +191,6 @@ class _SearchBarItemState extends State<SearchBarScreen> {
                         });
                         controller.close();
                       },
-                    );
-                  } else if (productList.length != null) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: productList?.length ?? 0,
-                        itemBuilder: (ctx, index) => GestureDetector(
-                          onTap: () => Navigator.of(context).pushNamed(
-                              ProductDetails.routeName,
-                              arguments: {'product_id': productList[index].id}),
-                          child: SearchItem(
-                            imgUrl: productList[index].mainImg,
-                            productName: productList[index].name,
-                            productPrice: productList[index].price,
-                            productCategory: productList[index].category.name,
-                            //  productQuantity: ,
-                          ),
-                        ),
-                      ),
                     );
                   } else {
                     return Column(
@@ -231,6 +232,7 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultsListView(
             searchTerm: selectedTerm,
+            productList: productList,
           ),
         ),
       ),
@@ -248,7 +250,7 @@ class SearchResultsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final fsb = FloatingSearchBar.of(context);
 
-    if (searchTerm == null) {
+    if (searchTerm == null && productList == null || productList.length == 0) {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -265,7 +267,6 @@ class SearchResultsListView extends StatelessWidget {
         ),
       );
     }
-
     return Padding(
       padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
       child: Container(

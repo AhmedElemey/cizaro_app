@@ -15,7 +15,7 @@ class CollectionItem extends StatelessWidget {
           height: MediaQuery.of(context).size.height * .2,
           padding: EdgeInsets.only(left: 15),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
                 imgUrl,

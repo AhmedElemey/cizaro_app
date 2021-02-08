@@ -5,7 +5,9 @@ import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
+import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
@@ -14,6 +16,7 @@ import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart';
+import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/shopping_cart.dart';
@@ -94,7 +97,7 @@ class ListServices {
     final response = await http.get(API + '/products/?search=$searchTxt');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      //print(response.body);
+      print(response.body);
       return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");

@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 
 class ProductDetailItem extends StatelessWidget {
   final String productName, imgUrl;
-  final double productPrice, productStar;
+  final double productPrice, productPriceAfter, productStar;
   const ProductDetailItem(
-      {this.productName, this.imgUrl, this.productPrice, this.productStar});
+      {this.productName,
+      this.imgUrl,
+      this.productPrice,
+      this.productPriceAfter,
+      this.productStar});
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -13,7 +17,7 @@ class ProductDetailItem extends StatelessWidget {
       child: Card(
         elevation: 1,
         child: Container(
-          height: MediaQuery.of(context).size.height * .8,
+          height: MediaQuery.of(context).size.height * .95,
           padding: EdgeInsets.only(left: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,7 +25,7 @@ class ProductDetailItem extends StatelessWidget {
               Image.network(
                 imgUrl,
                 width: MediaQuery.of(context).size.width * .3,
-                height: MediaQuery.of(context).size.height * .2,
+                height: MediaQuery.of(context).size.height * .18,
                 fit: BoxFit.contain,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent loadingProgress) {
@@ -48,12 +52,51 @@ class ProductDetailItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      productPrice.toString() + " LE",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1,
-                    ),
+                    productPriceAfter == productPrice
+                        ? Container(
+                            padding: EdgeInsets.only(right: 10),
+                            child: Text(
+                              productPrice.toString() + ' LE',
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 0.85,
+                            ),
+                          )
+                        : Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: 5,
+                                  ),
+                                  child: Text(
+                                    productPrice.toString() + ' LE',
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor *
+                                            0.85,
+                                    style: TextStyle(
+                                        color: Colors.red,
+                                        decoration: TextDecoration.lineThrough),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    productPriceAfter.toString() + ' LE',
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor *
+                                            0.85,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                    // Text(
+                    //   productPrice.toString() + " LE",
+                    //   style: TextStyle(fontWeight: FontWeight.bold),
+                    //   textScaleFactor:
+                    //       MediaQuery.of(context).textScaleFactor * 1,
+                    // ),
                     Container(
                       width: MediaQuery.of(context).size.width * .1,
                       height: MediaQuery.of(context).size.height * .03,

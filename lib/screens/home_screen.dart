@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
@@ -5,13 +6,12 @@ import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/collection_item.dart';
 import 'package:cizaro_app/widgets/custom_tab_bar.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/hotDeals_item.dart';
 import 'package:cizaro_app/widgets/product_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class HomeScreen extends StatefulWidget {
   static final routeName = '/home-screen';
@@ -101,6 +101,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             '',
                         productPrice:
                             newArrivalsList[0]?.products[index]?.price ?? 0.0,
+                        productPriceAfter: newArrivalsList[0]
+                                ?.products[index]
+                                ?.offer
+                                .afterPrice ??
+                            0.0,
                         isFav: isFavValue()
                         // fav.favProductModel.length == 0 ||
                         //         fav.favProductModel == null
@@ -144,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       imgUrl: topSellingList[0]?.products[index]?.mainImg ?? '',
                       productPrice:
                           topSellingList[0]?.products[index]?.price ?? 0.0,
-                      isFav: fav.favProductModel[index].isFav,
+                      //   isFav: fav.favProductModel[index].isFav,
                     ),
                   )),
         ),
@@ -357,59 +362,59 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class Search extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        });
-  }
-
-  String selectedResult;
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(selectedResult),
-      ),
-    );
-  }
-
-  List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList
-            .addAll(recentList.where((element) => element.contains(query)));
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(suggestionList[index]),
-          onTap: () {
-            selectedResult = suggestionList[index];
-            showResults(context);
-          },
-        );
-      },
-    );
-  }
-}
+// class Search extends SearchDelegate {
+//   @override
+//   List<Widget> buildActions(BuildContext context) {
+//     return <Widget>[
+//       IconButton(
+//           icon: Icon(Icons.close),
+//           onPressed: () {
+//             query = "";
+//           })
+//     ];
+//   }
+//
+//   @override
+//   Widget buildLeading(BuildContext context) {
+//     return IconButton(
+//         icon: Icon(Icons.arrow_back),
+//         onPressed: () {
+//           Navigator.pop(context);
+//         });
+//   }
+//
+//   String selectedResult;
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     return Container(
+//       child: Center(
+//         child: Text(selectedResult),
+//       ),
+//     );
+//   }
+//
+//   List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     List<String> suggestionList = [];
+//     query.isEmpty
+//         ? suggestionList = recentList
+//         : suggestionList
+//             .addAll(recentList.where((element) => element.contains(query)));
+//     return ListView.builder(
+//       itemCount: suggestionList.length,
+//       itemBuilder: (context, index) {
+//         return ListTile(
+//           title: Text(suggestionList[index]),
+//           onTap: () {
+//             selectedResult = suggestionList[index];
+//             showResults(context);
+//           },
+//         );
+//       },
+//     );
+//   }
+// }
 
 class CustomTabBar extends StatelessWidget {
   @override

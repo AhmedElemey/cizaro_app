@@ -1,11 +1,11 @@
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
-import 'package:cizaro_app/widgets/shop_item.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:cizaro_app/widgets/shop_item.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ShopScreen extends StatefulWidget {
   static final routeName = '/product-screen';
@@ -71,6 +71,8 @@ class _ShopScreenState extends State<ShopScreen> {
                           imgUrl: productList[index].mainImg,
                           productName: productList[index].name,
                           productPrice: productList[index].price,
+                          productPriceAfter:
+                              productList[index]?.offer?.afterPrice ?? 0.0,
                           productId: productList[index].id,
                           productCategory: productList[index].category.name,
                           productStars: productList[index].stars,

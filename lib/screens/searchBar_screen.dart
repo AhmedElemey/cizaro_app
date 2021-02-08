@@ -20,10 +20,10 @@ class _SearchBarItemState extends State<SearchBarScreen> {
 
   // The "raw" history that we don't access from the UI, prefilled with values
   List<String> _searchHistory = [
-    'fuchsia',
-    'flutter',
-    'widgets',
-    'resocoder',
+    // 'fuchsia',
+    // 'flutter',
+    // 'widgets',
+    // 'resocoder',
   ];
 // The filtered & ordered history that's accessed from the UI
   List<String> filteredSearchHistory;
@@ -110,7 +110,7 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         physics: BouncingScrollPhysics(),
 // Title is displayed on an unopened (inactive) search bar
         title: Text(
-          selectedTerm ?? 'The Search App',
+          selectedTerm ?? 'The Search ',
           style: Theme.of(context).textTheme.headline6,
         ),
 // Hint gets displayed once the search bar is tapped and opened
@@ -126,10 +126,13 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         },
         onSubmitted: (query) {
           getSearchData(query);
-          setState(() {
-            addSearchTerm(query);
-            selectedTerm = query;
-          });
+
+          // setState(() {
+          //         addSearchTerm(query);
+          //         selectedTerm = query;
+          //
+          //
+          //       });
           controller.close();
         },
 
@@ -154,6 +157,29 @@ class _SearchBarItemState extends State<SearchBarScreen> {
                         style: Theme.of(context).textTheme.caption,
                       ),
                     );
+                    // Container(
+                    //    height: MediaQuery.of(context).size.height,
+                    //    width: double.infinity,
+                    //    child: ListView.builder(
+                    //      itemCount: productList?.length ?? 0,
+                    //      itemBuilder: (ctx, index) => GestureDetector(
+                    //        onTap: () => Navigator.of(context).pushNamed(
+                    //            ProductDetails.routeName,
+                    //            arguments: {
+                    //              'product_id': productList[index].id
+                    //            }),
+                    //        child: SearchItem(
+                    //          imgUrl: productList[index].mainImg,
+                    //          productName: productList[index].name,
+                    //          productPrice: productList[index].price,
+                    //          productCategory:
+                    //              productList[index].category.name,
+                    //          //  productQuantity: ,
+                    //        ),
+                    //      ),
+                    //    ),
+                    //  );
+
                   } else if (filteredSearchHistory.isEmpty) {
                     return ListTile(
                       title: Text(controller.query),
@@ -206,6 +232,7 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         body: FloatingSearchBarScrollNotifier(
           child: SearchResultsListView(
             searchTerm: selectedTerm,
+            productList: productList,
           ),
         ),
       ),
@@ -223,7 +250,7 @@ class SearchResultsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final fsb = FloatingSearchBar.of(context);
 
-    if (searchTerm == null) {
+    if (searchTerm == null && productList == null || productList.length == 0) {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -240,7 +267,6 @@ class SearchResultsListView extends StatelessWidget {
         ),
       );
     }
-
     return Padding(
       padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
       child: Container(

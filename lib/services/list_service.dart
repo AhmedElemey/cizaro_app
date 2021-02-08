@@ -8,6 +8,7 @@ import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
+import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/searchFilter.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
@@ -15,6 +16,7 @@ import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
+import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:http/http.dart' as http;
 
@@ -133,8 +135,11 @@ class ListServices {
   }
 
   Future<RelatedSpec> fetchSpecs(Spec spec) async {
-    final response = await http.post(API + '/send-product-spec-value-id/',headers: {'accept': 'application/json',
-      'Content-Type': 'application/json; charset=UTF-8'},
+    final response = await http.post(API + '/send-product-spec-value-id/',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
         body: jsonEncode(spec.toJson()));
     final body = jsonDecode(response.body);
     print(response.body);
@@ -208,6 +213,27 @@ class ListServices {
     }
   }
 
+  Future<ResultShoppingCartModel> checkShoppingCart(
+      ShoppingCartModel shoppingCartModel, String token) async {
+    final response = await http.post(
+      API + '/shopping-cart/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+      body: jsonEncode(shoppingCartModel.toJson()),
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      final body = jsonDecode(response.body);
+      return ResultShoppingCartModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
   Future<address.AddressModel> fetchAddresses(String token) async {
     final response = await http.get(
       API + '/address-book/',
@@ -228,7 +254,8 @@ class ListServices {
     }
   }
 
- Future<AddressBookModel>fetchShippingAddress(String token,int addressId) async {
+  Future<AddressBookModel> fetchShippingAddress(
+      String token, int addressId) async {
     final response = await http.get(
       API + '/address-book/$addressId/',
       headers: {
@@ -247,5 +274,4 @@ class ListServices {
       throw Exception("Unable to perform request .. Try again!");
     }
   }
-
 }

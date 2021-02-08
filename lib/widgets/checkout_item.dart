@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class CheckoutItem extends StatelessWidget {
   final String productName, imgUrl, productCategory;
   final double productPrice;
-  final int productSpecs;
+  final String productSpecs;
+  final Color productColorSpecs;
 
   const CheckoutItem(
       {this.productName,
       this.imgUrl,
       this.productPrice,
       this.productCategory,
+      this.productColorSpecs,
       this.productSpecs});
   @override
   Widget build(BuildContext context) {
@@ -22,13 +24,12 @@ class CheckoutItem extends StatelessWidget {
           elevation: 1.7,
           child: Container(
             height: MediaQuery.of(context).size.height * .1,
-            padding: EdgeInsets.only(left: 10,right: 10, top: 5),
+            padding: EdgeInsets.only(left: 10, right: 10, top: 5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.only(right: 10, top: 5, bottom: 5),
+                  padding: EdgeInsets.only(right: 10, top: 5, bottom: 5),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80.0),
                     child: Image.network(imgUrl),
@@ -58,8 +59,8 @@ class CheckoutItem extends StatelessWidget {
                       ),
                       Spacer(),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text(
                             productPrice.toString() + ' LE',
@@ -85,6 +86,17 @@ class CheckoutItem extends StatelessWidget {
                                     MediaQuery.of(context).textScaleFactor *
                                         1.1,
                               ),
+                              Text(
+                                " , Color: ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.1,
+                              ),
+                              CircleAvatar(
+                                  radius: 8,
+                                  foregroundColor: productColorSpecs,
+                                  backgroundColor: productColorSpecs)
                             ],
                           ),
                         ],

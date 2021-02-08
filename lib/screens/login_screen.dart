@@ -1,13 +1,18 @@
 import 'dart:io';
 import 'package:cizaro_app/model/SignUpModel.dart';
 import 'package:cizaro_app/model/loginModel.dart';
+import 'package:cizaro_app/model/socialLoginModel.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:cizaro_app/view_model/auth_view_model.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+GoogleSignIn gSignIn = GoogleSignIn(scopes: ['email']);
 
 class LoginScreen extends StatefulWidget {
   static final routeName = '/login-screen';
@@ -17,7 +22,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isLoading = false,_obscureText = true;
+  bool _isLoading = false, _obscureText = true, isSignIn = false;
   var _currentItemSelectedGender;
   String birthDate;
   TextEditingController _emailLoginController = TextEditingController();
@@ -34,8 +39,84 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // Toggles the password show status
   void _toggle() {
-    setState(() {
-      _obscureText = !_obscureText;
+    setState(() => _obscureText = !_obscureText);
+  }
+
+  controlSgnIn(GoogleSignInAccount gSignInAccount) async {
+    if (gSignInAccount != null) {
+      if (!mounted) return;
+      setState(() {
+        isSignIn = true;
+      });
+    } else {
+      if (!mounted) return;
+      setState(() {
+        isSignIn = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    gSignIn.onCurrentUserChanged.listen((gSignInAccount) {
+      controlSgnIn(gSignInAccount);
+    }, onError: (gError) => print(gError));
+    gSignIn.signInSilently(suppressErrors: false).then((gSignInAccount) {
+      controlSgnIn(gSignInAccount);
+    }).catchError((gError) {
+      print(gError);
+    });
+  }
+
+  loginUser() {
+    gSignIn.signIn().then((result) {
+      result.authentication.then((googleKey) {
+        signUpWithGoogleButton();
+      }).catchError((err) {
+        print(err);
+      });
+    }).catchError((err) {
+      print(err);
+    });
+  }
+
+  Future signUpWithGoogleButton() async {
+    final signUp = Provider.of<AuthViewModel>(context, listen: false);
+    final signUpSocial = SignUp(
+        email: gSignIn.currentUser.email,
+        fullName: gSignIn.currentUser.displayName,
+        username: gSignIn.currentUser.displayName,
+        googleId: gSignIn.currentUser.id);
+    setState(() => _isLoading = true);
+    print(gSignIn.currentUser.email);
+    saveGoogleId(gSignIn.currentUser.id);
+    await signUp
+        .signUpSocial(signUpSocial, 'en')
+        .catchError((error) => print(error));
+    int statusCode = await getStatusCode();
+    setState(() => _isLoading = false);
+    print('Status-Code : $statusCode');
+    if (statusCode == 400) {
+      loginWithGoogleButton();
+    } else {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          TabsScreen.routeName, (Route<dynamic> route) => false);
+    }
+  }
+
+  Future loginWithGoogleButton() async {
+    final login = Provider.of<AuthViewModel>(context, listen: false);
+    final loginSocial = SocialLogin(
+        facebookGoogleId: gSignIn.currentUser.id, socialType: 'google');
+    setState(() => _isLoading = true);
+    await login.loginSocial(loginSocial, 'en').then((_) {
+      setState(() => _isLoading = false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          TabsScreen.routeName, (Route<dynamic> route) => false);
+    }).catchError((error) {
+      print(error);
+      setState(() => _isLoading = false);
     });
   }
 
@@ -71,7 +152,9 @@ class _LoginScreenState extends State<LoginScreen> {
     }
     _formKey.currentState.save();
     final postRegister = Provider.of<AuthViewModel>(context, listen: false);
-    final loginCustomer = Login(usernameEmail: _emailLoginController.text,password: _passwordLoginController.text);
+    final loginCustomer = Login(
+        usernameEmail: _emailLoginController.text,
+        password: _passwordLoginController.text);
     setState(() => _isLoading = true);
     await postRegister.login(loginCustomer, 'en').then((_) {
       setState(() => _isLoading = false);
@@ -114,7 +197,8 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Text('Error'),
-            content: Text('This password is too short. It must contain at least 8 characters. Plz Add valid Information!'),
+            content: Text(
+                'This password is too short. It must contain at least 8 characters. Plz Add valid Information!'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Close'),
@@ -210,8 +294,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? CupertinoActivityIndicator()
                             : CircularProgressIndicator())
                     : Form(
-                     key: _formKey,
-                      child: Container(
+                        key: _formKey,
+                        child: Container(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.8,
                           child: SingleChildScrollView(
@@ -225,19 +309,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                     hintText: 'Email Address or User Name',
                                     lineCount: 1,
                                     validator: validateEmail,
-                                    textEditingController: _emailLoginController),
+                                    textEditingController:
+                                        _emailLoginController),
                                 const SizedBox(height: 10),
                                 TextFieldBuild(
                                     obscureText: _obscureText,
                                     readOnly: false,
-                                    textInputType: TextInputType.visiblePassword,
+                                    textInputType:
+                                        TextInputType.visiblePassword,
                                     hintText: 'Password',
                                     lineCount: 1,
                                     validator: validatePassword,
                                     textEditingController:
                                         _passwordLoginController,
-                                    icon: _obscureText ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
-                                    onClick: () =>_toggle()),
+                                    icon: _obscureText
+                                        ? CupertinoIcons.eye
+                                        : CupertinoIcons.eye_slash,
+                                    onClick: () => _toggle()),
                                 Container(
                                     margin: const EdgeInsets.only(top: 10),
                                     width:
@@ -254,18 +342,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Divider(
                                     thickness: 0.8,
                                     color: Colors.grey,
-                                    indent:
-                                        MediaQuery.of(context).size.width * 0.07,
+                                    indent: MediaQuery.of(context).size.width *
+                                        0.07,
                                     endIndent:
-                                        MediaQuery.of(context).size.width * 0.07),
+                                        MediaQuery.of(context).size.width *
+                                            0.07),
                                 const SizedBox(height: 15),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () => loginWithGoogleButton(),
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.06,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
                                     color: Colors.blue,
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -275,7 +364,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Image.asset('assets/images/google.png'),
+                                          Image.asset(
+                                              'assets/images/google.png'),
                                           const SizedBox(width: 25),
                                           Text('Login with Google',
                                               textScaleFactor:
@@ -294,12 +384,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.06,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
                                     margin: const EdgeInsets.only(top: 10),
                                     decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Color(0xff3A559F)),
+                                        border: Border.all(
+                                            color: Color(0xff3A559F)),
                                         color: Colors.white),
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -327,15 +417,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                    ),
+                      ),
                 _isLoading
                     ? Center(
                         child: Platform.isIOS
                             ? CupertinoActivityIndicator()
                             : CircularProgressIndicator())
                     : Form(
-                      key: _formKey2,
-                      child: Container(
+                        key: _formKey2,
+                        child: Container(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.8,
                           child: SingleChildScrollView(
@@ -355,7 +445,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   children: [
                                     Expanded(
                                         child: Container(
-                                      padding: const EdgeInsets.only(left: 23,top: 10),
+                                      padding: const EdgeInsets.only(
+                                          left: 23, top: 10),
                                       child: TextFieldBuild(
                                           obscureText: false,
                                           readOnly: false,
@@ -370,7 +461,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Expanded(
                                         child: Container(
                                       padding: const EdgeInsets.only(
-                                          right: 23, left: 10,top: 10),
+                                          right: 23, left: 10, top: 10),
                                       child: TextFieldBuild(
                                           obscureText: false,
                                           readOnly: false,
@@ -388,19 +479,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                 TextFieldBuild(
                                     obscureText: _obscureText,
                                     readOnly: false,
-                                    textInputType: TextInputType.visiblePassword,
+                                    textInputType:
+                                        TextInputType.visiblePassword,
                                     hintText: 'Password',
                                     lineCount: 1,
                                     validator: validatePassword,
                                     textEditingController:
                                         _passwordSignUpController,
-                                    icon: _obscureText ? CupertinoIcons.eye : CupertinoIcons.eye_slash,
-                                onClick: () =>_toggle()),
+                                    icon: _obscureText
+                                        ? CupertinoIcons.eye
+                                        : CupertinoIcons.eye_slash,
+                                    onClick: () => _toggle()),
                                 const SizedBox(height: 10),
                                 TextFieldBuild(
                                     obscureText: true,
                                     readOnly: false,
-                                    textInputType: TextInputType.visiblePassword,
+                                    textInputType:
+                                        TextInputType.visiblePassword,
                                     hintText: 'Confirm password',
                                     lineCount: 1,
                                     validator: validateConfirmPassword,
@@ -491,20 +586,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                               context: context,
                                               builder: (BuildContext builder) {
                                                 return Container(
-                                                    height: MediaQuery.of(context)
-                                                            .copyWith()
-                                                            .size
-                                                            .height /
-                                                        3,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .copyWith()
+                                                                .size
+                                                                .height /
+                                                            3,
                                                     child: CupertinoPicker(
                                                       onSelectedItemChanged:
                                                           (int index) {
-                                                        int indexItem = index + 1;
+                                                        int indexItem =
+                                                            index + 1;
                                                         indexItem == 1
                                                             ? _genderNameController
                                                                 .text = 'Male'
                                                             : _genderNameController
-                                                                .text = 'Female';
+                                                                    .text =
+                                                                'Female';
                                                       },
                                                       itemExtent: 50,
                                                       children: [
@@ -533,11 +631,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                               context: context,
                                               builder: (BuildContext builder) {
                                                 return Container(
-                                                    height: MediaQuery.of(context)
-                                                            .copyWith()
-                                                            .size
-                                                            .height /
-                                                        3,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .copyWith()
+                                                                .size
+                                                                .height /
+                                                            3,
                                                     child: CupertinoDatePicker(
                                                         initialDateTime:
                                                             DateTime.now(),
@@ -569,18 +668,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Divider(
                                     thickness: 0.8,
                                     color: Colors.grey,
-                                    indent:
-                                        MediaQuery.of(context).size.width * 0.07,
+                                    indent: MediaQuery.of(context).size.width *
+                                        0.07,
                                     endIndent:
-                                        MediaQuery.of(context).size.width * 0.07),
+                                        MediaQuery.of(context).size.width *
+                                            0.07),
                                 const SizedBox(height: 15),
                                 GestureDetector(
-                                  onTap: () {},
+                                  onTap: () => loginUser(),
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.06,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
                                     color: Colors.blue,
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -590,7 +690,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Image.asset('assets/images/google.png'),
+                                          Image.asset(
+                                              'assets/images/google.png'),
                                           const SizedBox(width: 25),
                                           Text('SignUp with Google',
                                               textScaleFactor:
@@ -609,12 +710,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
-                                    height:
-                                        MediaQuery.of(context).size.height * 0.06,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
                                     margin: const EdgeInsets.only(top: 10),
                                     decoration: BoxDecoration(
-                                        border:
-                                            Border.all(color: Color(0xff3A559F)),
+                                        border: Border.all(
+                                            color: Color(0xff3A559F)),
                                         color: Colors.white),
                                     child: Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
@@ -642,7 +743,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ),
-                    ),
+                      ),
               ],
             ),
           ),
@@ -674,5 +775,15 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  saveGoogleId(String googleId) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('google_id', googleId);
+  }
+
+  Future<int> getStatusCode() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('status_code');
   }
 }

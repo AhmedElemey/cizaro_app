@@ -4,10 +4,12 @@ import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/related_spec.dart';
+import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/shopModel.dart';
+import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/services/list_service.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
@@ -15,7 +17,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 
 class ListViewModel extends ChangeNotifier {
-
   Future<Home> fetchHomeList() async {
     final result = await ListServices().fetchHome();
     notifyListeners();
@@ -77,6 +78,14 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
+  Future<ResultShoppingCartModel> fetchResultOfShippingCart(
+      ShoppingCartModel shoppingCartModel, String token) async {
+    final result =
+        await ListServices().checkShoppingCart(shoppingCartModel, token);
+    notifyListeners();
+    return result;
+  }
+
   Future<PolicesTermsModel> fetchPolicy() async {
     final result = await ListServices().fetchPolicy();
     notifyListeners();
@@ -101,7 +110,7 @@ class ListViewModel extends ChangeNotifier {
     return results;
   }
 
-  Future fetchShippingAddress(String token,int addressId) async {
+  Future fetchShippingAddress(String token, int addressId) async {
     final results = await ListServices().fetchShippingAddress(token, addressId);
     notifyListeners();
     return results;

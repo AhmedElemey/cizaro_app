@@ -100,7 +100,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         ),
                         Spacer(),
                         Text(
-                          total.totalPrice.toString() ?? '00.00',
+                          total.totalPrice.toString() + ' LE' ?? '00.00',
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.4,
                           style: TextStyle(color: Color(0xff3A559F)),

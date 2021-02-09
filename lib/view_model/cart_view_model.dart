@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class CartViewModel extends ChangeNotifier {
   List<ProductCart> _cartItemsList = [];
   List<productOffer.Data> _cartItemsAfterOffer = [];
-  int productId,quantity;
+  int productId, quantity;
 
   List<ProductCart> get cartProductModel => _cartItemsList;
   double get totalPrice => _totalPrice;
@@ -19,7 +19,6 @@ class CartViewModel extends ChangeNotifier {
     getCartProducts();
   }
 
-
   getCartProducts() async {
     _cartItemsList = await dbHelper.getCartItems();
     getTotalPrice();
@@ -27,19 +26,20 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-   getCartItemsAfterOffer() async {
+  getCartItemsAfterOffer() async {
     List<Items> itemsList = [];
-    _cartItemsList.forEach((element) {productId = element.id ; quantity = element.quantity;
-    itemsList.add(Items(product: productId,quantity: quantity));
+    _cartItemsList.forEach((element) {
+      productId = element.id;
+      quantity = element.quantity;
+      itemsList.add(Items(product: productId, quantity: quantity));
     });
 
-     final checkProductsOfferInCart = CheckProductsOfferInCart(items: itemsList);
-   _cartItemsAfterOffer = await ListServices().checkOfferInCart(checkProductsOfferInCart);
-   // _cartItemsAfterOffer.forEach((element) { element.});
-   print(_cartItemsAfterOffer);
+    final checkProductsOfferInCart = CheckProductsOfferInCart(items: itemsList);
+    _cartItemsAfterOffer =
+        await ListServices().checkOfferInCart(checkProductsOfferInCart);
+    print(_cartItemsAfterOffer);
     notifyListeners();
   }
-
 
   getTotalPrice() {
     for (int i = 0; i < _cartItemsList.length; i++) {
@@ -50,7 +50,9 @@ class CartViewModel extends ChangeNotifier {
 
   addProductToCart(ProductCart productCart) async {
     for (int i = 0; i < _cartItemsList.length; i++) {
-      if (_cartItemsList[i].id == productCart.id && _cartItemsList[i].colorSpecValue == productCart.colorSpecValue && _cartItemsList[i].sizeSpecValue == productCart.sizeSpecValue) {
+      if (_cartItemsList[i].id == productCart.id &&
+          _cartItemsList[i].colorSpecValue == productCart.colorSpecValue &&
+          _cartItemsList[i].sizeSpecValue == productCart.sizeSpecValue) {
         return;
       }
     }
@@ -60,8 +62,8 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  increaseQuantity(int index) async{
-    if(_cartItemsList[index].availability < _cartItemsList[index].quantity){
+  increaseQuantity(int index) async {
+    if (_cartItemsList[index].availability < _cartItemsList[index].quantity) {
       return;
     }
     _cartItemsList[index].quantity++;
@@ -71,20 +73,24 @@ class CartViewModel extends ChangeNotifier {
   }
 
   decreaseQuantity(int index) async {
-    _cartItemsList[index].quantity <= 1 ?  _cartItemsList[index].quantity = 1 : _cartItemsList[index].quantity--;
-    _cartItemsList[index].quantity <= 1 ? _totalPrice = _cartItemsList[index].price : _totalPrice -= _cartItemsList[index].price;
+    _cartItemsList[index].quantity <= 1
+        ? _cartItemsList[index].quantity = 1
+        : _cartItemsList[index].quantity--;
+    _cartItemsList[index].quantity <= 1
+        ? _totalPrice = _cartItemsList[index].price
+        : _totalPrice -= _cartItemsList[index].price;
     await dbHelper.updateProduct(_cartItemsList[index]);
     notifyListeners();
   }
 
-  deleteCartProduct(int index,int productId) async {
+  deleteCartProduct(int index, int productId) async {
     dbHelper.deleteCartItem(productId);
     _totalPrice -= _cartItemsList[index].price * _cartItemsList[index].quantity;
     await dbHelper.updateProduct(_cartItemsList[index]);
     notifyListeners();
   }
 
-  updateQuantity(int index,int productId) async {
+  updateQuantity(int index, int productId) async {
     await dbHelper.updateProduct(_cartItemsList[index]);
     getTotalPrice();
     notifyListeners();

@@ -78,7 +78,6 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = false;
       });
     }
-    displayBottomSheet(context);
   }
 
   Future getFilterData() async {
@@ -89,11 +88,12 @@ class _SearchScreenState extends State<SearchScreen> {
     final getFilter = Provider.of<ListViewModel>(context, listen: false);
 
     await getFilter
-        .fetchFilter(valueMinPrice.text, valueMaxPrice.text, valueBrand)
+        .fetchFilter(valueMinPrice.text ?? "", valueMaxPrice.text ?? "",
+            valueBrand ?? "")
         .then((response) {
       filter = response;
       filterList = filter.data.products;
-      getBrandData();
+      //getBrandData();
     });
     if (this.mounted) {
       setState(() {
@@ -123,6 +123,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   displayBottomSheet(BuildContext context) {
+    getBrandData();
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -362,7 +363,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                           padding:
                                               const EdgeInsets.only(left: 10),
                                           child: GestureDetector(
-                                            onTap: () => getBrandData(),
+                                            onTap: () =>
+                                                displayBottomSheet(context),
                                             child: Icon(
                                               Icons.filter_alt_outlined,
                                               size: 30,
@@ -390,7 +392,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: SearchItem(
                               imgUrl: productList[index].mainImg,
                               productName: productList[index].name,
-                              productPrice: productList[index].price,
+                              productPrice: productList[index].price ?? 0.0,
                               productPriceAfter:
                                   productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: productList[index].category.name,
@@ -461,7 +463,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                           padding:
                                               const EdgeInsets.only(left: 10),
                                           child: GestureDetector(
-                                            onTap: () => getHomeData(),
+                                            onTap: () =>
+                                                displayBottomSheet(context),
                                             child: Icon(
                                               Icons.filter_alt_outlined,
                                               size: 30,
@@ -489,7 +492,9 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: SearchItem(
                               imgUrl: filterList[index].mainImg,
                               productName: filterList[index].name,
-                              productPrice: filterList[index].price,
+                              productPrice: filterList[index].price ?? 0.0,
+                              productPriceAfter:
+                                  productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: filterList[index].category.name,
                               //  productQuantity: ,
                             ),

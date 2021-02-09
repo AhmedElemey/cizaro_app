@@ -149,6 +149,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       imgUrl: topSellingList[0]?.products[index]?.mainImg ?? '',
                       productPrice:
                           topSellingList[0]?.products[index]?.price ?? 0.0,
+                      productPriceAfter: topSellingList[0]
+                              ?.products[index]
+                              ?.offer
+                              .afterPrice ??
+                          0.0,
                       //   isFav: fav.favProductModel[index].isFav,
                     ),
                   )),

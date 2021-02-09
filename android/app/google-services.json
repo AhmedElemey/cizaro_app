@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "131419269548",
+    "project_id": "cizaro-flutter",
+    "storage_bucket": "cizaro-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131419269548:android:2077bfa9c62b77aa413209",
+        "android_client_info": {
+          "package_name": "treecode.cizaro_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131419269548-im9hte021qj8mn135dcpe6nur88rou4g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "treecode.cizaro_app",
+            "certificate_hash": "4aa80c5aef5eab2a50d29cd7ec3c666840dbe786"
+          }
+        },
+        {
+          "client_id": "131419269548-7v8mg44qtuhipb1n7r5nkhovrnj1kdq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC23y3CJLJOZOl7NBzj0FyEftagpQDnDDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131419269548-7v8mg44qtuhipb1n7r5nkhovrnj1kdq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

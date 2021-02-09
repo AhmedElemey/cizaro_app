@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 
+import 'checkout_screen.dart';
+
 class AddAddressScreen extends StatefulWidget {
   static final routeName = '/add-address-screen';
 
@@ -121,18 +123,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(0),
                                   isDense: true),
-                              items: snapshot.data != null ? snapshot.data[0]?.cities
-                                      ?.map((country.Cities data) {
-                                    return DropdownMenuItem(
-                                      value: data.id,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 12, left: 12),
-                                        child: Text(data.name),
-                                      ),
-                                    );
-                                  })?.toList() ??
-                                  [] : [],
+                              items: snapshot.data != null
+                                  ? snapshot.data[0]?.cities
+                                          ?.map((country.Cities data) {
+                                        return DropdownMenuItem(
+                                          value: data.id,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 12, left: 12),
+                                            child: Text(data.name),
+                                          ),
+                                        );
+                                      })?.toList() ??
+                                      []
+                                  : [],
                               onChanged: (newValueSelected) {
                                 setState(() => _currentItemSelectedCities =
                                     newValueSelected);
@@ -241,18 +245,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       await getData.fetchAddress(
                           data, "c4ce7da269c80455720be2c26c984d8828b88c5f");
                     },
-                    child: Container(
-                      margin: new EdgeInsets.all(10),
-                      child: Center(
-                        child: Text(
-                          "ADD",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
+                    child: GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(CheckoutScreen.routeName),
+                        child: Container(
+                            margin: const EdgeInsets.all(10),
+                            child: Center(
+                              child: Text("ADD",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold)),
+                            ))),
                   ),
                 ),
               ],

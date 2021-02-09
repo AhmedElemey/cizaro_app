@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart';
+import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,10 +24,12 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
-  int selectedRadio, addressId;
-  String addressName, countryName, cityName, regionName;
-  bool _isLoading = false;
+  int selectedRadio, addressId, productId, productQuantity;
+  String addressName, countryName, cityName, regionName, productSpec;
+  double totalOrder, shippingFees, totalCost, arrivalDate;
+  bool _isLoading = false, isVerified = false;
   AddressModel addressModel;
+  ResultShoppingCartModel resultShoppingCartModel;
   AddressBookModel addressBookModel;
   List<address.Data> addressesList = [];
   TextEditingController _promoCodeController = TextEditingController();
@@ -47,7 +51,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     await getAddress.fetchAddresses(token).then((response) {
       addressModel = response;
       addressesList = addressModel.data;
+      addressId = addressModel.data[0].id;
     });
+    fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
     }
@@ -66,9 +72,38 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       cityName = addressBookModel.data.city.name;
       regionName = addressBookModel.data.region;
     });
+    fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
     }
+  }
+
+  fetchTotalOrder() async {
+    if (this.mounted) setState(() => _isLoading = true);
+    final getTotalOrder = Provider.of<ListViewModel>(context, listen: false);
+    String token = await getToken();
+    List<Items> itemsList = [];
+    Provider.of<CartViewModel>(context, listen: false)
+        .cartProductModel
+        .forEach((element) {
+      productId = element.id;
+      productQuantity = element.quantity;
+      productSpec = element.sizeSpecValue + ',' + element.colorSpecValue;
+      itemsList.add(Items(
+          product: productId, quantity: productQuantity, specs: productSpec));
+    });
+    final shoppingCart =
+        ShoppingCartModel(addressBookId: addressId, items: itemsList);
+    await getTotalOrder
+        .fetchResultOfShippingCart(shoppingCart, token)
+        .then((response) {
+      resultShoppingCartModel = response;
+      totalOrder = resultShoppingCartModel.data.totalOrder;
+      shippingFees = resultShoppingCartModel.data.shippingFees;
+      totalCost = resultShoppingCartModel.data.totalCost;
+      isVerified = resultShoppingCartModel.data.verified;
+    });
+    if (this.mounted) setState(() => _isLoading = false);
   }
 
   @override
@@ -85,324 +120,386 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final cart = Provider.of<CartViewModel>(context, listen: true);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GradientAppBar("Complete Order"),
-            Container(
-              padding: EdgeInsets.only(left: 10, top: 5),
-              width: MediaQuery.of(context).size.width,
-              child: Text(
-                "Checkout",
-                textScaleFactor: MediaQuery.of(context).textScaleFactor * 2,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, color: Color(0xff515C6F)),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10, right: 20),
-              child: Row(
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "SHIPPING ADDRESS",
-                    textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
+                  GradientAppBar("Complete Order"),
+                  Container(
+                    padding: EdgeInsets.only(left: 10, top: 5),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      "Checkout",
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * 2,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff515C6F)),
+                    ),
                   ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.add),
-                          iconSize: 25,
-                          color: Color(0xff3EC429),
-                          onPressed: () => Navigator.of(context)
-                              .pushNamed(AddAddressScreen.routeName)),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: GestureDetector(
-                          onTap: () => Navigator.of(context)
-                              .pushNamed(AddressBookScreen.routeName),
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Color(0xff9EA4AF),
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 15,
-                              color: Color(0xff3A559F),
-                            ),
+                  Container(
+                    padding: EdgeInsets.only(left: 10, right: 20),
+                    child: Row(
+                      children: [
+                        Text(
+                          "SHIPPING ADDRESS",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1,
+                        ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            IconButton(
+                                icon: Icon(Icons.add),
+                                iconSize: 25,
+                                color: Color(0xff3EC429),
+                                onPressed: () => Navigator.of(context)
+                                    .pushNamed(AddAddressScreen.routeName)),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context)
+                                    .pushNamed(AddressBookScreen.routeName),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Color(0xff9EA4AF),
+                                  child: Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    size: 15,
+                                    color: Color(0xff3A559F),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  arguments == null
+                      ? Container(
+                          padding: EdgeInsets.only(left: 10),
+                          child: ListView.builder(
+                            itemCount: addressesList.length,
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => index == 0
+                                ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          addressesList[index].streetAddress ??
+                                              "John Doe",
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  1.5,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff515C6F))),
+                                      Text(
+                                        addressesList[index].region ??
+                                            "Main Street\,",
+                                        textScaleFactor: MediaQuery.of(context)
+                                                .textScaleFactor *
+                                            1,
+                                      ),
+                                      Text(
+                                        addressesList[index].city.name ??
+                                            "City Name, Province\,",
+                                        textScaleFactor: MediaQuery.of(context)
+                                                .textScaleFactor *
+                                            1,
+                                      ),
+                                      Text(
+                                        addressesList[index].country.name ??
+                                            "Country",
+                                        textScaleFactor: MediaQuery.of(context)
+                                                .textScaleFactor *
+                                            1,
+                                      ),
+                                    ],
+                                  )
+                                : Container(),
+                          ),
+                        )
+                      : Container(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(arguments['street_name'] ?? "John Doe",
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1.5,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xff515C6F))),
+                              Text(
+                                arguments['region_name'] ?? "Main Street\,",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor * 1,
+                              ),
+                              Text(
+                                arguments['city_name'] ??
+                                    "City Name, Province\,",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor * 1,
+                              ),
+                              Text(
+                                arguments['country_name'] ?? "Country",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor * 1,
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            arguments == null
-                ? Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: ListView.builder(
-                      itemCount: addressesList.length,
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) => index == 0
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    addressesList[index].streetAddress ??
-                                        "John Doe",
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.5,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff515C6F))),
-                                Text(
-                                  addressesList[index].region ??
-                                      "Main Street\,",
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1,
-                                ),
-                                Text(
-                                  addressesList[index].city.name ??
-                                      "City Name, Province\,",
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1,
-                                ),
-                                Text(
-                                  addressesList[index].country.name ??
-                                      "Country",
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1,
-                                ),
-                              ],
-                            )
-                          : Container(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Divider(
+                      color: Color(0xff515C6F),
                     ),
-                  )
-                : Container(
+                  ),
+                  Container(
                     padding: EdgeInsets.only(left: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Text(
+                      "PAYMENT METHOD",
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * 1,
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * .08,
+                    child: ButtonBar(
+                      alignment: MainAxisAlignment.start,
                       children: [
-                        Text(arguments['street_name'] ?? "John Doe",
+                        Radio(
+                          value: 1,
+                          groupValue: selectedRadio,
+                          activeColor: Theme.of(context).primaryColor,
+                          onChanged: (val) {
+                            setSelectedRadio(val);
+                          },
+                        ),
+                        Text("Credit Card  ",
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1.5,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xff515C6F))),
-                        Text(
-                          arguments['region_name'] ?? "Main Street\,",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
+                        Radio(
+                          value: 2,
+                          groupValue: selectedRadio,
+                          activeColor: Theme.of(context).primaryColor,
+                          onChanged: (val) {
+                            setSelectedRadio(val);
+                          },
                         ),
-                        Text(
-                          arguments['city_name'] ?? "City Name, Province\,",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
-                        ),
-                        Text(
-                          arguments['country_name'] ?? "Country",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
-                        ),
-                      ],
-                    ),
-                  ),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Divider(
-                color: Color(0xff515C6F),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                "PAYMENT METHOD",
-                textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .08,
-              child: ButtonBar(
-                alignment: MainAxisAlignment.start,
-                children: [
-                  Radio(
-                    value: 1,
-                    groupValue: selectedRadio,
-                    activeColor: Theme.of(context).primaryColor,
-                    onChanged: (val) {
-                      setSelectedRadio(val);
-                    },
-                  ),
-                  Text("Credit Card  ",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.5,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff515C6F))),
-                  Radio(
-                    value: 2,
-                    groupValue: selectedRadio,
-                    activeColor: Theme.of(context).primaryColor,
-                    onChanged: (val) {
-                      setSelectedRadio(val);
-                    },
-                  ),
-                  Text("Cash",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.5,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff515C6F))),
-                ],
-              ),
-            ),
-            selectedRadio == 1
-                ? Center(
-                    child: Text('Not Available Now!.',
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1))
-                : Container(),
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: Divider(
-                color: Color(0xff515C6F),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10),
-              child: Text(
-                "ITEMS",
-                textScaleFactor: MediaQuery.of(context).textScaleFactor * .9,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(bottom: 10),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * .35,
-              child: ListView.builder(
-                itemCount: cart.cartProductModel.length,
-                itemBuilder: (ctx, index) => CheckoutItem(
-                  imgUrl: cart.cartProductModel[index].mainImg ??
-                      "assets/images/collection.png",
-                  productName:
-                      cart.cartProductModel[index].name ?? "White Treecode",
-                  productCategory: cart.cartProductModel[index].categoryName ??
-                      "men fashion ",
-                  productPrice: cart.cartProductModel[index].price ?? 65,
-                  productSpecs: 34,
-                ),
-              ),
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width * .9,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.06,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    margin: const EdgeInsets.only(right: 10, left: 25),
-                    child: TextField(
-                      controller: _promoCodeController,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white,
-                          contentPadding:
-                              const EdgeInsets.only(right: 15, left: 15),
-                          hintText: 'Promo Code',
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)))),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 5, right: 5),
-                    child: Text(
-                      "Add",
-                      style: TextStyle(color: Color(0xff3A559F)),
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.4,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * .1,
-              padding: EdgeInsets.only(right: 20, left: 20),
-              child: Row(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * .07,
-                    child: Column(
-                      children: [
-                        Text(
-                          "TOTAL",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * .9,
-                        ),
-                        const SizedBox(height: 8),
-                        Container(
-                          child: Text(
-                            cart.totalPrice.toString() ?? '00.00',
+                        Text("Cash",
                             textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.3,
-                            style: TextStyle(color: Color(0xff3A559F)),
-                          ),
-                        )
+                                MediaQuery.of(context).textScaleFactor * 1.5,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff515C6F))),
                       ],
                     ),
                   ),
-                  Spacer(),
+                  selectedRadio == 1
+                      ? Center(
+                          child: Text('Not Available Now!.',
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1))
+                      : Container(),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    child: Divider(
+                      color: Color(0xff515C6F),
+                    ),
+                  ),
                   Container(
-                    padding: EdgeInsets.only(right: 10),
-                    width: MediaQuery.of(context).size.width * .4,
-                    height: MediaQuery.of(context).size.height * .058,
-                    decoration: BoxDecoration(
-                        color: Color(0xff3A559F),
-                        borderRadius: BorderRadius.circular(25.0)),
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      "ITEMS",
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * .9,
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 10),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * .35,
+                    child: ListView.builder(
+                      itemCount: cart.cartProductModel.length,
+                      itemBuilder: (ctx, index) => CheckoutItem(
+                        imgUrl: cart.cartProductModel[index].mainImg ??
+                            "assets/images/collection.png",
+                        productName: cart.cartProductModel[index].name ??
+                            "White Treecode",
+                        productCategory:
+                            cart.cartProductModel[index].categoryName ??
+                                "men fashion ",
+                        productPrice: cart.cartProductModel[index].price ?? 65,
+                        productSpecs:
+                            cart.cartProductModel[index].sizeSpecValue,
+                        productColorSpecs: Color(int.parse('0xff' +
+                            cart.cartProductModel[index].colorSpecValue
+                                .split('#')
+                                .last)),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width * .9,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.06,
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          margin: const EdgeInsets.only(right: 10, left: 25),
+                          child: TextField(
+                            controller: _promoCodeController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.white,
+                                contentPadding:
+                                    const EdgeInsets.only(right: 15, left: 15),
+                                hintText: 'Promo Code',
+                                border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)))),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 5),
+                          child: Text(
+                            "Add",
+                            style: TextStyle(color: Color(0xff3A559F)),
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.4,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * .1,
+                    padding: EdgeInsets.only(right: 20, left: 20, top: 10),
                     child: Row(
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Text(
-                            "PLACE ORDER",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * .07,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "Shipping Fess : ".toUpperCase(),
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  .9,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Container(
+                                          child: Text(
+                                            shippingFees.toString() + ' LE' ??
+                                                '00.00',
+                                            textScaleFactor:
+                                                MediaQuery.of(context)
+                                                        .textScaleFactor *
+                                                    1.3,
+                                            style: TextStyle(
+                                                color: Color(0xff3A559F)),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "TOTAL : ",
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  .9,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Container(
+                                          child: Text(
+                                            totalCost.toString() + ' LE' ??
+                                                '00.00',
+                                            textScaleFactor:
+                                                MediaQuery.of(context)
+                                                        .textScaleFactor *
+                                                    1.3,
+                                            style: TextStyle(
+                                                color: Color(0xff3A559F)),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                              Container(
+                                padding: EdgeInsets.only(right: 10),
+                                width: MediaQuery.of(context).size.width * .4,
+                                height:
+                                    MediaQuery.of(context).size.height * .058,
+                                decoration: BoxDecoration(
+                                    color: Color(0xff3A559F),
+                                    borderRadius: BorderRadius.circular(25.0)),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Text(
+                                        "PLACE ORDER",
+                                        textScaleFactor: MediaQuery.of(context)
+                                                .textScaleFactor *
+                                            1,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    CircleAvatar(
+                                      radius: 10,
+                                      backgroundColor: Colors.white,
+                                      child: Icon(
+                                        Icons.arrow_forward_ios_rounded,
+                                        size: 15,
+                                        color: Color(0xff3A559F),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Spacer(),
-                        CircleAvatar(
-                          radius: 10,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                            color: Color(0xff3A559F),
-                          ),
-                        )
                       ],
                     ),
                   ),
+                  const SizedBox(height: 20)
                 ],
               ),
             ),
-            const SizedBox(height: 25)
-          ],
-        ),
-      ),
     );
   }
 }

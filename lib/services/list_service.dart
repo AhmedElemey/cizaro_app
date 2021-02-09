@@ -13,8 +13,10 @@ import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart';
+import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
+import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:http/http.dart' as http;
 
@@ -207,6 +209,27 @@ class ListServices {
       jsonDecode(response.body);
     } else {
       print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future<ResultShoppingCartModel> checkShoppingCart(
+      ShoppingCartModel shoppingCartModel, String token) async {
+    final response = await http.post(
+      API + '/shopping-cart/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+      body: jsonEncode(shoppingCartModel.toJson()),
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      final body = jsonDecode(response.body);
+      return ResultShoppingCartModel.fromJson(body);
+    } else {
       throw Exception("Unable to perform request .. Try again!");
     }
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HotDealsItem extends StatelessWidget {
   final String itemText, imgUrl;
@@ -6,14 +7,20 @@ class HotDealsItem extends StatelessWidget {
   const HotDealsItem({this.id, this.itemText, this.imgUrl});
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        allowFontScaling: false,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height);
     return Container(
       child: Stack(children: [
         Container(
-          padding: EdgeInsets.only(left: 1, right: 1),
+          padding: EdgeInsets.only(
+              left: ScreenUtil().setWidth(1), right: ScreenUtil().setWidth(1)),
           child: Image.network(
             imgUrl,
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * .3,
+            height:
+                ScreenUtil().setHeight(MediaQuery.of(context).size.height * .3),
             fit: BoxFit.fitWidth,
             loadingBuilder: (BuildContext context, Widget child,
                 ImageChunkEvent loadingProgress) {
@@ -34,12 +41,13 @@ class HotDealsItem extends StatelessWidget {
             bottom: 1,
             right: 10,
             child: Container(
-              width: MediaQuery.of(context).size.width * .35,
+              width: ScreenUtil()
+                  .setWidth(MediaQuery.of(context).size.width * .41),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18.0)),
               child: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
+                padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

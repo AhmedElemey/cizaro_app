@@ -1,13 +1,11 @@
-import 'dart:ffi';
-
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class ProfileScreen extends StatelessWidget {
   static final routeName = '/profile-screen';
@@ -51,26 +49,6 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             Container(
-              child: Center(
-                  child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Color(0xff3A559F),
-                ),
-                height: MediaQuery.of(context).size.height * .05,
-                width: MediaQuery.of(context).size.width * .4,
-                child: Center(
-                  child: Text(
-                    "Login/ Signup",
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.4,
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )),
-            ),
-            Container(
               padding: EdgeInsets.only(left: 10, top: 5),
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -97,28 +75,48 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      padding: EdgeInsets.only(top: 5, left: 10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black26,
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                    padding: EdgeInsets.only(top: 5, left: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        color: Color(0xff3A559F),
+                      ),
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .4,
+                      child: Center(
+                        child: Text(
+                          "EDIT PROFILE",
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.4,
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
                         ),
-                        height: MediaQuery.of(context).size.height * .05,
-                        width: MediaQuery.of(context).size.width * .4,
-                        child: Center(
-                          child: Text(
-                            "EDIT PROFILE",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.3,
-                            style: TextStyle(
-                                color: Colors.black38,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )),
+                      ),
+                    ),
+                  ),
+                  // Container(
+                  //     padding: EdgeInsets.only(top: 5, left: 10),
+                  //     child: Container(
+                  //       decoration: BoxDecoration(
+                  //         border: Border.all(
+                  //           color: Colors.black26,
+                  //           width: 2,
+                  //         ),
+                  //         borderRadius: BorderRadius.all(Radius.circular(20)),
+                  //       ),
+                  //       height: MediaQuery.of(context).size.height * .05,
+                  //       width: MediaQuery.of(context).size.width * .4,
+                  //       child: Center(
+                  //         child: Text(
+                  //           "EDIT PROFILE",
+                  //           textScaleFactor:
+                  //               MediaQuery.of(context).textScaleFactor * 1.3,
+                  //           style: TextStyle(
+                  //               color: Colors.black38,
+                  //               fontWeight: FontWeight.bold),
+                  //         ),
+                  //       ),
+                  //     )),
                 ],
               ),
             ),
@@ -211,25 +209,25 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.add_business_rounded,
-                            size: 30,
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Address Book ",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.5,
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(AddressBookScreen.routeName),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add_business_rounded,
+                              size: 30,
                             ),
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () => Navigator.of(context)
-                                .pushNamed(AddressBookScreen.routeName),
-                            child: CircleAvatar(
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Address Book ",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) * 1.5,
+                              ),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
                               child: Icon(
@@ -237,9 +235,9 @@ class ProfileScreen extends StatelessWidget {
                                 size: 10,
                                 color: Colors.black45,
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -261,25 +259,25 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     Container(
                       padding: EdgeInsets.only(top: 5),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 30,
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Wish list",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.5,
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(FavoriteScreen.routeName),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 30,
                             ),
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () => Navigator.of(context)
-                                .pushNamed(FavoriteScreen.routeName),
-                            child: CircleAvatar(
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Wish list",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) * 1.5,
+                              ),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
                               child: Icon(
@@ -287,9 +285,9 @@ class ProfileScreen extends StatelessWidget {
                                 size: 10,
                                 color: Colors.black45,
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -302,25 +300,25 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.mail_sharp,
-                            size: 30,
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Polices and terms",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.5,
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(PolicesTermsScreen.routeName),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.mail_sharp,
+                              size: 30,
                             ),
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () => Navigator.of(context)
-                                .pushNamed(PolicesTermsScreen.routeName),
-                            child: CircleAvatar(
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Polices and terms",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) * 1.5,
+                              ),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
                               child: Icon(
@@ -328,9 +326,9 @@ class ProfileScreen extends StatelessWidget {
                                 size: 10,
                                 color: Colors.black45,
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -343,25 +341,25 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.email_rounded,
-                            size: 30,
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "About us",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.5,
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(AboutUsScreen.routeName),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.email_rounded,
+                              size: 30,
                             ),
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () => Navigator.of(context)
-                                .pushNamed(AboutUsScreen.routeName),
-                            child: CircleAvatar(
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "About us",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) * 1.5,
+                              ),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
                               child: Icon(
@@ -369,9 +367,9 @@ class ProfileScreen extends StatelessWidget {
                                 size: 10,
                                 color: Colors.black45,
                               ),
-                            ),
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -384,25 +382,25 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.headset_mic_rounded,
-                            size: 30,
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Contact us",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.5,
+                      child: GestureDetector(
+                        onTap: () => Navigator.of(context)
+                            .pushNamed(ContactUsScreen.routeName),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.headset_mic_rounded,
+                              size: 30,
                             ),
-                          ),
-                          Spacer(),
-                          GestureDetector(
-                            onTap: () => Navigator.of(context)
-                                .pushNamed(ContactUsScreen.routeName),
-                            child: CircleAvatar(
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "Contact us",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) * 1.5,
+                              ),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
                               child: Icon(
@@ -410,9 +408,49 @@ class ProfileScreen extends StatelessWidget {
                                 size: 10,
                                 color: Colors.black45,
                               ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 5),
+                      child: Divider(
+                        height: MediaQuery.of(context).size.height * .01,
+                        color: Color(0xff727C8E),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: GestureDetector(
+                        onTap: () => {},
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              size: 30,
                             ),
-                          )
-                        ],
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text(
+                                "SignOut",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) * 1.5,
+                              ),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.black26,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 10,
+                                color: Colors.black45,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],

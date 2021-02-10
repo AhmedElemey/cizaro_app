@@ -306,76 +306,72 @@ class _SearchScreenState extends State<SearchScreen> {
                       children: [
                         GradientAppBar(""),
                         Container(
+                          padding: EdgeInsets.only(left: 10, right: 10),
                           height: MediaQuery.of(context).size.height * .1,
+                          //   width: MediaQuery.of(context).size.width * .9,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(left: 5),
-                                    width:
-                                        MediaQuery.of(context).size.width * .24,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          productList?.length.toString() ?? '',
-                                          style: TextStyle(color: Colors.red),
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        ),
-                                        Text(
-                                          " Items",
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        )
-                                      ],
+                              Container(
+                                // width: MediaQuery.of(context)
+                                //         .size
+                                //         .width *
+                                //     .24,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      productList?.length.toString() ?? '',
+                                      style: TextStyle(color: Colors.red),
+                                      textScaleFactor:
+                                          MediaQuery.textScaleFactorOf(
+                                                  context) *
+                                              1.5,
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(left: 200),
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productList =
-                                                  productList.reversed.toList();
-                                            });
-                                          },
-                                          child: SvgPicture.asset(
-                                            'assets/images/arrow.svg',
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.035,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.025,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: GestureDetector(
-                                            onTap: () =>
-                                                displayBottomSheet(context),
-                                            child: Icon(
-                                              Icons.filter_alt_outlined,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                    Text(
+                                      " Items",
+                                      textScaleFactor:
+                                          MediaQuery.textScaleFactorOf(
+                                                  context) *
+                                              1.5,
+                                    )
+                                  ],
+                                ),
                               ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          productList =
+                                              productList.reversed.toList();
+                                        });
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/arrow.svg',
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.035,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.025,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 1),
+                                      child: GestureDetector(
+                                        onTap: () =>
+                                            displayBottomSheet(context),
+                                        child: Icon(
+                                          Icons.filter_alt_outlined,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),

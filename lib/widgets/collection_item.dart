@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CollectionItem extends StatelessWidget {
   final String itemText, imgUrl;
@@ -7,20 +8,28 @@ class CollectionItem extends StatelessWidget {
   const CollectionItem({this.id, this.itemText, this.imgUrl});
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        allowFontScaling: false,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height);
     // TODO: implement build
     return Container(
       child: Card(
         elevation: 3,
+        shadowColor: Colors.grey,
         child: Container(
-          height: MediaQuery.of(context).size.height * .2,
-          padding: EdgeInsets.only(left: 15),
+          height:
+              ScreenUtil().setHeight(MediaQuery.of(context).size.height * .2),
+          padding: EdgeInsets.only(left: ScreenUtil().setWidth(15)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
                 imgUrl,
-                width: MediaQuery.of(context).size.width * .3,
-                height: MediaQuery.of(context).size.height * .2,
+                width: ScreenUtil()
+                    .setWidth(MediaQuery.of(context).size.width * .3),
+                height: ScreenUtil()
+                    .setHeight(MediaQuery.of(context).size.height * .2),
                 fit: BoxFit.contain,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent loadingProgress) {
@@ -36,10 +45,12 @@ class CollectionItem extends StatelessWidget {
                 },
               ),
               Container(
-                padding: EdgeInsets.only(top: 10, right: 10),
+                padding: EdgeInsets.only(
+                    top: ScreenUtil().setHeight(10),
+                    right: ScreenUtil().setWidth(10)),
                 child: Text(
                   itemText,
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
+                  textScaleFactor: ScreenUtil.textScaleFactor * 1,
                   style: TextStyle(fontSize: 20),
                 ),
               ),

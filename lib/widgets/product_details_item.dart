@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ProductDetailItem extends StatelessWidget {
   final String productName, imgUrl;
@@ -48,7 +49,7 @@ class ProductDetailItem extends StatelessWidget {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * .3,
+                width: MediaQuery.of(context).size.width * .33,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -62,8 +63,7 @@ class ProductDetailItem extends StatelessWidget {
                             ),
                           )
                         : Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Row(
                               children: <Widget>[
                                 Container(
                                   padding: EdgeInsets.only(
@@ -80,7 +80,7 @@ class ProductDetailItem extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 5),
+                                  padding: EdgeInsets.only(top: 5, left: 5),
                                   child: Text(
                                     productPriceAfter.toString() + ' LE',
                                     textScaleFactor:
@@ -97,8 +97,18 @@ class ProductDetailItem extends StatelessWidget {
                     //   textScaleFactor:
                     //       MediaQuery.of(context).textScaleFactor * 1,
                     // ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 5),
+                width: MediaQuery.of(context).size.width * .3,
+                child: Row(
+                  children: [
+                    Icon(Icons.favorite_border_outlined),
+                    Spacer(),
                     Container(
-                      width: MediaQuery.of(context).size.width * .1,
+                      width: MediaQuery.of(context).size.width * .12,
                       height: MediaQuery.of(context).size.height * .03,
                       decoration: BoxDecoration(
                           color: Color(0xffFF6969),
@@ -122,9 +132,14 @@ class ProductDetailItem extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Spacer(),
+                    SvgPicture.asset('assets/images/cart.svg',
+                        width: MediaQuery.of(context).size.width * 0.028,
+                        height: MediaQuery.of(context).size.height * 0.028,
+                        color: Colors.grey),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),

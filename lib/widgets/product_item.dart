@@ -2,6 +2,7 @@ import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -64,109 +65,119 @@ class _ProductItemState extends State<ProductItem> {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        allowFontScaling: false,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height);
     // TODO: implement build
     final fav = Provider.of<FavViewModel>(context, listen: false);
     //  List favProducts = fav.favProductModel;
 
     return Container(
+      padding: EdgeInsets.only(left: 20),
       child: Card(
         elevation: 3,
-        child: Container(
-          height: MediaQuery.of(context).size.height * .05,
-          padding: EdgeInsets.only(left: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  width: MediaQuery.of(context).size.width * .3,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          final productFav = ProductFav(
-                              id: widget.productId,
-                              name: widget.productName,
-                              mainImg: widget.imgUrl,
-                              price: widget.productPrice,
-                              categoryName: widget.categoryName,
-                              isFav: 1);
+        shadowColor: Colors.grey[900],
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+                width: ScreenUtil()
+                    .setWidth(MediaQuery.of(context).size.width * .3),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        final productFav = ProductFav(
+                            id: widget.productId,
+                            name: widget.productName,
+                            mainImg: widget.imgUrl,
+                            price: widget.productPrice,
+                            categoryName: widget.categoryName,
+                            isFav: 1);
 
-                          fav.addProductToFav(productFav);
-                          showFavToast();
-                        },
-                        child: widget.isFav == 1
-                            ? Icon(
-                                Icons.favorite,
-                                color: Color(0xffFF6969),
-                              )
-                            : Icon(Icons.favorite_border_outlined),
-                      )
-                    ],
-                  )),
-              Image.network(
-                widget.imgUrl,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                          : null,
-                    ),
-                  );
-                },
-                width: MediaQuery.of(context).size.width * .3,
-                height: MediaQuery.of(context).size.height * .19,
-                fit: BoxFit.contain,
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 5, right: 10),
-                child: Text(
-                  widget.productName,
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
-                ),
-              ),
-              widget.productPriceAfter == widget.productPrice
-                  ? Container(
-                      padding: EdgeInsets.only(top: 5, right: 10),
-                      child: Text(
-                        widget.productPrice.toString() + ' LE',
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1.1,
-                      ),
+                        fav.addProductToFav(productFav);
+                        showFavToast();
+                      },
+                      child: widget.isFav == 1
+                          ? Icon(
+                              Icons.favorite,
+                              color: Color(0xffFF6969),
+                            )
+                          : Icon(Icons.favorite_border_outlined),
                     )
-                  : Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                            padding: EdgeInsets.only(top: 5, right: 10),
-                            child: Text(
-                              widget.productPrice.toString() + ' LE',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  decoration: TextDecoration.lineThrough),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 5, right: 10),
-                            child: Text(
-                              widget.productPriceAfter.toString() + ' LE',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
-                            ),
-                          )
-                        ],
-                      ),
+                  ],
+                )),
+            Image.network(
+              widget.imgUrl,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+              width:
+                  ScreenUtil().setWidth(MediaQuery.of(context).size.width * .3),
+              height: ScreenUtil()
+                  .setHeight(MediaQuery.of(context).size.height * .19),
+              fit: BoxFit.fill,
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(10),
+                  right: ScreenUtil().setWidth(10)),
+              child: Text(
+                widget.productName,
+                textScaleFactor: ScreenUtil.textScaleFactor * 1.2,
+              ),
+            ),
+            widget.productPriceAfter == widget.productPrice
+                ? Container(
+                    padding: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(5),
+                        right: ScreenUtil().setWidth(10)),
+                    child: Text(
+                      widget.productPrice.toString() + ' LE',
+                      textScaleFactor: ScreenUtil.textScaleFactor * 1.1,
                     ),
-            ],
-          ),
+                  )
+                : Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: ScreenUtil().setHeight(5),
+                              right: ScreenUtil().setWidth(10)),
+                          child: Text(
+                            widget.productPrice.toString() + ' LE',
+                            textScaleFactor: ScreenUtil.textScaleFactor * 1.1,
+                            style: TextStyle(
+                                color: Colors.red,
+                                decoration: TextDecoration.lineThrough),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: ScreenUtil().setHeight(5),
+                              right: ScreenUtil().setWidth(10)),
+                          child: Text(
+                            widget.productPriceAfter.toString() + ' LE',
+                            textScaleFactor: ScreenUtil.textScaleFactor * 1.1,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+          ],
         ),
       ),
     );

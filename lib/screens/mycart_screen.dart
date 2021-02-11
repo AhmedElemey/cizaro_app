@@ -1,6 +1,7 @@
 import 'package:cizaro_app/helper/database_helper.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
+import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:cizaro_app/widgets/toast_build.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyCartScreen extends StatefulWidget {
   static final routeName = '/my-cart-screen';
@@ -21,6 +23,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
   getProductsOffer() async {
     await Provider.of<CartViewModel>(context, listen: false)
         .getCartItemsAfterOffer();
+  }
+
+  Future<String> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
   }
 
   @override
@@ -50,10 +57,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     productName: cart.cartProductModel[index].name,
                     productCategory: cart.cartProductModel[index].categoryName,
                     productPrice: cart.cartProductModel[index].price,
+                    productPriceAfterDiscount:
+                        cart.cartProductModel[index].priceAfterDiscount,
                     totalAvailability:
                         cart.cartProductModel[index].availability,
-                    totalPrice: cart.cartProductModel[index].price *
-                        cart.cartProductModel[index].quantity,
+                    totalPrice: cart.cartProductModel[index].price ==
+                            cart.cartProductModel[index].priceAfterDiscount
+                        ? cart.cartProductModel[index].price *
+                            cart.cartProductModel[index].quantity
+                        : cart.cartProductModel[index]?.priceAfterDiscount ??
+                            cart.cartProductModel[index].price *
+                                cart.cartProductModel[index].quantity,
                     productQuantity: cart.cartProductModel[index].quantity ?? 1,
                     sizeSpecValue:
                         cart.cartProductModel[index]?.sizeSpecValue ?? '',
@@ -85,7 +99,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
             cartProductsList(),
             Container(
               height: MediaQuery.of(context).size.height * .1,
-              padding: EdgeInsets.only(right: 20, left: 20),
+              padding: const EdgeInsets.only(right: 20, left: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -103,22 +117,25 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           total.totalPrice.toString() + ' LE' ?? '00.00',
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.4,
-                          style: TextStyle(color: Color(0xff3A559F)),
+                          style: const TextStyle(color: Color(0xff3A559F)),
                         ),
                       ],
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      String token = await getToken();
                       total.cartProductModel.length == 0
                           ? ToastBuild(
                               toastMessage:
                                   'Please Add Products in Cart First!',
                               toastIcon: Icons.add,
-                              bgColor: Color(0xff3A559F),
-                            )
-                          : Navigator.of(context)
-                              .pushNamed(CheckoutScreen.routeName);
+                              bgColor: Color(0xff3A559F))
+                          : token == null || token.isEmpty
+                              ? Navigator.of(context)
+                                  .pushNamed(LoginScreen.routeName)
+                              : Navigator.of(context)
+                                  .pushNamed(CheckoutScreen.routeName);
                     },
                     child: Container(
                       padding: EdgeInsets.only(right: 10),
@@ -134,21 +151,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             padding: const EdgeInsets.only(left: 10),
                             child: Text(
                               "CHECKOUT",
-                              style: TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
                           CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 15,
-                              color: Color(0xff3A559F),
-                            ),
-                          )
+                              radius: 15,
+                              backgroundColor: Colors.white,
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 15, color: Color(0xff3A559F)))
                         ],
                       ),
                     ),

@@ -37,6 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     startTime();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,15 +45,17 @@ class _SplashScreenState extends State<SplashScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [Color(0xff05080F),Color(0xff395A9A)],
-              begin: Alignment.bottomRight,
-              end: Alignment.topLeft)
-        ),
-        child: Center(child: Padding(
-          padding: const EdgeInsets.only(left: 23),
-          child: Image.asset('assets/images/cizaro_logo.png',alignment: Alignment.center,width: MediaQuery.of(context).size.width * 0.8,height: MediaQuery.of(context).size.height * 0.4)
-        )),
+            gradient: LinearGradient(
+                colors: [Color(0xff05080F), Color(0xff395A9A)],
+                begin: Alignment.bottomRight,
+                end: Alignment.topLeft)),
+        child: Center(
+            child: Padding(
+                padding: const EdgeInsets.only(left: 23),
+                child: Image.asset('assets/images/cizaro_logo.png',
+                    alignment: Alignment.center,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.4))),
       ),
     );
   }

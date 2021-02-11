@@ -3,35 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CartItem extends StatefulWidget {
-   final String productName,
+  final String productName,
       imgUrl,
-   colorSpecValue,
-   sizeSpecValue,
+      colorSpecValue,
+      sizeSpecValue,
       productCategory;
-   int productQuantity,totalAvailability;
-  final double totalPrice, productPrice;
-   var myController = TextEditingController();
+  int productQuantity, totalAvailability;
+  final double totalPrice, productPrice, productPriceAfterDiscount;
+  var myController = TextEditingController();
   final VoidCallback onDelete;
   final VoidCallback onPlusQuantity;
   final VoidCallback onMinusQuantity;
-   final VoidCallback onUpdateQuantity;
+  final VoidCallback onUpdateQuantity;
 
   CartItem(
       {Key key,
       this.productName,
       this.imgUrl,
       this.productPrice,
+      this.productPriceAfterDiscount,
       this.productCategory,
       this.totalAvailability,
-        this.myController,
+      this.myController,
       this.totalPrice,
       this.productQuantity,
       this.onDelete,
       this.onMinusQuantity,
-        this.colorSpecValue,
-        this.sizeSpecValue,
-        this.onUpdateQuantity,
-      this.onPlusQuantity}): super(key: key);
+      this.colorSpecValue,
+      this.sizeSpecValue,
+      this.onUpdateQuantity,
+      this.onPlusQuantity})
+      : super(key: key);
 
   @override
   _CartItemState createState() => _CartItemState();
@@ -42,7 +44,7 @@ class _CartItemState extends State<CartItem> {
 
   @override
   void initState() {
-    widget.myController.addListener((){
+    widget.myController.addListener(() {
       print("value: ${widget.myController.text}");
       // widget.productQuantity = int.parse(widget.myController.text);
       widget.onUpdateQuantity();
@@ -68,7 +70,7 @@ class _CartItemState extends State<CartItem> {
         child: Container(
           height: MediaQuery.of(context).size.height * .22,
           width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.only(top: 5,bottom: 5),
+          margin: const EdgeInsets.only(top: 5, bottom: 5),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -76,12 +78,12 @@ class _CartItemState extends State<CartItem> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.2,
-                      height: MediaQuery.of(context).size.height * 0.3,
-                      child: Image.network(widget.imgUrl,fit: BoxFit.fitHeight))
-                ),
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: Image.network(widget.imgUrl,
+                            fit: BoxFit.fitHeight))),
               ),
               Flexible(
                 child: Column(
@@ -89,20 +91,23 @@ class _CartItemState extends State<CartItem> {
                   children: [
                     Row(
                       children: [
-                        Text(
-                          widget.productName,
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.3
-                        ),
+                        Text(widget.productName,
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.3),
                         Spacer(),
                         Padding(
-                          padding: const EdgeInsets.only(right: 8,left: 8),
+                          padding: const EdgeInsets.only(right: 8, left: 8),
                           child: Text(
-                            widget.productPrice.toString() + ' LE',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1
-                          ),
+                              widget.productPriceAfterDiscount ==
+                                      widget.productPrice
+                                  ? widget.productPrice.toString()
+                                  : widget.productPriceAfterDiscount
+                                          .toString() +
+                                      ' LE',
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1),
                         )
                       ],
                     ),
@@ -116,15 +121,30 @@ class _CartItemState extends State<CartItem> {
                     ),
                     Row(
                       children: [
-                        Text('Size : ${widget.sizeSpecValue}',style: const TextStyle(color: Colors.black),),
-                        Text(' , ',style: const TextStyle(color: Colors.black)),
-                        Text('Color : ',style: const TextStyle(color: Colors.black)),
-                        CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Color(int.parse('0xff${widget.colorSpecValue}')),
-                            foregroundColor: Color(int.parse('0xff${widget.colorSpecValue}'))),
+                        Text(
+                          widget.sizeSpecValue == ""
+                              ? ''
+                              : 'Size : ${widget.sizeSpecValue}',
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                        Text(widget.colorSpecValue == "" ? '' : ' , ',
+                            style: const TextStyle(color: Colors.black)),
+                        Text(widget.colorSpecValue == "" ? '' : 'Color : ',
+                            style: const TextStyle(color: Colors.black)),
+                        widget.colorSpecValue == ""
+                            ? Container()
+                            : CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Color(
+                                    int.parse('0xff${widget.colorSpecValue}')),
+                                foregroundColor: Color(
+                                    int.parse('0xff${widget.colorSpecValue}'))),
                         Spacer(),
-                        IconButton(icon: Icon(Icons.delete,size: MediaQuery.of(context).size.width * 0.08,color: Colors.red), onPressed: widget.onDelete)
+                        IconButton(
+                            icon: Icon(Icons.delete,
+                                size: MediaQuery.of(context).size.width * 0.08,
+                                color: Colors.red),
+                            onPressed: widget.onDelete)
                       ],
                     ),
                     Row(
@@ -134,13 +154,9 @@ class _CartItemState extends State<CartItem> {
                         GestureDetector(
                           onTap: widget.onMinusQuantity,
                           child: Container(
-                            width: MediaQuery.of(context).size.width *
-                                .075,
-                            height:
-                                MediaQuery.of(context).size.height *
-                                    .075,
-                            padding:
-                                EdgeInsets.only(right: 5, bottom: 17),
+                            width: MediaQuery.of(context).size.width * .075,
+                            height: MediaQuery.of(context).size.height * .075,
+                            padding: EdgeInsets.only(right: 5, bottom: 17),
                             decoration: BoxDecoration(
                               color: Colors.black12,
                               shape: BoxShape.circle,
@@ -156,8 +172,7 @@ class _CartItemState extends State<CartItem> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 5),
-                          width:
-                              MediaQuery.of(context).size.width * .09,
+                          width: MediaQuery.of(context).size.width * .09,
                           child: TextFormField(
                             controller: widget.myController,
                             keyboardType: TextInputType.numberWithOptions(
@@ -170,10 +185,10 @@ class _CartItemState extends State<CartItem> {
                             textAlign: TextAlign.center,
                             decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.only(left: 7),
-                              border: InputBorder.none,
-                              hintText: widget.productQuantity.toString(),
-                              hintStyle: const TextStyle(color: Colors.black)
-                            ),
+                                border: InputBorder.none,
+                                hintText: widget.productQuantity.toString(),
+                                hintStyle:
+                                    const TextStyle(color: Colors.black)),
                             onChanged: (value) {
                               // widget.myController.addListener((){
                               //   print("value: ${widget.myController.text}");
@@ -183,15 +198,15 @@ class _CartItemState extends State<CartItem> {
                               // });
                               setState(() {
                                 widget.myController.text = value;
-                                widget.productQuantity = int.parse(widget.myController.text);
+                                widget.productQuantity =
+                                    int.parse(widget.myController.text);
                               });
-                            // widget.onUpdateQuantity();
+                              // widget.onUpdateQuantity();
                             },
                           ),
                         ),
                         Container(
-                          padding:
-                              EdgeInsets.only(right: 5, left: 10),
+                          padding: EdgeInsets.only(right: 5, left: 10),
                           child: GestureDetector(
                             onTap: widget.onPlusQuantity,
                             child: CircleAvatar(
@@ -207,29 +222,33 @@ class _CartItemState extends State<CartItem> {
                         ),
                         Spacer(),
                         Padding(
-                          padding: const EdgeInsets.only(right: 8,left: 8),
+                          padding: const EdgeInsets.only(right: 8, left: 8),
                           child: Column(
                             children: [
-                              Text(
-                                  "TOTAL",
+                              Text("TOTAL",
                                   textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor *
-                                      .8
-                              ),
+                                      MediaQuery.of(context).textScaleFactor *
+                                          .8),
                               Text(
                                 widget.totalPrice.toString() + ' LE',
-                                textScaleFactor: MediaQuery.of(context)
-                                    .textScaleFactor *
-                                    1,
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor * 1,
                                 style:
-                                const TextStyle(color: Color(0xff3A559F)),
+                                    const TextStyle(color: Color(0xff3A559F)),
                               )
                             ],
                           ),
                         ),
                       ],
                     ),
-                    widget.totalAvailability < widget.productQuantity ? Center(child: Text('${widget.totalAvailability}  items Available in Stock' ?? '',style: const TextStyle(color: Colors.red,fontSize: 10))) : Container()
+                    widget.totalAvailability < widget.productQuantity
+                        ? Center(
+                            child: Text(
+                                '${widget.totalAvailability}  items Available in Stock' ??
+                                    '',
+                                style: const TextStyle(
+                                    color: Colors.red, fontSize: 10)))
+                        : Container()
                   ],
                 ),
               ),

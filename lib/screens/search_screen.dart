@@ -10,6 +10,7 @@ import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -382,11 +383,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           shrinkWrap: true,
                           itemCount: productList?.length ?? 0,
                           itemBuilder: (ctx, index) => GestureDetector(
-                            onTap: () => Navigator.of(context).pushNamed(
-                                ProductDetails.routeName,
-                                arguments: {
-                                  'product_id': productList[index].id
-                                }),
+                            onTap: () => pushNewScreenWithRouteSettings(context,
+                                settings: RouteSettings(
+                                    name: ProductDetails.routeName,
+                                    arguments: {
+                                      'product_id': productList[index].id
+                                    }),
+                                screen: ProductDetails(),
+                                withNavBar: true,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.fade),
                             child: SearchItem(
                               imgUrl: productList[index].mainImg,
                               productName: productList[index].name,
@@ -481,11 +487,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           shrinkWrap: true,
                           itemCount: filterList?.length ?? 0,
                           itemBuilder: (ctx, index) => GestureDetector(
-                            onTap: () => Navigator.of(context).pushNamed(
-                                ProductDetails.routeName,
-                                arguments: {
-                                  'product_id': filterList[index].id
-                                }),
+                            onTap: () => pushNewScreenWithRouteSettings(context,
+                                settings: RouteSettings(
+                                    name: ProductDetails.routeName,
+                                    arguments: {
+                                      'product_id': filterList[index].id
+                                    }),
+                                screen: ProductDetails(),
+                                withNavBar: true,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.fade),
                             child: SearchItem(
                               imgUrl: filterList[index].mainImg,
                               productName: filterList[index].name,

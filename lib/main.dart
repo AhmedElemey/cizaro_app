@@ -36,6 +36,8 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
+GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
+
 void main() {
   HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,12 +52,22 @@ void main() {
       child: DevicePreview(
         enabled: false,
         builder: (context) => MaterialApp(
+          navigatorKey: mainNavigatorKey,
           builder: DevicePreview.appBuilder,
-          theme: ThemeData(
-            primaryColor: Color(0xff294794),
-          ),
+          theme: ThemeData(primaryColor: Color(0xff294794)),
           debugShowCheckedModeBanner: false,
           home: SplashScreen(),
+          onGenerateRoute: (settings) {
+            WidgetBuilder builder;
+            switch (settings.name) {
+              case 'ContactUsScreen.routeName':
+                builder = (BuildContext context) => ContactUsScreen();
+                break;
+              default:
+                throw Exception('Invalid route: ${settings.name}');
+            }
+            return MaterialPageRoute(builder: builder, settings: settings);
+          },
           routes: {
             TabsScreen.routeName: (ctx) => TabsScreen(),
             LoginScreen.routeName: (ctx) => LoginScreen(),

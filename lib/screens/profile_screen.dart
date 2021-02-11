@@ -277,8 +277,11 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           Spacer(),
                           GestureDetector(
-                            onTap: () => Navigator.of(context)
-                                .pushNamed(FavoriteScreen.routeName),
+                            onTap: () =>
+                                Navigator.of(context, rootNavigator: false)
+                                    .push(MaterialPageRoute(
+                                        builder: (context) => FavoriteScreen(),
+                                        maintainState: false)),
                             child: CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,

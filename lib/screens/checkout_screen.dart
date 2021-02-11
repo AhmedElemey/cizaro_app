@@ -3,6 +3,7 @@ import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
+import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/checkout_item.dart';
@@ -52,7 +53,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       addressModel = response;
       addressesList = addressModel.data;
       addressId = addressModel.data[0].id;
-    });
+    }).catchError(
+        (error) => Navigator.of(context).pushNamed(LoginScreen.routeName));
     fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
@@ -71,7 +73,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       countryName = addressBookModel.data.country.name;
       cityName = addressBookModel.data.city.name;
       regionName = addressBookModel.data.region;
-    });
+    }).catchError(
+        (error) => Navigator.of(context).pushNamed(LoginScreen.routeName));
     fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
@@ -88,9 +91,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         .forEach((element) {
       productId = element.id;
       productQuantity = element.quantity;
-      productSpec = element.sizeSpecValue + ',' + element.colorSpecValue;
+      productSpec = element.sizeSpecValue == null
+          ? ''
+          : element.sizeSpecValue + ',' + element.colorSpecValue == null
+              ? ''
+              : element.colorSpecValue;
       itemsList.add(Items(
-          product: productId, quantity: productQuantity, specs: productSpec));
+          product: productId,
+          quantity: productQuantity,
+          specs: productSpec ?? ''));
     });
     final shoppingCart =
         ShoppingCartModel(addressBookId: addressId, items: itemsList);
@@ -102,7 +111,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       shippingFees = resultShoppingCartModel.data.shippingFees;
       totalCost = resultShoppingCartModel.data.totalCost;
       isVerified = resultShoppingCartModel.data.verified;
-    });
+    }).catchError((error) => print(error));
     if (this.mounted) setState(() => _isLoading = false);
   }
 
@@ -343,13 +352,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         productCategory:
                             cart.cartProductModel[index].categoryName ??
                                 "men fashion ",
-                        productPrice: cart.cartProductModel[index].price ?? 65,
-                        productSpecs:
-                            cart.cartProductModel[index].sizeSpecValue,
-                        productColorSpecs: Color(int.parse('0xff' +
-                            cart.cartProductModel[index].colorSpecValue
-                                .split('#')
-                                .last)),
+                        productPrice: cart.cartProductModel[index].price ==
+                                cart.cartProductModel[index].priceAfterDiscount
+                            ? cart.cartProductModel[index].price
+                            : cart.cartProductModel[index].priceAfterDiscount ??
+                                0.0,
+                        productSizeSpecs:
+                            cart.cartProductModel[index].sizeSpecValue ?? '',
+                        productColorSpecs:
+                            cart.cartProductModel[index].colorSpecValue == null
+                                ? Colors.white
+                                : Color(int.parse('0xff' +
+                                        cart.cartProductModel[index]
+                                            .colorSpecValue
+                                            .split('#')
+                                            .last) ??
+                                    ''),
                       ),
                     ),
                   ),

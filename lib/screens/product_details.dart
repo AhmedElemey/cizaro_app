@@ -37,7 +37,10 @@ class _ProductDetailsState extends State<ProductDetails> {
       specTitle,
       colorSpecValue,
       sizeSpecValue;
-  double productPrice, productStar, productPriceAfter;
+  double productPrice,
+      productStar,
+      productPriceAfter,
+      productPriceAfterDiscount;
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
   List<Values> productSpecs = [];
@@ -57,6 +60,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       productName = productDetails.data.name;
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
+      productPriceAfterDiscount = productDetails.data.offer.afterPrice;
       productPriceAfter = productDetails.data.offer.afterPrice;
 
       productStar = productDetails.data.stars ?? 0.0;
@@ -493,6 +497,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 name: productName,
                                 mainImg: imgUrl,
                                 price: productPrice,
+                                priceAfterDiscount: productPriceAfterDiscount,
                                 categoryName: productName,
                                 quantity: 1,
                                 availability: productAvailability,

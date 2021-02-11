@@ -43,7 +43,10 @@ class CartViewModel extends ChangeNotifier {
 
   getTotalPrice() {
     for (int i = 0; i < _cartItemsList.length; i++) {
-      _totalPrice += _cartItemsList[i].price * _cartItemsList[i].quantity;
+      _cartItemsList[i].price == _cartItemsList[i].priceAfterDiscount
+          ? _totalPrice += _cartItemsList[i].price * _cartItemsList[i].quantity
+          : _totalPrice +=
+              _cartItemsList[i].priceAfterDiscount * _cartItemsList[i].quantity;
       notifyListeners();
     }
   }
@@ -58,7 +61,9 @@ class CartViewModel extends ChangeNotifier {
     }
     await dbHelper.addProductToCart(productCart);
     _cartItemsList.add(productCart);
-    _totalPrice += productCart.price * productCart.quantity;
+    productCart.price == productCart.priceAfterDiscount
+        ? _totalPrice += productCart.price * productCart.quantity
+        : _totalPrice += productCart.priceAfterDiscount * productCart.quantity;
     notifyListeners();
   }
 
@@ -67,7 +72,9 @@ class CartViewModel extends ChangeNotifier {
       return;
     }
     _cartItemsList[index].quantity++;
-    _totalPrice += _cartItemsList[index].price;
+    _cartItemsList[index].price == _cartItemsList[index].priceAfterDiscount
+        ? _totalPrice += _cartItemsList[index].price
+        : _totalPrice += _cartItemsList[index].priceAfterDiscount;
     await dbHelper.updateProduct(_cartItemsList[index]);
     notifyListeners();
   }
@@ -77,15 +84,23 @@ class CartViewModel extends ChangeNotifier {
         ? _cartItemsList[index].quantity = 1
         : _cartItemsList[index].quantity--;
     _cartItemsList[index].quantity <= 1
-        ? _totalPrice = _cartItemsList[index].price
-        : _totalPrice -= _cartItemsList[index].price;
+        ? _cartItemsList[index].price ==
+                _cartItemsList[index].priceAfterDiscount
+            ? _totalPrice = _cartItemsList[index].price
+            : _totalPrice = _cartItemsList[index].priceAfterDiscount
+        : _cartItemsList[index].price ==
+                _cartItemsList[index].priceAfterDiscount
+            ? _totalPrice -= _cartItemsList[index].price
+            : _totalPrice -= _cartItemsList[index].priceAfterDiscount;
     await dbHelper.updateProduct(_cartItemsList[index]);
     notifyListeners();
   }
 
   deleteCartProduct(int index, int productId) async {
     dbHelper.deleteCartItem(productId);
-    _totalPrice -= _cartItemsList[index].price * _cartItemsList[index].quantity;
+    _cartItemsList[index].price == _cartItemsList[index].priceAfterDiscount
+        ? _totalPrice += _cartItemsList[index].price
+        : _totalPrice += _cartItemsList[index].priceAfterDiscount;
     await dbHelper.updateProduct(_cartItemsList[index]);
     notifyListeners();
   }

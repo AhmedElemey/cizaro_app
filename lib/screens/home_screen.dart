@@ -11,6 +11,7 @@ import 'package:cizaro_app/widgets/hotDeals_item.dart';
 import 'package:cizaro_app/widgets/product_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -84,10 +85,17 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: newArrivalsList[index]?.products?.length ?? 0,
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, index) => GestureDetector(
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(ProductDetails.routeName, arguments: {
-                      'product_id': newArrivalsList[0].products[index].id
-                    }),
+                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                        settings: RouteSettings(
+                            name: ProductDetails.routeName,
+                            arguments: {
+                              'product_id':
+                                  newArrivalsList[0].products[index].id
+                            }),
+                        screen: ProductDetails(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            tab.PageTransitionAnimation.fade),
                     child: ProductItem(
                         productId: newArrivalsList[0]?.products[index]?.id ?? 0,
                         productName:
@@ -104,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         productPriceAfter: newArrivalsList[0]
                                 ?.products[index]
                                 ?.offer
-                                .afterPrice ??
+                                ?.afterPrice ??
                             0.0,
                         isFav: isFavValue()
                         // fav.favProductModel.length == 0 ||
@@ -138,10 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: topSellingList[index]?.products?.length ?? 0,
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, index) => GestureDetector(
-                    onTap: () => Navigator.of(context)
-                        .pushNamed(ProductDetails.routeName, arguments: {
-                      'product_id': topSellingList[0].products[index].id
-                    }),
+                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                        settings: RouteSettings(
+                            name: ProductDetails.routeName,
+                            arguments: {
+                              'product_id': topSellingList[0].products[index].id
+                            }),
+                        screen: ProductDetails(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            tab.PageTransitionAnimation.fade),
                     child: ProductItem(
                       productId: topSellingList[0]?.products[index]?.id ?? 0,
                       productName:
@@ -270,12 +284,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                     scrollDirection: Axis.horizontal,
                                     itemBuilder: (ctx, index) =>
                                         GestureDetector(
-                                          onTap: () => Navigator.of(context)
-                                              .pushNamed(ShopScreen.routeName,
-                                                  arguments: {
-                                                'collection_id':
-                                                    collectionsList[index].id
-                                              }),
+                                          onTap: () => tab
+                                              .pushNewScreenWithRouteSettings(
+                                                  context,
+                                                  settings: RouteSettings(
+                                                      name:
+                                                          ShopScreen.routeName,
+                                                      arguments: {
+                                                        'collection_id':
+                                                            collectionsList[
+                                                                    index]
+                                                                .id
+                                                      }),
+                                                  screen: ShopScreen(),
+                                                  withNavBar: true,
+                                                  pageTransitionAnimation: tab
+                                                      .PageTransitionAnimation
+                                                      .fade),
                                           child: CollectionItem(
                                             id: collectionsList[index].id,
                                             itemText:

@@ -28,6 +28,7 @@ class DataBaseHelper {
       $columnId INTEGER PRIMARY KEY,
       $columnName TEXT NOT NULL,
       $columnPrice Double,
+      $columnPriceAfterDiscount Double,
       $columnCategoryName TEXT NOT NULL,
       $columnQuantity INTEGER,
       $columnMainImag TEXT NOT NULL,
@@ -54,16 +55,17 @@ class DataBaseHelper {
         where: '$columnId = ?', whereArgs: [productCart.id]);
   }
 
-  Future<List<ProductCart>> getCartItems() async{
+  Future<List<ProductCart>> getCartItems() async {
     var dbClient = await database;
     List<Map> maps = await dbClient.query(tableCart);
-    return maps.isNotEmpty ? maps.map((cart) => ProductCart.fromJson(cart)).toList() : [];
+    return maps.isNotEmpty
+        ? maps.map((cart) => ProductCart.fromJson(cart)).toList()
+        : [];
   }
 
-  Future<void> deleteCartItem(int id) async{
+  Future<void> deleteCartItem(int id) async {
     var dbClient = await database;
-    return await dbClient.delete(tableCart,where: '$columnId = ?' ,whereArgs: [id]);
-
+    return await dbClient
+        .delete(tableCart, where: '$columnId = ?', whereArgs: [id]);
   }
-
 }

@@ -11,66 +11,69 @@ class HotDealsItem extends StatelessWidget {
         allowFontScaling: false,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height);
-    return Container(
-      child: Stack(children: [
-        Container(
-          padding: EdgeInsets.only(
-              left: ScreenUtil().setWidth(1), right: ScreenUtil().setWidth(1)),
-          child: Image.network(
-            imgUrl,
-            width: MediaQuery.of(context).size.width,
-            height:
-                ScreenUtil().setHeight(MediaQuery.of(context).size.height * .3),
-            fit: BoxFit.fitWidth,
-            loadingBuilder: (BuildContext context, Widget child,
-                ImageChunkEvent loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Center(
-                child: CircularProgressIndicator(
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes
-                      : null,
-                ),
-              );
-            },
-          ),
-        ),
-        // Positioned(top: 1, left: 10, child: Image.network(imgUrl)),
-        Positioned(
-            bottom: 1,
-            right: 10,
-            child: Container(
-              width: ScreenUtil()
-                  .setWidth(MediaQuery.of(context).size.width * .41),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18.0)),
-              child: Padding(
-                padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                        margin: new EdgeInsets.all(10),
-                        child: Text(
-                          "SEE MORE",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        )),
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundColor: Colors.blue.shade900,
-                      child: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 15,
-                      ),
-                    )
-                  ],
-                ),
+    return Stack(children: [
+      Container(
+        padding: EdgeInsets.only(
+            left: ScreenUtil().setWidth(1), right: ScreenUtil().setWidth(1)),
+        child: Image.network(
+          imgUrl,
+          width: MediaQuery.of(context).size.width,
+          height:
+              ScreenUtil().setHeight(MediaQuery.of(context).size.height * .3),
+          fit: BoxFit.fitWidth,
+          loadingBuilder: (BuildContext context, Widget child,
+              ImageChunkEvent loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes
+                    : null,
               ),
-            ))
-      ]),
-    );
+            );
+          },
+        ),
+      ),
+      // Positioned(top: 1, left: 10, child: Image.network(imgUrl)),
+      Positioned(
+          bottom: 1,
+          right: 10,
+          child: Container(
+            width:
+                ScreenUtil().setWidth(MediaQuery.of(context).size.width * .41),
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ], color: Colors.white, borderRadius: BorderRadius.circular(18.0)),
+            child: Padding(
+              padding: EdgeInsets.only(right: ScreenUtil().setWidth(8)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      margin: new EdgeInsets.all(10),
+                      child: Text(
+                        "SEE MORE",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      )),
+                  CircleAvatar(
+                    radius: 15,
+                    backgroundColor: Colors.blue.shade900,
+                    child: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 15,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ))
+    ]);
   }
 }

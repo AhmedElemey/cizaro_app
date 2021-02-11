@@ -227,6 +227,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          0, 3), // changes position of shadow
+                                    ),
+                                  ],
+                                ),
                                 padding: EdgeInsets.only(
                                   top: ScreenUtil().setHeight(5),
                                 ),
@@ -339,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Container(
                                   height: ScreenUtil().setHeight(
-                                      MediaQuery.of(context).size.height * .4),
+                                      MediaQuery.of(context).size.height * .48),
                                   child: tabsWidgets(context)),
                             ],
                           ),
@@ -368,7 +379,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Container(
                                   height: ScreenUtil().setHeight(
-                                      MediaQuery.of(context).size.height * .4),
+                                      MediaQuery.of(context).size.height * .48),
                                   child: topSellingWidgets(context)),
                             ],
                           ),

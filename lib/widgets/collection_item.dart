@@ -15,47 +15,65 @@ class CollectionItem extends StatelessWidget {
     // TODO: implement build
     return Container(
       child: Card(
-        elevation: 3,
-        shadowColor: Colors.grey,
-        child: Container(
-          height:
-              ScreenUtil().setHeight(MediaQuery.of(context).size.height * .2),
-          padding: EdgeInsets.only(left: ScreenUtil().setWidth(15)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(
-                imgUrl,
-                width: ScreenUtil()
-                    .setWidth(MediaQuery.of(context).size.width * .3),
-                height: ScreenUtil()
-                    .setHeight(MediaQuery.of(context).size.height * .2),
-                fit: BoxFit.contain,
-                loadingBuilder: (BuildContext context, Widget child,
-                    ImageChunkEvent loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                          : null,
-                    ),
-                  );
-                },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 10,
+        shadowColor: Colors.grey[900],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image.network(
+            //   imgUrl,
+            //   width: ScreenUtil()
+            //       .setWidth(MediaQuery.of(context).size.width * .3),
+            //   height: ScreenUtil()
+            //       .setHeight(MediaQuery.of(context).size.height * .2),
+            //   fit: BoxFit.contain,
+            //   loadingBuilder: (BuildContext context, Widget child,
+            //       ImageChunkEvent loadingProgress) {
+            //     if (loadingProgress == null) return child;
+            //     return Center(
+            //       child: CircularProgressIndicator(
+            //         value: loadingProgress.expectedTotalBytes != null
+            //             ? loadingProgress.cumulativeBytesLoaded /
+            //                 loadingProgress.expectedTotalBytes
+            //             : null,
+            //       ),
+            //     );
+            //   },
+            // ),
+            Image.network(
+              imgUrl,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Center(
+                  child: CircularProgressIndicator(
+                    value: loadingProgress.expectedTotalBytes != null
+                        ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes
+                        : null,
+                  ),
+                );
+              },
+              width:
+                  ScreenUtil().setWidth(MediaQuery.of(context).size.width * .3),
+              height: ScreenUtil()
+                  .setHeight(MediaQuery.of(context).size.height * .19),
+              fit: BoxFit.fill,
+            ),
+            Container(
+              padding: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(10),
+                  left: ScreenUtil().setWidth(20)),
+              child: Text(
+                itemText,
+                textScaleFactor: ScreenUtil.textScaleFactor * 1,
+                style: TextStyle(fontSize: 20),
               ),
-              Container(
-                padding: EdgeInsets.only(
-                    top: ScreenUtil().setHeight(10),
-                    right: ScreenUtil().setWidth(10)),
-                child: Text(
-                  itemText,
-                  textScaleFactor: ScreenUtil.textScaleFactor * 1,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -12,6 +12,7 @@ import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/product_details.dart';
+import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
@@ -168,6 +169,21 @@ class ListServices {
     } else {
       print(response.body);
       throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future<ProfileModel> fetchProfile(int id, String token) async {
+    final response = await http.get(API + '/users/$id/', headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': '${'Token'} $token'
+    });
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      // print(response.body);
+      return ProfileModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
     }
   }
 

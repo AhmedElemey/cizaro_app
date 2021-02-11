@@ -25,7 +25,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//hamada
 
 class MyHttpOverrides extends HttpOverrides {
   @override

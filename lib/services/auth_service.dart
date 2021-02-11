@@ -103,7 +103,6 @@ saveToken(String token) async {
   final prefs = await SharedPreferences.getInstance();
   prefs.setString('token', token);
 }
-// String token = await getToken();
 
 saveId(int customerId) async {
   final prefs = await SharedPreferences.getInstance();

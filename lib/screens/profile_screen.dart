@@ -1,14 +1,70 @@
+import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
+import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static final routeName = '/profile-screen';
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool _isLoading = false;
+  ProfileModel profile;
+  String userName, userEmail, userBirthDate;
+  Gender userGender;
+  getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
+  getId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('customer_id');
+  }
+
+  Future getProfileData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
+
+    String token = await getToken();
+    int userId = await getId();
+
+    final getProfile = Provider.of<ListViewModel>(context, listen: false);
+    await getProfile.fetchProfile(userId, token).then((response) {
+      profile = response;
+      userName = profile.data.fullName;
+      userEmail = profile.data.email;
+      userBirthDate = profile.data.birthDate;
+      userGender = profile.data.gender;
+
+      //  profileList = response.data;
+    });
+    if (this.mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    Future.microtask(() => getProfileData());
+    super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +112,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Container(
                     child: Text(
-                      "Noha Hamza",
+                      userName ?? "",
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 2,
                       style: TextStyle(
@@ -66,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   Container(
                     child: Text(
-                      "Nohahamza@email.com",
+                      userEmail ?? "",
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 1.3,
                       style: TextStyle(

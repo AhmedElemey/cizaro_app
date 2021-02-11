@@ -67,144 +67,149 @@ class _SearchItemState extends State<SearchBarItem> {
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.only(left: 5),
                   width: MediaQuery.of(context).size.width * .4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          widget.productName,
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.5,
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(top: 20),
+                          child: Text(
+                            widget.productName,
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.5,
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Text(
-                          widget.productCategory ?? '',
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.1,
+                        Container(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            widget.productCategory ?? '',
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.1,
+                          ),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Text(
-                          widget.productPrice.toString() + ' LE',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.1,
+                        Container(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                            widget.productPrice.toString() + ' LE',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.1,
+                          ),
                         ),
-                      ),
-                      // Container(
-                      //   padding: EdgeInsets.only(top: 10),
-                      //   child: Row(
-                      //     children: [
-                      //       Container(
-                      //         width: MediaQuery.of(context).size.width * .3,
-                      //         child: Row(
-                      //           children: [
-                      //             Container(
-                      //               child: GestureDetector(
-                      //                 onTap: () {
-                      //                   setState(() {
-                      //                     int value = int.parse(
-                      //                             quantityController.text) -
-                      //                         1;
-                      //                     widget.productQuantity =
-                      //                         value.toString();
-                      //                   });
-                      //                 },
-                      //                 child: CircleAvatar(
-                      //                   radius: 15,
-                      //                   backgroundColor: Colors.black12,
-                      //                   child: Container(
-                      //                     padding: EdgeInsets.only(bottom: 10),
-                      //                     child: Icon(
-                      //                       Icons.minimize,
-                      //                       size: 20,
-                      //                       color: Color(0xff707070),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               child: Container(
-                      //                 padding: EdgeInsets.only(left: 2),
-                      //                 width: MediaQuery.of(context).size.width *
-                      //                     .1,
-                      //                 child: TextField(
-                      //                   controller: quantityController,
-                      //                   keyboardType: TextInputType.number,
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Container(
-                      //               padding: EdgeInsets.only(right: 5),
-                      //               child: GestureDetector(
-                      //                 onTap: () {
-                      //                   setState(() {
-                      //                     int value = int.parse(
-                      //                             quantityController.text) +
-                      //                         1;
-                      //                     widget.productQuantity =
-                      //                         value.toString();
-                      //                   });
-                      //                 },
-                      //                 child: CircleAvatar(
-                      //                   radius: 15,
-                      //                   backgroundColor: Colors.black12,
-                      //                   child: Container(
-                      //                     padding: EdgeInsets.only(bottom: 2),
-                      //                     child: Icon(
-                      //                       Icons.add,
-                      //                       size: 20,
-                      //                       color: Color(0xff707070),
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //               ),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       ),
-                      //       Container(
-                      //         width: MediaQuery.of(context).size.width * .2,
-                      //         padding: EdgeInsets.only(left: 30),
-                      //         child: Row(
-                      //           children: [
-                      //             Container(
-                      //               padding: EdgeInsets.only(top: 5),
-                      //               child: Container(
-                      //                 padding: EdgeInsets.only(bottom: 10),
-                      //                 child: Icon(
-                      //                   Icons.favorite,
-                      //                   size: 25,
-                      //                   color: Color(0xff707070),
-                      //                 ),
-                      //               ),
-                      //             ),
-                      //             Spacer(),
-                      //             Container(
-                      //               child: Container(
-                      //                 padding: EdgeInsets.only(bottom: 2),
-                      //                 child: SvgPicture.asset(
-                      //                   'assets/images/cart.svg',
-                      //                   width:
-                      //                       MediaQuery.of(context).size.width *
-                      //                           0.03,
-                      //                   height:
-                      //                       MediaQuery.of(context).size.height *
-                      //                           0.03,
-                      //                 ),
-                      //               ),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // )
-                    ],
+                        // Container(
+                        //   padding: EdgeInsets.only(top: 10),
+                        //   child: Row(
+                        //     children: [
+                        //       Container(
+                        //         width: MediaQuery.of(context).size.width * .3,
+                        //         child: Row(
+                        //           children: [
+                        //             Container(
+                        //               child: GestureDetector(
+                        //                 onTap: () {
+                        //                   setState(() {
+                        //                     int value = int.parse(
+                        //                             quantityController.text) -
+                        //                         1;
+                        //                     widget.productQuantity =
+                        //                         value.toString();
+                        //                   });
+                        //                 },
+                        //                 child: CircleAvatar(
+                        //                   radius: 15,
+                        //                   backgroundColor: Colors.black12,
+                        //                   child: Container(
+                        //                     padding: EdgeInsets.only(bottom: 10),
+                        //                     child: Icon(
+                        //                       Icons.minimize,
+                        //                       size: 20,
+                        //                       color: Color(0xff707070),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               child: Container(
+                        //                 padding: EdgeInsets.only(left: 2),
+                        //                 width: MediaQuery.of(context).size.width *
+                        //                     .1,
+                        //                 child: TextField(
+                        //                   controller: quantityController,
+                        //                   keyboardType: TextInputType.number,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 5),
+                        //               child: GestureDetector(
+                        //                 onTap: () {
+                        //                   setState(() {
+                        //                     int value = int.parse(
+                        //                             quantityController.text) +
+                        //                         1;
+                        //                     widget.productQuantity =
+                        //                         value.toString();
+                        //                   });
+                        //                 },
+                        //                 child: CircleAvatar(
+                        //                   radius: 15,
+                        //                   backgroundColor: Colors.black12,
+                        //                   child: Container(
+                        //                     padding: EdgeInsets.only(bottom: 2),
+                        //                     child: Icon(
+                        //                       Icons.add,
+                        //                       size: 20,
+                        //                       color: Color(0xff707070),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         width: MediaQuery.of(context).size.width * .2,
+                        //         padding: EdgeInsets.only(left: 30),
+                        //         child: Row(
+                        //           children: [
+                        //             Container(
+                        //               padding: EdgeInsets.only(top: 5),
+                        //               child: Container(
+                        //                 padding: EdgeInsets.only(bottom: 10),
+                        //                 child: Icon(
+                        //                   Icons.favorite,
+                        //                   size: 25,
+                        //                   color: Color(0xff707070),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Spacer(),
+                        //             Container(
+                        //               child: Container(
+                        //                 padding: EdgeInsets.only(bottom: 2),
+                        //                 child: SvgPicture.asset(
+                        //                   'assets/images/cart.svg',
+                        //                   width:
+                        //                       MediaQuery.of(context).size.width *
+                        //                           0.03,
+                        //                   height:
+                        //                       MediaQuery.of(context).size.height *
+                        //                           0.03,
+                        //                 ),
+                        //               ),
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // )
+                      ],
+                    ),
                   ),
                 ),
               ],

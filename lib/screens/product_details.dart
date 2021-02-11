@@ -1,4 +1,4 @@
-import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart' as rs;
@@ -37,10 +37,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       specTitle,
       colorSpecValue,
       sizeSpecValue;
-  double productPrice,
-      productStar,
-      productPriceAfter,
-      productPriceAfterDiscount;
+  double productPrice, productStar, productPriceAfter;
   List<RelatedProducts> productRelated = [];
   List<MultiImages> productImages = [];
   List<Values> productSpecs = [];
@@ -60,7 +57,6 @@ class _ProductDetailsState extends State<ProductDetails> {
       productName = productDetails.data.name;
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
-      productPriceAfterDiscount = productDetails.data.offer.afterPrice;
       productPriceAfter = productDetails.data.offer.afterPrice;
 
       productStar = productDetails.data.stars ?? 0.0;
@@ -74,7 +70,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       //
       productRelated = productDetails.data.relatedProducts;
 //
-      productImages = productDetails.data.multiImages;
+      productImages = productDetails?.data.multiImages;
       //
       productSpecs = productDetails?.data.specs?.values ?? [];
       print(productRelated.length);
@@ -169,9 +165,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 children: [
                   GradientAppBar(""),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(top: 10),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
                           icon: Icon(
@@ -183,20 +178,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                             Navigator.pop(context);
                           },
                         ),
+                        Spacer(),
                         Container(
+                          width: MediaQuery.of(context).size.width * .3,
                           child: Column(
                             children: [
                               Text(
                                 productName ?? "",
                                 textScaleFactor:
                                     MediaQuery.of(context).textScaleFactor *
-                                        1.1,
+                                        1.5,
                               ),
                               Row(
                                 children: [
                                   productPriceAfter == productPrice
                                       ? Container(
-                                          padding: EdgeInsets.only(right: 10),
                                           child: Text(
                                             productPrice.toString() + ' LE',
                                             textScaleFactor:
@@ -248,10 +244,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   //       MediaQuery.of(context).textScaleFactor *
                                   //           1.1,
                                   // ),
+                                  Spacer(),
                                   Container(
-                                    padding: EdgeInsets.only(left: 5),
-                                    width:
-                                        MediaQuery.of(context).size.width * .1,
+                                    padding: EdgeInsets.only(right: 5),
                                     height: MediaQuery.of(context).size.height *
                                         .03,
                                     decoration: BoxDecoration(
@@ -281,26 +276,68 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ],
                           ),
                         ),
-                        Icon(
-                          Icons.shopping_cart,
-                          color: Color(0xff2DE300),
-                        )
+                        Spacer(),
                       ],
                     ),
                   ),
-                  Container(
-                    child: SizedBox(
-                        height: MediaQuery.of(context).size.height * .3,
-                        child: Carousel(
-                          dotColor: Color(0xff727C8E),
-                          radius: Radius.circular(5.0),
-                          dotSize: 5.0,
-                          dotBgColor: Colors.white,
-                          autoplay: false,
-                          dotIncreasedColor: Color(0xff727C8E),
-                          images: [Image.asset("assets/images/hot.png")],
-                        )),
-                  ),
+                  productImages?.length == 0
+                      ? Container(
+                          height: MediaQuery.of(context).size.height * .4,
+                          width: double.infinity,
+                          child: Image.network(imgUrl),
+                        )
+                      : Container(
+                          height: MediaQuery.of(context).size.height * .4,
+                          width: double.infinity,
+                          child: CarouselSlider.builder(
+                            // dotColor: Color(0xff727C8E),
+                            // radius: Radius.circular(5.0),
+                            // dotSize: 5.0,
+                            // dotBgColor: Colors.white,
+                            // autoplay: false,
+                            // dotIncreasedColor: Color(0xff727C8E),
+                            // images: productImages.length == 0
+                            //     ? imgUrl
+                            //     : productImages,
+                            itemCount: productImages.length,
+                            itemBuilder: (ctx, index) {
+                              return Container(
+                                padding: EdgeInsets.only(top: 10),
+                                child: Image.network(
+                                    productImages[index]?.image ?? imgUrl),
+                              );
+                            },
+                            options: CarouselOptions(
+                              aspectRatio: 16 / 9,
+                              viewportFraction: 1,
+                              initialPage: 0,
+                              enableInfiniteScroll: true,
+                              reverse: false,
+                              autoPlay: false,
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayAnimationDuration:
+                                  Duration(milliseconds: 800),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              enlargeCenterPage: true,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
+                        ),
+                  // Container(
+                  //   child: SmoothPageIndicator(
+                  //     // controller: controller,
+                  //     count: productImages.length,
+                  //     effect: SlideEffect(
+                  //         spacing: 8.0,
+                  //         radius: 4.0,
+                  //         dotWidth: 24.0,
+                  //         dotHeight: 16.0,
+                  //         dotColor: Colors.grey,
+                  //         paintStyle: PaintingStyle.stroke,
+                  //         strokeWidth: 2,
+                  //         activeDotColor: Colors.indigo),
+                  //   ),
+                  // ),
                   Container(
                     padding: EdgeInsets.only(left: 10),
                     child: Row(
@@ -308,7 +345,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Text(
                           "Description ",
                           textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 2,
+                              MediaQuery.of(context).textScaleFactor * 1.7,
                           style: TextStyle(color: Color(0xff3A559F)),
                         ),
                       ],
@@ -481,33 +518,32 @@ class _ProductDetailsState extends State<ProductDetails> {
                               },
                             )
                       : Container(),
-                  Container(
-                    width: MediaQuery.of(context).size.width * .44,
-                    height: MediaQuery.of(context).size.height * .066,
-                    decoration: BoxDecoration(
-                        color: Color(0xff3A559F),
-                        borderRadius: BorderRadius.circular(25.0)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            final productCart = ProductCart(
-                                id: productId,
-                                name: productName,
-                                mainImg: imgUrl,
-                                price: productPrice,
-                                priceAfterDiscount: productPriceAfterDiscount,
-                                categoryName: productName,
-                                quantity: 1,
-                                availability: productAvailability,
-                                colorSpecValue: colorSpecValue,
-                                sizeSpecValue: sizeSpecValue);
-                            cart.addProductToCart(productCart);
-                            showToast();
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(left: 10),
+                  GestureDetector(
+                    onTap: () {
+                      final productCart = ProductCart(
+                          id: productId,
+                          name: productName,
+                          mainImg: imgUrl,
+                          price: productPrice,
+                          categoryName: productName,
+                          quantity: 1,
+                          availability: productAvailability,
+                          colorSpecValue: colorSpecValue,
+                          sizeSpecValue: sizeSpecValue);
+                      cart.addProductToCart(productCart);
+                      showToast();
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * .44,
+                      height: MediaQuery.of(context).size.height * .066,
+                      decoration: BoxDecoration(
+                          color: Color(0xff3A559F),
+                          borderRadius: BorderRadius.circular(25.0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(left: 20),
                             child: Text(
                               "ADD TO CART",
                               style: const TextStyle(
@@ -516,20 +552,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 15,
-                              color: Colors.red.shade900,
+                          Container(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 15,
+                                color: Colors.red.shade900,
+                              ),
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Container(
@@ -546,8 +582,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 10, left: 5),
-                    height: MediaQuery.of(context).size.height * .3,
+                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    height: MediaQuery.of(context).size.height * .33,
                     child: ListView.builder(
                         itemCount: productRelated.length,
                         scrollDirection: Axis.horizontal,

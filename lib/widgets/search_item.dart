@@ -43,15 +43,14 @@ class _SearchItemState extends State<SearchItem> {
         child: Card(
           child: Container(
             height: MediaQuery.of(context).size.height * .18,
-            width: MediaQuery.of(context).size.width * .1,
-            padding: EdgeInsets.only(left: 10, right: 10),
+            //width: MediaQuery.of(context).size.width * .1,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 5, right: 10, bottom: 5),
+                  padding: EdgeInsets.only(left: 5, bottom: 5),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(80.0),
+                    borderRadius: BorderRadius.circular(40.0),
                     child: Image.network(
                       widget.imgUrl,
                       loadingBuilder: (BuildContext context, Widget child,
@@ -70,7 +69,7 @@ class _SearchItemState extends State<SearchItem> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 5),
                   width: MediaQuery.of(context).size.width * .5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,22 +95,19 @@ class _SearchItemState extends State<SearchItem> {
                               child: Text(
                                 widget.productPrice.toString() + ' LE',
                                 textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.1,
+                                    MediaQuery.of(context).textScaleFactor * 1,
                               ),
                             )
                           : Container(
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Container(
-                                    padding: EdgeInsets.only(top: 5, right: 10),
+                                    padding: EdgeInsets.only(top: 5, right: 5),
                                     child: Text(
                                       widget.productPrice.toString() + ' LE',
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
-                                          1.1,
+                                          1,
                                       style: TextStyle(
                                           color: Colors.red,
                                           decoration:
@@ -119,13 +115,13 @@ class _SearchItemState extends State<SearchItem> {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.only(top: 5, right: 10),
+                                    padding: EdgeInsets.only(top: 5, right: 5),
                                     child: Text(
                                       widget.productPriceAfter.toString() +
                                           ' LE',
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
-                                          1.1,
+                                          1,
                                     ),
                                   )
                                 ],
@@ -142,35 +138,29 @@ class _SearchItemState extends State<SearchItem> {
                       Container(
                         child: Row(
                           children: [
+                            SizedBox(),
+                            Spacer(),
                             Container(
                               width: MediaQuery.of(context).size.width * .2,
-                              padding: EdgeInsets.only(left: 10),
                               child: Row(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.only(top: 5),
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: 10),
-                                      child: Icon(
-                                        Icons.favorite,
-                                        size: 25,
-                                        color: Color(0xff707070),
-                                      ),
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Icon(
+                                      Icons.favorite,
+                                      size: 25,
+                                      color: Color(0xff707070),
                                     ),
                                   ),
-                                  Spacer(),
                                   Container(
-                                    child: Container(
-                                      padding: EdgeInsets.only(bottom: 2),
-                                      child: SvgPicture.asset(
-                                        'assets/images/cart.svg',
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.03,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.03,
-                                      ),
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: SvgPicture.asset(
+                                      'assets/images/cart.svg',
+                                      width: MediaQuery.of(context).size.width *
+                                          0.04,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.04,
                                     ),
                                   )
                                 ],

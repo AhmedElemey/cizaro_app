@@ -83,12 +83,12 @@ class Data {
     id = json['id'];
     name = json['name'];
     mainImg = json['main_img'];
-    // if (json['multi_images'] != null) {
-    //   multiImages = new List<Null>();
-    //   json['multi_images'].forEach((v) {
-    //     multiImages.add(new Null.fromJson(v));
-    //   });
-    // }
+    if (json['multi_images'] != null) {
+      multiImages = new List<MultiImages>();
+      json['multi_images'].forEach((v) {
+        multiImages.add(new MultiImages.fromJson(v));
+      });
+    }
     price = json['price'];
     stars = json['stars'];
     reviews = json['reviews'];

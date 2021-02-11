@@ -1,20 +1,21 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
+import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
+import 'package:cizaro_app/model/product_details.dart';
+import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/searchModel.dart';
-import 'package:cizaro_app/model/home.dart';
-import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/services/list_service.dart';
-import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:flutter/cupertino.dart';
-import 'package:cizaro_app/model/countries.dart' as country;
 
 class ListViewModel extends ChangeNotifier {
   Future<Home> fetchHomeList() async {
@@ -94,6 +95,12 @@ class ListViewModel extends ChangeNotifier {
 
   Future<List<country.Data>> fetchCountries(String token) async {
     final results = await ListServices().fetchCountries(token);
+    notifyListeners();
+    return results;
+  }
+
+  Future<ProfileModel> fetchProfile(int id, String token) async {
+    final results = await ListServices().fetchProfile(id, token);
     notifyListeners();
     return results;
   }

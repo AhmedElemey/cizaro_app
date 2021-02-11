@@ -79,7 +79,6 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = false;
       });
     }
-    displayBottomSheet(context);
   }
 
   Future getFilterData() async {
@@ -90,11 +89,12 @@ class _SearchScreenState extends State<SearchScreen> {
     final getFilter = Provider.of<ListViewModel>(context, listen: false);
 
     await getFilter
-        .fetchFilter(valueMinPrice.text, valueMaxPrice.text, valueBrand)
+        .fetchFilter(valueMinPrice.text ?? "", valueMaxPrice.text ?? "",
+            valueBrand ?? "")
         .then((response) {
       filter = response;
       filterList = filter.data.products;
-      getBrandData();
+      //getBrandData();
     });
     if (this.mounted) {
       setState(() {
@@ -124,6 +124,7 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   displayBottomSheet(BuildContext context) {
+    getBrandData();
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
@@ -306,75 +307,72 @@ class _SearchScreenState extends State<SearchScreen> {
                       children: [
                         GradientAppBar(""),
                         Container(
+                          padding: EdgeInsets.only(left: 10, right: 10),
                           height: MediaQuery.of(context).size.height * .1,
+                          //   width: MediaQuery.of(context).size.width * .9,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(left: 5),
-                                    width:
-                                        MediaQuery.of(context).size.width * .24,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          productList?.length.toString() ?? '',
-                                          style: TextStyle(color: Colors.red),
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        ),
-                                        Text(
-                                          " Items",
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        )
-                                      ],
+                              Container(
+                                // width: MediaQuery.of(context)
+                                //         .size
+                                //         .width *
+                                //     .24,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      productList?.length.toString() ?? '',
+                                      style: TextStyle(color: Colors.red),
+                                      textScaleFactor:
+                                          MediaQuery.textScaleFactorOf(
+                                                  context) *
+                                              1.5,
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(left: 200),
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productList =
-                                                  productList.reversed.toList();
-                                            });
-                                          },
-                                          child: SvgPicture.asset(
-                                            'assets/images/arrow.svg',
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.035,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.025,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: GestureDetector(
-                                            onTap: () => getBrandData(),
-                                            child: Icon(
-                                              Icons.filter_alt_outlined,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                    Text(
+                                      " Items",
+                                      textScaleFactor:
+                                          MediaQuery.textScaleFactorOf(
+                                                  context) *
+                                              1.5,
+                                    )
+                                  ],
+                                ),
                               ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          productList =
+                                              productList.reversed.toList();
+                                        });
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/arrow.svg',
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.035,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.025,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 1),
+                                      child: GestureDetector(
+                                        onTap: () =>
+                                            displayBottomSheet(context),
+                                        child: Icon(
+                                          Icons.filter_alt_outlined,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -396,7 +394,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: SearchItem(
                               imgUrl: productList[index].mainImg,
                               productName: productList[index].name,
-                              productPrice: productList[index].price,
+                              productPrice: productList[index].price ?? 0.0,
                               productPriceAfter:
                                   productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: productList[index].category.name,
@@ -467,7 +465,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                           padding:
                                               const EdgeInsets.only(left: 10),
                                           child: GestureDetector(
-                                            onTap: () => getHomeData(),
+                                            onTap: () =>
+                                                displayBottomSheet(context),
                                             child: Icon(
                                               Icons.filter_alt_outlined,
                                               size: 30,
@@ -500,7 +499,9 @@ class _SearchScreenState extends State<SearchScreen> {
                             child: SearchItem(
                               imgUrl: filterList[index].mainImg,
                               productName: filterList[index].name,
-                              productPrice: filterList[index].price,
+                              productPrice: filterList[index].price ?? 0.0,
+                              productPriceAfter:
+                                  productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: filterList[index].category.name,
                               //  productQuantity: ,
                             ),

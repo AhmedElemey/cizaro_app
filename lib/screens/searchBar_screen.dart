@@ -1,4 +1,5 @@
 import 'package:cizaro_app/model/searchModel.dart';
+import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/searchBar_item.dart';
 import 'package:flutter/material.dart';
@@ -274,12 +275,17 @@ class SearchResultsListView extends StatelessWidget {
         width: double.infinity,
         child: ListView.builder(
           itemCount: productList?.length ?? 0,
-          itemBuilder: (ctx, index) => SearchBarItem(
-            imgUrl: productList[index].mainImg,
-            productName: productList[index].name,
-            productPrice: productList[index].price,
-            productCategory: productList[index].category.name,
-            //  productQuantity: ,
+          itemBuilder: (ctx, index) => GestureDetector(
+            onTap: () => Navigator.of(context).pushNamed(
+                ProductDetails.routeName,
+                arguments: {'product_id': productList[index].id}),
+            child: SearchBarItem(
+              imgUrl: productList[index].mainImg,
+              productName: productList[index].name,
+              productPrice: productList[index].price,
+              productCategory: productList[index].category.name,
+              //  productQuantity: ,
+            ),
           ),
         ),
       ),

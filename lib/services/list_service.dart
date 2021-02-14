@@ -12,6 +12,7 @@ import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/product_details.dart';
+import 'package:cizaro_app/model/profileEditModel.dart';
 import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
@@ -182,7 +183,7 @@ class ListServices {
     });
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      // print(response.body);
+      print(response.body);
       return ProfileModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -207,8 +208,27 @@ class ListServices {
     }
   }
 
-  // POST
+//patch
 
+  Future<ProfileEditingModel> updateProfile(
+      int id, ProfileEditingModel profileEditingModel, String token) async {
+    final response = await http.patch(API + '/users/$id/',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': '${'Token'} $token'
+        },
+        body: jsonEncode(profileEditingModel.toJson()));
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return ProfileEditingModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  // POST
   Future createAddress(CreateAddress address, String token) async {
     final response = await http.post(
       API + '/address-book/',

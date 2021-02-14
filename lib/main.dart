@@ -11,6 +11,7 @@ import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/screens/profileEdit_screen.dart';
 import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/screens/search_screen.dart';
@@ -84,6 +85,7 @@ void main() {
             AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
             PolicesTermsScreen.routeName: (ctx) => PolicesTermsScreen(),
             AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
+            ProfileEditScreen.routeName: (ctx) => ProfileEditScreen(),
           },
         ),
       ),

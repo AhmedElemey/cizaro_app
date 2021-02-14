@@ -2,8 +2,8 @@ import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
-import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
+import 'package:cizaro_app/screens/profileEdit_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
@@ -130,22 +130,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Color(0xff515C6F)),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 5, left: 10),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context)
+                        .pushNamed(ProfileEditScreen.routeName),
                     child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Color(0xff3A559F),
-                      ),
-                      height: MediaQuery.of(context).size.height * .05,
-                      width: MediaQuery.of(context).size.width * .4,
-                      child: Center(
-                        child: Text(
-                          "EDIT PROFILE",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.4,
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                      padding: EdgeInsets.only(top: 5, left: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Color(0xff3A559F),
+                        ),
+                        height: MediaQuery.of(context).size.height * .05,
+                        width: MediaQuery.of(context).size.width * .4,
+                        child: Center(
+                          child: Text(
+                            "EDIT PROFILE",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.4,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
@@ -316,8 +321,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 5),
                       child: GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(FavoriteScreen.routeName),
                         child: Row(
                           children: [
                             Icon(

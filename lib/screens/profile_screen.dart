@@ -8,6 +8,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -316,8 +317,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 5),
                       child: GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(FavoriteScreen.routeName),
+                        onTap: () => pushNewScreenWithRouteSettings(context,
+                            settings:
+                                RouteSettings(name: FavoriteScreen.routeName),
+                            screen: FavoriteScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade),
                         child: Row(
                           children: [
                             Icon(
@@ -357,8 +363,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(PolicesTermsScreen.routeName),
+                        onTap: () => pushNewScreenWithRouteSettings(context,
+                            settings: RouteSettings(
+                                name: PolicesTermsScreen.routeName),
+                            screen: PolicesTermsScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade),
                         child: Row(
                           children: [
                             Icon(
@@ -398,8 +409,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(AboutUsScreen.routeName),
+                        onTap: () => pushNewScreenWithRouteSettings(context,
+                            settings:
+                                RouteSettings(name: AboutUsScreen.routeName),
+                            screen: AboutUsScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade),
                         child: Row(
                           children: [
                             Icon(
@@ -439,8 +455,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(ContactUsScreen.routeName),
+                        onTap: () => pushNewScreenWithRouteSettings(context,
+                            settings:
+                                RouteSettings(name: ContactUsScreen.routeName),
+                            screen: ContactUsScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade),
                         child: Row(
                           children: [
                             Icon(

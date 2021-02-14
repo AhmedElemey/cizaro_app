@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,12 +63,13 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     totalAvailability:
                         cart.cartProductModel[index].availability,
                     totalPrice: cart.cartProductModel[index].price ==
-                            cart.cartProductModel[index].priceAfterDiscount
+                                cart.cartProductModel[index]
+                                    ?.priceAfterDiscount ??
+                            cart.cartProductModel[index].price
                         ? cart.cartProductModel[index].price *
                             cart.cartProductModel[index].quantity
-                        : cart.cartProductModel[index]?.priceAfterDiscount ??
-                            cart.cartProductModel[index].price *
-                                cart.cartProductModel[index].quantity,
+                        : cart.cartProductModel[index].priceAfterDiscount *
+                            cart.cartProductModel[index].quantity,
                     productQuantity: cart.cartProductModel[index].quantity ?? 1,
                     sizeSpecValue:
                         cart.cartProductModel[index]?.sizeSpecValue ?? '',
@@ -82,8 +84,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         cart.cartProductModel?.removeAt(index);
                       });
                     },
-                    onUpdateQuantity: () => cart.updateQuantity(
-                        index, cart.cartProductModel[index].id),
+                    onUpdateQuantity: () => cart.updateQuantity(index, cart.cartProductModel[index].id),
                     onPlusQuantity: () => cart.increaseQuantity(index),
                     onMinusQuantity: () => cart.decreaseQuantity(index))));
   }
@@ -132,10 +133,20 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               toastIcon: Icons.add,
                               bgColor: Color(0xff3A559F))
                           : token == null || token.isEmpty
-                              ? Navigator.of(context)
-                                  .pushNamed(LoginScreen.routeName)
-                              : Navigator.of(context)
-                                  .pushNamed(CheckoutScreen.routeName);
+                              ? pushNewScreenWithRouteSettings(context,
+                                  settings: RouteSettings(
+                                      name: LoginScreen.routeName),
+                                  screen: LoginScreen(),
+                                  withNavBar: false,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.fade)
+                              : pushNewScreenWithRouteSettings(context,
+                                  settings: RouteSettings(
+                                      name: CheckoutScreen.routeName),
+                                  screen: CheckoutScreen(),
+                                  withNavBar: true,
+                                  pageTransitionAnimation:
+                                      PageTransitionAnimation.fade);
                     },
                     child: Container(
                       padding: EdgeInsets.only(right: 10),

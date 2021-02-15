@@ -5,8 +5,8 @@ import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
-import 'package:cizaro_app/services/auth_service.dart';
 import 'package:cizaro_app/screens/profileEdit_screen.dart';
+import 'package:cizaro_app/services/auth_service.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -388,7 +388,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.email_rounded,
+                              Icons.email_outlined,
                               size: 30,
                             ),
                             Container(

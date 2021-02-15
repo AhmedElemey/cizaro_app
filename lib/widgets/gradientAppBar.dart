@@ -1,10 +1,9 @@
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/searchBar_screen.dart';
-import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
-import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class GradientAppBar extends StatefulWidget {
@@ -289,8 +288,13 @@ class _GradientAppBarState extends State<GradientAppBar> {
                   Icons.search,
                 ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SearchBarScreen
-                      .routeName); //    showSearch(context: context, delegate: Search());
+                  pushNewScreenWithRouteSettings(context,
+                      settings: RouteSettings(name: SearchBarScreen.routeName),
+                      screen: SearchBarScreen(),
+                      withNavBar: true,
+                      pageTransitionAnimation: PageTransitionAnimation.fade);
+                  // Navigator.of(context).pushNamed(SearchBarScreen
+                  //     .routeName); //    showSearch(context: context, delegate: Search());
                 },
               ),
             ),

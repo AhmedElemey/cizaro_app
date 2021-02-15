@@ -105,7 +105,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check, color: Colors.white),
+          Icon(Icons.close, color: Colors.white),
           SizedBox(width: 12.0),
           Text("Password Not matching !",
               style: const TextStyle(color: Colors.white))

@@ -1,4 +1,3 @@
-import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,14 +37,39 @@ class _ProductItemState extends State<ProductItem> {
   @override
   void initState() {
     //   Future.microtask(() => getHomeData());
+    // Future.microtask(() => checkFavItems());
     super.initState();
-    Future.microtask(() => checkFavItems());
+
     fToast = FToast();
     fToast.init(context);
     // de 3ashan awel lama aload el screen t7mel el data
   }
 
-  checkFavItems() async {
+  showFavAlreadyToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Already in Favorites",
+              style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  checkFavItems(BuildContext context) async {
     final fav = Provider.of<FavViewModel>(context, listen: false);
     fav.favProductModel.forEach((element) {
       if (widget.productId == element.id) {
@@ -83,7 +107,7 @@ class _ProductItemState extends State<ProductItem> {
     );
   }
 
-  showToast() {
+  showCartToast() {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
@@ -115,7 +139,7 @@ class _ProductItemState extends State<ProductItem> {
     // TODO: implement build
     final fav = Provider.of<FavViewModel>(context, listen: false);
     //  List favProducts = fav.favProductModel;
-
+    checkFavItems(context);
     return Padding(
       padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
       child: Column(
@@ -210,13 +234,20 @@ class _ProductItemState extends State<ProductItem> {
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            setState(() {
-                              widget.isFav == 1
-                                  ? widget.isFav = 0
-                                  : widget.isFav = 1;
-                              widget.onAddToFavorite();
-                            });
-                            showFavToast();
+                            if (widget.isFav == 1) {
+                              setState(() {
+                                showFavAlreadyToast();
+                                // widget.isFav = 0;
+                                //print("already here");
+                              });
+                            } else {
+                              setState(() {
+                                widget.isFav = 1;
+                                widget.onAddToFavorite();
+                                //  print(" here");
+                                showFavToast();
+                              });
+                            }
                           },
                           child: widget.isFav == 1
                               ? Icon(Icons.favorite, color: Color(0xffFF6969))
@@ -226,7 +257,7 @@ class _ProductItemState extends State<ProductItem> {
                         GestureDetector(
                           onTap: () {
                             widget.onAddToCart();
-                            showToast();
+                            showCartToast();
                           },
                           child: Container(
                             padding: EdgeInsets.only(

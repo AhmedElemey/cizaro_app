@@ -4,6 +4,7 @@ import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart';
+import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
@@ -238,6 +239,27 @@ class ListServices {
         'Authorization': '${'Token'} $token'
       },
       body: jsonEncode(address.toJson()),
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      jsonDecode(response.body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future changePassword(
+      ChangePasswordModel changePasswordModel, String token) async {
+    final response = await http.post(
+      API + '/password_change/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+      body: jsonEncode(changePasswordModel.toJson()),
     );
     var data = json.decode(response.body);
     print(response.body);

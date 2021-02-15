@@ -1,6 +1,7 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart';
+import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
@@ -42,6 +43,14 @@ class ListViewModel extends ChangeNotifier {
       int id, ProfileEditingModel profileEditingModel, String token) async {
     final results =
         await ListServices().updateProfile(id, profileEditingModel, token);
+    notifyListeners();
+    return results;
+  }
+
+  Future<ChangePasswordModel> changePassword(
+      ChangePasswordModel changePasswordModel, String token) async {
+    final results =
+        await ListServices().changePassword(changePasswordModel, token);
     notifyListeners();
     return results;
   }

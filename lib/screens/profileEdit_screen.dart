@@ -1,3 +1,4 @@
+import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/profileEditModel.dart' as Edit;
 import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -29,7 +30,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       valueFullName,
       valueEmail,
       valueBirthDate,
-      valueCurrentPassword,
+      valueConfirmPassword,
       valuePassword;
 
   getToken() async {
@@ -69,6 +70,54 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     }
   }
 
+  showPasswordChangeToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Your Password Changed .!",
+              style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  showConfirmToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Password Not matching !",
+              style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
   showUpdatedToast() {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -91,6 +140,22 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       toastDuration: Duration(seconds: 2),
       gravity: ToastGravity.BOTTOM,
     );
+  }
+
+  Future changePassword() async {
+    if (this.mounted) setState(() => _isLoading = true);
+    final changeProfilePassword =
+        Provider.of<ListViewModel>(context, listen: false);
+    String token = await getToken();
+    final changePasswordModel = ChangePasswordModel(
+        newPassword1: valuePassword, newPassword2: valueConfirmPassword);
+    await changeProfilePassword
+        .changePassword(changePasswordModel, token)
+        .then((response) {});
+    showPasswordChangeToast();
+    if (this.mounted) {
+      setState(() => _isLoading = false);
+    }
   }
 
   Future editProfile() async {
@@ -142,7 +207,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     decoration: BoxDecoration(
                       boxShadow: <BoxShadow>[
                         BoxShadow(
-                          color: Colors.grey.shade200,
+                          color: Colors.grey.shade300,
                           blurRadius: 10.0,
                         ),
                       ],
@@ -174,7 +239,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 15),
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.05,
                           child: TextField(
                             obscureText: false,
@@ -211,7 +276,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 15, top: 10),
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.07,
                           child: TextField(
                             obscureText: false,
@@ -248,7 +313,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 15, top: 10),
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.07,
                           child: TextField(
                             obscureText: false,
@@ -286,7 +351,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 15, top: 10),
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.07,
                           child: TextField(
                             obscureText: false,
@@ -358,7 +423,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   //   ),
                   // ),
                   Container(
-                    padding: EdgeInsets.only(right: 10),
+                    padding: EdgeInsets.only(right: 10, top: 20),
                     child: Row(
                       children: [
                         SizedBox(),
@@ -397,6 +462,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       ],
                     ),
                   ),
+                  Divider(
+                    height: MediaQuery.of(context).size.height * .01,
+                  ),
                   Container(
                     padding: EdgeInsets.only(left: 10, top: 10),
                     height: MediaQuery.of(context).size.height * .05,
@@ -404,7 +472,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                     decoration: BoxDecoration(
                       boxShadow: <BoxShadow>[
                         BoxShadow(
-                          color: Colors.grey.shade200,
+                          color: Colors.grey.shade300,
                           blurRadius: 10.0,
                         ),
                       ],
@@ -419,7 +487,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   Padding(
                     padding: EdgeInsets.only(top: 10, left: 20),
                     child: Text(
-                      "Current Password :",
+                      " Password :",
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 1,
                     ),
@@ -435,14 +503,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 15, top: 10),
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.07,
                           child: TextField(
                             obscureText: true,
                             readOnly: false,
                             onChanged: (value) {
                               setState(() {
-                                valueCurrentPassword = value;
+                                valuePassword = value;
                               });
                             },
                           ),
@@ -453,7 +521,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                   Padding(
                     padding: EdgeInsets.only(top: 10, left: 20),
                     child: Text(
-                      "Password :",
+                      "Confirm Password :",
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 1,
                     ),
@@ -469,14 +537,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         ),
                         Container(
                           padding: EdgeInsets.only(left: 15, top: 10),
-                          width: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.8,
                           height: MediaQuery.of(context).size.height * 0.07,
                           child: TextField(
                             obscureText: true,
                             readOnly: false,
                             onChanged: (value) {
                               setState(() {
-                                valuePassword = value;
+                                valueConfirmPassword = value;
                               });
                             },
                           ),
@@ -490,32 +558,39 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       children: [
                         SizedBox(),
                         Spacer(),
-                        Container(
-                          padding: EdgeInsets.only(right: 10),
-                          width: MediaQuery.of(context).size.width * .5,
-                          height: MediaQuery.of(context).size.height * .06,
-                          decoration: BoxDecoration(
-                              color: Color(0xff3A559F),
-                              borderRadius: BorderRadius.circular(25.0)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(
-                                  "Update Password",
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+                        GestureDetector(
+                          onTap: () => {
+                            valuePassword == valueConfirmPassword
+                                ? changePassword()
+                                : showConfirmToast()
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(right: 10),
+                            width: MediaQuery.of(context).size.width * .45,
+                            height: MediaQuery.of(context).size.height * .06,
+                            decoration: BoxDecoration(
+                                color: Color(0xff3A559F),
+                                borderRadius: BorderRadius.circular(25.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: Text(
+                                    "Change Password",
+                                    style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                              CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.white,
-                                  child: Icon(Icons.arrow_forward_ios_rounded,
-                                      size: 15, color: Color(0xff3A559F)))
-                            ],
+                                CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(Icons.arrow_forward_ios_rounded,
+                                        size: 15, color: Color(0xff3A559F)))
+                              ],
+                            ),
                           ),
                         ),
                       ],

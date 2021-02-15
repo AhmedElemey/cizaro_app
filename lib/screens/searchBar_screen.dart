@@ -4,6 +4,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/searchBar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class SearchBarScreen extends StatefulWidget {
@@ -251,7 +252,7 @@ class SearchResultsListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final fsb = FloatingSearchBar.of(context);
 
-    if (searchTerm == null && productList == null || productList.length == 0) {
+    if (searchTerm == null && productList == null || productList?.length == 0) {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -276,9 +277,18 @@ class SearchResultsListView extends StatelessWidget {
         child: ListView.builder(
           itemCount: productList?.length ?? 0,
           itemBuilder: (ctx, index) => GestureDetector(
-            onTap: () => Navigator.of(context).pushNamed(
-                ProductDetails.routeName,
-                arguments: {'product_id': productList[index].id}),
+            onTap: () => pushNewScreenWithRouteSettings(
+              context,
+              settings: RouteSettings(
+                  name: ProductDetails.routeName,
+                  arguments: {'product_id': productList[index].id}),
+              screen: ProductDetails(),
+              withNavBar: true,
+              pageTransitionAnimation: PageTransitionAnimation.fade,
+            ),
+            // Navigator.of(context).pushNamed(
+            // ProductDetails.routeName,
+            // arguments: {'product_id': productList[index].id}),
             child: SearchBarItem(
               imgUrl: productList[index].mainImg,
               productName: productList[index].name,

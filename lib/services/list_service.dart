@@ -40,7 +40,7 @@ class ListServices {
     final response = await http.get(API + '/brands');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //  print(response.body);
       return BrandModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -53,7 +53,7 @@ class ListServices {
         API + '/products/?min_price=$minimum&max_price=$maximum&brand=$brand');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      // print(response.body);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -97,7 +97,7 @@ class ListServices {
     final response = await http.get(API + '/products/?search=$searchTxt');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      // print(response.body);
       return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -145,11 +145,11 @@ class ListServices {
         },
         body: jsonEncode(spec.toJson()));
     final body = jsonDecode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || body['message'] == '') {
       return RelatedSpec.fromJson(body);
     } else {
-      print(response.body);
+      //   print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -163,7 +163,7 @@ class ListServices {
         },
         body: jsonEncode(checkProductsOfferInCart.toJson()));
     final body = jsonDecode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || body['message'] == '') {
       final Iterable json = body['data'];
       return json
@@ -171,7 +171,7 @@ class ListServices {
               (products) => productOffer.Data.fromJson(products))
           .toList();
     } else {
-      print(response.body);
+      // print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -184,7 +184,7 @@ class ListServices {
     });
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      // print(response.body);
       return ProfileModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -222,7 +222,7 @@ class ListServices {
         body: jsonEncode(profileEditingModel.toJson()));
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      // print(response.body);
       return ProfileEditingModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -241,7 +241,7 @@ class ListServices {
       body: jsonEncode(address.toJson()),
     );
     var data = json.decode(response.body);
-    print(response.body);
+    //print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       jsonDecode(response.body);
     } else {
@@ -262,7 +262,7 @@ class ListServices {
       body: jsonEncode(changePasswordModel.toJson()),
     );
     var data = json.decode(response.body);
-    print(response.body);
+    //print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       jsonDecode(response.body);
     } else {
@@ -283,7 +283,7 @@ class ListServices {
       body: jsonEncode(shoppingCartModel.toJson()),
     );
     var data = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       final body = jsonDecode(response.body);
       return ResultShoppingCartModel.fromJson(body);
@@ -302,7 +302,7 @@ class ListServices {
       },
     );
     var data = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       final body = jsonDecode(response.body);
       return address.AddressModel.fromJson(body);
@@ -323,7 +323,7 @@ class ListServices {
       },
     );
     var data = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       final body = jsonDecode(response.body);
       return AddressBookModel.fromJson(body);

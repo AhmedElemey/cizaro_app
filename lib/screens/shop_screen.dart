@@ -6,6 +6,7 @@ import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/shop_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class ShopScreen extends StatefulWidget {
@@ -68,9 +69,18 @@ class _ShopScreenState extends State<ShopScreen> {
                     child: ListView.builder(
                       itemCount: productList.length,
                       itemBuilder: (ctx, index) => GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(
-                            ProductDetails.routeName,
-                            arguments: {'product_id': productList[index].id}),
+                        onTap: () => pushNewScreenWithRouteSettings(
+                          context,
+                          settings: RouteSettings(
+                              name: ProductDetails.routeName,
+                              arguments: {'product_id': productList[index].id}),
+                          screen: ProductDetails(),
+                          withNavBar: true,
+                          pageTransitionAnimation: PageTransitionAnimation.fade,
+                        ),
+                        // Navigator.of(context).pushNamed(
+                        // ProductDetails.routeName,
+                        // arguments: {'product_id': productList[index].id}),
                         child: ShopItem(
                           imgUrl: productList[index].mainImg,
                           productName: productList[index].name,

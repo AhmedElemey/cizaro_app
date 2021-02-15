@@ -11,6 +11,7 @@ import 'package:cizaro_app/widgets/product_details_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -592,11 +593,23 @@ class _ProductDetailsState extends State<ProductDetails> {
                         itemCount: productRelated.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (ctx, index) => GestureDetector(
-                              onTap: () => Navigator.of(context).pushNamed(
-                                  ProductDetails.routeName,
-                                  arguments: {
-                                    'product_id': productRelated[index].id
-                                  }),
+                              onTap: () => pushNewScreenWithRouteSettings(
+                                context,
+                                settings: RouteSettings(
+                                    name: ProductDetails.routeName,
+                                    arguments: {
+                                      'product_id': productRelated[index].id
+                                    }),
+                                screen: ProductDetails(),
+                                withNavBar: true,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.fade,
+                              ),
+                              // Navigator.of(context).pushNamed(
+                              // ProductDetails.routeName,
+                              // arguments: {
+                              //   'product_id': productRelated[index].id
+                              // }),
                               child: ProductDetailItem(
                                 imgUrl: productRelated[index].mainImg,
                                 productName: productRelated[index].name ?? "",

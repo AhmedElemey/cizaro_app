@@ -15,9 +15,8 @@ import 'package:cizaro_app/widgets/hotDeals_item.dart';
 import 'package:cizaro_app/widgets/product_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -301,8 +300,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MediaQuery.of(context).textScaleFactor *
                                             1.2,
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                        //   fontWeight: FontWeight.bold,
                                         fontSize: 20,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w800,
                                         color: Color(0xff294794)),
                                   ),
                                 ),
@@ -361,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Container()
                       : Container(
                           padding: EdgeInsets.only(
-                            top: ScreenUtil().setHeight(30),
+                            top: ScreenUtil().setHeight(20),
                           ),
                           child: Column(
                             children: [
@@ -373,8 +374,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       textScaleFactor:
                                           ScreenUtil.textScaleFactor * 1.2,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                                          fontSize: 18,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w800,
                                           color: Color(0xff294794)),
                                     ),
                                   ),
@@ -382,7 +384,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Container(
                                 padding: EdgeInsets.only(
-                                    top: ScreenUtil().setHeight(20),
+                                    top: ScreenUtil().setHeight(10),
                                     left: ScreenUtil().setWidth(10)),
                                 height: ScreenUtil().setHeight(
                                     MediaQuery.of(context).size.height * .3),
@@ -423,12 +425,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   newArrivalsList.length == 0 || newArrivalsList.length == null
                       ? Container()
                       : Container(
+                          padding: EdgeInsets.only(left: 10),
                           child: Column(
                             children: [
                               Center(
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      top: ScreenUtil().setHeight(20)),
+                                      top: ScreenUtil().setHeight(10)),
                                   child: Text(
                                     " New Arrivals",
                                     textScaleFactor:
@@ -450,8 +453,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   topSellingList.length == 0 || topSellingList.length == null
                       ? Container()
                       : Container(
-                          padding:
-                              EdgeInsets.only(top: ScreenUtil().setHeight(30)),
                           child: Column(
                             children: [
                               Container(
@@ -470,6 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               Container(
+                                  padding: EdgeInsets.only(left: 10),
                                   height: ScreenUtil().setHeight(
                                       MediaQuery.of(context).size.height * .48),
                                   child: topSellingWidgets(context)),

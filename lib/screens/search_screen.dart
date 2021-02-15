@@ -107,26 +107,6 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  Future getHomeData() async {
-    if (this.mounted)
-      setState(() {
-        _isLoading = true;
-      });
-    final getHome = Provider.of<ListViewModel>(context, listen: false);
-    await getHome.fetchHomeList().then((response) {
-      home = response;
-      newArrivalsList = home.data.newArrivals;
-    });
-    if (this.mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-    // if (filterList.length == 0) {
-    //   displayBottomSheet(context);
-    // } else  {}
-  }
-
   displayBottomSheet(BuildContext context) {
     getBrandData();
     showModalBottomSheet(

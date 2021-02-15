@@ -6,6 +6,7 @@ import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:cizaro_app/services/auth_service.dart';
+import 'package:cizaro_app/screens/profileEdit_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -79,8 +80,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    Future.microtask(() => getProfileData());
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+    Future.microtask(() => getProfileData());
   }
 
   @override
@@ -128,22 +129,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           color: Color(0xff515C6F)),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 5, left: 10),
+                  GestureDetector(
+                    onTap: () => pushNewScreenWithRouteSettings(context,
+                        settings:
+                            RouteSettings(name: ProfileEditScreen.routeName),
+                        screen: ProfileEditScreen(),
+                        withNavBar: true,
+                        pageTransitionAnimation: PageTransitionAnimation.fade),
                     child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Color(0xff3A559F),
-                      ),
-                      height: MediaQuery.of(context).size.height * .05,
-                      width: MediaQuery.of(context).size.width * .4,
-                      child: Center(
-                        child: Text(
-                          "EDIT PROFILE",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.4,
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
+                      padding: EdgeInsets.only(top: 5, left: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: Color(0xff3A559F),
+                        ),
+                        height: MediaQuery.of(context).size.height * .05,
+                        width: MediaQuery.of(context).size.width * .4,
+                        child: Center(
+                          child: Text(
+                            "EDIT PROFILE",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.4,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),

@@ -1,12 +1,14 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart';
+import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
+import 'package:cizaro_app/model/profileEditModel.dart';
 import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
@@ -33,6 +35,22 @@ class ListViewModel extends ChangeNotifier {
   Future<ShopModel> fetchFilter(var minimum, var maximum, var brand) async {
     final results =
         await ListServices().fetchFilterItems(minimum, maximum, brand);
+    notifyListeners();
+    return results;
+  }
+
+  Future<ProfileEditingModel> updateProfile(
+      int id, ProfileEditingModel profileEditingModel, String token) async {
+    final results =
+        await ListServices().updateProfile(id, profileEditingModel, token);
+    notifyListeners();
+    return results;
+  }
+
+  Future<ChangePasswordModel> changePassword(
+      ChangePasswordModel changePasswordModel, String token) async {
+    final results =
+        await ListServices().changePassword(changePasswordModel, token);
     notifyListeners();
     return results;
   }

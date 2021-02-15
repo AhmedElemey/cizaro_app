@@ -1,15 +1,12 @@
-import 'package:cizaro_app/helper/database_helper.dart';
-import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/toast_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';

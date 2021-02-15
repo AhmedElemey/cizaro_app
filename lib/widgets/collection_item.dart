@@ -70,7 +70,12 @@ class CollectionItem extends StatelessWidget {
               child: Text(
                 itemText,
                 textScaleFactor: ScreenUtil.textScaleFactor * 1,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Poppins',
+                  fontStyle: FontStyle.normal,
+                  fontWeight: FontWeight.w200,
+                ),
               ),
             ),
           ],

@@ -1,9 +1,12 @@
 import 'package:cizaro_app/model/brandModel.dart' as brandData;
+import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
@@ -21,6 +24,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   var valueBrand;
+  final GlobalKey<ScaffoldState> _scaffoldKey13 = GlobalKey<ScaffoldState>();
   TextEditingController valueMinPrice = TextEditingController();
   TextEditingController valueMaxPrice = TextEditingController();
 
@@ -296,16 +300,16 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey13,
+      drawer: DrawerLayout(),
       body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: filterList.length == 0
                   ? Column(
                       children: [
-                        GradientAppBar(""),
+                        GradientAppBar("", _scaffoldKey13),
                         Container(
                           padding: EdgeInsets.only(left: 10, right: 10),
                           height: MediaQuery.of(context).size.height * .1,
@@ -398,15 +402,36 @@ class _SearchScreenState extends State<SearchScreen> {
                               productPriceAfter:
                                   productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: productList[index].category.name,
+                              onAddToCart: () {
+                                final cart = Provider.of<CartViewModel>(context,
+                                    listen: false);
+                                final productCart = ProductCart(
+                                    id: productList[index].id,
+                                    name: productList[index].name,
+                                    mainImg: productList[index].mainImg,
+                                    price: productList[index].price,
+                                    priceAfterDiscount:
+                                        productList[index].offer?.afterPrice ??
+                                            productList[index].price,
+                                    categoryName:
+                                        productList[index].category.name,
+                                    quantity: 1,
+                                    availability:
+                                        productList[index].availability,
+                                    colorSpecValue: '',
+                                    sizeSpecValue: '');
+                                cart.addProductToCart(productCart);
+                              },
                               //  productQuantity: ,
                             ),
                           ),
                         ),
+                        const SizedBox(height: 30)
                       ],
                     )
                   : Column(
                       children: [
-                        GradientAppBar(""),
+                        GradientAppBar("", _scaffoldKey13),
                         Container(
                           height: MediaQuery.of(context).size.height * .1,
                           child: Row(
@@ -507,6 +532,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(height: 30)
                       ],
                     ),
             ),

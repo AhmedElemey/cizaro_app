@@ -11,8 +11,10 @@ class ProductItem extends StatefulWidget {
   final String productName, imgUrl, categoryName;
   final int productId;
   final double productPrice, productPriceAfter;
-  double stars;
-  int isFav;
+  final double stars;
+  int isFav = 0;
+  final VoidCallback onAddToCart;
+  final VoidCallback onAddToFavorite;
 
   ProductItem(
       {this.productId,
@@ -22,7 +24,9 @@ class ProductItem extends StatefulWidget {
       this.productPrice,
       this.productPriceAfter,
       this.stars,
-      this.isFav});
+      this.isFav,
+      this.onAddToCart,
+      this.onAddToFavorite});
 
   @override
   _ProductItemState createState() => _ProductItemState();
@@ -30,15 +34,30 @@ class ProductItem extends StatefulWidget {
 
 class _ProductItemState extends State<ProductItem> {
   FToast fToast;
-  int productId;
 
   @override
   void initState() {
     //   Future.microtask(() => getHomeData());
     super.initState();
+    Future.microtask(() => checkFavItems());
     fToast = FToast();
     fToast.init(context);
     // de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  checkFavItems() async {
+    final fav = Provider.of<FavViewModel>(context, listen: false);
+    fav.favProductModel.forEach((element) {
+      if (widget.productId == element.id) {
+        setState(() {
+          widget.isFav = 1;
+        });
+      } else {
+        setState(() {
+          widget.isFav = 0;
+        });
+      }
+    });
   }
 
   showFavToast() {
@@ -54,6 +73,29 @@ class _ProductItemState extends State<ProductItem> {
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
           Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Cart", style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -167,33 +209,34 @@ class _ProductItemState extends State<ProductItem> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            final productFav = ProductFav(
-                                id: widget.productId,
-                                name: widget.productName,
-                                mainImg: widget.imgUrl,
-                                price: widget.productPrice,
-                                categoryName: widget.categoryName,
-                                isFav: 1);
-
-                            fav.addProductToFav(productFav);
+                          onTap: () async {
+                            setState(() {
+                              widget.isFav == 1
+                                  ? widget.isFav = 0
+                                  : widget.isFav = 1;
+                              widget.onAddToFavorite();
+                            });
                             showFavToast();
                           },
                           child: widget.isFav == 1
-                              ? Icon(
-                                  Icons.favorite,
-                                  color: Color(0xffFF6969),
-                                )
+                              ? Icon(Icons.favorite, color: Color(0xffFF6969))
                               : Icon(Icons.favorite_border_outlined),
                         ),
                         Spacer(),
-                        Container(
-                          padding:
-                              EdgeInsets.only(right: ScreenUtil().setWidth(10)),
-                          child: SvgPicture.asset('assets/images/cart.svg',
-                              width: MediaQuery.of(context).size.width * 0.03,
-                              height: MediaQuery.of(context).size.height * 0.03,
-                              color: Colors.grey[900]),
+                        GestureDetector(
+                          onTap: () {
+                            widget.onAddToCart();
+                            showToast();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(10)),
+                            child: SvgPicture.asset('assets/images/cart.svg',
+                                width: MediaQuery.of(context).size.width * 0.03,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.03,
+                                color: Colors.grey[900]),
+                          ),
                         ),
                       ],
                     )),

@@ -5,6 +5,7 @@ import 'package:cizaro_app/model/related_spec.dart' as rs;
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/product_details_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final GlobalKey<ScaffoldState> _scaffoldKey10 = GlobalKey<ScaffoldState>();
   bool _isLoading = false,
       _isLoading2 = false,
       _isColor = false,
@@ -155,6 +157,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final cart = Provider.of<CartViewModel>(context, listen: false);
     return Scaffold(
+      key: _scaffoldKey10,
+      drawer: DrawerLayout(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -163,7 +167,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               physics: ScrollPhysics(),
               child: Column(
                 children: [
-                  GradientAppBar(""),
+                  GradientAppBar("", _scaffoldKey10),
                   Container(
                     padding: EdgeInsets.only(top: 10),
                     child: Row(
@@ -284,7 +288,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ? Container(
                           height: MediaQuery.of(context).size.height * .4,
                           width: double.infinity,
-                          child: Image.network(imgUrl),
+                          child: Image.network(imgUrl ?? ''),
                         )
                       : Container(
                           height: MediaQuery.of(context).size.height * .4,

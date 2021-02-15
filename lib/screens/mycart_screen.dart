@@ -4,6 +4,7 @@ import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/cart_item.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/toast_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class MyCartScreen extends StatefulWidget {
 }
 
 class _MyCartScreenState extends State<MyCartScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey9 = GlobalKey<ScaffoldState>();
+
   getProductsOffer() async {
     await Provider.of<CartViewModel>(context, listen: false)
         .getCartItemsAfterOffer();
@@ -63,13 +66,15 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     totalAvailability:
                         cart.cartProductModel[index].availability,
                     totalPrice: cart.cartProductModel[index].price ==
-                                cart.cartProductModel[index]
-                                    ?.priceAfterDiscount ??
-                            cart.cartProductModel[index].price
+                            cart.cartProductModel[index]?.priceAfterDiscount
                         ? cart.cartProductModel[index].price *
                             cart.cartProductModel[index].quantity
-                        : cart.cartProductModel[index].priceAfterDiscount *
-                            cart.cartProductModel[index].quantity,
+                        : cart.cartProductModel[index].priceAfterDiscount ==
+                                null
+                            ? cart.cartProductModel[index].price *
+                                cart.cartProductModel[index].quantity
+                            : cart.cartProductModel[index].priceAfterDiscount *
+                                cart.cartProductModel[index].quantity,
                     productQuantity: cart.cartProductModel[index].quantity ?? 1,
                     sizeSpecValue:
                         cart.cartProductModel[index]?.sizeSpecValue ?? '',
@@ -84,7 +89,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         cart.cartProductModel?.removeAt(index);
                       });
                     },
-                    onUpdateQuantity: () => cart.updateQuantity(index, cart.cartProductModel[index].id),
+                    // onUpdateQuantity: () => cart.updateQuantity(
+                    //     index, cart.cartProductModel[index].id),
                     onPlusQuantity: () => cart.increaseQuantity(index),
                     onMinusQuantity: () => cart.decreaseQuantity(index))));
   }
@@ -93,10 +99,12 @@ class _MyCartScreenState extends State<MyCartScreen> {
   Widget build(BuildContext context) {
     final total = Provider.of<CartViewModel>(context, listen: true);
     return Scaffold(
+      key: _scaffoldKey9,
+      drawer: DrawerLayout(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("My Cart"),
+            GradientAppBar("My Cart", _scaffoldKey9),
             cartProductsList(),
             Container(
               height: MediaQuery.of(context).size.height * .1,

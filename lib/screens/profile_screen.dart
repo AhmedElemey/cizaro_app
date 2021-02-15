@@ -3,8 +3,11 @@ import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
+import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
+import 'package:cizaro_app/services/auth_service.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +24,26 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _isLoading = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey12 = GlobalKey<ScaffoldState>();
   ProfileModel profile;
   String userName, userEmail, userBirthDate;
   Gender userGender;
   getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
+  }
+
+  // Future<void> _logOut() async {
+  //   await FacebookAuth.instance.logOut();
+  //   String token = await getFacebookToken();
+  //   setState(() {
+  //     token = null;
+  //   });
+  //   Navigator.of(context).pushNamed(LoginScreen.routeName);
+  // }
+
+  logOut() {
+    gSignIn.signOut();
   }
 
   getId() async {
@@ -69,32 +86,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: Container(
-      //       padding: EdgeInsets.only(left: 10),
-      //       child: Image.asset(
-      //         "assets/images/logo.png",
-      //       )),
-      //   title: Center(
-      //     child: Text("Profile"),
-      //   ),
-      //   actions: [
-      //     Container(
-      //       padding: EdgeInsets.all(10.0),
-      //       child: CircleAvatar(
-      //         backgroundColor: Colors.white,
-      //         child: Icon(
-      //           Icons.search,
-      //           color: Colors.black,
-      //         ),
-      //       ),
-      //     )
-      //   ],
-      // ),
+      key: _scaffoldKey12,
+      drawer: DrawerLayout(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Profile"),
+            GradientAppBar("Profile", _scaffoldKey12),
             Container(
               height: MediaQuery.of(context).size.height * .09,
               child: Center(
@@ -200,21 +197,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "All My Orders",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.5,
-                            ),
+                            child: Text("All My Orders",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) *
+                                        1.5),
                           ),
                           Spacer(),
                           CircleAvatar(
                             radius: 10,
                             backgroundColor: Colors.black26,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 10,
-                              color: Colors.black45,
-                            ),
+                            child: Icon(Icons.arrow_forward_ios_rounded,
+                                size: 10, color: Colors.black45),
                           )
                         ],
                       ),
@@ -223,36 +216,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 5),
                       child: Divider(
-                        height: MediaQuery.of(context).size.height * .01,
-                        color: Color(0xff727C8E),
-                      ),
+                          height: MediaQuery.of(context).size.height * .01,
+                          color: Color(0xff727C8E)),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: Row(
                         children: [
-                          Icon(
-                            Icons.local_shipping_outlined,
-                            size: 30,
-                          ),
+                          Icon(Icons.local_shipping_outlined, size: 30),
                           Container(
                             padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Pending Shipments",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.5,
-                            ),
+                            child: Text("Pending Shipments",
+                                textScaleFactor:
+                                    MediaQuery.textScaleFactorOf(context) *
+                                        1.5),
                           ),
                           Spacer(),
                           CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.black26,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 10,
-                              color: Colors.black45,
-                            ),
-                          )
+                              radius: 10,
+                              backgroundColor: Colors.black26,
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45))
                         ],
                       ),
                     ),
@@ -260,9 +244,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 5),
                       child: Divider(
-                        height: MediaQuery.of(context).size.height * .01,
-                        color: Color(0xff727C8E),
-                      ),
+                          height: MediaQuery.of(context).size.height * .01,
+                          color: Color(0xff727C8E)),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
@@ -271,27 +254,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             .pushNamed(AddressBookScreen.routeName),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.add_business_rounded,
-                              size: 30,
-                            ),
+                            Icon(Icons.add_business_rounded, size: 30),
                             Container(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Address Book ",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                              ),
-                            ),
+                                padding: EdgeInsets.only(left: 10),
+                                child: Text("Address Book ",
+                                    textScaleFactor:
+                                        MediaQuery.textScaleFactorOf(context) *
+                                            1.5)),
                             Spacer(),
                             CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 10,
-                                color: Colors.black45,
-                              ),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45),
                             )
                           ],
                         ),
@@ -306,10 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Container(
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black12,
-                    width: 2,
-                  ),
+                  border: Border.all(color: Colors.black12, width: 2),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                 ),
                 child: Column(
@@ -332,21 +304,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Container(
                               padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Wish list",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                              ),
+                              child: Text("Wish list",
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context) *
+                                          1.5),
                             ),
                             Spacer(),
                             CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 10,
-                                color: Colors.black45,
-                              ),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45),
                             )
                           ],
                         ),
@@ -356,9 +324,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 5),
                       child: Divider(
-                        height: MediaQuery.of(context).size.height * .01,
-                        color: Color(0xff727C8E),
-                      ),
+                          height: MediaQuery.of(context).size.height * .01,
+                          color: Color(0xff727C8E)),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
@@ -372,27 +339,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 PageTransitionAnimation.fade),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.mail_sharp,
-                              size: 30,
-                            ),
+                            Icon(Icons.mail_sharp, size: 30),
                             Container(
                               padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Polices and terms",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                              ),
+                              child: Text("Polices and terms",
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context) *
+                                          1.5),
                             ),
                             Spacer(),
                             CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 10,
-                                color: Colors.black45,
-                              ),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45),
                             )
                           ],
                         ),
@@ -402,9 +362,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 5),
                       child: Divider(
-                        height: MediaQuery.of(context).size.height * .01,
-                        color: Color(0xff727C8E),
-                      ),
+                          height: MediaQuery.of(context).size.height * .01,
+                          color: Color(0xff727C8E)),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
@@ -424,21 +383,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             Container(
                               padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "About us",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                              ),
+                              child: Text("About us",
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context) *
+                                          1.5),
                             ),
                             Spacer(),
                             CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 10,
-                                color: Colors.black45,
-                              ),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45),
                             )
                           ],
                         ),
@@ -448,9 +403,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 5),
                       child: Divider(
-                        height: MediaQuery.of(context).size.height * .01,
-                        color: Color(0xff727C8E),
-                      ),
+                          height: MediaQuery.of(context).size.height * .01,
+                          color: Color(0xff727C8E)),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
@@ -464,27 +418,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 PageTransitionAnimation.fade),
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.headset_mic_rounded,
-                              size: 30,
-                            ),
+                            Icon(Icons.headset_mic_rounded, size: 30),
                             Container(
                               padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Contact us",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                              ),
+                              child: Text("Contact us",
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context) *
+                                          1.5),
                             ),
                             Spacer(),
                             CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 10,
-                                color: Colors.black45,
-                              ),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45),
                             )
                           ],
                         ),
@@ -494,37 +441,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding:
                           const EdgeInsets.only(left: 20, right: 20, top: 5),
                       child: Divider(
-                        height: MediaQuery.of(context).size.height * .01,
-                        color: Color(0xff727C8E),
-                      ),
+                          height: MediaQuery.of(context).size.height * .01,
+                          color: Color(0xff727C8E)),
                     ),
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: GestureDetector(
-                        onTap: () => {},
+                        onTap: () async {
+                          saveToken('');
+                          saveId(0);
+                          // _logOut();
+                          logOut();
+                          pushNewScreenWithRouteSettings(context,
+                              settings:
+                                  RouteSettings(name: LoginScreen.routeName),
+                              screen: LoginScreen(),
+                              withNavBar: false,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade);
+                        },
                         child: Row(
                           children: [
-                            Icon(
-                              Icons.logout,
-                              size: 30,
-                            ),
+                            Icon(Icons.logout, size: 30),
                             Container(
                               padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "SignOut",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                              ),
+                              child: Text("SignOut",
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context) *
+                                          1.5),
                             ),
                             Spacer(),
                             CircleAvatar(
                               radius: 10,
                               backgroundColor: Colors.black26,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 10,
-                                color: Colors.black45,
-                              ),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45),
                             )
                           ],
                         ),

@@ -28,7 +28,7 @@ class FavDataBaseHelper {
       $columnId INTEGER PRIMARY KEY,
       $columnName TEXT NOT NULL,
       $columnPrice Double,
-      $columnCategoryName TEXT NOT NULL,
+      $columnCategoryName TEXT ,
       $columnMainImag TEXT NOT NULL,
       $columnStars Double,
       $columnIsFav INTEGER NOT NULL  

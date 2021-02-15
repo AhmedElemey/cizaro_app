@@ -2,6 +2,7 @@ import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/address_item.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -18,6 +19,7 @@ class AddressBookScreen extends StatefulWidget {
 
 class _AddressBookScreenState extends State<AddressBookScreen> {
   bool _isLoading = false;
+  final GlobalKey<ScaffoldState> _scaffoldKey5 = GlobalKey<ScaffoldState>();
   AddressModel addressModel;
   List<address.Data> addressesList = [];
   int indexOfSelectedItemAddress = -1;
@@ -50,6 +52,8 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey5,
+      drawer: DrawerLayout(),
       body: SingleChildScrollView(
         child: Container(
           child: _isLoading
@@ -57,7 +61,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GradientAppBar("Select Address"),
+                    GradientAppBar("Select Address", _scaffoldKey5),
                     Container(
                       height: MediaQuery.of(context).size.height * .15,
                       padding: EdgeInsets.only(left: 5, top: 15),

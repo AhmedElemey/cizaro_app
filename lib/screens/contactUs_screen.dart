@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +18,7 @@ class ContactUsScreen extends StatefulWidget {
 class _ContactUsScreenState extends State<ContactUsScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey7 = GlobalKey<ScaffoldState>();
 
   bool _isLoading = false;
   ContactUsModel contactUsModel;
@@ -78,6 +80,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey7,
+      drawer: DrawerLayout(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -86,7 +90,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar(""),
+                  GradientAppBar("", _scaffoldKey7),
                   Padding(
                     padding: const EdgeInsets.only(top: 20, left: 20),
                     child: Column(

@@ -2,14 +2,16 @@ import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/searchBar_screen.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GradientAppBar extends StatefulWidget {
   final String title;
+  GlobalKey<ScaffoldState> _scaffoldKey1 = GlobalKey<ScaffoldState>();
 
-  GradientAppBar(this.title);
+  GradientAppBar(this.title, this._scaffoldKey1);
 
   @override
   _GradientAppBarState createState() => _GradientAppBarState();
@@ -200,10 +202,14 @@ class _GradientAppBarState extends State<GradientAppBar> {
                 //     color: Colors.white,
                 //   ),
                 // ),
-                child: PopupMenuButton<String>(
-                  onSelected: (String value) {
-                    Navigator.of(context).pushNamed(ShopScreen.routeName,
-                        arguments: {'collection_id': int.parse(value)});
+                // child: PopupMenuButton<String>(
+                //   onSelected: (String value) {
+                //     Navigator.of(context).pushNamed(ShopScreen.routeName,
+                //         arguments: {'collection_id': int.parse(value)});
+                //   },
+                child: GestureDetector(
+                  onTap: () {
+                    widget._scaffoldKey1.currentState.openDrawer();
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * .11,
@@ -213,13 +219,14 @@ class _GradientAppBarState extends State<GradientAppBar> {
                       color: Colors.white,
                     ),
                   ),
-                  itemBuilder: (context) => collectionsList
-                      .map((item) => PopupMenuItem<String>(
-                            child: Text(item.name),
-                            value: item.id.toString(),
-                          ))
-                      .toList(),
                 ),
+                // itemBuilder: (context) => collectionsList
+                //     .map((item) => PopupMenuItem<String>(
+                //           child: Text(item.name),
+                //           value: item.id.toString(),
+                //         ))
+                //     .toList(),
+                // ),
               ),
 
               // child: PopupMenuButton<String>(

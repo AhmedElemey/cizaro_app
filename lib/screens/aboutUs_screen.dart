@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   bool _isLoading = false;
   AboutUsModel aboutUsModel;
   String _details;
+  final GlobalKey<ScaffoldState> _scaffoldKey2 = GlobalKey<ScaffoldState>();
 
   Future getAboutUsData() async {
     if (this.mounted)
@@ -44,6 +46,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey2,
+      drawer: DrawerLayout(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -52,7 +56,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar("About Us"),
+                  GradientAppBar("About Us", _scaffoldKey2),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 10),
                     child: Text(

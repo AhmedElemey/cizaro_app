@@ -1,6 +1,7 @@
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/shop_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,7 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ShopModel shopModel;
   String productName, imgUrl, productDescription;
   double productPrice, productStar;
@@ -50,6 +52,8 @@ class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: DrawerLayout(),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -57,7 +61,7 @@ class _ShopScreenState extends State<ShopScreen> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  GradientAppBar(""),
+                  GradientAppBar("", _scaffoldKey),
                   Container(
                     padding: EdgeInsets.only(top: 10),
                     height: MediaQuery.of(context).size.height,

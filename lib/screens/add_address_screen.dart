@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   TextEditingController _zipCodeController = TextEditingController();
   TextEditingController _regionController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
@@ -33,10 +35,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey4,
+      drawer: DrawerLayout(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Add New Address"),
+            GradientAppBar("Add New Address", _scaffoldKey4),
             FutureBuilder(
                 future: Provider.of<ListViewModel>(context, listen: false)
                     .fetchCountries('c4ce7da269c80455720be2c26c984d8828b88c5f'),

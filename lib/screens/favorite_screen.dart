@@ -1,4 +1,5 @@
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/favorite_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -14,6 +15,8 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   FToast fToast;
+  final GlobalKey<ScaffoldState> _scaffoldKey8 = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     //   Future.microtask(() => getHomeData());
@@ -60,6 +63,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         : Container(
             height: MediaQuery.of(context).size.height * .7,
             child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: fav.favProductModel?.length ?? 0,
                 itemBuilder: (ctx, index) => FavoriteItem(
@@ -73,7 +77,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                             index, fav.favProductModel[index].id);
                         setState(() {
                           fav.favProductModel?.removeAt(index);
-                          fav.favProductModel[index].isFav = 0;
+                          // fav.favProductModel[index].isFav = 0;
                         });
                         showUnFavToast();
                       },
@@ -84,61 +88,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   leading: Container(
-      //       padding: EdgeInsets.only(left: 10),
-      //       child: Image.asset(
-      //         "assets/images/logo.png",
-      //       )),
-      //   title: Center(
-      //     child: Text("Wishlist"),
-      //   ),
-      //   actions: [
-      //     Container(
-      //       padding: EdgeInsets.all(10.0),
-      //       child: CircleAvatar(
-      //         backgroundColor: Colors.white,
-      //         child: Icon(
-      //           Icons.search,
-      //           color: Colors.black,
-      //         ),
-      //       ),
-      //     )
-      //   ],
-      // ),
+      key: _scaffoldKey8,
+      drawer: DrawerLayout(),
       body: SingleChildScrollView(
+        physics: ScrollPhysics(),
         child: Column(
           children: [
-            GradientAppBar("My Favorite"),
-            Container(
-              padding: EdgeInsets.only(left: 10, top: 25),
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Text(
-                      "Noha Hamza",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff515C6F)),
-                    ),
-                  ),
-                  Container(
-                    child: Text(
-                      "Nohahamza@email.com",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.3,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff515C6F)),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            GradientAppBar("My Favorite", _scaffoldKey8),
             favProductList(),
           ],
         ),

@@ -7,6 +7,7 @@ import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/checkout_item.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -25,6 +26,7 @@ class CheckoutScreen extends StatefulWidget {
 }
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey6 = GlobalKey<ScaffoldState>();
   int selectedRadio, addressId, productId, productQuantity;
   String addressName, countryName, cityName, regionName, productSpec;
   double totalOrder, shippingFees, totalCost, arrivalDate;
@@ -129,6 +131,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final cart = Provider.of<CartViewModel>(context, listen: true);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     return Scaffold(
+      key: _scaffoldKey6,
+      drawer: DrawerLayout(),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -136,7 +140,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar("Complete Order"),
+                  GradientAppBar("Complete Order", _scaffoldKey6),
                   Container(
                     padding: EdgeInsets.only(left: 10, top: 5),
                     width: MediaQuery.of(context).size.width,

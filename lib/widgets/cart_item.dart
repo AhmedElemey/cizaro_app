@@ -101,9 +101,11 @@ class _CartItemState extends State<CartItem> {
                               widget.productPriceAfterDiscount ==
                                       widget.productPrice
                                   ? widget.productPrice.toString()
-                                  : widget.productPriceAfterDiscount
-                                          .toString() +
-                                      ' LE',
+                                  : widget.productPriceAfterDiscount == null
+                                      ? widget.productPrice.toString() + ' LE'
+                                      : widget.productPriceAfterDiscount
+                                              .toString() +
+                                          ' LE',
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                               textScaleFactor:

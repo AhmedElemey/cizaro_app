@@ -6,6 +6,7 @@ import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
@@ -105,21 +106,30 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                         indexOfSelectedItemAddress =
                                             addressesList[index].id;
                                       });
-                                      Navigator.of(context).pushNamed(
-                                          CheckoutScreen.routeName,
-                                          arguments: {
-                                            'address_id':
-                                                indexOfSelectedItemAddress,
-                                            'street_name': addressesList[index]
-                                                .streetAddress,
-                                            'country_name': addressesList[index]
-                                                .country
-                                                .name,
-                                            'city_name':
-                                                addressesList[index].city.name,
-                                            'region_name':
-                                                addressesList[index].region
-                                          });
+                                      pushNewScreenWithRouteSettings(context,
+                                          settings: RouteSettings(
+                                              name: CheckoutScreen.routeName,
+                                              arguments: {
+                                                'address_id':
+                                                    indexOfSelectedItemAddress,
+                                                'street_name':
+                                                    addressesList[index]
+                                                        .streetAddress,
+                                                'country_name':
+                                                    addressesList[index]
+                                                        .country
+                                                        .name,
+                                                'city_name':
+                                                    addressesList[index]
+                                                        .city
+                                                        .name,
+                                                'region_name':
+                                                    addressesList[index].region
+                                              }),
+                                          screen: CheckoutScreen(),
+                                          withNavBar: true,
+                                          pageTransitionAnimation:
+                                              PageTransitionAnimation.fade);
                                     },
                                     child: AddressItem(
                                       strName:

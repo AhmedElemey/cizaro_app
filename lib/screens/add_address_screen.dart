@@ -5,8 +5,10 @@ import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'checkout_screen.dart';
 
@@ -23,13 +25,22 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   TextEditingController _zipCodeController = TextEditingController();
   TextEditingController _regionController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
+  String token;
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _streetController.dispose();
+    _zipCodeController.dispose();
+    _regionController.dispose();
+    _phoneController.dispose();
     super.dispose();
+  }
+
+  getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token');
+    return token;
   }
 
   @override
@@ -43,7 +54,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             GradientAppBar("Add New Address", _scaffoldKey4),
             FutureBuilder(
                 future: Provider.of<ListViewModel>(context, listen: false)
-                    .fetchCountries('c4ce7da269c80455720be2c26c984d8828b88c5f'),
+                    .fetchCountries(
+                        token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f'),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<country.Data>> snapshot) {
                   if (snapshot.hasError)
@@ -96,7 +108,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 }),
             FutureBuilder(
                 future: Provider.of<ListViewModel>(context, listen: false)
-                    .fetchCountries('c4ce7da269c80455720be2c26c984d8828b88c5f'),
+                    .fetchCountries(
+                        token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f'),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<country.Data>> snapshot) {
                   if (snapshot.hasError)
@@ -246,21 +259,25 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           zipCode: _zipCodeController?.text);
                       final getData =
                           Provider.of<ListViewModel>(context, listen: false);
-                      await getData.fetchAddress(
-                          data, "c4ce7da269c80455720be2c26c984d8828b88c5f");
+                      String token = await getToken();
+                      await getData.fetchAddress(data, token);
                     },
                     child: GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(CheckoutScreen.routeName),
+                        onTap: () => pushNewScreenWithRouteSettings(context,
+                            settings:
+                                RouteSettings(name: CheckoutScreen.routeName),
+                            screen: CheckoutScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade),
                         child: Container(
                             margin: const EdgeInsets.all(10),
                             child: Center(
-                              child: Text("ADD",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold)),
-                            ))),
+                                child: Text("ADD",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold))))),
                   ),
                 ),
               ],

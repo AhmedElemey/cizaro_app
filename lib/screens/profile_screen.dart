@@ -4,6 +4,8 @@ import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
+import 'package:cizaro_app/screens/orders_screen.dart';
+import 'package:cizaro_app/screens/pending_shipment_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:cizaro_app/services/auth_service.dart';
 import 'package:cizaro_app/screens/profileEdit_screen.dart';
@@ -197,29 +199,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.only(top: 5),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.menu,
-                            size: 30,
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text("All My Orders",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) *
-                                        1.5),
-                          ),
-                          Spacer(),
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundColor: Colors.black26,
-                            child: Icon(Icons.arrow_forward_ios_rounded,
-                                size: 10, color: Colors.black45),
-                          )
-                        ],
+                    GestureDetector(
+                      onTap: () => pushNewScreenWithRouteSettings(context,
+                          settings: RouteSettings(name: OrderScreen.routeName),
+                          screen: OrderScreen(),
+                          withNavBar: true,
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.fade),
+                      child: Container(
+                        padding: EdgeInsets.only(top: 5),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.menu,
+                              size: 30,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text("All My Orders",
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context) *
+                                          1.5),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
+                              radius: 10,
+                              backgroundColor: Colors.black26,
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                  size: 10, color: Colors.black45),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -229,25 +239,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: MediaQuery.of(context).size.height * .01,
                           color: Color(0xff727C8E)),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        children: [
-                          Icon(Icons.local_shipping_outlined, size: 30),
-                          Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text("Pending Shipments",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) *
-                                        1.5),
-                          ),
-                          Spacer(),
-                          CircleAvatar(
-                              radius: 10,
-                              backgroundColor: Colors.black26,
-                              child: Icon(Icons.arrow_forward_ios_rounded,
-                                  size: 10, color: Colors.black45))
-                        ],
+                    GestureDetector(
+                      onTap: () => pushNewScreenWithRouteSettings(context,
+                          settings:
+                              RouteSettings(name: PendingShipment.routeName),
+                          screen: PendingShipment(),
+                          withNavBar: true,
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.fade),
+                      child: Container(
+                        padding: EdgeInsets.only(top: 10),
+                        child: Row(
+                          children: [
+                            Icon(Icons.local_shipping_outlined, size: 30),
+                            Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Text("Pending Shipments",
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context) *
+                                          1.5),
+                            ),
+                            Spacer(),
+                            CircleAvatar(
+                                radius: 10,
+                                backgroundColor: Colors.black26,
+                                child: Icon(Icons.arrow_forward_ios_rounded,
+                                    size: 10, color: Colors.black45))
+                          ],
+                        ),
                       ),
                     ),
                     Padding(
@@ -260,8 +279,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: GestureDetector(
-                        onTap: () => Navigator.of(context)
-                            .pushNamed(AddressBookScreen.routeName),
+                        onTap: () => pushNewScreenWithRouteSettings(context,
+                            settings: RouteSettings(
+                                name: AddressBookScreen.routeName),
+                            screen: AddressBookScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade),
                         child: Row(
                           children: [
                             Icon(Icons.add_business_rounded, size: 30),

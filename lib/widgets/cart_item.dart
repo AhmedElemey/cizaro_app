@@ -58,6 +58,7 @@ class _CartItemState extends State<CartItem> {
   @override
   void dispose() {
     quantityController.dispose();
+    widget.myController.dispose();
     super.dispose();
   }
 
@@ -76,15 +77,14 @@ class _CartItemState extends State<CartItem> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width * 0.2,
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        child: Image.network(widget.imgUrl,
-                            fit: BoxFit.fitHeight))),
-              ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          child: Image.network(widget.imgUrl,
+                              fit: BoxFit.fitHeight)))),
               Flexible(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,30 +96,27 @@ class _CartItemState extends State<CartItem> {
                                 MediaQuery.of(context).textScaleFactor * 1.3),
                         Spacer(),
                         Padding(
-                          padding: const EdgeInsets.only(right: 8, left: 8),
-                          child: Text(
-                              widget.productPriceAfterDiscount ==
-                                      widget.productPrice
-                                  ? widget.productPrice.toString()
-                                  : widget.productPriceAfterDiscount == null
-                                      ? widget.productPrice.toString() + ' LE'
-                                      : widget.productPriceAfterDiscount
-                                              .toString() +
-                                          ' LE',
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1),
-                        )
+                            padding: const EdgeInsets.only(right: 8, left: 8),
+                            child: Text(
+                                widget.productPriceAfterDiscount ==
+                                        widget.productPrice
+                                    ? widget.productPrice.toString() + ' LE'
+                                    : widget.productPriceAfterDiscount == null
+                                        ? widget.productPrice.toString() + ' LE'
+                                        : widget.productPriceAfterDiscount
+                                                .toString() +
+                                            ' LE',
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor * 1))
                       ],
                     ),
                     Container(
-                      child: Text(
-                        widget.productCategory,
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1.1,
-                        style: const TextStyle(color: Colors.blueGrey),
-                      ),
+                      child: Text(widget.productCategory,
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.1,
+                          style: const TextStyle(color: Colors.blueGrey)),
                     ),
                     Row(
                       children: [
@@ -160,15 +157,12 @@ class _CartItemState extends State<CartItem> {
                             height: MediaQuery.of(context).size.height * .075,
                             padding: EdgeInsets.only(right: 5, bottom: 17),
                             decoration: BoxDecoration(
-                              color: Colors.black12,
-                              shape: BoxShape.circle,
-                            ),
+                                color: Colors.black12, shape: BoxShape.circle),
                             child: Center(
-                              child: Icon(
-                                Icons.minimize_outlined,
-                                size: MediaQuery.of(context).size.width * 0.07,
-                                color: Color(0xff707070),
-                              ),
+                              child: Icon(Icons.minimize_outlined,
+                                  size:
+                                      MediaQuery.of(context).size.width * 0.07,
+                                  color: Color(0xff707070)),
                             ),
                           ),
                         ),
@@ -188,7 +182,8 @@ class _CartItemState extends State<CartItem> {
                             decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.only(left: 7),
                                 border: InputBorder.none,
-                                hintText: widget.productQuantity.toString(),
+                                hintText: widget.myController.text ??
+                                    widget.productQuantity.toString(),
                                 hintStyle:
                                     const TextStyle(color: Colors.black)),
                             onChanged: (value) {
@@ -202,6 +197,7 @@ class _CartItemState extends State<CartItem> {
                                 widget.myController.text = value;
                                 widget.productQuantity =
                                     int.parse(widget.myController.text);
+                                widget.onUpdateQuantity();
                               });
                               // widget.onUpdateQuantity();
                             },

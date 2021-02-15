@@ -6,9 +6,12 @@ import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
+import 'package:cizaro_app/screens/finished_order_screen.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
+import 'package:cizaro_app/screens/orders_screen.dart';
+import 'package:cizaro_app/screens/pending_shipment_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/profileEdit_screen.dart';
@@ -22,6 +25,7 @@ import 'package:cizaro_app/view_model/auth_view_model.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +51,8 @@ void main() {
         ChangeNotifierProvider.value(value: AuthViewModel()),
         ChangeNotifierProvider.value(value: ListViewModel()),
         ChangeNotifierProvider.value(value: CartViewModel()),
-        ChangeNotifierProvider.value(value: FavViewModel())
+        ChangeNotifierProvider.value(value: FavViewModel()),
+        ChangeNotifierProvider.value(value: OrdersViewModel())
       ],
       child: DevicePreview(
         enabled: false,
@@ -86,6 +91,9 @@ void main() {
             PolicesTermsScreen.routeName: (ctx) => PolicesTermsScreen(),
             AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
             ProfileEditScreen.routeName: (ctx) => ProfileEditScreen(),
+            OrderScreen.routeName: (ctx) => OrderScreen(),
+            PendingShipment.routeName: (ctx) => PendingShipment(),
+            FinishedOrder.routeName: (ctx) => FinishedOrder()
           },
         ),
       ),

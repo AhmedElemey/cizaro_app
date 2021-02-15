@@ -120,7 +120,8 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateQuantity(int index, int productId) async {
+  updateQuantity(int index, int productId, int quantity) async {
+    _cartItemsList[index].quantity = quantity;
     await dbHelper.updateProduct(_cartItemsList[index]);
     getTotalPrice();
     notifyListeners();

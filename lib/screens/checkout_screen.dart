@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart';
+import 'package:cizaro_app/model/available_payments.dart';
+import 'package:cizaro_app/model/checkout.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
+import 'package:cizaro_app/screens/finished_order_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
+import 'package:cizaro_app/screens/orders_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/checkout_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:flutter/cupertino.dart';
@@ -14,6 +21,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
@@ -27,11 +35,18 @@ class CheckoutScreen extends StatefulWidget {
 
 class _CheckoutScreenState extends State<CheckoutScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey6 = GlobalKey<ScaffoldState>();
-  int selectedRadio, addressId, productId, productQuantity;
+  int selectedRadio,
+      addressId,
+      productId,
+      productQuantity,
+      selectedPaymentRadio,
+      selectedPaymentId;
   String addressName, countryName, cityName, regionName, productSpec;
   double totalOrder, shippingFees, totalCost, arrivalDate;
-  bool _isLoading = false, isVerified = false;
+  bool _isLoading = false, isVerified = false, _selectedPromoCode = false;
   AddressModel addressModel;
+  Payments payments;
+  List<AvailablePayments> _paymentList = [];
   ResultShoppingCartModel resultShoppingCartModel;
   AddressBookModel addressBookModel;
   List<address.Data> addressesList = [];
@@ -46,6 +61,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     setState(() => selectedRadio = val);
   }
 
+  setSelectedPaymentRadio(int val) {
+    setState(() => selectedPaymentRadio = val);
+  }
+
   fetchLastShippingAddress() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getAddress = Provider.of<ListViewModel>(context, listen: false);
@@ -55,12 +74,89 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       addressModel = response;
       addressesList = addressModel.data;
       addressId = addressModel.data[0].id;
-    }).catchError(
-        (error) => Navigator.of(context).pushNamed(LoginScreen.routeName));
+    }).catchError((error) => pushNewScreenWithRouteSettings(context,
+        settings: RouteSettings(name: LoginScreen.routeName),
+        screen: LoginScreen(),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.fade));
     fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
     }
+  }
+
+  fetchPaymentsList() async {
+    if (this.mounted) setState(() => _isLoading = true);
+    final getAddress = Provider.of<OrdersViewModel>(context, listen: false);
+    String token = await getToken();
+    await getAddress.fetchAvailablePaymentsList(token).then((response) {
+      payments = response;
+      _paymentList = payments.data.availablePayments;
+    });
+    fetchTotalOrder();
+    if (this.mounted) setState(() => _isLoading = false);
+  }
+
+  _showAndroidDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('Mobile Number not Verified!',
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Close',
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _isLoading = false;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showIosDialog() {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text('Error'),
+            content: Text('Mobile Number not Verified!'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _isLoading = false;
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  sendCheckOut() async {
+    if (this.mounted) setState(() => _isLoading = true);
+    final getAddress = Provider.of<OrdersViewModel>(context, listen: false);
+    String token = await getToken();
+    final checkout = CheckOut(
+        addressBookId: addressId,
+        isCash: selectedRadio == 1 ? false : true,
+        paymentApiId: selectedPaymentId);
+    await getAddress.checkOutMethod(token, checkout).then((response) {
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: FinishedOrder.routeName),
+          screen: FinishedOrder(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+    }).catchError(
+        (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
+    if (this.mounted) setState(() => _isLoading = false);
   }
 
   fetchSelectedShippingAddress() async {
@@ -75,8 +171,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       countryName = addressBookModel.data.country.name;
       cityName = addressBookModel.data.city.name;
       regionName = addressBookModel.data.region;
-    }).catchError(
-        (error) => Navigator.of(context).pushNamed(LoginScreen.routeName));
+    }).catchError((error) => pushNewScreenWithRouteSettings(context,
+        settings: RouteSettings(name: LoginScreen.routeName),
+        screen: LoginScreen(),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.fade));
     fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
@@ -124,6 +223,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     Future.microtask(() => addressId == null
         ? fetchLastShippingAddress()
         : fetchSelectedShippingAddress());
+    Future.microtask(() => fetchPaymentsList());
   }
 
   @override
@@ -324,9 +424,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   selectedRadio == 1
                       ? Center(
-                          child: Text('Not Available Now!.',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1))
+                          child: _paymentList.isEmpty
+                              ? Text('Not Available Now!.',
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1)
+                              : ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: _paymentList.length,
+                                  itemBuilder: (ctx, index) => RadioListTile(
+                                        value: index,
+                                        activeColor:
+                                            Theme.of(context).primaryColor,
+                                        secondary: Image.network(
+                                            _paymentList[index].logo),
+                                        groupValue: selectedPaymentRadio,
+                                        onChanged: (val) {
+                                          setSelectedPaymentRadio(val);
+                                          selectedPaymentId =
+                                              _paymentList[index].id;
+                                          print(selectedPaymentId);
+                                        },
+                                        title: Text(_paymentList[index].name),
+                                      )))
                       : Container(),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -342,73 +463,111 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           MediaQuery.of(context).textScaleFactor * .9,
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 10),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * .35,
-                    child: ListView.builder(
-                      itemCount: cart.cartProductModel.length,
-                      itemBuilder: (ctx, index) => CheckoutItem(
-                        imgUrl: cart.cartProductModel[index].mainImg ??
-                            "assets/images/collection.png",
-                        productName: cart.cartProductModel[index].name ??
-                            "White Treecode",
-                        productCategory:
-                            cart.cartProductModel[index].categoryName ??
-                                "men fashion ",
-                        productPrice: cart.cartProductModel[index].price ==
-                                cart.cartProductModel[index].priceAfterDiscount
-                            ? cart.cartProductModel[index].price
-                            : cart.cartProductModel[index].priceAfterDiscount ??
-                                0.0,
-                        productSizeSpecs:
-                            cart.cartProductModel[index].sizeSpecValue ?? '',
-                        productColorSpecs:
-                            cart.cartProductModel[index].colorSpecValue == null
-                                ? Colors.white
-                                : Color(int.parse('0xff' +
-                                        cart.cartProductModel[index]
-                                            .colorSpecValue
-                                            .split('#')
-                                            .last) ??
-                                    ''),
-                      ),
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: cart.cartProductModel.length,
+                    itemBuilder: (ctx, index) => CheckoutItem(
+                      imgUrl: cart.cartProductModel[index].mainImg ??
+                          "assets/images/collection.png",
+                      productName:
+                          cart.cartProductModel[index].name ?? "White Treecode",
+                      productCategory:
+                          cart.cartProductModel[index].categoryName ??
+                              "men fashion ",
+                      productPrice: cart.cartProductModel[index].price ==
+                              cart.cartProductModel[index].priceAfterDiscount
+                          ? cart.cartProductModel[index].price
+                          : cart.cartProductModel[index].priceAfterDiscount ??
+                              0.0,
+                      productSizeSpecs:
+                          cart.cartProductModel[index].sizeSpecValue ?? '',
+                      productColorSpecs:
+                          cart.cartProductModel[index].colorSpecValue == null
+                              ? Colors.white
+                              : Color(int.parse('0xff' +
+                                      cart.cartProductModel[index]
+                                          .colorSpecValue
+                                          .split('#')
+                                          .last) ??
+                                  ''),
                     ),
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width * .9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height * 0.06,
-                          width: MediaQuery.of(context).size.width * 0.5,
-                          margin: const EdgeInsets.only(right: 10, left: 25),
-                          child: TextField(
-                            controller: _promoCodeController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                contentPadding:
-                                    const EdgeInsets.only(right: 15, left: 15),
-                                hintText: 'Promo Code',
-                                border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)))),
+                    margin: const EdgeInsets.only(top: 23, bottom: 10),
+                    child: _selectedPromoCode
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              GestureDetector(
+                                onTap: () =>
+                                    setState(() => _selectedPromoCode = false),
+                                child: CircleAvatar(
+                                    radius: 10,
+                                    backgroundColor: Colors.black26,
+                                    child: Icon(Icons.close,
+                                        size: 13, color: Colors.black45)),
+                              ),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.06,
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: TextField(
+                                  controller: _promoCodeController,
+                                  keyboardType: TextInputType.text,
+                                  decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      contentPadding: const EdgeInsets.only(
+                                          right: 15, left: 15),
+                                      hintText: 'Promo Code',
+                                      border: OutlineInputBorder(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10)))),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 5, right: 5),
+                                child: Text(
+                                  "Add",
+                                  style: TextStyle(color: Color(0xff3A559F)),
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1.4,
+                                ),
+                              ),
+                            ],
+                          )
+                        : GestureDetector(
+                            onTap: () =>
+                                setState(() => _selectedPromoCode = true),
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 15),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.local_offer_rounded,
+                                      color: Theme.of(context).primaryColor),
+                                  const SizedBox(width: 8),
+                                  Text('Add Promo Code',
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                      textScaleFactor: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          1.2),
+                                  Spacer(),
+                                  CircleAvatar(
+                                    radius: 10,
+                                    backgroundColor: Colors.black26,
+                                    child: Icon(Icons.arrow_forward_ios_rounded,
+                                        size: 10, color: Colors.black45),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5, right: 5),
-                          child: Text(
-                            "Add",
-                            style: TextStyle(color: Color(0xff3A559F)),
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.4,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * .1,
@@ -477,39 +636,44 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 ),
                               ),
                               Spacer(),
-                              Container(
-                                padding: EdgeInsets.only(right: 10),
-                                width: MediaQuery.of(context).size.width * .4,
-                                height:
-                                    MediaQuery.of(context).size.height * .058,
-                                decoration: BoxDecoration(
-                                    color: Color(0xff3A559F),
-                                    borderRadius: BorderRadius.circular(25.0)),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        "PLACE ORDER",
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1,
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
+                              GestureDetector(
+                                onTap: () => sendCheckOut(),
+                                child: Container(
+                                  padding: EdgeInsets.only(right: 10),
+                                  width: MediaQuery.of(context).size.width * .4,
+                                  height:
+                                      MediaQuery.of(context).size.height * .058,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff3A559F),
+                                      borderRadius:
+                                          BorderRadius.circular(25.0)),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          "PLACE ORDER",
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  1,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        ),
                                       ),
-                                    ),
-                                    Spacer(),
-                                    CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor: Colors.white,
-                                      child: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 15,
-                                        color: Color(0xff3A559F),
-                                      ),
-                                    )
-                                  ],
+                                      Spacer(),
+                                      CircleAvatar(
+                                        radius: 10,
+                                        backgroundColor: Colors.white,
+                                        child: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 15,
+                                          color: Color(0xff3A559F),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],

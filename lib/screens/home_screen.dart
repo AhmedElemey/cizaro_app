@@ -42,10 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = false;
 
   Future getHomeData() async {
-    if (this.mounted)
-      setState(() {
-        _isLoading = true;
-      });
+    if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
     await getHome.fetchHomeList().then((response) {
       home = response;
@@ -54,11 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
       newArrivalsList = home.data.newArrivals;
       topSellingList = home.data.topSelling;
     });
-    if (this.mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    if (this.mounted) setState(() => _isLoading = false);
   }
 
   @override
@@ -73,13 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
         allowFontScaling: false,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height);
-    int isFavValue() {
-      int result = 0;
-      for (int i = 0; i < fav.favProductModel.length; i++) {
-        result = fav.favProductModel[i].isFav;
-      }
-      return result;
-    }
 
     return Padding(
       padding: EdgeInsets.only(

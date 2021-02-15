@@ -53,43 +53,51 @@ class _MyCartScreenState extends State<MyCartScreen> {
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: cart.cartProductModel?.length ?? 0,
-                itemBuilder: (ctx, index) => CartItem(
-                    imgUrl: cart.cartProductModel[index].mainImg,
-                    productName: cart.cartProductModel[index].name,
-                    productCategory: cart.cartProductModel[index].categoryName,
-                    productPrice: cart.cartProductModel[index].price,
-                    productPriceAfterDiscount:
-                        cart.cartProductModel[index].priceAfterDiscount,
-                    totalAvailability:
-                        cart.cartProductModel[index].availability,
-                    totalPrice: cart.cartProductModel[index].price ==
-                            cart.cartProductModel[index]?.priceAfterDiscount
-                        ? cart.cartProductModel[index].price *
-                            cart.cartProductModel[index].quantity
-                        : cart.cartProductModel[index].priceAfterDiscount ==
-                                null
-                            ? cart.cartProductModel[index].price *
-                                cart.cartProductModel[index].quantity
-                            : cart.cartProductModel[index].priceAfterDiscount *
-                                cart.cartProductModel[index].quantity,
-                    productQuantity: cart.cartProductModel[index].quantity ?? 1,
-                    sizeSpecValue:
-                        cart.cartProductModel[index]?.sizeSpecValue ?? '',
-                    colorSpecValue:
-                        cart.cartProductModel[index]?.colorSpecValue ?? '',
-                    myController: TextEditingController(
-                        text: cart.cartProductModel[index].quantity.toString()),
-                    onDelete: () {
-                      cart.deleteCartProduct(
-                          index, cart.cartProductModel[index].id);
-                      setState(() {
-                        cart.cartProductModel?.removeAt(index);
-                      });
-                    },
-                    // onUpdateQuantity: () => cart.updateQuantity(
-                    //     index, cart.cartProductModel[index].id),
-                    onPlusQuantity: () => cart.increaseQuantity(index),
-                    onMinusQuantity: () => cart.decreaseQuantity(index))));
+                itemBuilder: (ctx, index) {
+                  return CartItem(
+                      imgUrl: cart.cartProductModel[index].mainImg,
+                      productName: cart.cartProductModel[index].name,
+                      productCategory:
+                          cart.cartProductModel[index].categoryName,
+                      productPrice: cart.cartProductModel[index].price,
+                      productPriceAfterDiscount:
+                          cart.cartProductModel[index].priceAfterDiscount,
+                      totalAvailability:
+                          cart.cartProductModel[index].availability,
+                      totalPrice: cart.cartProductModel[index].price ==
+                              cart.cartProductModel[index]?.priceAfterDiscount
+                          ? cart.cartProductModel[index].price *
+                              cart.cartProductModel[index].quantity
+                          : cart.cartProductModel[index].priceAfterDiscount ==
+                                  null
+                              ? cart.cartProductModel[index].price *
+                                  cart.cartProductModel[index].quantity
+                              : cart.cartProductModel[index]
+                                      .priceAfterDiscount *
+                                  cart.cartProductModel[index].quantity,
+                      productQuantity:
+                          cart.cartProductModel[index].quantity ?? 1,
+                      sizeSpecValue:
+                          cart.cartProductModel[index]?.sizeSpecValue ?? '',
+                      colorSpecValue:
+                          cart.cartProductModel[index]?.colorSpecValue ?? '',
+                      myController: TextEditingController(
+                          text:
+                              cart.cartProductModel[index].quantity.toString()),
+                      onDelete: () {
+                        cart.deleteCartProduct(
+                            index, cart.cartProductModel[index].id);
+                        setState(() {
+                          cart.cartProductModel?.removeAt(index);
+                        });
+                      },
+                      onUpdateQuantity: () => cart.updateQuantity(
+                          index,
+                          cart.cartProductModel[index].id,
+                          cart.cartProductModel[index].quantity),
+                      onPlusQuantity: () => cart.increaseQuantity(index),
+                      onMinusQuantity: () => cart.decreaseQuantity(index));
+                }));
   }
 
   @override

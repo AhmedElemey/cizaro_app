@@ -30,17 +30,14 @@ class FavoriteItem extends StatelessWidget {
           elevation: 10,
           child: Container(
             height: MediaQuery.of(context).size.height * .17,
-            padding: EdgeInsets.only(left: 10, right: 10, top: 5),
+            padding: EdgeInsets.only(left: 5, right: 10, top: 5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding:
                       EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: Image.network(imgUrl),
-                  ),
+                  child: Image.network(imgUrl),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * .3,
@@ -56,7 +53,7 @@ class FavoriteItem extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 15, top: 5),
+                        padding: EdgeInsets.only(right: 15),
                         child: Text(
                           productCategory,
                           textScaleFactor:
@@ -109,28 +106,15 @@ class FavoriteItem extends StatelessWidget {
                   ),
                 ),
                 Spacer(),
-                Column(
-                  children: [
-                    Container(
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.favorite,
-                          size: MediaQuery.of(context).size.width * 0.08,
-                          color: Color(0xffFF6969),
-                        ),
-                        onPressed: unFavorite,
-                      ),
+                Container(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      size: MediaQuery.of(context).size.width * 0.08,
+                      color: Color(0xffFF6969),
                     ),
-                    // Spacer(),
-                    // Container(
-                    //   padding: EdgeInsets.only(bottom: 5),
-                    //   child: Icon(
-                    //     Icons.delete_forever_outlined,
-                    //     color: Color(0xff727C8E),
-                    //     size: 20,
-                    //   ),
-                    // )
-                  ],
+                    onPressed: unFavorite,
+                  ),
                 )
               ],
             ),

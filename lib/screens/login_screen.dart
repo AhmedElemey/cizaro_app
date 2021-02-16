@@ -1,8 +1,8 @@
 import 'dart:io';
+
 import 'package:cizaro_app/model/SignUpModel.dart';
 import 'package:cizaro_app/model/loginModel.dart';
 import 'package:cizaro_app/model/socialLoginModel.dart';
-import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:cizaro_app/view_model/auth_view_model.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
@@ -259,14 +259,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   unselectedLabelColor: Colors.grey,
                   isScrollable: true,
                   tabs: <Widget>[
-                    Text('Login',
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1.4,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    Text('SignUp',
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1.4,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
+                    Text(
+                      'Login',
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * 1.4,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    Text(
+                      'SignUp',
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * 1.4,
+                      style: TextStyle(
+                        fontFamily: 'Segoe UI',
+                        fontWeight: FontWeight.w100,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -752,7 +762,10 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 'Welcome',
                 textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.7,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               tabsWidgets(),
             ],

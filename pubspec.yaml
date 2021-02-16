@@ -71,10 +71,25 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 700
+          weight: 400
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 200
         - asset: assets/fonts/Poppins-Light.ttf
-          weight: 300
+          weight: 100
           style: normal
+
+    - family: NeusaNextStd
+      fonts:
+        - asset: assets/fonts/NeusaNextStd-Light.otf
+          weight: 600
+        - asset: assets/fonts/NeusaNextStd-Bold.otf
+          weight: 700
+    - family: Segoe UI
+      fonts:
+        - asset: assets/fonts/Segoe UI Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Segoe UI.ttf
+          weight: 100
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

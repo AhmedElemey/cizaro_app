@@ -1,8 +1,8 @@
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/favorite_item.dart';
-import 'package:flutter/material.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
@@ -90,11 +90,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
       key: _scaffoldKey8,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("My Favorite", _scaffoldKey8),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Column(
           children: [
-            GradientAppBar("My Favorite", _scaffoldKey8),
             favProductList(),
           ],
         ),

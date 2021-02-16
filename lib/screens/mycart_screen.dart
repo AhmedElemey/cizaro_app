@@ -106,10 +106,13 @@ class _MyCartScreenState extends State<MyCartScreen> {
     return Scaffold(
       key: _scaffoldKey9,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("My Cart", _scaffoldKey9),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("My Cart", _scaffoldKey9),
             cartProductsList(),
             Container(
               height: MediaQuery.of(context).size.height * .1,
@@ -130,7 +133,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         Text(
                           total.totalPrice.toString() + ' LE' ?? '00.00',
                           textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.4,
+                              MediaQuery.of(context).textScaleFactor * 1.2,
                           style: const TextStyle(color: Color(0xff3A559F)),
                         ),
                       ],

@@ -194,10 +194,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     // TODO: implement build
     return Scaffold(
       key: _scaffoldKey,
+      appBar: PreferredSize(
+        child: GradientAppBar("Profile Editing", _scaffoldKey),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Profile Editing", _scaffoldKey),
             Container(
               padding: EdgeInsets.only(top: 10, left: 10),
               child: Column(

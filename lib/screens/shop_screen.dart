@@ -55,6 +55,10 @@ class _ShopScreenState extends State<ShopScreen> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("", _scaffoldKey),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -62,7 +66,6 @@ class _ShopScreenState extends State<ShopScreen> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  GradientAppBar("", _scaffoldKey),
                   Container(
                     padding: EdgeInsets.only(top: 10),
                     height: MediaQuery.of(context).size.height,

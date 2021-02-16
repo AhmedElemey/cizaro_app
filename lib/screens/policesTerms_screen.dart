@@ -1,11 +1,10 @@
-import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class PolicesTermsScreen extends StatefulWidget {
   static final routeName = '/policesTerms-screen';
@@ -49,6 +48,10 @@ class _PolicesTermsScreenState extends State<PolicesTermsScreen> {
     return Scaffold(
       key: _scaffoldKey11,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("Policy And Privacy", _scaffoldKey11),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -57,7 +60,6 @@ class _PolicesTermsScreenState extends State<PolicesTermsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar("Policy And Privacy", _scaffoldKey11),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 10),
                     child: Text(

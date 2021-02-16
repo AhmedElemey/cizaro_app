@@ -13,37 +13,42 @@ class CollectionItem extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height);
     // TODO: implement build
-    return Container(
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
         ),
-        elevation: 10,
-        shadowColor: Colors.grey[900],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Image.network(
-            //   imgUrl,
-            //   width: ScreenUtil()
-            //       .setWidth(MediaQuery.of(context).size.width * .3),
-            //   height: ScreenUtil()
-            //       .setHeight(MediaQuery.of(context).size.height * .2),
-            //   fit: BoxFit.contain,
-            //   loadingBuilder: (BuildContext context, Widget child,
-            //       ImageChunkEvent loadingProgress) {
-            //     if (loadingProgress == null) return child;
-            //     return Center(
-            //       child: CircularProgressIndicator(
-            //         value: loadingProgress.expectedTotalBytes != null
-            //             ? loadingProgress.cumulativeBytesLoaded /
-            //                 loadingProgress.expectedTotalBytes
-            //             : null,
-            //       ),
-            //     );
-            //   },
-            // ),
-            Image.network(
+      ),
+      elevation: 10,
+      shadowColor: Colors.grey[900],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Image.network(
+          //   imgUrl,
+          //   width: ScreenUtil()
+          //       .setWidth(MediaQuery.of(context).size.width * .3),
+          //   height: ScreenUtil()
+          //       .setHeight(MediaQuery.of(context).size.height * .2),
+          //   fit: BoxFit.contain,
+          //   loadingBuilder: (BuildContext context, Widget child,
+          //       ImageChunkEvent loadingProgress) {
+          //     if (loadingProgress == null) return child;
+          //     return Center(
+          //       child: CircularProgressIndicator(
+          //         value: loadingProgress.expectedTotalBytes != null
+          //             ? loadingProgress.cumulativeBytesLoaded /
+          //                 loadingProgress.expectedTotalBytes
+          //             : null,
+          //       ),
+          //     );
+          //   },
+          // ),
+          ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+            child: Image.network(
               imgUrl,
               loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent loadingProgress) {
@@ -57,29 +62,28 @@ class CollectionItem extends StatelessWidget {
                   ),
                 );
               },
-              width:
-                  ScreenUtil().setWidth(MediaQuery.of(context).size.width * .3),
+              width: ScreenUtil()
+                  .setWidth(MediaQuery.of(context).size.width * .34),
               height: ScreenUtil()
                   .setHeight(MediaQuery.of(context).size.height * .19),
               fit: BoxFit.fill,
             ),
-            Container(
-              padding: EdgeInsets.only(
-                  top: ScreenUtil().setHeight(10),
-                  left: ScreenUtil().setWidth(20)),
-              child: Text(
-                itemText,
-                textScaleFactor: ScreenUtil.textScaleFactor * 1,
-                style: TextStyle(
-                  fontSize: 18,
+          ),
+          Container(
+            padding: EdgeInsets.only(
+                top: ScreenUtil().setHeight(10),
+                left: ScreenUtil().setWidth(20)),
+            child: Text(
+              itemText,
+              textScaleFactor: ScreenUtil.textScaleFactor * 1.5,
+              style: TextStyle(
                   fontFamily: 'Poppins',
                   fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
+                  fontWeight: FontWeight.w300,
+                  color: Color(0xff515C6F)),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -159,6 +159,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     final cart = Provider.of<CartViewModel>(context, listen: false);
     return Scaffold(
       key: _scaffoldKey10,
+      appBar: PreferredSize(
+        child: GradientAppBar("", _scaffoldKey10),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       drawer: DrawerLayout(),
       body: _isLoading
           ? Center(
@@ -168,7 +172,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               physics: ScrollPhysics(),
               child: Column(
                 children: [
-                  GradientAppBar("", _scaffoldKey10),
                   Container(
                     padding: EdgeInsets.only(top: 10),
                     child: Row(

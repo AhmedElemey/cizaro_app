@@ -1,10 +1,10 @@
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class AboutUsScreen extends StatefulWidget {
   static final routeName = '/aboutUs-screen';
@@ -48,6 +48,10 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     return Scaffold(
       key: _scaffoldKey2,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("About Us", _scaffoldKey2),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -56,7 +60,6 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar("About Us", _scaffoldKey2),
                   Padding(
                     padding: const EdgeInsets.only(top: 10, left: 10),
                     child: Text(

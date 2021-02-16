@@ -13,10 +13,13 @@ class _PendingShipmentState extends State<PendingShipment> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: PreferredSize(
+        child: GradientAppBar("My Pending Shipment", _scaffoldKey),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("My Pending Shipment", _scaffoldKey),
             Center(
                 child: Text('There is No Orders Yet!',
                     textScaleFactor:

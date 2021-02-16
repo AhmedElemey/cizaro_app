@@ -91,10 +91,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       key: _scaffoldKey12,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("Profile", _scaffoldKey12),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Profile", _scaffoldKey12),
             Container(
               height: MediaQuery.of(context).size.height * .09,
               child: Center(

@@ -48,13 +48,16 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      appBar: PreferredSize(
+        child: GradientAppBar("My Orders", _scaffoldKey),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: Column(
                 children: [
-                  GradientAppBar("My Orders", _scaffoldKey),
                   _ordersList == null || _ordersList.length == 0
                       ? Center(
                           child: Text('There is No Orders Yet!',

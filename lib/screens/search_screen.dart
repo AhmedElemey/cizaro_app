@@ -1,10 +1,12 @@
 import 'package:cizaro_app/model/brandModel.dart' as brandData;
 import 'package:cizaro_app/model/cartModel.dart';
+import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -68,22 +70,22 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
   }
 
-  Future getBrandData() async {
-    if (this.mounted)
-      setState(() {
-        _isLoading = true;
-      });
-    final getBrand = Provider.of<ListViewModel>(context, listen: false);
-    await getBrand.fetchBrandList().then((response) {
-      brand = response;
-      brandList = response.data;
-    });
-    if (this.mounted) {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
+  // Future getBrandData() async {
+  //   if (this.mounted)
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //   final getBrand = Provider.of<ListViewModel>(context, listen: false);
+  //   await getBrand.fetchBrandList().then((response) {
+  //     brand = response;
+  //     brandList = response.data;
+  //   });
+  //   if (this.mounted) {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
 
   Future getFilterData() async {
     if (this.mounted)
@@ -108,171 +110,232 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   displayBottomSheet(BuildContext context) {
-    getBrandData();
+    // getBrandData();
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (ctx) {
           return StatefulBuilder(builder: (BuildContext context,
               StateSetter setState /*You can rename this!*/) {
-            return Container(
-              height: MediaQuery.of(context).size.height * .8,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, top: 10),
-                    child: Text(
-                      "Filter By :",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 2,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 10),
-                    child: Row(
+            return _isLoading
+                ? Center(child: CircularProgressIndicator())
+                : Container(
+                    height: MediaQuery.of(context).size.height * .8,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Filter By Brands :",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.3,
+                        Padding(
+                          padding: EdgeInsets.only(left: 10, top: 10),
+                          child: Text(
+                            "Filter By :",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 2,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, left: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Filter By Brands :",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.3,
+                              ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: FutureBuilder(
+                                    future: Provider.of<ListViewModel>(context,
+                                            listen: false)
+                                        .fetchBrandList(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<List<brandData.Data>>
+                                            snapshot) {
+                                      if (snapshot.hasError)
+                                        return Text(snapshot.error.toString());
+                                      else
+                                        return Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                .1,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                .5,
+                                            padding: EdgeInsets.only(
+                                                top: 10, left: 20),
+                                            child: DropdownButton(
+                                              hint: Text("Select Brand "),
+                                              value: valueBrand,
+                                              // dropdownColor: Colors.grey.shade400,
+                                              items: snapshot.data
+                                                      ?.map((brandData.Data e) {
+                                                    return DropdownMenuItem(
+                                                      child: Text(e.name),
+                                                      value: e.id,
+                                                    );
+                                                  })?.toList() ??
+                                                  null,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  valueBrand = value;
+                                                });
+                                              },
+                                              isExpanded: true,
+                                            ));
+                                    }),
+                              ),
+
+                              // FutureBuilder(
+                              //     future: getBrandData(),
+                              //     builder: (BuildContext context,
+                              //         AsyncSnapshot<List<brandData.Data>> snapshot) {
+                              //       if (snapshot.hasError)
+                              //         return {Text(snapshot.error.toString());}
+                              //       else{
+                              //         return Container(
+                              //         height: MediaQuery.of(context).size.height * .1,
+                              //         width: MediaQuery.of(context).size.width * .5,
+                              //         padding: EdgeInsets.only(top: 10, right: 40),
+                              //         child: DropdownButton(
+                              //           hint: Text("Select Brand "),
+                              //           value: valueBrand,
+                              //           dropdownColor: Colors.grey.shade400,
+                              //           items: snapshot.data?.map((brandData.Data e) {
+                              //             return DropdownMenuItem(
+                              //               child: Text(e.name),
+                              //               value: e.id,
+                              //             );
+                              //           }).toList(),
+                              //           onChanged: (value) {
+                              //             setState(() {
+                              //               valueBrand = value;
+                              //             });
+                              //           },
+                              //           isExpanded: true,
+                              //         ),
+                              //       );}
+                              //     }),
+                            ],
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 10, left: 10),
+                        //   child: Row(
+                        //     children: [
+                        //       Text(
+                        //         "Filter By Category :",
+                        //         textScaleFactor:
+                        //             MediaQuery.of(context).textScaleFactor * 1.5,
+                        //       ),
+                        //       Spacer(),
+                        //       Container(
+                        //         height: MediaQuery.of(context).size.height * .1,
+                        //         width: MediaQuery.of(context).size.width * .5,
+                        //         padding: EdgeInsets.only(top: 10, right: 40),
+                        //         child: DropdownButton(
+                        //           hint: Text("Select Category"),
+                        //           value: valueCategory,
+                        //           dropdownColor: Colors.grey.shade400,
+                        //           items: newArrivalsList.map((e) {
+                        //             return DropdownMenuItem(
+                        //               child: Text(e.name),
+                        //               value: e.id,
+                        //             );
+                        //           }).toList(),
+                        //           onChanged: (newValue) {
+                        //             setState(() {
+                        //               valueCategory = newValue;
+                        //             });
+                        //           },
+                        //           isExpanded: true,
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        Container(
+                          height: MediaQuery.of(context).size.height * 0.1,
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Minimum Price : ",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.2,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.04,
+                                padding: EdgeInsets.only(left: 30),
+                                child: TextFieldBuild(
+                                    obscureText: false,
+                                    readOnly: false,
+                                    textInputType: TextInputType.number,
+                                    lineCount: 1,
+                                    textEditingController: valueMinPrice),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Maximum Price :",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.2,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 30),
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.04,
+                                child: TextFieldBuild(
+                                    obscureText: false,
+                                    readOnly: false,
+                                    lineCount: 1,
+                                    textInputType: TextInputType.number,
+                                    textEditingController: valueMaxPrice),
+                              )
+                            ],
+                          ),
                         ),
                         Spacer(),
-                        Container(
-                          height: MediaQuery.of(context).size.height * .1,
-                          width: MediaQuery.of(context).size.width * .5,
-                          padding: EdgeInsets.only(top: 10, right: 40),
-                          child: DropdownButton(
-                            hint: Text("Select Brand "),
-                            value: valueBrand,
-                            dropdownColor: Colors.grey.shade400,
-                            items: brandList.map((e) {
-                              return DropdownMenuItem(
-                                child: Text(e.name),
-                                value: e.id,
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                valueBrand = value;
-                              });
-                            },
-                            isExpanded: true,
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 30, left: 150),
+                          child: GestureDetector(
+                            onTap: () =>
+                                {getFilterData(), Navigator.pop(context)},
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * .3,
+                              height: MediaQuery.of(context).size.height * .06,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff3A559F),
+                                  borderRadius: BorderRadius.circular(25.0)),
+                              child: Container(
+                                margin: new EdgeInsets.all(10),
+                                padding: EdgeInsets.only(left: 30),
+                                child: Text(
+                                  "Filter",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 10, left: 10),
-                  //   child: Row(
-                  //     children: [
-                  //       Text(
-                  //         "Filter By Category :",
-                  //         textScaleFactor:
-                  //             MediaQuery.of(context).textScaleFactor * 1.5,
-                  //       ),
-                  //       Spacer(),
-                  //       Container(
-                  //         height: MediaQuery.of(context).size.height * .1,
-                  //         width: MediaQuery.of(context).size.width * .5,
-                  //         padding: EdgeInsets.only(top: 10, right: 40),
-                  //         child: DropdownButton(
-                  //           hint: Text("Select Category"),
-                  //           value: valueCategory,
-                  //           dropdownColor: Colors.grey.shade400,
-                  //           items: newArrivalsList.map((e) {
-                  //             return DropdownMenuItem(
-                  //               child: Text(e.name),
-                  //               value: e.id,
-                  //             );
-                  //           }).toList(),
-                  //           onChanged: (newValue) {
-                  //             setState(() {
-                  //               valueCategory = newValue;
-                  //             });
-                  //           },
-                  //           isExpanded: true,
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.1,
-                    padding: EdgeInsets.only(top: 10, left: 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Minimum Price : ",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.2,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          height: MediaQuery.of(context).size.height * 0.04,
-                          padding: EdgeInsets.only(left: 10),
-                          child: TextFieldBuild(
-                              obscureText: false,
-                              readOnly: false,
-                              textInputType: TextInputType.number,
-                              lineCount: 1,
-                              textEditingController: valueMinPrice),
-                        )
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(top: 10, left: 10),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Max Price :",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.2,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 10),
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          height: MediaQuery.of(context).size.height * 0.04,
-                          child: TextFieldBuild(
-                              obscureText: false,
-                              readOnly: false,
-                              lineCount: 1,
-                              textInputType: TextInputType.number,
-                              textEditingController: valueMaxPrice),
-                        )
-                      ],
-                    ),
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 30, left: 150),
-                    child: GestureDetector(
-                      onTap: () => {getFilterData(), Navigator.pop(context)},
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * .3,
-                        height: MediaQuery.of(context).size.height * .06,
-                        decoration: BoxDecoration(
-                            color: Color(0xff3A559F),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        child: Container(
-                          margin: new EdgeInsets.all(10),
-                          padding: EdgeInsets.only(left: 30),
-                          child: Text(
-                            "Filter",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
+                  );
           });
         });
   }
@@ -282,6 +345,10 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       key: _scaffoldKey13,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("", _scaffoldKey13),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -289,9 +356,8 @@ class _SearchScreenState extends State<SearchScreen> {
               child: filterList.length == 0
                   ? Column(
                       children: [
-                        GradientAppBar("", _scaffoldKey13),
                         Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
+                          padding: EdgeInsets.only(left: 20, right: 10),
                           height: MediaQuery.of(context).size.height * .1,
                           //   width: MediaQuery.of(context).size.width * .9,
                           child: Row(
@@ -306,7 +372,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   children: [
                                     Text(
                                       productList?.length.toString() ?? '',
-                                      style: TextStyle(color: Colors.red),
+                                      style:
+                                          TextStyle(color: Color(0xff3A559F)),
                                       textScaleFactor:
                                           MediaQuery.textScaleFactorOf(
                                                   context) *
@@ -376,12 +443,26 @@ class _SearchScreenState extends State<SearchScreen> {
                                 pageTransitionAnimation:
                                     PageTransitionAnimation.fade),
                             child: SearchItem(
+                              productId: productList[index].id,
                               imgUrl: productList[index].mainImg,
                               productName: productList[index].name,
                               productPrice: productList[index].price ?? 0.0,
                               productPriceAfter:
                                   productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: productList[index].category.name,
+                              onAddToFavorite: () {
+                                final fav = Provider.of<FavViewModel>(context,
+                                    listen: false);
+                                final productFav = ProductFav(
+                                    id: productList[index].id,
+                                    name: productList[index].name,
+                                    mainImg: productList[index].mainImg,
+                                    price: productList[index].price,
+                                    categoryName:
+                                        productList[index].category.name,
+                                    isFav: 1);
+                                fav.addProductToFav(productFav);
+                              },
                               onAddToCart: () {
                                 final cart = Provider.of<CartViewModel>(context,
                                     listen: false);
@@ -411,78 +492,74 @@ class _SearchScreenState extends State<SearchScreen> {
                     )
                   : Column(
                       children: [
-                        GradientAppBar("", _scaffoldKey13),
                         Container(
+                          padding: EdgeInsets.only(left: 20, right: 10),
                           height: MediaQuery.of(context).size.height * .1,
+                          //   width: MediaQuery.of(context).size.width * .9,
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(left: 5),
-                                    width:
-                                        MediaQuery.of(context).size.width * .24,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          filterList?.length.toString() ?? '',
-                                          style: TextStyle(color: Colors.red),
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        ),
-                                        Text(
-                                          " Items",
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        )
-                                      ],
+                              Container(
+                                // width: MediaQuery.of(context)
+                                //         .size
+                                //         .width *
+                                //     .24,
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      filterList?.length.toString() ?? '',
+                                      style:
+                                          TextStyle(color: Color(0xff3A559F)),
+                                      textScaleFactor:
+                                          MediaQuery.textScaleFactorOf(
+                                                  context) *
+                                              1.5,
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.only(left: 200),
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              filterList =
-                                                  filterList.reversed.toList();
-                                            });
-                                          },
-                                          child: SvgPicture.asset(
-                                            'assets/images/arrow.svg',
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.035,
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.025,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10),
-                                          child: GestureDetector(
-                                            onTap: () =>
-                                                displayBottomSheet(context),
-                                            child: Icon(
-                                              Icons.filter_alt_outlined,
-                                              size: 30,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                    Text(
+                                      " Items",
+                                      textScaleFactor:
+                                          MediaQuery.textScaleFactorOf(
+                                                  context) *
+                                              1.5,
+                                    )
+                                  ],
+                                ),
                               ),
+                              Container(
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          filterList =
+                                              filterList.reversed.toList();
+                                        });
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/images/arrow.svg',
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.035,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.025,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 1),
+                                      child: GestureDetector(
+                                        onTap: () =>
+                                            displayBottomSheet(context),
+                                        child: Icon(
+                                          Icons.filter_alt_outlined,
+                                          size: 30,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -508,6 +585,39 @@ class _SearchScreenState extends State<SearchScreen> {
                               productPriceAfter:
                                   productList[index]?.offer?.afterPrice ?? 0.0,
                               productCategory: filterList[index].category.name,
+                              onAddToFavorite: () {
+                                final fav = Provider.of<FavViewModel>(context,
+                                    listen: false);
+                                final productFav = ProductFav(
+                                    id: filterList[index].id,
+                                    name: filterList[index].name,
+                                    mainImg: filterList[index].mainImg,
+                                    price: filterList[index].price,
+                                    categoryName:
+                                        filterList[index].category.name,
+                                    isFav: 1);
+                                fav.addProductToFav(productFav);
+                              },
+                              onAddToCart: () {
+                                final cart = Provider.of<CartViewModel>(context,
+                                    listen: false);
+                                final productCart = ProductCart(
+                                    id: filterList[index].id,
+                                    name: filterList[index].name,
+                                    mainImg: filterList[index].mainImg,
+                                    price: filterList[index].price,
+                                    priceAfterDiscount:
+                                        filterList[index].offer?.afterPrice ??
+                                            filterList[index].price,
+                                    categoryName:
+                                        filterList[index].category.name,
+                                    quantity: 1,
+                                    availability:
+                                        filterList[index].availability,
+                                    colorSpecValue: '',
+                                    sizeSpecValue: '');
+                                cart.addProductToCart(productCart);
+                              },
                               //  productQuantity: ,
                             ),
                           ),

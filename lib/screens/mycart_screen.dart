@@ -104,23 +104,25 @@ class _MyCartScreenState extends State<MyCartScreen> {
   Widget build(BuildContext context) {
     final total = Provider.of<CartViewModel>(context, listen: true);
     return Scaffold(
-      key: _scaffoldKey9,
-      drawer: DrawerLayout(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            GradientAppBar("My Cart", _scaffoldKey9),
-            cartProductsList(),
-            Container(
-              height: MediaQuery.of(context).size.height * .1,
-              padding: const EdgeInsets.only(right: 20, left: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * .07,
-                    child: Column(
-                      children: [
+        key: _scaffoldKey9,
+        drawer: DrawerLayout(),
+        appBar: PreferredSize(
+          child: GradientAppBar("My Cart", _scaffoldKey9),
+          preferredSize: const Size(double.infinity, kToolbarHeight),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              cartProductsList(),
+              Container(
+                height: MediaQuery.of(context).size.height * .1,
+                padding: const EdgeInsets.only(right: 20, left: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: MediaQuery.of(context).size.height * .07,
+                      child: Column(children: [
                         Text("TOTAL",
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * .9),
@@ -131,69 +133,66 @@ class _MyCartScreenState extends State<MyCartScreen> {
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1.4,
                             style: const TextStyle(color: Color(0xff3A559F))),
-                      ],
+                      ]),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () async {
-                      String token = await getToken();
-                      total.cartProductModel.length == 0
-                          ? ToastBuild(
-                              toastMessage:
-                                  'Please Add Products in Cart First!',
-                              toastIcon: Icons.add,
-                              bgColor: Color(0xff3A559F))
-                          : token == null || token.isEmpty
-                              ? pushNewScreenWithRouteSettings(context,
-                                  settings: RouteSettings(
-                                      name: LoginScreen.routeName),
-                                  screen: LoginScreen(),
-                                  withNavBar: false,
-                                  pageTransitionAnimation:
-                                      PageTransitionAnimation.fade)
-                              : pushNewScreenWithRouteSettings(context,
-                                  settings: RouteSettings(
-                                      name: CheckoutScreen.routeName),
-                                  screen: CheckoutScreen(),
-                                  withNavBar: true,
-                                  pageTransitionAnimation:
-                                      PageTransitionAnimation.fade);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.only(right: 10),
-                      width: MediaQuery.of(context).size.width * .4,
-                      height: MediaQuery.of(context).size.height * .06,
-                      decoration: BoxDecoration(
-                          color: Color(0xff3A559F),
-                          borderRadius: BorderRadius.circular(25.0)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              "CHECKOUT",
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          CircleAvatar(
-                              radius: 15,
-                              backgroundColor: Colors.white,
-                              child: Icon(Icons.arrow_forward_ios_rounded,
-                                  size: 15, color: Color(0xff3A559F)))
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
-      ),
-    );
+              GestureDetector(
+                onTap: () async {
+                  String token = await getToken();
+                  total.cartProductModel.length == 0
+                      ? ToastBuild(
+                          toastMessage: 'Please Add Products in Cart First!',
+                          toastIcon: Icons.add,
+                          bgColor: Color(0xff3A559F))
+                      : token == null || token.isEmpty
+                          ? pushNewScreenWithRouteSettings(context,
+                              settings:
+                                  RouteSettings(name: LoginScreen.routeName),
+                              screen: LoginScreen(),
+                              withNavBar: false,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade)
+                          : pushNewScreenWithRouteSettings(context,
+                              settings:
+                                  RouteSettings(name: CheckoutScreen.routeName),
+                              screen: CheckoutScreen(),
+                              withNavBar: true,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade);
+                },
+                child: Container(
+                  padding: EdgeInsets.only(right: 10),
+                  width: MediaQuery.of(context).size.width * .4,
+                  height: MediaQuery.of(context).size.height * .06,
+                  decoration: BoxDecoration(
+                      color: Color(0xff3A559F),
+                      borderRadius: BorderRadius.circular(25.0)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          "CHECKOUT",
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      CircleAvatar(
+                          radius: 15,
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.arrow_forward_ios_rounded,
+                              size: 15, color: Color(0xff3A559F)))
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }

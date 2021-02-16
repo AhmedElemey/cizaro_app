@@ -1,12 +1,12 @@
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 
 class ContactUsScreen extends StatefulWidget {
   static final routeName = '/contactUs-screen';
@@ -82,6 +82,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     return Scaffold(
       key: _scaffoldKey7,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("", _scaffoldKey7),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -90,7 +94,6 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar("", _scaffoldKey7),
                   Padding(
                     padding: const EdgeInsets.only(top: 20, left: 20),
                     child: Column(

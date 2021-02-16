@@ -163,6 +163,10 @@ class _ProductDetailsState extends State<ProductDetails> {
     final cart = Provider.of<CartViewModel>(context, listen: false);
     return Scaffold(
       key: _scaffoldKey10,
+      appBar: PreferredSize(
+        child: GradientAppBar("", _scaffoldKey10),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       drawer: DrawerLayout(),
       body: _isLoading
           ? Center(
@@ -172,7 +176,122 @@ class _ProductDetailsState extends State<ProductDetails> {
               physics: ScrollPhysics(),
               child: Column(
                 children: [
-                  GradientAppBar("", _scaffoldKey10),
+                  Container(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios_rounded,
+                            size: 20,
+                            color: Color(0xff3A559F),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Spacer(),
+                        Container(
+                          width: MediaQuery.of(context).size.width * .3,
+                          child: Column(
+                            children: [
+                              Text(
+                                productName ?? "",
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.5,
+                              ),
+                              Row(
+                                children: [
+                                  productPriceAfter == productPrice
+                                      ? Container(
+                                          child: Text(
+                                            productPrice.toString() + ' LE',
+                                            textScaleFactor:
+                                                MediaQuery.of(context)
+                                                        .textScaleFactor *
+                                                    0.85,
+                                          ),
+                                        )
+                                      : Container(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                  top: 5,
+                                                ),
+                                                child: Text(
+                                                  productPrice.toString() +
+                                                      ' LE',
+                                                  textScaleFactor:
+                                                      MediaQuery.of(context)
+                                                              .textScaleFactor *
+                                                          0.85,
+                                                  style: TextStyle(
+                                                      color: Colors.red,
+                                                      decoration: TextDecoration
+                                                          .lineThrough),
+                                                ),
+                                              ),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 5),
+                                                child: Text(
+                                                  productPriceAfter.toString() +
+                                                      ' LE',
+                                                  textScaleFactor:
+                                                      MediaQuery.of(context)
+                                                              .textScaleFactor *
+                                                          0.85,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                  // Text(
+                                  //   productPrice.toString(),
+                                  //   textScaleFactor:
+                                  //       MediaQuery.of(context).textScaleFactor *
+                                  //           1.1,
+                                  // ),
+                                  Spacer(),
+                                  Container(
+                                    padding: EdgeInsets.only(right: 5),
+                                    height: MediaQuery.of(context).size.height *
+                                        .03,
+                                    decoration: BoxDecoration(
+                                        color: Color(0xffFF6969),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.star,
+                                          size: 10,
+                                          color: Colors.white,
+                                        ),
+                                        Text(
+                                          productStar.toString() ?? 0.0,
+                                          style: TextStyle(color: Colors.white),
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  1,
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
                   productImages?.length == 0
                       ? Container(
                           height: MediaQuery.of(context).size.height * .4,

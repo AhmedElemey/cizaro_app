@@ -1,13 +1,12 @@
+import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
-import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'checkout_screen.dart';
@@ -48,10 +47,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     return Scaffold(
       key: _scaffoldKey4,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("Add New Address", _scaffoldKey4),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Add New Address", _scaffoldKey4),
             FutureBuilder(
                 future: Provider.of<ListViewModel>(context, listen: false)
                     .fetchCountries(

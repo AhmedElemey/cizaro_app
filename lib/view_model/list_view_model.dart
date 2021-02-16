@@ -1,6 +1,8 @@
+import 'dart:core';
+
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
-import 'package:cizaro_app/model/brandModel.dart';
+import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
@@ -22,12 +24,6 @@ import 'package:flutter/cupertino.dart';
 class ListViewModel extends ChangeNotifier {
   Future<Home> fetchHomeList() async {
     final result = await ListServices().fetchHome();
-    notifyListeners();
-    return result;
-  }
-
-  Future<BrandModel> fetchBrandList() async {
-    final result = await ListServices().fetchBrand();
     notifyListeners();
     return result;
   }
@@ -115,6 +111,12 @@ class ListViewModel extends ChangeNotifier {
     final results = await ListServices().fetchCountries(token);
     notifyListeners();
     return results;
+  }
+
+  Future<List<BrandModel.Data>> fetchBrandList() async {
+    final result = await ListServices().fetchBrand();
+    notifyListeners();
+    return result;
   }
 
   Future<ProfileModel> fetchProfile(int id, String token) async {

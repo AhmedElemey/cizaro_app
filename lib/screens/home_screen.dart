@@ -76,6 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: newArrivalsList?.length ?? 0,
         tabBuilder: (context, index) => Tab(
           child: Text(newArrivalsList[index].name,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+              ),
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
         ),
         pageBuilder: (context, index) => Container(
@@ -184,6 +188,10 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: topSellingList?.length ?? 0,
         tabBuilder: (context, index) => Tab(
           child: Text(topSellingList[index].name,
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+              ),
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
         ),
         pageBuilder: (context, index) => Container(
@@ -276,6 +284,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("", _scaffoldKey),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
@@ -284,7 +296,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar("", _scaffoldKey),
                   hotDealsList.length == 0 || hotDealsList.length == null
                       ? Container()
                       : Container(
@@ -303,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         //   fontWeight: FontWeight.bold,
                                         fontSize: 20,
                                         fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w800,
+                                        fontWeight: FontWeight.w700,
                                         color: Color(0xff294794)),
                                   ),
                                 ),
@@ -312,11 +323,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 decoration: BoxDecoration(
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 5,
-                                      blurRadius: 7,
-                                      offset: Offset(
-                                          0, 3), // changes position of shadow
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 1,
+                                      blurRadius: 5,
+                                      // changes position of shadow
                                     ),
                                   ],
                                 ),
@@ -376,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       style: TextStyle(
                                           fontSize: 18,
                                           fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w800,
+                                          fontWeight: FontWeight.w700,
                                           color: Color(0xff294794)),
                                     ),
                                   ),
@@ -437,8 +447,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     textScaleFactor:
                                         ScreenUtil.textScaleFactor * 1.3,
                                     style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w700,
                                         color: Color(0xff294794)),
                                   ),
                                 ),
@@ -463,8 +473,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       textScaleFactor:
                                           ScreenUtil.textScaleFactor * 1.3,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w700,
                                           color: Color(0xff294794)),
                                     ),
                                   ),

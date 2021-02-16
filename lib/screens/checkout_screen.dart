@@ -1,29 +1,28 @@
 import 'dart:io';
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart';
+import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/available_payments.dart';
 import 'package:cizaro_app/model/checkout.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
+import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/finished_order_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
-import 'package:cizaro_app/screens/orders_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/checkout_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
+import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:cizaro_app/model/shopping_cart.dart';
-import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cizaro_app/model/addressModel.dart' as address;
 
 class CheckoutScreen extends StatefulWidget {
   static final routeName = '/checkout-screen';
@@ -230,6 +229,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
       key: _scaffoldKey6,
       drawer: DrawerLayout(),
+      appBar: PreferredSize(
+        child: GradientAppBar("Complete Order", _scaffoldKey6),
+        preferredSize: const Size(double.infinity, kToolbarHeight),
+      ),
       body: _isLoading
           ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
@@ -237,7 +240,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GradientAppBar("Complete Order", _scaffoldKey6),
                   Container(
                     padding: EdgeInsets.only(left: 10, top: 5),
                     width: MediaQuery.of(context).size.width,
@@ -246,7 +248,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 2,
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                          //   fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
                           color: Color(0xff515C6F)),
                     ),
                   ),
@@ -258,6 +263,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           "SHIPPING ADDRESS",
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1,
+                          style: TextStyle(
+                              //   fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xff515C6F)),
                         ),
                         Spacer(),
                         Row(
@@ -321,29 +332,46 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       .textScaleFactor *
                                                   1.5,
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                              // fontWeight: FontWeight.bold,
+                                              fontFamily: 'Poppins',
+                                              fontWeight: FontWeight.w700,
                                               color: Color(0xff515C6F))),
                                       Text(
-                                        addressesList[index].region ??
-                                            "Main Street\,",
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1,
-                                      ),
+                                          addressesList[index].region ??
+                                              "Main Street\,",
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  1.2,
+                                          style: TextStyle(
+                                            // fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w400,
+                                          )),
                                       Text(
-                                        addressesList[index].city.name ??
-                                            "City Name, Province\,",
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1,
-                                      ),
+                                          addressesList[index].city.name ??
+                                              "City Name, Province\,",
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  1,
+                                          style: TextStyle(
+                                            // fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w400,
+                                          )),
                                       Text(
-                                        addressesList[index].country.name ??
-                                            "Country",
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1,
-                                      ),
+                                          addressesList[index].country.name ??
+                                              "Country",
+                                          textScaleFactor:
+                                              MediaQuery.of(context)
+                                                      .textScaleFactor *
+                                                  1,
+                                          style: TextStyle(
+                                            // fontWeight: FontWeight.bold,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w400,
+                                          )),
                                     ],
                                   )
                                 : Container(),

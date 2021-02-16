@@ -153,34 +153,42 @@ class _ProductItemState extends State<ProductItem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(
-                  widget.imgUrl,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes
-                            : null,
-                      ),
-                    );
-                  },
-                  width: ScreenUtil()
-                      .setWidth(MediaQuery.of(context).size.width * .3),
-                  height: ScreenUtil()
-                      .setHeight(MediaQuery.of(context).size.height * .19),
-                  fit: BoxFit.fill,
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  child: Image.network(
+                    widget.imgUrl,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
+                    width: ScreenUtil()
+                        .setWidth(MediaQuery.of(context).size.width * .33),
+                    height: ScreenUtil()
+                        .setHeight(MediaQuery.of(context).size.height * .19),
+                    fit: BoxFit.fill,
+                  ),
                 ),
                 Container(
                   padding: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(10),
                       right: ScreenUtil().setWidth(10),
                       left: ScreenUtil().setWidth(10)),
                   child: Text(
                     widget.productName,
-                    textScaleFactor: ScreenUtil.textScaleFactor * 1.2,
+                    textScaleFactor: ScreenUtil.textScaleFactor * 1.5,
+                    style: TextStyle(
+                      fontFamily: 'NeusaNextStd',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 widget.productPriceAfter == widget.productPrice
@@ -192,6 +200,10 @@ class _ProductItemState extends State<ProductItem> {
                         child: Text(
                           widget.productPrice.toString() + ' LE',
                           textScaleFactor: ScreenUtil.textScaleFactor * 1,
+                          style: TextStyle(
+                            fontFamily: 'NeusaNextStd',
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       )
                     : Container(
@@ -200,13 +212,14 @@ class _ProductItemState extends State<ProductItem> {
                           children: <Widget>[
                             Container(
                               padding: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(5),
                                   right: ScreenUtil().setWidth(10),
                                   left: ScreenUtil().setWidth(10)),
                               child: Text(
                                 widget.productPrice.toString() + ' LE',
                                 textScaleFactor: ScreenUtil.textScaleFactor * 1,
                                 style: TextStyle(
+                                    fontFamily: 'NeusaNextStd',
+                                    fontWeight: FontWeight.w700,
                                     color: Colors.red,
                                     decoration: TextDecoration.lineThrough),
                               ),
@@ -219,6 +232,10 @@ class _ProductItemState extends State<ProductItem> {
                               child: Text(
                                 widget.productPriceAfter.toString() + ' LE',
                                 textScaleFactor: ScreenUtil.textScaleFactor * 1,
+                                style: TextStyle(
+                                  fontFamily: 'NeusaNextStd',
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             )
                           ],
@@ -226,7 +243,7 @@ class _ProductItemState extends State<ProductItem> {
                       ),
                 Container(
                     padding: EdgeInsets.only(
-                        top: 10, bottom: 5, left: ScreenUtil().setWidth(10)),
+                        bottom: 5, left: ScreenUtil().setWidth(10)),
                     width: ScreenUtil()
                         .setWidth(MediaQuery.of(context).size.width * .3),
                     child: Row(
@@ -253,15 +270,12 @@ class _ProductItemState extends State<ProductItem> {
                               ? Icon(Icons.favorite, color: Color(0xffFF6969))
                               : Icon(Icons.favorite_border_outlined),
                         ),
-                        Spacer(),
                         GestureDetector(
                           onTap: () {
                             widget.onAddToCart();
                             showCartToast();
                           },
                           child: Container(
-                            padding: EdgeInsets.only(
-                                right: ScreenUtil().setWidth(10)),
                             child: SvgPicture.asset('assets/images/cart.svg',
                                 width: MediaQuery.of(context).size.width * 0.03,
                                 height:

@@ -32,8 +32,8 @@ class Data {
   String fullName;
   Gender gender;
   String birthDate;
-  Null facebookId;
-  Null googleId;
+  String facebookId;
+  String googleId;
 
   Data(
       {this.id,

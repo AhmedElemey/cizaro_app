@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
 class OrderItem extends StatelessWidget {
-  final String orderId,
+  final String orderNumber,
       orderDate,
       orderShippingAddress,
       orderRecipient,
       orderPaymentMethod,
       orderStatus;
   final double orderTotal;
-  final int orderStatusId;
+  final int orderStatusId, orderId;
 
   OrderItem(
-      {this.orderId,
+      {this.orderNumber,
+      this.orderId,
       this.orderDate,
       this.orderShippingAddress,
       this.orderRecipient,
@@ -23,7 +24,7 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.3,
       margin: const EdgeInsets.only(right: 15, left: 15),
       child: Column(
         children: [
@@ -37,7 +38,7 @@ class OrderItem extends StatelessWidget {
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
                 Text('------------------------------------------------------'),
-                Text(orderId ?? '162184'),
+                Text(orderNumber ?? '162184'),
               ],
             ),
           ),
@@ -66,7 +67,7 @@ class OrderItem extends StatelessWidget {
                         MediaQuery.of(context).textScaleFactor * 1.2,
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Text('---------'),
+                Text('--------------'),
                 Text(orderShippingAddress ?? '12 st cairo'),
               ],
             ),

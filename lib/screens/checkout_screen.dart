@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/model/available_payments.dart';
@@ -177,9 +176,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         withNavBar: true,
         pageTransitionAnimation: PageTransitionAnimation.fade));
     fetchTotalOrder();
-    if (this.mounted) {
-      setState(() => _isLoading = false);
-    }
+    if (this.mounted) setState(() => _isLoading = false);
   }
 
   fetchTotalOrder() async {
@@ -269,13 +266,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 icon: Icon(Icons.add),
                                 iconSize: 25,
                                 color: Color(0xff3EC429),
-                                onPressed: () => Navigator.of(context)
-                                    .pushNamed(AddAddressScreen.routeName)),
+                                onPressed: () => pushNewScreenWithRouteSettings(
+                                    context,
+                                    settings: RouteSettings(
+                                        name: AddAddressScreen.routeName),
+                                    screen: AddAddressScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade)),
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: GestureDetector(
-                                onTap: () => Navigator.of(context)
-                                    .pushNamed(AddressBookScreen.routeName),
+                                onTap: () => pushNewScreenWithRouteSettings(
+                                    context,
+                                    settings: RouteSettings(
+                                        name: AddressBookScreen.routeName),
+                                    screen: AddressBookScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade),
                                 child: CircleAvatar(
                                   radius: 15,
                                   backgroundColor: Color(0xff9EA4AF),

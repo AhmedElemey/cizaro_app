@@ -312,6 +312,44 @@ class ListServices {
     }
   }
 
+  Future deleteAddress(String token, int addressId) async {
+    final response = await http.delete(
+      API + '/address-book/$addressId/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      return jsonDecode(response.body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future updateAddress(
+      CreateAddress createAddress, String token, int addressId) async {
+    final response = await http.patch(API + '/address-book/$addressId/',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': '${'Token'} $token'
+        },
+        body: jsonEncode(createAddress.toJson()));
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      return jsonDecode(response.body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
   Future<AddressBookModel> fetchShippingAddress(
       String token, int addressId) async {
     final response = await http.get(

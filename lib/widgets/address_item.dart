@@ -1,22 +1,29 @@
+import 'package:cizaro_app/screens/edit_address_screen.dart';
 import 'package:cizaro_app/widgets/collection_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class AddressItem extends StatelessWidget {
   final String strName, strNumber, strMain, cityName, countryName;
   final Color bgColor;
+  final VoidCallback onDelete;
+  final VoidCallback onEdit;
   const AddressItem(
       {this.strName,
       this.strNumber,
       this.strMain,
-        this.bgColor,
+      this.bgColor,
       this.cityName,
+      this.onDelete,
+      this.onEdit,
       this.countryName});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(5),
+    return Padding(
+      padding: const EdgeInsets.all(5),
       child: Card(
-        elevation: 3,
+        elevation: 4,
         child: Container(
           height: MediaQuery.of(context).size.height * .15,
           padding: EdgeInsets.only(left: 5, top: 5),
@@ -63,17 +70,20 @@ class AddressItem extends StatelessWidget {
               ],
             ),
             Spacer(),
-            Container(
-              padding: EdgeInsets.only(right: 20),
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
               child: GestureDetector(
-                child: Text(
-                  "Edit",
-                  style: TextStyle(color: Color(0xff3A559F)),
-                  textScaleFactor:
-                      MediaQuery.of(context).textScaleFactor * 1.35,
-                ),
-              ),
-            )
+                  onTap: () => onEdit(),
+                  child: Text("Edit",
+                      style: TextStyle(color: Color(0xff3A559F)),
+                      textScaleFactor:
+                          MediaQuery.of(context).textScaleFactor * 1.3)),
+            ),
+            IconButton(
+                icon: Icon(CupertinoIcons.delete_simple),
+                color: Colors.red,
+                onPressed: () => onDelete()),
+            const SizedBox(width: 5)
           ]),
         ),
       ),

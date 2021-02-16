@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cizaro_app/model/available_payments.dart';
 import 'package:cizaro_app/model/checkout.dart';
 import 'package:cizaro_app/model/order.dart';
+import 'package:cizaro_app/model/order_details.dart';
 import 'package:http/http.dart' as http;
 
 class OrderServices {
@@ -32,6 +33,21 @@ class OrderServices {
       final body = jsonDecode(response.body);
       print(response.body);
       return Payments.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<OrderDetails> fetchOrderDetails(String token, int orderId) async {
+    final response = await http.get(API + '/orders/$orderId/', headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': '${'Token'} $token'
+    });
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return OrderDetails.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }

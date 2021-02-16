@@ -2,11 +2,8 @@ import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
 import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/screens/search_screen.dart';
-import 'package:custom_navigator/custom_navigator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 // Ios Version
 // class TabsScreen extends StatelessWidget {

@@ -5,6 +5,7 @@ import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
+import 'package:cizaro_app/screens/edit_address_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/finished_order_screen.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
@@ -93,7 +94,8 @@ void main() {
             ProfileEditScreen.routeName: (ctx) => ProfileEditScreen(),
             OrderScreen.routeName: (ctx) => OrderScreen(),
             PendingShipment.routeName: (ctx) => PendingShipment(),
-            FinishedOrder.routeName: (ctx) => FinishedOrder()
+            FinishedOrder.routeName: (ctx) => FinishedOrder(),
+            EditAddressScreen.routeName: (ctx) => EditAddressScreen()
           },
         ),
       ),

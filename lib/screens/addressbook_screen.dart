@@ -1,4 +1,5 @@
 import 'package:cizaro_app/model/addressModel.dart';
+import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/address_item.dart';
@@ -10,6 +11,8 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
+
+import 'edit_address_screen.dart';
 
 class AddressBookScreen extends StatefulWidget {
   static final routeName = '/address-book-screen';
@@ -44,6 +47,13 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     }
   }
 
+  Future deleteAddress(int addressId) async {
+    final getAddress = Provider.of<ListViewModel>(context, listen: false);
+    String token = await getToken();
+    print(token);
+    await getAddress.deleteAddress(token, addressId);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,60 +65,82 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     return Scaffold(
       key: _scaffoldKey5,
       drawer: DrawerLayout(),
-      body: SingleChildScrollView(
-        child: Container(
-          child: _isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GradientAppBar("Select Address", _scaffoldKey5),
-                    Container(
-                      height: MediaQuery.of(context).size.height * .15,
-                      padding: EdgeInsets.only(left: 5, top: 15),
-                      child: Column(
-                        children: [
-                          Container(
-                            child: Text(
-                              "Noha Hamza",
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 2,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff515C6F)),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 5),
-                            child: Text(
-                              "Nohahamza@email.com",
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.3,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff515C6F)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: MediaQuery.of(context).size.height * .6,
-                      child: addressesList.length == 0 || addressesList == null
-                          ? Center(
-                              child: Text(
-                                  'No addresses Added yet, please Add One.'))
-                          : ListView.builder(
-                              itemCount: addressesList.length,
-                              itemBuilder: (ctx, index) => GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        indexOfSelectedItemAddress =
-                                            addressesList[index].id;
-                                      });
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              physics: ScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GradientAppBar("Select Address", _scaffoldKey5),
+                  addressesList.length == 0 || addressesList == null
+                      ? Center(
+                          child:
+                              Text('No addresses Added yet, please Add One.'))
+                      : ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: addressesList.length,
+                          itemBuilder: (ctx, index) => GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    indexOfSelectedItemAddress =
+                                        addressesList[index].id;
+                                  });
+                                  pushNewScreenWithRouteSettings(context,
+                                      settings: RouteSettings(
+                                          name: CheckoutScreen.routeName,
+                                          arguments: {
+                                            'address_id':
+                                                indexOfSelectedItemAddress,
+                                            'street_name': addressesList[index]
+                                                .streetAddress,
+                                            'country_name': addressesList[index]
+                                                .country
+                                                .name,
+                                            'city_name':
+                                                addressesList[index].city.name,
+                                            'zip_code':
+                                                addressesList[index].zipCode,
+                                            'phone_number':
+                                                addressesList[index].phone,
+                                            'region_name':
+                                                addressesList[index].region
+                                          }),
+                                      screen: CheckoutScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade);
+                                },
+                                child: AddressItem(
+                                    strName:
+                                        addressesList[index].streetAddress ??
+                                            "John Doe",
+                                    strNumber: addressesList[index].zipCode ??
+                                        "No 123",
+                                    strMain: addressesList[index].region ??
+                                        "Main Street",
+                                    cityName: addressesList[index].city.name ??
+                                        "City Name",
+                                    countryName:
+                                        addressesList[index].country.name ??
+                                            "Country",
+                                    bgColor: addressesList[index].id ==
+                                            indexOfSelectedItemAddress
+                                        ? Colors.blue
+                                        : Colors.white,
+                                    onDelete: () {
+                                      deleteAddress(addressesList[index].id);
+                                      setState(
+                                          () => addressesList.removeAt(index));
+                                    },
+                                    onEdit: () {
+                                      setState(() =>
+                                          indexOfSelectedItemAddress =
+                                              addressesList[index].id);
                                       pushNewScreenWithRouteSettings(context,
                                           settings: RouteSettings(
-                                              name: CheckoutScreen.routeName,
+                                              name: EditAddressScreen.routeName,
                                               arguments: {
                                                 'address_id':
                                                     indexOfSelectedItemAddress,
@@ -123,41 +155,33 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                                     addressesList[index]
                                                         .city
                                                         .name,
+                                                'zip_code': addressesList[index]
+                                                    .zipCode,
+                                                'phone_number':
+                                                    addressesList[index].phone,
                                                 'region_name':
                                                     addressesList[index].region
                                               }),
-                                          screen: CheckoutScreen(),
+                                          screen: EditAddressScreen(),
                                           withNavBar: true,
                                           pageTransitionAnimation:
                                               PageTransitionAnimation.fade);
-                                    },
-                                    child: AddressItem(
-                                      strName:
-                                          addressesList[index].streetAddress ??
-                                              "John Doe",
-                                      strNumber: addressesList[index].zipCode ??
-                                          "No 123",
-                                      strMain: addressesList[index].region ??
-                                          "Main Street",
-                                      cityName:
-                                          addressesList[index].city.name ??
-                                              "City Name",
-                                      countryName:
-                                          addressesList[index].country.name ??
-                                              "Country",
-                                      bgColor: addressesList[index].id ==
-                                              indexOfSelectedItemAddress
-                                          ? Colors.blue
-                                          : Colors.white,
-                                    ),
-                                  )),
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(),
-                        Spacer(),
-                        Container(
-                          margin: EdgeInsets.only(right: 20, top: 10),
+                                    }),
+                              )),
+                  Row(
+                    children: [
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () => pushNewScreenWithRouteSettings(context,
+                            settings:
+                                RouteSettings(name: AddAddressScreen.routeName),
+                            screen: AddAddressScreen(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                PageTransitionAnimation.fade),
+                        child: Container(
+                          margin:
+                              EdgeInsets.only(right: 20, top: 10, bottom: 30),
                           width: MediaQuery.of(context).size.width * .16,
                           height: MediaQuery.of(context).size.height * .06,
                           decoration: BoxDecoration(
@@ -176,12 +200,12 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-        ),
-      ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
     );
   }
 }

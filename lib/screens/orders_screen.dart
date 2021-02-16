@@ -1,8 +1,10 @@
 import 'package:cizaro_app/model/order.dart';
+import 'package:cizaro_app/screens/order_details_screen.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_item.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,16 +64,33 @@ class _OrderScreenState extends State<OrderScreen> {
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: _ordersList.length,
-                          itemBuilder: (ctx, index) => OrderItem(
-                              orderId: _ordersList[index].orderNumber,
-                              orderDate: _ordersList[index].deliveredDate,
-                              orderPaymentMethod:
-                                  _ordersList[index].paymentMethod.value,
-                              orderStatusId: _ordersList[index].status.key,
-                              orderShippingAddress: _ordersList[index].address,
-                              orderStatus: _ordersList[index].status.value,
-                              orderTotal: _ordersList[index].cashAmount +
-                                  _ordersList[index].shippingFees))
+                          itemBuilder: (ctx, index) => GestureDetector(
+                                onTap: () => pushNewScreenWithRouteSettings(
+                                    context,
+                                    settings: RouteSettings(
+                                        name: OrderDetailsScreen.routeName,
+                                        arguments: {
+                                          'order_id': _ordersList[index].id
+                                        }),
+                                    screen: OrderDetailsScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade),
+                                child: OrderItem(
+                                    orderId: _ordersList[index].id,
+                                    orderNumber: _ordersList[index].orderNumber,
+                                    orderDate: _ordersList[index].deliveredDate,
+                                    orderPaymentMethod:
+                                        _ordersList[index].paymentMethod.value,
+                                    orderStatusId:
+                                        _ordersList[index].status.key,
+                                    orderShippingAddress:
+                                        _ordersList[index].address,
+                                    orderStatus:
+                                        _ordersList[index].status.value,
+                                    orderTotal: _ordersList[index].cashAmount +
+                                        _ordersList[index].shippingFees),
+                              ))
                 ],
               ),
             ),

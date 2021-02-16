@@ -121,18 +121,16 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     height: MediaQuery.of(context).size.height * .07,
                     child: Column(
                       children: [
-                        Text(
-                          "TOTAL",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * .9,
-                        ),
+                        Text("TOTAL",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * .9),
                         Spacer(),
                         Text(
-                          total.totalPrice.toString() + ' LE' ?? '00.00',
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.4,
-                          style: const TextStyle(color: Color(0xff3A559F)),
-                        ),
+                            total.totalPrice.toStringAsFixed(2) + ' LE' ??
+                                '00.00',
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.4,
+                            style: const TextStyle(color: Color(0xff3A559F))),
                       ],
                     ),
                   ),

@@ -129,6 +129,20 @@ class ListViewModel extends ChangeNotifier {
     return results;
   }
 
+  Future deleteAddress(String token, int addressId) async {
+    final results = await ListServices().deleteAddress(token, addressId);
+    notifyListeners();
+    return results;
+  }
+
+  Future updateAddress(
+      CreateAddress createAddress, String token, int addressId) async {
+    final results =
+        await ListServices().updateAddress(createAddress, token, addressId);
+    notifyListeners();
+    return results;
+  }
+
   Future fetchAddress(CreateAddress address, String token) async {
     final results = await ListServices().createAddress(address, token);
     notifyListeners();

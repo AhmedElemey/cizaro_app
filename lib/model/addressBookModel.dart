@@ -32,21 +32,21 @@ class Data {
   String streetAddress;
   String zipCode;
   String region;
-  String phone;
+  int phone;
 
   Data(
       {this.id,
-        this.country,
-        this.city,
-        this.streetAddress,
-        this.zipCode,
-        this.region,
-        this.phone});
+      this.country,
+      this.city,
+      this.streetAddress,
+      this.zipCode,
+      this.region,
+      this.phone});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     country =
-    json['country'] != null ? new Country.fromJson(json['country']) : null;
+        json['country'] != null ? new Country.fromJson(json['country']) : null;
     city = json['city'] != null ? new Country.fromJson(json['city']) : null;
     streetAddress = json['street_address'];
     zipCode = json['zip_code'];

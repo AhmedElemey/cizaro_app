@@ -8,13 +8,13 @@ class CartItem extends StatefulWidget {
       colorSpecValue,
       sizeSpecValue,
       productCategory;
-  int productQuantity, totalAvailability;
+  int productQuantity, totalAvailability, index;
   final double totalPrice, productPrice, productPriceAfterDiscount;
   var myController = TextEditingController();
   final VoidCallback onDelete;
   final VoidCallback onPlusQuantity;
   final VoidCallback onMinusQuantity;
-  final VoidCallback onUpdateQuantity;
+  final Function onUpdateQuantity;
 
   CartItem(
       {Key key,
@@ -27,6 +27,7 @@ class CartItem extends StatefulWidget {
       this.myController,
       this.totalPrice,
       this.productQuantity,
+      this.index,
       this.onDelete,
       this.onMinusQuantity,
       this.colorSpecValue,
@@ -40,7 +41,7 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
-  TextEditingController quantityController = TextEditingController();
+  // TextEditingController quantityController = TextEditingController();
 
   @override
   void initState() {
@@ -51,13 +52,13 @@ class _CartItemState extends State<CartItem> {
       setState(() {});
     });
     widget.productQuantity = int.parse(widget.myController.text);
-    quantityController.text = 1.toString();
+    //  quantityController.text = 1.toString();
     super.initState();
   }
 
   @override
   void dispose() {
-    quantityController.dispose();
+    //  quantityController.dispose();
     widget.myController.dispose();
     super.dispose();
   }
@@ -169,8 +170,7 @@ class _CartItemState extends State<CartItem> {
                         Container(
                           padding: EdgeInsets.only(left: 5),
                           width: MediaQuery.of(context).size.width * .09,
-                          child: TextFormField(
-                            controller: widget.myController,
+                          child: TextField(
                             keyboardType: TextInputType.numberWithOptions(
                               decimal: false,
                               signed: true,
@@ -186,6 +186,7 @@ class _CartItemState extends State<CartItem> {
                                     widget.productQuantity.toString(),
                                 hintStyle:
                                     const TextStyle(color: Colors.black)),
+                            controller: widget.myController,
                             onChanged: (value) {
                               // widget.myController.addListener((){
                               //   print("value: ${widget.myController.text}");
@@ -193,12 +194,15 @@ class _CartItemState extends State<CartItem> {
                               //   print(widget.productQuantity);
                               //   setState(() {});
                               // });
+                              // widget.onUpdateQuantity(widget.index,widget.productQuantity);
                               setState(() {
                                 widget.myController.text = value;
                                 widget.productQuantity =
                                     int.parse(widget.myController.text);
-                                widget.onUpdateQuantity();
+                                widget.onUpdateQuantity(
+                                    widget.index, widget.productQuantity);
                               });
+
                               // widget.onUpdateQuantity();
                             },
                           ),
@@ -228,7 +232,7 @@ class _CartItemState extends State<CartItem> {
                                       MediaQuery.of(context).textScaleFactor *
                                           .8),
                               Text(
-                                widget.totalPrice.toString() + ' LE',
+                                widget.totalPrice.toStringAsFixed(2) + ' LE',
                                 textScaleFactor:
                                     MediaQuery.of(context).textScaleFactor * 1,
                                 style:

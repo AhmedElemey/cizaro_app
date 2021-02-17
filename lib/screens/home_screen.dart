@@ -118,6 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.offer
                               ?.afterPrice ??
                           0.0,
+                      offer: newArrivalsList[0]?.products[index]?.offer ?? "",
                       onAddToCart: () {
                         final cart =
                             Provider.of<CartViewModel>(context, listen: false);
@@ -224,6 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.offer
                               ?.afterPrice ??
                           0.0,
+                      offer: topSellingList[0]?.products[index]?.offer ?? "",
                       onAddToCart: () {
                         final cart =
                             Provider.of<CartViewModel>(context, listen: false);
@@ -370,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Container()
                       : Container(
                           padding: EdgeInsets.only(
-                            top: ScreenUtil().setHeight(20),
+                            top: ScreenUtil().setHeight(10),
                           ),
                           child: Column(
                             children: [
@@ -453,7 +455,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Container(
                                   height: ScreenUtil().setHeight(
-                                      MediaQuery.of(context).size.height * .48),
+                                      MediaQuery.of(context).size.height * .45),
                                   child: tabsWidgets(context)),
                             ],
                           ),
@@ -481,7 +483,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                   padding: EdgeInsets.only(left: 10),
                                   height: ScreenUtil().setHeight(
-                                      MediaQuery.of(context).size.height * .48),
+                                      MediaQuery.of(context).size.height * .45),
                                   child: topSellingWidgets(context)),
                             ],
                           ),

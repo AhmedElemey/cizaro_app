@@ -92,6 +92,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           cart.cartProductModel?.removeAt(index);
                         });
                       },
+                      index: index,
                       onUpdateQuantity: () => cart.updateQuantity(
                           index,
                           cart.cartProductModel[index].id,

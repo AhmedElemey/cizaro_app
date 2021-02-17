@@ -109,6 +109,13 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // onUpdateQuantity(int index, int quantity) async {
+  //   _cartItemsList[index].quantity = quantity;
+  //   await dbHelper.updateProduct(_cartItemsList[index]);
+  //   //  getTotalPrice();
+  //   notifyListeners();
+  // }
+
   deleteCartProduct(int index, int productId) async {
     dbHelper.deleteCartItem(productId);
     _cartItemsList[index].price == _cartItemsList[index].priceAfterDiscount

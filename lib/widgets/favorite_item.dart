@@ -89,7 +89,7 @@ class FavoriteItem extends StatelessWidget {
                                       padding: EdgeInsets.only(left: 5),
                                     ),
                                     Text(
-                                      productStar,
+                                      productStar ?? '0.0',
                                       style: TextStyle(color: Colors.white),
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *

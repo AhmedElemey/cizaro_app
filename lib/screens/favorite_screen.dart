@@ -53,36 +53,33 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     final fav = Provider.of<FavViewModel>(context, listen: true);
     return fav.favProductModel.length == 0
         ? Container(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.9,
             padding: const EdgeInsets.all(25),
             child: Center(
                 child: Text(
                     'Your Favorites is Empty, please Add your Favorites.',
                     textScaleFactor:
                         MediaQuery.of(context).textScaleFactor * 1.3)))
-        : Container(
-            height: MediaQuery.of(context).size.height * .7,
-            child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: fav.favProductModel?.length ?? 0,
-                itemBuilder: (ctx, index) => FavoriteItem(
-                      imgUrl: fav.favProductModel[index].mainImg,
-                      productName: fav.favProductModel[index].name,
-                      productCategory: fav.favProductModel[index].categoryName,
-                      productStar: fav.favProductModel[index].stars.toString(),
-                      productPrice: fav.favProductModel[index].price.toString(),
-                      unFavorite: () {
-                        fav.deleteFavProduct(
-                            index, fav.favProductModel[index].id);
-                        setState(() {
-                          fav.favProductModel?.removeAt(index);
-                          // fav.favProductModel[index].isFav = 0;
-                        });
-                        showUnFavToast();
-                      },
-                    )),
-          );
+        : ListView.builder(
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: fav.favProductModel?.length ?? 0,
+            itemBuilder: (ctx, index) => FavoriteItem(
+                  imgUrl: fav.favProductModel[index].mainImg,
+                  productName: fav.favProductModel[index].name,
+                  productCategory: fav.favProductModel[index].categoryName,
+                  productStar:
+                      fav.favProductModel[index]?.stars.toString() ?? '0.0',
+                  productPrice: fav.favProductModel[index].price.toString(),
+                  unFavorite: () {
+                    fav.deleteFavProduct(index, fav.favProductModel[index].id);
+                    setState(() {
+                      fav.favProductModel?.removeAt(index);
+                      // fav.favProductModel[index].isFav = 0;
+                    });
+                    showUnFavToast();
+                  },
+                ));
   }
 
   @override
@@ -99,6 +96,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         child: Column(
           children: [
             favProductList(),
+            SizedBox(
+              height: 20,
+            )
           ],
         ),
       ),

@@ -89,22 +89,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             : SingleChildScrollView(
                 child: Column(children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * .09,
-                  child: Center(
-                    child: Text(
-                      "Welcome",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 3,
-                    ),
-                  ),
-                ),
-                Container(
                   padding: EdgeInsets.only(left: 10, top: 5),
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
-                      GradientAppBar("Profile", _scaffoldKey12),
                       Container(
                         height: MediaQuery.of(context).size.height * .09,
                         child: Center(

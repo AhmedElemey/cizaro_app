@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cizaro_app/model/cartModel.dart';
+import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart' as rs;
 import 'package:cizaro_app/model/specMdel.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -15,7 +16,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductDetails extends StatefulWidget {
   static final routeName = '/productDetails-screen';
@@ -161,6 +161,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartViewModel>(context, listen: false);
+    final fav = Provider.of<FavViewModel>(context, listen: false);
     return Scaffold(
       key: _scaffoldKey10,
       appBar: PreferredSize(
@@ -373,7 +374,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     padding: EdgeInsets.only(left: 15, top: 15),
                     child: Row(
                       children: [
-                        Text(productName,
+                        Text(productName ?? "",
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1.5)
                       ],
@@ -707,6 +708,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               //   'product_id': productRelated[index].id
                               // }),
                               child: ProductDetailItem(
+                                productId: productRelated[index]?.id ?? 0,
                                 imgUrl: productRelated[index].mainImg,
                                 productName: productRelated[index].name ?? "",
                                 productPrice:
@@ -715,6 +717,40 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     productRelated[index]?.offer?.afterPrice ??
                                         0.0,
                                 productStar: productRelated[index].stars ?? 0.0,
+                                offer: productRelated[index]?.offer ?? "",
+                                onAddToCart: () {
+                                  final cart = Provider.of<CartViewModel>(
+                                      context,
+                                      listen: false);
+                                  final productCart = ProductCart(
+                                      id: productRelated[index].id,
+                                      name: productRelated[index].name,
+                                      mainImg: productRelated[index].mainImg,
+                                      price: productRelated[index].price,
+                                      priceAfterDiscount: productRelated[index]
+                                              .offer
+                                              ?.afterPrice ??
+                                          productRelated[index].price,
+                                      categoryName:
+                                          productRelated[index].category.name,
+                                      quantity: 1,
+                                      availability:
+                                          productRelated[index].availability,
+                                      colorSpecValue: '',
+                                      sizeSpecValue: '');
+                                  cart.addProductToCart(productCart);
+                                },
+                                onAddToFavorite: () {
+                                  final productFav = ProductFav(
+                                      id: productRelated[index].id,
+                                      name: productRelated[index].name,
+                                      mainImg: productRelated[index].mainImg,
+                                      price: productRelated[index].price,
+                                      categoryName:
+                                          productRelated[index].category.name,
+                                      isFav: 1);
+                                  fav.addProductToFav(productFav);
+                                },
                               ),
                             )),
                   )

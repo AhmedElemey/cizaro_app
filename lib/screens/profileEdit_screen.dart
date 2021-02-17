@@ -456,7 +456,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   ),
                                 ),
                                 CircleAvatar(
-                                    radius: 15,
+                                    radius: MediaQuery.of(context).size.width *
+                                        .035,
                                     backgroundColor: Colors.white,
                                     child: Icon(Icons.arrow_forward_ios_rounded,
                                         size: 15, color: Color(0xff3A559F)))
@@ -570,27 +571,27 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 : showConfirmToast()
                           },
                           child: Container(
-                            padding: EdgeInsets.only(right: 10),
                             width: MediaQuery.of(context).size.width * .45,
                             height: MediaQuery.of(context).size.height * .06,
+                            margin: const EdgeInsets.only(top: 8),
                             decoration: BoxDecoration(
                                 color: Color(0xff3A559F),
                                 borderRadius: BorderRadius.circular(25.0)),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.only(left: 15),
-                                  child: Text(
-                                    "Change Password",
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                Text(
+                                  "Change Password",
+                                  textScaleFactor:
+                                      MediaQuery.of(context).textScaleFactor *
+                                          1,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 CircleAvatar(
-                                    radius: 15,
+                                    radius: MediaQuery.of(context).size.width *
+                                        .035,
                                     backgroundColor: Colors.white,
                                     child: Icon(Icons.arrow_forward_ios_rounded,
                                         size: 15, color: Color(0xff3A559F)))

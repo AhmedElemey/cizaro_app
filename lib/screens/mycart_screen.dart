@@ -51,6 +51,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         : Container(
             height: MediaQuery.of(context).size.height * 0.7,
             child: ListView.builder(
+                padding: const EdgeInsets.only(top: 5),
                 shrinkWrap: true,
                 itemCount: cart.cartProductModel?.length ?? 0,
                 itemBuilder: (ctx, index) {
@@ -116,79 +117,75 @@ class _MyCartScreenState extends State<MyCartScreen> {
               cartProductsList(),
               Container(
                 height: MediaQuery.of(context).size.height * .1,
-                padding: const EdgeInsets.only(right: 20, left: 20),
+                padding: const EdgeInsets.only(right: 20, left: 20, bottom: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * .07,
-                      child: Column(children: [
-                        Text("TOTAL",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * .9),
-                        Spacer(),
-                        Text(
-                            total.totalPrice.toStringAsFixed(2) + ' LE' ??
-                                '00.00',
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.4,
-                            style: const TextStyle(color: Color(0xff3A559F))),
-                      ]),
-                    ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () async {
-                  String token = await getToken();
-                  total.cartProductModel.length == 0
-                      ? ToastBuild(
-                          toastMessage: 'Please Add Products in Cart First!',
-                          toastIcon: Icons.add,
-                          bgColor: Color(0xff3A559F))
-                      : token == null || token.isEmpty
-                          ? pushNewScreenWithRouteSettings(context,
-                              settings:
-                                  RouteSettings(name: LoginScreen.routeName),
-                              screen: LoginScreen(),
-                              withNavBar: false,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.fade)
-                          : pushNewScreenWithRouteSettings(context,
-                              settings:
-                                  RouteSettings(name: CheckoutScreen.routeName),
-                              screen: CheckoutScreen(),
-                              withNavBar: true,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.fade);
-                },
-                child: Container(
-                  padding: EdgeInsets.only(right: 10),
-                  width: MediaQuery.of(context).size.width * .4,
-                  height: MediaQuery.of(context).size.height * .06,
-                  decoration: BoxDecoration(
-                      color: Color(0xff3A559F),
-                      borderRadius: BorderRadius.circular(25.0)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          "CHECKOUT",
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text("TOTAL",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * .9),
+                          Text(
+                              total.totalPrice.toStringAsFixed(2) + ' LE' ??
+                                  '00.00',
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.4,
+                              style: const TextStyle(color: Color(0xff3A559F))),
+                        ]),
+                    GestureDetector(
+                      onTap: () async {
+                        String token = await getToken();
+                        total.cartProductModel.length == 0
+                            ? ToastBuild(
+                                toastMessage:
+                                    'Please Add Products in Cart First!',
+                                toastIcon: Icons.add,
+                                bgColor: Color(0xff3A559F))
+                            : token == null || token.isEmpty
+                                ? pushNewScreenWithRouteSettings(context,
+                                    settings: RouteSettings(
+                                        name: LoginScreen.routeName),
+                                    screen: LoginScreen(),
+                                    withNavBar: false,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade)
+                                : pushNewScreenWithRouteSettings(context,
+                                    settings: RouteSettings(
+                                        name: CheckoutScreen.routeName),
+                                    screen: CheckoutScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade);
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * .4,
+                        height: MediaQuery.of(context).size.height * .3,
+                        decoration: BoxDecoration(
+                            color: Color(0xff3A559F),
+                            borderRadius: BorderRadius.circular(25.0)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              "CHECKOUT",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.11,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            CircleAvatar(
+                                radius: MediaQuery.of(context).size.width * .03,
+                                backgroundColor: Colors.white,
+                                child: Icon(Icons.arrow_forward_ios_rounded,
+                                    size: 15, color: Color(0xff3A559F)))
+                          ],
                         ),
                       ),
-                      CircleAvatar(
-                          radius: 15,
-                          backgroundColor: Colors.white,
-                          child: Icon(Icons.arrow_forward_ios_rounded,
-                              size: 15, color: Color(0xff3A559F)))
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

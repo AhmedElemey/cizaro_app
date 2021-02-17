@@ -48,8 +48,7 @@ class ProductDetailItem extends StatelessWidget {
                   textScaleFactor: MediaQuery.of(context).textScaleFactor * 1,
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width * .33,
+              Flexible(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

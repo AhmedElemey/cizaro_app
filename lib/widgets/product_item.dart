@@ -140,156 +140,152 @@ class _ProductItemState extends State<ProductItem> {
     final fav = Provider.of<FavViewModel>(context, listen: false);
     //  List favProducts = fav.favProductModel;
     checkFavItems(context);
-    return Padding(
-      padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
-      child: Column(
-        children: [
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            elevation: 10,
-            shadowColor: Colors.grey[900],
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10)),
-                  child: Image.network(
-                    widget.imgUrl,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                              : null,
-                        ),
-                      );
-                    },
-                    width: ScreenUtil()
-                        .setWidth(MediaQuery.of(context).size.width * .33),
-                    height: ScreenUtil()
-                        .setHeight(MediaQuery.of(context).size.height * .19),
-                    fit: BoxFit.fill,
+    return Column(
+      children: [
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          elevation: 10,
+          shadowColor: Colors.grey[900],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+                child: Image.network(
+                  widget.imgUrl,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes
+                            : null,
+                      ),
+                    );
+                  },
+                  width: ScreenUtil()
+                      .setWidth(MediaQuery.of(context).size.width * .33),
+                  height: ScreenUtil()
+                      .setHeight(MediaQuery.of(context).size.height * .19),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(
+                    right: ScreenUtil().setWidth(10),
+                    left: ScreenUtil().setWidth(10)),
+                child: Text(
+                  widget.productName,
+                  textScaleFactor: ScreenUtil.textScaleFactor * 1.5,
+                  style: TextStyle(
+                    fontFamily: 'NeusaNextStd',
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(
-                      right: ScreenUtil().setWidth(10),
-                      left: ScreenUtil().setWidth(10)),
-                  child: Text(
-                    widget.productName,
-                    textScaleFactor: ScreenUtil.textScaleFactor * 1.5,
-                    style: TextStyle(
-                      fontFamily: 'NeusaNextStd',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                widget.productPriceAfter == widget.productPrice
-                    ? Container(
-                        padding: EdgeInsets.only(
-                            top: ScreenUtil().setHeight(5),
-                            right: ScreenUtil().setWidth(10),
-                            left: ScreenUtil().setWidth(10)),
-                        child: Text(
-                          widget.productPrice.toString() + ' LE',
-                          textScaleFactor: ScreenUtil.textScaleFactor * 1,
-                          style: TextStyle(
-                            fontFamily: 'NeusaNextStd',
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Container(
-                              padding: EdgeInsets.only(
-                                  right: ScreenUtil().setWidth(10),
-                                  left: ScreenUtil().setWidth(10)),
-                              child: Text(
-                                widget.productPrice.toString() + ' LE',
-                                textScaleFactor: ScreenUtil.textScaleFactor * 1,
-                                style: TextStyle(
-                                    fontFamily: 'NeusaNextStd',
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.red,
-                                    decoration: TextDecoration.lineThrough),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(5),
-                                  right: ScreenUtil().setWidth(10),
-                                  left: ScreenUtil().setWidth(10)),
-                              child: Text(
-                                widget.productPriceAfter.toString() + ' LE',
-                                textScaleFactor: ScreenUtil.textScaleFactor * 1,
-                                style: TextStyle(
-                                  fontFamily: 'NeusaNextStd',
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            )
-                          ],
+              ),
+              widget.productPriceAfter == widget.productPrice
+                  ? Container(
+                      padding: EdgeInsets.only(
+                          top: ScreenUtil().setHeight(5),
+                          right: ScreenUtil().setWidth(10),
+                          left: ScreenUtil().setWidth(10)),
+                      child: Text(
+                        widget.productPrice.toString() + ' LE',
+                        textScaleFactor: ScreenUtil.textScaleFactor * 1,
+                        style: TextStyle(
+                          fontFamily: 'NeusaNextStd',
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                Container(
-                    padding: EdgeInsets.only(
-                        bottom: 5, left: ScreenUtil().setWidth(10)),
-                    width: ScreenUtil()
-                        .setWidth(MediaQuery.of(context).size.width * .3),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () async {
-                            if (widget.isFav == 1) {
-                              setState(() {
-                                showFavAlreadyToast();
-                                // widget.isFav = 0;
-                                //print("already here");
-                              });
-                            } else {
-                              setState(() {
-                                widget.isFav = 1;
-                                widget.onAddToFavorite();
-                                //  print(" here");
-                                showFavToast();
-                              });
-                            }
-                          },
-                          child: widget.isFav == 1
-                              ? Icon(Icons.favorite, color: Color(0xffFF6969))
-                              : Icon(Icons.favorite_border_outlined),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            widget.onAddToCart();
-                            showCartToast();
-                          },
-                          child: Container(
-                            child: SvgPicture.asset('assets/images/cart.svg',
-                                width: MediaQuery.of(context).size.width * 0.03,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
-                                color: Colors.grey[900]),
+                    )
+                  : Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(
+                                right: ScreenUtil().setWidth(10),
+                                left: ScreenUtil().setWidth(10)),
+                            child: Text(
+                              widget.productPrice.toString() + ' LE',
+                              textScaleFactor: ScreenUtil.textScaleFactor * 1,
+                              style: TextStyle(
+                                  fontFamily: 'NeusaNextStd',
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.red,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
                           ),
+                          Container(
+                            padding: EdgeInsets.only(
+                                top: ScreenUtil().setHeight(5),
+                                right: ScreenUtil().setWidth(10),
+                                left: ScreenUtil().setWidth(10)),
+                            child: Text(
+                              widget.productPriceAfter.toString() + ' LE',
+                              textScaleFactor: ScreenUtil.textScaleFactor * 1,
+                              style: TextStyle(
+                                fontFamily: 'NeusaNextStd',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+              Container(
+                  padding: EdgeInsets.only(
+                      bottom: 5, left: ScreenUtil().setWidth(10)),
+                  width: ScreenUtil()
+                      .setWidth(MediaQuery.of(context).size.width * .3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          if (widget.isFav == 1) {
+                            setState(() {
+                              showFavAlreadyToast();
+                              // widget.isFav = 0;
+                              //print("already here");
+                            });
+                          } else {
+                            setState(() {
+                              widget.isFav = 1;
+                              widget.onAddToFavorite();
+                              //  print(" here");
+                              showFavToast();
+                            });
+                          }
+                        },
+                        child: widget.isFav == 1
+                            ? Icon(Icons.favorite, color: Color(0xffFF6969))
+                            : Icon(Icons.favorite_border_outlined),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          widget.onAddToCart();
+                          showCartToast();
+                        },
+                        child: Container(
+                          child: SvgPicture.asset('assets/images/cart.svg',
+                              width: MediaQuery.of(context).size.width * 0.03,
+                              height: MediaQuery.of(context).size.height * 0.03,
+                              color: Colors.grey[900]),
                         ),
-                      ],
-                    )),
-              ],
-            ),
+                      ),
+                    ],
+                  )),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

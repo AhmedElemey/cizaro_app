@@ -24,8 +24,8 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.3,
-      margin: const EdgeInsets.only(right: 15, left: 15),
+      height: MediaQuery.of(context).size.height * 0.22,
+      margin: const EdgeInsets.only(right: 15, left: 15, top: 10),
       child: Column(
         children: [
           Flexible(
@@ -34,10 +34,12 @@ class OrderItem extends StatelessWidget {
               children: [
                 Text('Order ID',
                     textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.2,
+                        MediaQuery.of(context).textScaleFactor * 1.1,
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Text('------------------------------------------------------'),
+                Expanded(
+                    child: Text(
+                        '------------------------------------------------------')),
                 Text(orderNumber ?? '162184'),
               ],
             ),
@@ -49,10 +51,12 @@ class OrderItem extends StatelessWidget {
               children: [
                 Text('Order Date',
                     textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.2,
+                        MediaQuery.of(context).textScaleFactor * 1.1,
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Text('-----------------------------------------------'),
+                Expanded(
+                    child: Text(
+                        '-----------------------------------------------')),
                 Text(orderDate ?? DateTime.now().toString().split(' ').first),
               ],
             ),
@@ -64,10 +68,10 @@ class OrderItem extends StatelessWidget {
               children: [
                 Text('Shipped Address',
                     textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.2,
+                        MediaQuery.of(context).textScaleFactor * 1.1,
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Text('--------------'),
+                Expanded(child: Text('--------------')),
                 Text(orderShippingAddress ?? '12 st cairo'),
               ],
             ),
@@ -94,10 +98,10 @@ class OrderItem extends StatelessWidget {
               children: [
                 Text('Payment Method',
                     textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.2,
+                        MediaQuery.of(context).textScaleFactor * 1.1,
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Text('------------------------------------'),
+                Expanded(child: Text('------------------------------------')),
                 Text(orderPaymentMethod ?? '162184'),
               ],
             ),
@@ -109,11 +113,13 @@ class OrderItem extends StatelessWidget {
               children: [
                 Text('Total',
                     textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.2,
+                        MediaQuery.of(context).textScaleFactor * 1.1,
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Text(
-                    '--------------------------------------------------------------'),
+                Expanded(
+                  child: Text(
+                      '--------------------------------------------------------------'),
+                ),
                 Text(orderTotal.toString() + ' L.E' ?? '162184'),
               ],
             ),
@@ -125,14 +131,16 @@ class OrderItem extends StatelessWidget {
               children: [
                 Text('Status',
                     textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.2,
+                        MediaQuery.of(context).textScaleFactor * 1.1,
                     style: const TextStyle(
                         color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Text(
-                    '----------------------------------------------------------------'),
+                Expanded(
+                  child: Text(
+                      '----------------------------------------------------------------'),
+                ),
                 Text(
                   orderStatus ?? 'Ordered',
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.2,
+                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.1,
                   style: TextStyle(
                       color: orderStatusId == 1
                           ? Colors.green

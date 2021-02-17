@@ -314,14 +314,12 @@ class _SearchScreenState extends State<SearchScreen> {
                             onTap: () =>
                                 {getFilterData(), Navigator.pop(context)},
                             child: Container(
-                              width: MediaQuery.of(context).size.width * .3,
+                              width: MediaQuery.of(context).size.width * .25,
                               height: MediaQuery.of(context).size.height * .06,
                               decoration: BoxDecoration(
                                   color: Color(0xff3A559F),
                                   borderRadius: BorderRadius.circular(25.0)),
-                              child: Container(
-                                margin: new EdgeInsets.all(10),
-                                padding: EdgeInsets.only(left: 30),
+                              child: Center(
                                 child: Text(
                                   "Filter",
                                   style: TextStyle(

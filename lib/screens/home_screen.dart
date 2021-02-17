@@ -86,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView.builder(
               padding: EdgeInsets.only(
                 right: ScreenUtil().setWidth(5),
-                left: ScreenUtil().setWidth(5),
                 top: ScreenUtil().setHeight(5),
               ),
               itemCount: newArrivalsList[index]?.products?.length ?? 0,
@@ -198,7 +197,6 @@ class _HomeScreenState extends State<HomeScreen> {
           child: ListView.builder(
               padding: EdgeInsets.only(
                 right: ScreenUtil().setWidth(5),
-                left: ScreenUtil().setWidth(5),
                 top: ScreenUtil().setHeight(5),
               ),
               itemCount: topSellingList[index]?.products?.length ?? 0,

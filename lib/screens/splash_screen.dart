@@ -24,8 +24,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPageHome() {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        TabsScreen.routeName, (Route<dynamic> route) => false);
+    Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    // Navigator.of(context).pushNamedAndRemoveUntil(
+    //     TabsScreen.routeName, (Route<dynamic> route) => false);
   }
 
   void navigationPageWel() {

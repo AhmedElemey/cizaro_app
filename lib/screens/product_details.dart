@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart' as rs;
@@ -14,8 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ProductDetails extends StatefulWidget {
   static final routeName = '/productDetails-screen';
@@ -176,122 +175,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               physics: ScrollPhysics(),
               child: Column(
                 children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 10),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios_rounded,
-                            size: 20,
-                            color: Color(0xff3A559F),
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        Spacer(),
-                        Container(
-                          width: MediaQuery.of(context).size.width * .3,
-                          child: Column(
-                            children: [
-                              Text(
-                                productName ?? "",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.5,
-                              ),
-                              Row(
-                                children: [
-                                  productPriceAfter == productPrice
-                                      ? Container(
-                                          child: Text(
-                                            productPrice.toString() + ' LE',
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                        .textScaleFactor *
-                                                    0.85,
-                                          ),
-                                        )
-                                      : Container(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Container(
-                                                padding: EdgeInsets.only(
-                                                  top: 5,
-                                                ),
-                                                child: Text(
-                                                  productPrice.toString() +
-                                                      ' LE',
-                                                  textScaleFactor:
-                                                      MediaQuery.of(context)
-                                                              .textScaleFactor *
-                                                          0.85,
-                                                  style: TextStyle(
-                                                      color: Colors.red,
-                                                      decoration: TextDecoration
-                                                          .lineThrough),
-                                                ),
-                                              ),
-                                              Container(
-                                                padding:
-                                                    EdgeInsets.only(top: 5),
-                                                child: Text(
-                                                  productPriceAfter.toString() +
-                                                      ' LE',
-                                                  textScaleFactor:
-                                                      MediaQuery.of(context)
-                                                              .textScaleFactor *
-                                                          0.85,
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                  // Text(
-                                  //   productPrice.toString(),
-                                  //   textScaleFactor:
-                                  //       MediaQuery.of(context).textScaleFactor *
-                                  //           1.1,
-                                  // ),
-                                  Spacer(),
-                                  Container(
-                                    padding: EdgeInsets.only(right: 5),
-                                    height: MediaQuery.of(context).size.height *
-                                        .03,
-                                    decoration: BoxDecoration(
-                                        color: Color(0xffFF6969),
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          size: 10,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          productStar.toString() ?? 0.0,
-                                          style: TextStyle(color: Colors.white),
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  1,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
                   productImages?.length == 0
                       ? Container(
                           height: MediaQuery.of(context).size.height * .4,
@@ -304,76 +187,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                           width: double.infinity,
                           child: Swiper(
                               itemBuilder: (BuildContext context, int index) {
-                                return CachedNetworkImage(
-                                    imageUrl:
-                                        productImages[index]?.image ?? imgUrl,
-                                    fit: BoxFit.fill,
-                                    progressIndicatorBuilder: (context, url,
-                                            downloadProgress) =>
-                                        Center(
-                                          child: CircularProgressIndicator(
-                                              value: downloadProgress.progress),
-                                        ),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error));
+                                return PinchZoomImage(
+                                  image: Center(
+                                    child: CachedNetworkImage(
+                                        imageUrl: productImages[index]?.image ??
+                                            imgUrl,
+                                        fit: BoxFit.fitWidth,
+                                        progressIndicatorBuilder: (context, url,
+                                                downloadProgress) =>
+                                            Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                        value: downloadProgress
+                                                            .progress)),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error)),
+                                  ),
+                                  zoomedBackgroundColor: Colors.grey.shade300,
+                                  hideStatusBarWhileZooming: true,
+                                  onZoomStart: () => print('Zoom started'),
+                                  onZoomEnd: () => print('Zoom finished'),
+                                );
                               },
                               itemCount: productImages.length,
                               pagination: SwiperPagination()),
-                          // CarouselSlider.builder(
-                          //   // dotColor: Color(0xff727C8E),
-                          //   // radius: Radius.circular(5.0),
-                          //   // dotSize: 5.0,
-                          //   // dotBgColor: Colors.white,
-                          //   // autoplay: false,
-                          //   // dotIncreasedColor: Color(0xff727C8E),
-                          //   // images: productImages.length == 0
-                          //   //     ? imgUrl
-                          //   //     : productImages,
-                          //   itemCount: productImages.length,
-                          //   itemBuilder: (ctx, index) {
-                          //     return Container(
-                          //       padding: EdgeInsets.only(top: 10),
-                          //       child: Image.network(
-                          //           productImages[index]?.image ?? imgUrl),
-                          //     );
-                          //   },
-                          //   options: CarouselOptions(
-                          //     aspectRatio: 16 / 9,
-                          //     viewportFraction: 1,
-                          //     initialPage: 0,
-                          //     enableInfiniteScroll: true,
-                          //     reverse: false,
-                          //     autoPlay: false,
-                          //     autoPlayInterval: Duration(seconds: 3),
-                          //     autoPlayAnimationDuration:
-                          //         Duration(milliseconds: 800),
-                          //     autoPlayCurve: Curves.fastOutSlowIn,
-                          //     enlargeCenterPage: true,
-                          //     scrollDirection: Axis.horizontal,
-                          //   ),
-                          // ),
                         ),
-
-                  // Container(
-                  //   child: SmoothPageIndicator(
-                  //     // controller: controller,
-                  //     count: productImages.length,
-                  //     effect: SlideEffect(
-                  //         spacing: 8.0,
-                  //         radius: 4.0,
-                  //         dotWidth: 24.0,
-                  //         dotHeight: 16.0,
-                  //         dotColor: Colors.grey,
-                  //         paintStyle: PaintingStyle.stroke,
-                  //         strokeWidth: 2,
-                  //         activeDotColor: Colors.indigo),
-                  //   ),
-                  // ),
                   Padding(
                     padding: EdgeInsets.only(left: 15, top: 15),
                     child: Row(
                       children: [
-                        Text(productName,
+                        Text(productName ?? '',
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1.5)
                       ],
@@ -386,12 +229,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                       children: [
                         productPriceAfter == productPrice
                             ? Container(
-                                child: Text(
-                                  productPrice.toString() + ' LE',
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1.1,
-                                ),
+                                child: Text(productPrice.toString() + ' LE',
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor *
+                                            1.1),
                               )
                             : Container(
                                 child: Row(
@@ -641,28 +482,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                           color: Color(0xff3A559F),
                           borderRadius: BorderRadius.circular(25.0)),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Text(
-                              "ADD TO CART",
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                          Text(
+                            "ADD TO CART",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: CircleAvatar(
-                              radius: 15,
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: 15,
-                                color: Colors.red.shade900,
-                              ),
+                          CircleAvatar(
+                            radius: 15,
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 15,
+                              color: Colors.red.shade900,
                             ),
                           )
                         ],
@@ -683,7 +518,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    padding:
+                        const EdgeInsets.only(top: 10, left: 10, bottom: 20),
                     height: MediaQuery.of(context).size.height * .33,
                     child: ListView.builder(
                         itemCount: productRelated.length,

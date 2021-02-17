@@ -8,6 +8,7 @@ import 'package:cizaro_app/view_model/auth_view_model.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +39,107 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<FormState> _formKey2 = GlobalKey<FormState>();
 
+  AccessToken _accessToken;
+  Map<String, dynamic> _userData;
+
+  Future<void> _checkLogin() async {
+    await Future.delayed(Duration(seconds: 1));
+    _accessToken = await FacebookAuth.instance.isLogged;
+    if (_accessToken != null) {
+      saveFacebookToken(_accessToken.toString());
+      await _getUserData();
+    }
+
+    _fetching = false;
+    if (!mounted) return;
+    setState(() {});
+  }
+
+  Future<void> _getUserData() async {
+    _userData = await FacebookAuth.instance
+        .getUserData(fields: "id,email,name,picture,birthday,friends");
+  }
+
+  saveFacebookToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('facebook_token', token);
+  }
+
+  Future<void> _loginWithFacebook() async {
+    try {
+      setState(() {
+        _fetching = true;
+      });
+      _accessToken = await FacebookAuth.instance.login();
+      await _getUserData();
+      setState(() {
+        _fetching = false;
+      });
+      signUpWithFacebookButton();
+    } catch (e, s) {
+      setState(() {
+        _fetching = false;
+      });
+      if (e is FacebookAuthException) {
+        switch (e.errorCode) {
+          case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
+            print("FacebookAuthErrorCode.OPERATION_IN_PROGRESS");
+            break;
+          case FacebookAuthErrorCode.CANCELLED:
+            print("FacebookAuthErrorCode.CANCELLED");
+            break;
+          case FacebookAuthErrorCode.FAILED:
+            print("FacebookAuthErrorCode.FAILED");
+            break;
+        }
+      }
+    }
+  }
+
+  saveFacebookId(String faceId) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('facebook_id', faceId);
+  }
+
+  Future loginWithFacebookButton() async {
+    final login = Provider.of<AuthViewModel>(context, listen: false);
+    final loginSocial =
+        SocialLogin(facebookGoogleId: _userData['id'], socialType: 'facebook');
+    setState(() => showSpinner = true);
+    await login.loginSocial(loginSocial, 'en').then((_) {
+      setState(() => showSpinner = false);
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          TabsScreen.routeName, (Route<dynamic> route) => false);
+    }).catchError((error) {
+      print(error);
+      setState(() => showSpinner = false);
+    });
+  }
+
+  Future signUpWithFacebookButton() async {
+    final signUp = Provider.of<AuthViewModel>(context, listen: false);
+    final signUpSocial = SignUp(
+        email: _userData['email'],
+        fullName: _userData['name'],
+        username: _userData['name'],
+        facebookId: _userData['id']);
+    setState(() => showSpinner = true);
+    print(_userData['email']);
+    saveFacebookId(_userData['id']);
+    await signUp
+        .signUpSocial(signUpSocial, 'en')
+        .catchError((error) => print(error));
+    int statusCode = await getStatusCode();
+    setState(() => showSpinner = false);
+    print('Status-Code : $statusCode');
+    if (statusCode == 400) {
+      loginWithFacebookButton();
+    } else {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          TabsScreen.routeName, (Route<dynamic> route) => false);
+    }
+  }
+
   // Toggles the password show status
   void _toggle() {
     setState(() {
@@ -62,6 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    _checkLogin();
     gSignIn.onCurrentUserChanged.listen((gSignInAccount) {
       controlSgnIn(gSignInAccount);
     }, onError: (gError) => print(gError));
@@ -375,7 +478,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => {},
+                                  onTap: () => loginWithFacebookButton(),
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
@@ -701,7 +804,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => {},
+                                  onTap: () => _loginWithFacebook(),
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,

@@ -524,7 +524,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Container(
                     padding:
                         const EdgeInsets.only(top: 10, left: 10, bottom: 20),
-                    height: MediaQuery.of(context).size.height * .33,
+                    height: MediaQuery.of(context).size.height * .35,
                     child: ListView.builder(
                         itemCount: productRelated.length,
                         scrollDirection: Axis.horizontal,

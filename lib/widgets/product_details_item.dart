@@ -130,8 +130,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
-        child: Card(
+    return Card(
       elevation: 1,
       child: Container(
         height: MediaQuery.of(context).size.height * .95,
@@ -173,7 +172,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                       children: [
                         widget.productPriceAfter == widget.productPrice
                             ? Container(
-                                padding: EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.only(right: 10, top: 5),
                                 child: Text(
                                   widget.productPrice.toString() + ' LE',
                                   textScaleFactor:
@@ -334,7 +333,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                           children: [
                             widget.productPriceAfter == widget.productPrice
                                 ? Container(
-                                    padding: EdgeInsets.only(right: 10),
+                                    padding: EdgeInsets.only(right: 10, top: 5),
                                     child: Text(
                                       widget.productPrice.toString() + ' LE',
                                       textScaleFactor: MediaQuery.of(context)
@@ -491,6 +490,6 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                 ],
               ),
       ),
-    ));
+    );
   }
 }

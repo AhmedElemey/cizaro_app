@@ -1,11 +1,19 @@
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class SearchBarItem extends StatefulWidget {
   final String productName, imgUrl, productCategory, iconAdd, iconMinus;
   final double totalPrice, productPrice;
   int productAvailability;
   String productQuantity;
+  final int productId;
+  int isFav = 0;
+  final VoidCallback onAddToCart;
+  final VoidCallback onAddToFavorite;
   SearchBarItem(
       {this.productName,
       this.imgUrl,
@@ -15,6 +23,10 @@ class SearchBarItem extends StatefulWidget {
       this.iconMinus,
       this.totalPrice,
       this.productAvailability,
+      this.onAddToFavorite,
+      this.onAddToCart,
+      this.isFav,
+      this.productId,
       this.productQuantity});
 
   @override
@@ -22,13 +34,100 @@ class SearchBarItem extends StatefulWidget {
 }
 
 class _SearchItemState extends State<SearchBarItem> {
+  FToast fToast;
   TextEditingController quantityController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-
+    fToast = FToast();
+    fToast.init(context);
     widget.productQuantity = quantityController.text;
+  }
+
+  showFavAlreadyToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Already in Favorites",
+              style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  showFavToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  showCartToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  checkFavItems(BuildContext context) async {
+    final fav = Provider.of<FavViewModel>(context, listen: false);
+    fav.favProductModel.forEach((element) {
+      if (widget.productId == element.id) {
+        setState(() {
+          widget.isFav = 1;
+        });
+      } else {
+        setState(() {
+          widget.isFav = 0;
+        });
+      }
+    });
   }
 
   @override
@@ -68,7 +167,7 @@ class _SearchItemState extends State<SearchBarItem> {
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 5),
-                  width: MediaQuery.of(context).size.width * .4,
+                  width: MediaQuery.of(context).size.width * .6,
                   child: Center(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,6 +197,59 @@ class _SearchItemState extends State<SearchBarItem> {
                                 MediaQuery.of(context).textScaleFactor * 1.1,
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                if (widget.isFav == 1) {
+                                  setState(() {
+                                    showFavAlreadyToast();
+                                    //  widget.isFav = 0;
+                                    // final fav = Provider.of<FavViewModel>(context, listen: true);
+                                    // fav.deleteFavProduct(
+                                    //     index, fav.favProductModel[index].id);
+                                    //print("already here");
+                                  });
+                                } else {
+                                  setState(() {
+                                    widget.isFav = 1;
+                                    widget.onAddToFavorite();
+                                    //  print(" here");
+                                    showFavToast();
+                                  });
+                                }
+                              },
+                              child: widget.isFav == 1
+                                  ? Icon(Icons.favorite,
+                                      color: Color(0xffFF6969))
+                                  : Icon(Icons.favorite_border_outlined),
+                            ),
+                            // GestureDetector(
+                            //     onTap: () {
+                            //       widget.onAddToFavorite();
+                            //       showFavToast();
+                            //     },
+                            //     child: Icon(Icons.favorite_border,
+                            //         size: 25, color: Color(0xff707070))),
+                            const SizedBox(width: 10),
+                            GestureDetector(
+                                onTap: () {
+                                  widget.onAddToCart();
+                                  showCartToast();
+                                },
+                                child: SvgPicture.asset(
+                                  'assets/images/cart.svg',
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.04,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.035,
+                                  color: Colors.grey[900],
+                                ))
+                          ],
+                        )
                         // Container(
                         //   padding: EdgeInsets.only(top: 10),
                         //   child: Row(

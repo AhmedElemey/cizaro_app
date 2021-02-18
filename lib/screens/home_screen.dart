@@ -16,6 +16,7 @@ import 'package:cizaro_app/widgets/product_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
 
@@ -76,10 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: newArrivalsList?.length ?? 0,
         tabBuilder: (context, index) => Tab(
           child: Text(newArrivalsList[index].name,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
-              ),
+              // style: TextStyle(
+              //   fontFamily: 'Poppins',
+              //   fontWeight: FontWeight.w700,
+              // ),
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
         ),
         pageBuilder: (context, index) => Container(
@@ -188,10 +190,11 @@ class _HomeScreenState extends State<HomeScreen> {
         itemCount: topSellingList?.length ?? 0,
         tabBuilder: (context, index) => Tab(
           child: Text(topSellingList[index].name,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
-              ),
+              // style: TextStyle(
+              //   fontFamily: 'Poppins',
+              //   fontWeight: FontWeight.w700,
+              // ),
+              style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
         ),
         pageBuilder: (context, index) => Container(
@@ -309,13 +312,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "Hot Deals",
                                     textScaleFactor:
                                         MediaQuery.of(context).textScaleFactor *
-                                            1.2,
-                                    style: TextStyle(
-                                        //   fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xff294794)),
+                                            1.6,
+                                    // style: TextStyle(
+                                    //     //   fontWeight: FontWeight.bold,
+                                    //     fontSize: 20,
+                                    //     fontFamily: 'Poppins',
+                                    //     fontWeight: FontWeight.w700,
+                                    //     color: Color(0xff294794)
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w700,
+                                      color: Color(0xff294794),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -382,10 +389,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                       "Collections",
                                       textScaleFactor:
-                                          ScreenUtil.textScaleFactor * 1.2,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Poppins',
+                                          ScreenUtil.textScaleFactor * 1.5,
+                                      // style: TextStyle(
+                                      //     fontSize: 18,
+                                      //     fontFamily: 'Poppins',
+                                      //     fontWeight: FontWeight.w700,
+                                      //     color: Color(0xff294794)
+                                      // ),
+                                      style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
                                           color: Color(0xff294794)),
                                     ),
@@ -446,8 +457,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     " New Arrivals",
                                     textScaleFactor:
                                         ScreenUtil.textScaleFactor * 1.3,
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
+                                    // style: TextStyle(
+                                    //     fontFamily: 'Poppins',
+                                    //     fontWeight: FontWeight.w700,
+                                    //     color: Color(0xff294794)),
+                                    style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w700,
                                         color: Color(0xff294794)),
                                   ),
@@ -472,8 +486,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "Top Selling ",
                                       textScaleFactor:
                                           ScreenUtil.textScaleFactor * 1.3,
-                                      style: TextStyle(
-                                          fontFamily: 'Poppins',
+                                      // style: TextStyle(
+                                      //     fontFamily: 'Poppins',
+                                      //     fontWeight: FontWeight.w700,
+                                      //     color: Color(0xff294794)),
+                                      style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
                                           color: Color(0xff294794)),
                                     ),

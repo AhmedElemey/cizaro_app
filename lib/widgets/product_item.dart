@@ -1,4 +1,5 @@
 import 'dart:math';
+
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ProductItem extends StatefulWidget {
@@ -191,9 +193,12 @@ class _ProductItemState extends State<ProductItem> {
                         child: Text(
                           widget.productName,
                           textScaleFactor: ScreenUtil.textScaleFactor * 1.5,
-                          style: TextStyle(
-                            fontFamily: 'NeusaNextStd',
-                            fontWeight: FontWeight.w600,
+                          // style: TextStyle(
+                          //   fontFamily: 'NeusaNextStd',
+                          //   fontWeight: FontWeight.w600,
+                          // ),
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -206,9 +211,12 @@ class _ProductItemState extends State<ProductItem> {
                               child: Text(
                                 widget.productPrice.toString() + ' LE',
                                 textScaleFactor: ScreenUtil.textScaleFactor * 1,
-                                style: TextStyle(
-                                  fontFamily: 'NeusaNextStd',
-                                  fontWeight: FontWeight.w700,
+                                // style: TextStyle(
+                                //   fontFamily: 'NeusaNextStd',
+                                //   fontWeight: FontWeight.w700,
+                                // ),
+                                style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             )
@@ -348,26 +356,31 @@ class _ProductItemState extends State<ProductItem> {
                                 left: ScreenUtil().setWidth(10)),
                             child: Text(
                               widget.productName,
-                              textScaleFactor: ScreenUtil.textScaleFactor * 1.5,
-                              style: TextStyle(
-                                fontFamily: 'NeusaNextStd',
-                                fontWeight: FontWeight.w600,
+                              textScaleFactor: ScreenUtil.textScaleFactor * 1.3,
+                              // style: TextStyle(
+                              //   fontFamily: 'NeusaNextStd',
+                              //   fontWeight: FontWeight.w600,
+                              // ),
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
                           widget.productPriceAfter == widget.productPrice
                               ? Container(
                                   padding: EdgeInsets.only(
-                                      top: ScreenUtil().setHeight(5),
                                       right: ScreenUtil().setWidth(10),
                                       left: ScreenUtil().setWidth(10)),
                                   child: Text(
                                     widget.productPrice.toString() + ' LE',
                                     textScaleFactor:
                                         ScreenUtil.textScaleFactor * 1,
-                                    style: TextStyle(
-                                      fontFamily: 'NeusaNextStd',
-                                      fontWeight: FontWeight.w700,
+                                    // style: TextStyle(
+                                    //   fontFamily: 'NeusaNextStd',
+                                    //   fontWeight: FontWeight.w700,
+                                    // ),
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 )
@@ -385,9 +398,14 @@ class _ProductItemState extends State<ProductItem> {
                                               ' LE',
                                           textScaleFactor:
                                               ScreenUtil.textScaleFactor * 1,
-                                          style: TextStyle(
-                                              fontFamily: 'NeusaNextStd',
-                                              fontWeight: FontWeight.w700,
+                                          // style: TextStyle(
+                                          //     fontFamily: 'NeusaNextStd',
+                                          //     fontWeight: FontWeight.w700,
+                                          //     color: Colors.red,
+                                          //     decoration:
+                                          //         TextDecoration.lineThrough),
+                                          style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w600,
                                               color: Colors.red,
                                               decoration:
                                                   TextDecoration.lineThrough),
@@ -395,7 +413,6 @@ class _ProductItemState extends State<ProductItem> {
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(
-                                            top: ScreenUtil().setHeight(5),
                                             right: ScreenUtil().setWidth(10),
                                             left: ScreenUtil().setWidth(10)),
                                         child: Text(
@@ -403,9 +420,12 @@ class _ProductItemState extends State<ProductItem> {
                                               ' LE',
                                           textScaleFactor:
                                               ScreenUtil.textScaleFactor * 1,
-                                          style: TextStyle(
-                                            fontFamily: 'NeusaNextStd',
-                                            fontWeight: FontWeight.w700,
+                                          // style: TextStyle(
+                                          //   fontFamily: 'NeusaNextStd',
+                                          //   fontWeight: FontWeight.w700,
+                                          // ),
+                                          style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                       )

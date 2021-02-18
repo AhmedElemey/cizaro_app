@@ -125,7 +125,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 10, top: 10),
+                          padding: EdgeInsets.only(left: 20, top: 10),
                           child: Text(
                             "Filter By :",
                             textScaleFactor:
@@ -133,11 +133,11 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 10),
+                          padding: const EdgeInsets.only(top: 10, left: 20),
                           child: Row(
                             children: [
                               Text(
-                                "Filter By Brands :",
+                                "Filter By Brand :",
                                 textScaleFactor:
                                     MediaQuery.of(context).textScaleFactor *
                                         1.3,
@@ -256,9 +256,17 @@ class _SearchScreenState extends State<SearchScreen> {
                         //     ],
                         //   ),
                         // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 30, right: 50, bottom: 5),
+                          child: Divider(
+                              height:
+                                  MediaQuery.of(context).size.height * .0001,
+                              color: Color(0xff727C8E)),
+                        ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.1,
-                          padding: EdgeInsets.only(top: 10, left: 10),
+                          height: MediaQuery.of(context).size.height * 0.07,
+                          padding: EdgeInsets.only(top: 5, left: 20),
                           child: Row(
                             children: [
                               Text(
@@ -282,8 +290,16 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 30, right: 50, bottom: 5),
+                          child: Divider(
+                              height:
+                                  MediaQuery.of(context).size.height * .0001,
+                              color: Color(0xff727C8E)),
+                        ),
                         Container(
-                          padding: EdgeInsets.only(top: 10, left: 10),
+                          padding: EdgeInsets.only(top: 10, left: 20),
                           child: Row(
                             children: [
                               Text(

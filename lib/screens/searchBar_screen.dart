@@ -1,5 +1,9 @@
+import 'package:cizaro_app/model/cartModel.dart';
+import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/searchBar_item.dart';
 import 'package:flutter/material.dart';
@@ -294,6 +298,33 @@ class SearchResultsListView extends StatelessWidget {
               productName: productList[index].name,
               productPrice: productList[index].price,
               productCategory: productList[index].category.name,
+              onAddToFavorite: () {
+                final fav = Provider.of<FavViewModel>(context, listen: false);
+                final productFav = ProductFav(
+                    id: productList[index].id,
+                    name: productList[index].name,
+                    mainImg: productList[index].mainImg,
+                    price: productList[index].price,
+                    categoryName: productList[index].category.name,
+                    isFav: 1);
+                fav.addProductToFav(productFav);
+              },
+              onAddToCart: () {
+                final cart = Provider.of<CartViewModel>(context, listen: false);
+                final productCart = ProductCart(
+                    id: productList[index].id,
+                    name: productList[index].name,
+                    mainImg: productList[index].mainImg,
+                    price: productList[index].price,
+                    priceAfterDiscount: productList[index].offer?.afterPrice ??
+                        productList[index].price,
+                    categoryName: productList[index].category.name,
+                    quantity: 1,
+                    availability: productList[index].availability,
+                    colorSpecValue: '',
+                    sizeSpecValue: '');
+                cart.addProductToCart(productCart);
+              },
               //  productQuantity: ,
             ),
           ),

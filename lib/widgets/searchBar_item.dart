@@ -146,27 +146,24 @@ class _SearchItemState extends State<SearchBarItem> {
                 Padding(
                   padding:
                       EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(80.0),
-                    child: Image.network(
-                      widget.imgUrl,
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
-                      },
-                    ),
+                  child: Image.network(
+                    widget.imgUrl,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 5),
+                  padding: EdgeInsets.only(left: 15),
                   width: MediaQuery.of(context).size.width * .6,
                   child: Center(
                     child: Column(

@@ -45,7 +45,7 @@ class FavoriteItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        padding: EdgeInsets.only(right: 15, top: 5),
+                        padding: EdgeInsets.only(top: 5),
                         child: Text(
                           productName,
                           textScaleFactor:
@@ -53,7 +53,7 @@ class FavoriteItem extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 15),
+                        // padding: EdgeInsets.only(right: 5),
                         child: Text(
                           productCategory,
                           textScaleFactor:
@@ -61,7 +61,7 @@ class FavoriteItem extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(bottom: 5),
+                        padding: EdgeInsets.only(bottom: 5, left: 15, right: 5),
                         child: Row(
                           children: [
                             Text(

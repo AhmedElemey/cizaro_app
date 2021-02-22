@@ -3,6 +3,7 @@ import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ShopItem extends StatefulWidget {
@@ -76,26 +77,23 @@ class _ShopItemState extends State<ShopItem> {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(80.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * .3,
-                      height: MediaQuery.of(context).size.height * .2,
-                      child: Image.network(
-                        widget.imgUrl,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes
-                                  : null,
-                            ),
-                          );
-                        },
-                      ),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * .3,
+                    height: MediaQuery.of(context).size.height * .2,
+                    child: Image.network(
+                      widget.imgUrl,
+                      loadingBuilder: (BuildContext context, Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -110,6 +108,10 @@ class _ShopItemState extends State<ShopItem> {
                           widget.productName,
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.5,
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xff515C6F),
+                          ),
                         ),
                       ),
                       Container(
@@ -118,11 +120,15 @@ class _ShopItemState extends State<ShopItem> {
                           widget.productCategory ?? '',
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.1,
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff515C6F),
+                          ),
                         ),
                       ),
                       widget.productPriceAfter == widget.productPrice
                           ? Container(
-                              padding: EdgeInsets.only(right: 10),
+                              padding: EdgeInsets.only(left: 10),
                               child: Text(
                                 widget.productPrice.toString() + ' LE',
                                 textScaleFactor:
@@ -134,9 +140,7 @@ class _ShopItemState extends State<ShopItem> {
                               child: Row(
                                 children: <Widget>[
                                   Container(
-                                    padding: EdgeInsets.only(
-                                      top: 5,
-                                    ),
+                                    padding: EdgeInsets.only(top: 5, left: 10),
                                     child: Text(
                                       widget.productPrice.toString() + ' LE',
                                       textScaleFactor: MediaQuery.of(context)
@@ -172,7 +176,7 @@ class _ShopItemState extends State<ShopItem> {
                       //   ),
                       // ),
                       Container(
-                        padding: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(top: 5),
                         child: Row(
                           children: [
                             // Container(

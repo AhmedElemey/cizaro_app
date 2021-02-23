@@ -4,12 +4,14 @@ import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/available_payments.dart';
 import 'package:cizaro_app/model/checkout.dart';
+import 'package:cizaro_app/model/checkout_results.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/finished_order_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
+import 'package:cizaro_app/screens/payments_screen.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
@@ -23,6 +25,7 @@ import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static final routeName = '/checkout-screen';
@@ -38,11 +41,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       productId,
       productQuantity,
       selectedPaymentRadio,
-      selectedPaymentId;
-  String addressName, countryName, cityName, regionName, productSpec;
+      selectedPaymentId,
+      orderId;
+  String addressName,
+      countryName,
+      cityName,
+      regionName,
+      productSpec,
+      paymentUrl;
   double totalOrder, shippingFees, totalCost, arrivalDate;
-  bool _isLoading = false, isVerified = false, _selectedPromoCode = false;
+  bool _isLoading = false,
+      isVerified = false,
+      _selectedPromoCode = false,
+      _checkOutDone = false;
   AddressModel addressModel;
+  CheckoutResult checkoutResult;
   Payments payments;
   List<AvailablePayments> _paymentList = [];
   ResultShoppingCartModel resultShoppingCartModel;
@@ -147,11 +160,26 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         isCash: selectedRadio == 1 ? false : true,
         paymentApiId: selectedPaymentId);
     await getAddress.checkOutMethod(token, checkout).then((response) {
-      pushNewScreenWithRouteSettings(context,
-          settings: RouteSettings(name: FinishedOrder.routeName),
-          screen: FinishedOrder(),
-          withNavBar: false,
-          pageTransitionAnimation: PageTransitionAnimation.fade);
+      checkoutResult = response;
+      paymentUrl = checkoutResult.data.paymentUrl;
+      orderId = checkoutResult.data.orderId;
+      _checkOutDone = checkoutResult.data.done;
+      // online payment
+      if (paymentUrl != null) {
+        pushNewScreenWithRouteSettings(context,
+            settings: RouteSettings(
+                name: PaymentsScreen.routeName,
+                arguments: {'payment_url': paymentUrl}),
+            screen: PaymentsScreen(),
+            withNavBar: false,
+            pageTransitionAnimation: PageTransitionAnimation.fade);
+      } else {
+        pushNewScreenWithRouteSettings(context,
+            settings: RouteSettings(name: FinishedOrder.routeName),
+            screen: FinishedOrder(),
+            withNavBar: false,
+            pageTransitionAnimation: PageTransitionAnimation.fade);
+      }
     }).catchError(
         (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
     if (this.mounted) setState(() => _isLoading = false);
@@ -240,21 +268,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 10, top: 5),
-                    width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      "Checkout",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 2,
-                      style: TextStyle(
-                          //   fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xff515C6F)),
-                    ),
-                  ),
                   Container(
                     padding: EdgeInsets.only(left: 10, right: 20),
                     child: Row(
@@ -674,7 +687,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                               Spacer(),
                               GestureDetector(
-                                onTap: () => sendCheckOut(),
+                                onTap: () {
+                                  sendCheckOut();
+                                },
                                 child: Container(
                                   padding: EdgeInsets.only(right: 10),
                                   width: MediaQuery.of(context).size.width * .4,

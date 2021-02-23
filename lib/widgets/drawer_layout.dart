@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -41,7 +43,9 @@ class _DrawerLayoutState extends State<DrawerLayout> {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           alignment: Alignment.topLeft,
-          margin: const EdgeInsets.only(top: 75),
+          margin: Platform.isAndroid
+              ? const EdgeInsets.only(top: 75)
+              : const EdgeInsets.only(top: 95),
           height: MediaQuery.of(context).size.height * 0.35,
           width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),

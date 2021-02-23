@@ -1,15 +1,18 @@
 import 'dart:io';
-
+import 'package:apple_sign_in/apple_sign_in.dart' as apple;
+import 'package:cizaro_app/main.dart';
 import 'package:cizaro_app/model/SignUpModel.dart';
 import 'package:cizaro_app/model/loginModel.dart';
 import 'package:cizaro_app/model/socialLoginModel.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
+import 'package:cizaro_app/services/auth_service.dart';
 import 'package:cizaro_app/view_model/auth_view_model.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -108,8 +111,33 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => showSpinner = true);
     await login.loginSocial(loginSocial, 'en').then((_) {
       setState(() => showSpinner = false);
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          TabsScreen.routeName, (Route<dynamic> route) => false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
+    }).catchError((error) {
+      print(error);
+      setState(() => showSpinner = false);
+    });
+  }
+
+  Future loginWithAppleButton(String appleId) async {
+    final login = Provider.of<AuthViewModel>(context, listen: false);
+    final loginSocial =
+        SocialLogin(facebookGoogleId: appleId, socialType: 'apple');
+    setState(() => showSpinner = true);
+    await login.loginSocial(loginSocial, 'en').then((_) {
+      setState(() => showSpinner = false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
     }).catchError((error) {
       print(error);
       setState(() => showSpinner = false);
@@ -135,8 +163,42 @@ class _LoginScreenState extends State<LoginScreen> {
     if (statusCode == 400) {
       loginWithFacebookButton();
     } else {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          TabsScreen.routeName, (Route<dynamic> route) => false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
+    }
+  }
+
+  Future signUpWithAppleButton(
+      String email, String fullName, String userName, String appleId) async {
+    final signUp = Provider.of<AuthViewModel>(context, listen: false);
+    final signUpSocial = SignUp(
+        email: email,
+        fullName: fullName,
+        username: userName,
+        facebookId: appleId);
+    setState(() => showSpinner = true);
+    saveFacebookId(appleId);
+    await signUp
+        .signUpSocial(signUpSocial, 'en')
+        .catchError((error) => print(error));
+    int statusCode = await getStatusCode();
+    setState(() => showSpinner = false);
+    print('Status-Code : $statusCode');
+    if (statusCode == 400) {
+      loginWithAppleButton(appleId);
+    } else {
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
     }
   }
 
@@ -158,6 +220,20 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isSignIn = false;
       });
+    }
+  }
+
+  Future<void> _signInWithApple(BuildContext context) async {
+    try {
+      final authService = Provider.of<AuthServices>(context, listen: false);
+      final user = await authService
+          .signInWithApple(scopes: [apple.Scope.email, apple.Scope.fullName]);
+      print('uid: ${user.uid}');
+      signUpWithAppleButton(
+          user.email, user.displayName, user.displayName, user.uid);
+    } catch (e) {
+      // TODO: Show alert here
+      print(e);
     }
   }
 
@@ -204,8 +280,13 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => showSpinner = true);
     await postRegister.customerRegisterData(register, 'en').then((_) {
       setState(() => showSpinner = false);
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          TabsScreen.routeName, (Route<dynamic> route) => false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
     }).catchError((error) {
       print(error);
       Platform.isIOS ? _showIosDialog() : _showAndroidDialog();
@@ -225,8 +306,13 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => showSpinner = true);
     await postRegister.login(loginCustomer, 'en').then((_) {
       setState(() => showSpinner = false);
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          TabsScreen.routeName, (Route<dynamic> route) => false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
     }).catchError((error) {
       print(error);
       Platform.isIOS ? _showIosDialog() : _showAndroidDialog();
@@ -247,8 +333,13 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => showSpinner = true);
     await login.loginSocial(loginSocial, 'en').then((_) {
       setState(() => showSpinner = false);
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          TabsScreen.routeName, (Route<dynamic> route) => false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
     }).catchError((error) {
       print(error);
       setState(() => showSpinner = false);
@@ -341,6 +432,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget tabsWidgets() {
+    final appleSignInAvailable =
+        Provider.of<AppleSignInAvailable>(context, listen: false);
     return DefaultTabController(
       length: 2,
       child: SingleChildScrollView(
@@ -510,7 +603,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
+                                if (appleSignInAvailable.isAvailable)
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    margin: const EdgeInsets.only(top: 10),
+                                    child: apple.AppleSignInButton(
+                                      cornerRadius: 0.0,
+                                      style: apple
+                                          .ButtonStyle.black, // style as needed
+                                      type: apple.ButtonType
+                                          .continueButton, // style as needed
+                                      onPressed: () =>
+                                          _signInWithApple(context),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
@@ -836,7 +946,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
+                                if (appleSignInAvailable.isAvailable)
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.06,
+                                    margin: const EdgeInsets.only(top: 10),
+                                    child: apple.AppleSignInButton(
+                                      cornerRadius: 0.0,
+                                      style: apple
+                                          .ButtonStyle.black, // style as needed
+                                      type: apple
+                                          .ButtonType.signIn, // style as needed
+                                      onPressed: () =>
+                                          _signInWithApple(context),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
@@ -866,9 +993,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 'Welcome',
                 textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.7,
                 style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w700,
-                ),
+                    fontFamily: 'Poppins', fontWeight: FontWeight.w700),
               ),
               tabsWidgets(),
             ],
@@ -902,8 +1027,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if (statusCode == 400) {
       loginWithGoogleButton();
     } else {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          TabsScreen.routeName, (Route<dynamic> route) => false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: TabsScreen.routeName),
+          screen: TabsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+      // Navigator.of(context).pushNamedAndRemoveUntil(
+      //     TabsScreen.routeName, (Route<dynamic> route) => false);
     }
   }
 

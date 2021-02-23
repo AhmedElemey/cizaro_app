@@ -1,11 +1,15 @@
 import 'package:cizaro_app/screens/orders_screen.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:provider/provider.dart';
 
 class FinishedOrder extends StatelessWidget {
   static final routeName = '/orders-screen';
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<CartViewModel>(context, listen: false);
+    cart.cartProductModel.removeRange(0, cart.cartProductModel.length);
     return Scaffold(
       body: Center(
         child: Column(

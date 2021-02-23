@@ -1,8 +1,10 @@
 import 'dart:convert';
-
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:cizaro_app/model/SignUpModel.dart';
 import 'package:cizaro_app/model/loginModel.dart';
 import 'package:cizaro_app/model/socialLoginModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -95,6 +97,45 @@ class AuthServices {
     } else {
       print(response.body);
       throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future<User> signInWithApple({List<Scope> scopes = const []}) async {
+    final _firebaseAuth = FirebaseAuth.instance;
+    // 1. perform the sign-in request
+    final result = await AppleSignIn.performRequests(
+        [AppleIdRequest(requestedScopes: scopes)]);
+    // 2. check the result
+    switch (result.status) {
+      case AuthorizationStatus.authorized:
+        final appleIdCredential = result.credential;
+        final oAuthProvider = OAuthProvider('apple.com');
+        final credential = oAuthProvider.credential(
+          idToken: String.fromCharCodes(appleIdCredential.identityToken),
+          accessToken:
+              String.fromCharCodes(appleIdCredential.authorizationCode),
+        );
+        final authResult = await _firebaseAuth.signInWithCredential(credential);
+        final firebaseUser = authResult.user;
+        if (scopes.contains(Scope.fullName)) {
+          final displayName =
+              '${appleIdCredential.fullName.givenName} ${appleIdCredential.fullName.familyName}';
+          await firebaseUser.updateProfile(displayName: displayName);
+        }
+        return firebaseUser;
+      case AuthorizationStatus.error:
+        throw PlatformException(
+          code: 'ERROR_AUTHORIZATION_DENIED',
+          message: result.error.toString(),
+        );
+
+      case AuthorizationStatus.cancelled:
+        throw PlatformException(
+          code: 'ERROR_ABORTED_BY_USER',
+          message: 'Sign in aborted by user',
+        );
+      default:
+        throw UnimplementedError();
     }
   }
 }

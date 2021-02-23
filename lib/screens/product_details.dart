@@ -509,7 +509,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    padding: const EdgeInsets.only(top: 10, left: 15),
                     child: Row(
                       children: [
                         Text(

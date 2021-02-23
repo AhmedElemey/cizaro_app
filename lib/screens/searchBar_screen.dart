@@ -262,7 +262,7 @@ class SearchResultsListView extends StatelessWidget {
               size: 64,
             ),
             Text(
-              'Start searching',
+              'Start Searching',
               style: Theme.of(context).textTheme.headline5,
             )
           ],
@@ -273,6 +273,7 @@ class SearchResultsListView extends StatelessWidget {
       padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
       child: Container(
         height: MediaQuery.of(context).size.height,
+        margin: const EdgeInsets.only(bottom: 25),
         width: double.infinity,
         child: ListView.builder(
           itemCount: productList?.length ?? 0,

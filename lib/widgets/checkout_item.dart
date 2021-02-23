@@ -78,8 +78,8 @@ class CheckoutItem extends StatelessWidget {
                                     MediaQuery.of(context).textScaleFactor *
                                         1.1),
                             Text(
-                                productColorSpecs == Color(0xffffffff) ||
-                                        productColorSpecs == null
+                                productColorSpecs == Color(0x000000ff) ||
+                                        productColorSpecs == Color(0xffffffff)
                                     ? ''
                                     : " , Color: ",
                                 style: TextStyle(fontWeight: FontWeight.bold),

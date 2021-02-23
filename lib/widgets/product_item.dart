@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
@@ -473,24 +474,30 @@ class _ProductItemState extends State<ProductItem> {
                         width: MediaQuery.of(context).size.width * 0.1,
                         height: MediaQuery.of(context).size.height * 0.1,
                       ),
-                      top: -3,
-                      left: -3,
+                      top: -MediaQuery.of(context).size.height * 0.01,
+                      left: -MediaQuery.of(context).size.width * 0.02,
                     ),
                     Positioned(
-                      child: Transform.rotate(
-                        angle: -pi / 4,
-                        child: Text(
-                          widget.offer.discount.toString() + "%",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold,
+                        child: Transform.rotate(
+                          angle: -pi / 4,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: Text(
+                              widget.offer.discount.toString() + " % ",
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 0.9,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
-                      top: 12,
-                      left: 4,
-                    )
+                        top: Platform.isAndroid
+                            ? MediaQuery.of(context).size.height * 0.011
+                            : MediaQuery.of(context).size.height * 0.014,
+                        right: Platform.isAndroid
+                            ? MediaQuery.of(context).size.width * 0.24
+                            : MediaQuery.of(context).size.width * 0.21)
                   ],
                 ),
         ],

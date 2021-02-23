@@ -82,90 +82,79 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
         ),
-        pageBuilder: (context, index) => Container(
-          child: ListView.builder(
-              padding: EdgeInsets.only(
-                right: ScreenUtil().setWidth(5),
-                top: ScreenUtil().setHeight(5),
-              ),
-              itemCount: newArrivalsList[index]?.products?.length ?? 0,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx, index) => GestureDetector(
-                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
-                        settings: RouteSettings(
-                            name: ProductDetails.routeName,
-                            arguments: {
-                              'product_id':
-                                  newArrivalsList[0].products[index].id
-                            }),
-                        screen: ProductDetails(),
-                        withNavBar: true,
-                        pageTransitionAnimation:
-                            tab.PageTransitionAnimation.fade),
-                    child: ProductItem(
-                      productId: newArrivalsList[0]?.products[index]?.id ?? 0,
-                      productName:
-                          newArrivalsList[0]?.products[index]?.name ?? '',
-                      imgUrl:
-                          newArrivalsList[0]?.products[index]?.mainImg ?? '',
-                      categoryName:
-                          newArrivalsList[0]?.products[index]?.category?.name ??
-                              '',
-                      productPrice:
-                          newArrivalsList[0]?.products[index]?.price ?? 0.0,
-                      productPriceAfter: newArrivalsList[0]
-                              ?.products[index]
-                              ?.offer
-                              ?.afterPrice ??
-                          0.0,
-                      offer: newArrivalsList[0]?.products[index]?.offer ?? "",
-                      onAddToCart: () {
-                        final cart =
-                            Provider.of<CartViewModel>(context, listen: false);
-                        final productCart = ProductCart(
-                            id: newArrivalsList[0]?.products[index].id,
-                            name: newArrivalsList[0]?.products[index].name,
-                            mainImg:
-                                newArrivalsList[0]?.products[index].mainImg,
-                            price: newArrivalsList[0]?.products[index].price,
-                            priceAfterDiscount: newArrivalsList[0]
-                                    ?.products[index]
-                                    .offer
-                                    ?.afterPrice ??
-                                newArrivalsList[0]?.products[index].price,
-                            categoryName: newArrivalsList[0]
-                                ?.products[index]
-                                .category
-                                .name,
-                            quantity: 1,
-                            availability: newArrivalsList[0]
-                                ?.products[index]
-                                .availability,
-                            colorSpecValue: '',
-                            sizeSpecValue: '');
-                        cart.addProductToCart(productCart);
-                      },
-                      onAddToFavorite: () {
-                        final productFav = ProductFav(
-                            id: newArrivalsList[0]?.products[index].id,
-                            name: newArrivalsList[0]?.products[index].name,
-                            mainImg:
-                                newArrivalsList[0]?.products[index].mainImg,
-                            price: newArrivalsList[0]?.products[index].price,
-                            categoryName: newArrivalsList[0]
-                                ?.products[index]
-                                .category
-                                .name,
-                            isFav: 1);
-                        fav.addProductToFav(productFav);
-                      },
-                      // fav.favProductModel.length == 0 ||
-                      //         fav.favProductModel == null
-                      //     ? 0
-                      //     : fav.favProductModel[index]?.isFav ?? 0,
-                    ),
-                  )),
-        ),
+        pageBuilder: (context, index) => ListView.builder(
+            padding: EdgeInsets.only(
+              right: ScreenUtil().setWidth(5),
+              top: ScreenUtil().setHeight(5),
+            ),
+            itemCount: newArrivalsList[index]?.products?.length ?? 0,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (ctx, index) => GestureDetector(
+                  onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                      settings: RouteSettings(
+                          name: ProductDetails.routeName,
+                          arguments: {
+                            'product_id': newArrivalsList[0].products[index].id
+                          }),
+                      screen: ProductDetails(),
+                      withNavBar: true,
+                      pageTransitionAnimation:
+                          tab.PageTransitionAnimation.fade),
+                  child: ProductItem(
+                    productId: newArrivalsList[0]?.products[index]?.id ?? 0,
+                    productName:
+                        newArrivalsList[0]?.products[index]?.name ?? '',
+                    imgUrl: newArrivalsList[0]?.products[index]?.mainImg ?? '',
+                    categoryName:
+                        newArrivalsList[0]?.products[index]?.category?.name ??
+                            '',
+                    productPrice:
+                        newArrivalsList[0]?.products[index]?.price ?? 0.0,
+                    productPriceAfter: newArrivalsList[0]
+                            ?.products[index]
+                            ?.offer
+                            ?.afterPrice ??
+                        0.0,
+                    offer: newArrivalsList[0]?.products[index]?.offer ?? "",
+                    onAddToCart: () {
+                      final cart =
+                          Provider.of<CartViewModel>(context, listen: false);
+                      final productCart = ProductCart(
+                          id: newArrivalsList[0]?.products[index].id,
+                          name: newArrivalsList[0]?.products[index].name,
+                          mainImg: newArrivalsList[0]?.products[index].mainImg,
+                          price: newArrivalsList[0]?.products[index].price,
+                          priceAfterDiscount: newArrivalsList[0]
+                                  ?.products[index]
+                                  .offer
+                                  ?.afterPrice ??
+                              newArrivalsList[0]?.products[index].price,
+                          categoryName:
+                              newArrivalsList[0]?.products[index].category.name,
+                          quantity: 1,
+                          availability:
+                              newArrivalsList[0]?.products[index].availability,
+                          colorSpecValue: '',
+                          sizeSpecValue: '');
+                      cart.addProductToCart(productCart);
+                    },
+                    onAddToFavorite: () {
+                      final productFav = ProductFav(
+                          id: newArrivalsList[0]?.products[index].id,
+                          name: newArrivalsList[0]?.products[index].name,
+                          mainImg: newArrivalsList[0]?.products[index].mainImg,
+                          price: newArrivalsList[0]?.products[index].price,
+                          categoryName:
+                              newArrivalsList[0]?.products[index].category.name,
+                          isFav: 1);
+                      fav.addProductToFav(productFav);
+                    },
+                    // fav.favProductModel.length == 0 ||
+                    //         fav.favProductModel == null
+                    //     ? 0
+                    //     : fav.favProductModel[index]?.isFav ?? 0,
+                  ),
+                )),
         onPositionChange: (index) {
           initPosition = index;
         },

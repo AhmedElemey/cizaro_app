@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cizaro_app/model/available_payments.dart';
 import 'package:cizaro_app/model/checkout.dart';
+import 'package:cizaro_app/model/checkout_results.dart';
 import 'package:cizaro_app/model/order.dart';
 import 'package:cizaro_app/model/order_details.dart';
 import 'package:http/http.dart' as http;
@@ -53,7 +54,7 @@ class OrderServices {
     }
   }
 
-  Future<CheckOut> sendCheckOut(String token, CheckOut checkOut) async {
+  Future<CheckoutResult> sendCheckOut(String token, CheckOut checkOut) async {
     final response = await http.post(API + '/check-out/',
         headers: {
           'accept': 'application/json',
@@ -64,7 +65,7 @@ class OrderServices {
     final body = jsonDecode(response.body);
     print(response.body);
     if (response.statusCode == 200 || body['message'] == '') {
-      return CheckOut.fromJson(body);
+      return CheckoutResult.fromJson(body);
     } else {
       print(response.body);
       throw Exception("Unable to perform request .. Try again!");

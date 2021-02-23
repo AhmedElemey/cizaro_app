@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/available_payments.dart';
 import 'package:cizaro_app/model/checkout.dart';
+import 'package:cizaro_app/model/checkout_results.dart';
 import 'package:cizaro_app/model/order.dart';
 import 'package:cizaro_app/model/order_details.dart';
 import 'package:cizaro_app/services/orders_service.dart';
@@ -18,7 +19,7 @@ class OrdersViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<CheckOut> checkOutMethod(String token, CheckOut checkOut) async {
+  Future<CheckoutResult> checkOutMethod(String token, CheckOut checkOut) async {
     final result = await OrderServices().sendCheckOut(token, checkOut);
     notifyListeners();
     return result;

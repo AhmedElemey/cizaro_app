@@ -131,7 +131,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Card(
-      elevation: 1,
+      elevation: 3,
       child: Container(
         height: MediaQuery.of(context).size.height * .95,
         padding: EdgeInsets.only(left: 15),
@@ -177,7 +177,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                   widget.productPrice.toString() + ' LE',
                                   textScaleFactor:
                                       MediaQuery.of(context).textScaleFactor *
-                                          0.85,
+                                          0.75,
                                 ),
                               )
                             : Container(
@@ -191,7 +191,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                         widget.productPrice.toString() + ' LE',
                                         textScaleFactor: MediaQuery.of(context)
                                                 .textScaleFactor *
-                                            0.85,
+                                            0.75,
                                         style: TextStyle(
                                             color: Colors.red,
                                             decoration:
@@ -205,7 +205,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                             ' LE',
                                         textScaleFactor: MediaQuery.of(context)
                                                 .textScaleFactor *
-                                            0.85,
+                                            0.75,
                                       ),
                                     )
                                   ],
@@ -338,7 +338,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                       widget.productPrice.toString() + ' LE',
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
-                                          0.85,
+                                          0.75,
                                     ),
                                   )
                                 : Container(
@@ -355,7 +355,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                               textScaleFactor:
                                                   MediaQuery.of(context)
                                                           .textScaleFactor *
-                                                      0.85,
+                                                      0.75,
                                               style: TextStyle(
                                                   color: Colors.red,
                                                   decoration: TextDecoration
@@ -372,7 +372,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                               textScaleFactor:
                                                   MediaQuery.of(context)
                                                           .textScaleFactor *
-                                                      0.85,
+                                                      0.75,
                                             ),
                                           )
                                         ],
@@ -469,24 +469,27 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                       width: MediaQuery.of(context).size.width * 0.1,
                       height: MediaQuery.of(context).size.height * 0.1,
                     ),
-                    top: -3,
-                    left: -3,
+                    top: -MediaQuery.of(context).size.height * 0.01,
+                    left: -MediaQuery.of(context).size.width * 0.01,
                   ),
                   Positioned(
-                    child: Transform.rotate(
-                      angle: -pi / 4,
-                      child: Text(
-                        widget.offer.discount.toString() + "%",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
+                      child: Transform.rotate(
+                        angle: -pi / 4,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: Text(
+                            widget.offer.discount.toString() + " %",
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 0.9,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    top: 12,
-                    left: 4,
-                  )
+                      top: MediaQuery.of(context).size.height * 0.017,
+                      right: MediaQuery.of(context).size.width * 0.19)
                 ],
               ),
       ),

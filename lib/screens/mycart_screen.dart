@@ -1,5 +1,6 @@
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
@@ -41,17 +42,20 @@ class _MyCartScreenState extends State<MyCartScreen> {
     final cart = Provider.of<CartViewModel>(context, listen: true);
     return cart.cartProductModel.length == 0
         ? Container(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: SizeConfig.blockSizeVertical * 70,
             padding: const EdgeInsets.all(25),
             child: Center(
                 child: Text(
                     'Cart is Empty, please Search and Add your Product.',
+                    style:
+                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
                     textScaleFactor:
                         MediaQuery.of(context).textScaleFactor * 1.3)))
         : Container(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: SizeConfig.blockSizeVertical * 72,
             child: ListView.builder(
-                padding: const EdgeInsets.only(top: 5),
+                padding:
+                    EdgeInsets.only(top: SizeConfig.blockSizeVertical * .5),
                 shrinkWrap: true,
                 itemCount: cart.cartProductModel?.length ?? 0,
                 itemBuilder: (ctx, index) {
@@ -117,8 +121,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
             children: [
               cartProductsList(),
               Container(
-                height: MediaQuery.of(context).size.height * .1,
-                padding: const EdgeInsets.only(right: 20, left: 20, bottom: 25),
+                height: SizeConfig.blockSizeVertical * 7,
+                padding: EdgeInsets.only(
+                  right: SizeConfig.blockSizeHorizontal * 5,
+                  left: SizeConfig.blockSizeHorizontal * 5,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -126,14 +133,19 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text("TOTAL",
+                              style: TextStyle(
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4),
                               textScaleFactor:
                                   MediaQuery.of(context).textScaleFactor * .9),
                           Text(
-                              total.totalPrice.toStringAsFixed(2) + ' LE' ??
-                                  '00.00',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.4,
-                              style: const TextStyle(color: Color(0xff3A559F))),
+                            total.totalPrice.toStringAsFixed(2) + ' LE' ??
+                                '00.00',
+                            textScaleFactor:
+                                MediaQuery.of(context).textScaleFactor * 1.4,
+                            style: TextStyle(
+                                color: Color(0xff3A559F),
+                                fontSize: SizeConfig.safeBlockHorizontal * 4),
+                          )
                         ]),
                     GestureDetector(
                       onTap: () async {
@@ -161,8 +173,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                         PageTransitionAnimation.fade);
                       },
                       child: Container(
-                        width: MediaQuery.of(context).size.width * .4,
-                        height: MediaQuery.of(context).size.height * .3,
+                        width: SizeConfig.blockSizeHorizontal * 40,
+                        height: SizeConfig.blockSizeVertical * 30,
                         decoration: BoxDecoration(
                             color: Color(0xff3A559F),
                             borderRadius: BorderRadius.circular(25.0)),
@@ -173,12 +185,13 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               "CHECKOUT",
                               textScaleFactor:
                                   MediaQuery.of(context).textScaleFactor * 1.11,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.white,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
                                   fontWeight: FontWeight.bold),
                             ),
                             CircleAvatar(
-                                radius: MediaQuery.of(context).size.width * .03,
+                                radius: SizeConfig.blockSizeHorizontal * 3,
                                 backgroundColor: Colors.white,
                                 child: Icon(Icons.arrow_forward_ios_rounded,
                                     size: 15, color: Color(0xff3A559F)))

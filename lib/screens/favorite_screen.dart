@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/favorite_item.dart';
@@ -53,11 +54,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     final fav = Provider.of<FavViewModel>(context, listen: true);
     return fav.favProductModel.length == 0
         ? Container(
-            height: MediaQuery.of(context).size.height * 0.9,
+            height: SizeConfig.blockSizeVertical * 90,
             padding: const EdgeInsets.all(25),
             child: Center(
                 child: Text(
                     'Your Favorites is Empty, please Add your Favorites.',
+                    style: TextStyle(
+                      fontSize: SizeConfig.safeBlockHorizontal * 4,
+                    ),
                     textScaleFactor:
                         MediaQuery.of(context).textScaleFactor * 1.3)))
         : ListView.builder(

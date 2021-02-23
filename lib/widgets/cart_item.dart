@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,13 +68,15 @@ class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.only(
+          top: SizeConfig.blockSizeVertical * 2,
+          left: SizeConfig.blockSizeHorizontal * 5,
+          right: SizeConfig.blockSizeHorizontal * 5),
       child: Card(
         elevation: 5,
         child: Container(
-          height: MediaQuery.of(context).size.height * .22,
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.only(top: 5, bottom: 5),
+          height: SizeConfig.blockSizeVertical * 20,
+          width: SizeConfig.blockSizeHorizontal * 100,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -83,13 +86,14 @@ class _CartItemState extends State<CartItem> {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          height: MediaQuery.of(context).size.height * 0.3,
+                          width: SizeConfig.blockSizeHorizontal * 20,
+                          height: SizeConfig.blockSizeVertical * 18,
                           child: Image.network(widget.imgUrl,
                               fit: BoxFit.fitHeight)))),
               Flexible(
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
+                  padding:
+                      EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 3),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -98,12 +102,15 @@ class _CartItemState extends State<CartItem> {
                           Text(widget.productName,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
                                   color: Color(0xff515C6F)),
                               textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.3),
+                                  MediaQuery.of(context).textScaleFactor * 1.2),
                           Spacer(),
                           Padding(
-                              padding: const EdgeInsets.only(right: 8, left: 8),
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * 3,
+                                  left: SizeConfig.blockSizeHorizontal * 1),
                               child: Text(
                                   widget.productPriceAfterDiscount ==
                                           widget.productPrice
@@ -118,49 +125,63 @@ class _CartItemState extends State<CartItem> {
                                   //     fontWeight: FontWeight.bold),
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4,
                                       color: Color(0xff515C6F)),
                                   textScaleFactor:
                                       MediaQuery.of(context).textScaleFactor *
                                           1))
                         ],
                       ),
-                      Text(
-                        widget.productCategory,
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1.1,
-                        // style: const TextStyle(color: Colors.blueGrey)
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xff515C6F)),
+                      Container(
+                        height: SizeConfig.blockSizeVertical * 3,
+                        padding: EdgeInsets.only(
+                            right: SizeConfig.blockSizeHorizontal * 3),
+                        child: Row(
+                          children: [
+                            Text(
+                              widget.productCategory,
+                              textScaleFactor:
+                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                              // style: const TextStyle(color: Colors.blueGrey)
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 3,
+                                  color: Color(0xff515C6F)),
+                            ),
+                            Spacer(),
+                            IconButton(
+                                icon: Icon(Icons.delete,
+                                    size: SizeConfig.safeBlockHorizontal * 6,
+                                    color: Colors.red),
+                                onPressed: widget.onDelete)
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            widget.sizeSpecValue == ""
-                                ? ''
-                                : 'Size : ${widget.sizeSpecValue}',
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                          Text(widget.colorSpecValue == "" ? '' : ' , ',
-                              style: const TextStyle(color: Colors.black)),
-                          Text(widget.colorSpecValue == "" ? '' : 'Color : ',
-                              style: const TextStyle(color: Colors.black)),
-                          widget.colorSpecValue == ""
-                              ? Container()
-                              : CircleAvatar(
-                                  radius: 10,
-                                  backgroundColor: Color(int.parse(
-                                      '0xff${widget.colorSpecValue}')),
-                                  foregroundColor: Color(int.parse(
-                                      '0xff${widget.colorSpecValue}'))),
-                          Spacer(),
-                          IconButton(
-                              icon: Icon(Icons.delete,
-                                  size:
-                                      MediaQuery.of(context).size.width * 0.08,
-                                  color: Colors.red),
-                              onPressed: widget.onDelete)
-                        ],
+                      Container(
+                        height: SizeConfig.blockSizeVertical * 3.5,
+                        child: Row(
+                          children: [
+                            Text(
+                              widget.sizeSpecValue == ""
+                                  ? ''
+                                  : 'Size : ${widget.sizeSpecValue}',
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            Text(widget.colorSpecValue == "" ? '' : ' , ',
+                                style: const TextStyle(color: Colors.black)),
+                            Text(widget.colorSpecValue == "" ? '' : 'Color : ',
+                                style: const TextStyle(color: Colors.black)),
+                            widget.colorSpecValue == ""
+                                ? Container()
+                                : CircleAvatar(
+                                    radius: 10,
+                                    backgroundColor: Color(int.parse(
+                                        '0xff${widget.colorSpecValue}')),
+                                    foregroundColor: Color(int.parse(
+                                        '0xff${widget.colorSpecValue}'))),
+                          ],
+                        ),
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,23 +190,24 @@ class _CartItemState extends State<CartItem> {
                           GestureDetector(
                             onTap: widget.onMinusQuantity,
                             child: Container(
-                              width: MediaQuery.of(context).size.width * .075,
-                              height: MediaQuery.of(context).size.height * .075,
-                              padding: EdgeInsets.only(right: 5, bottom: 17),
+                              width: SizeConfig.blockSizeHorizontal * 7.5,
+                              height: SizeConfig.blockSizeVertical * 7.5,
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * .5,
+                                  bottom: SizeConfig.blockSizeVertical * 3),
                               decoration: BoxDecoration(
                                   color: Colors.black12,
                                   shape: BoxShape.circle),
                               child: Center(
                                 child: Icon(Icons.minimize_outlined,
-                                    size: MediaQuery.of(context).size.width *
-                                        0.07,
+                                    size: SizeConfig.safeBlockHorizontal * 7,
                                     color: Color(0xff707070)),
                               ),
                             ),
                           ),
                           Container(
                             padding: EdgeInsets.only(left: 5),
-                            width: MediaQuery.of(context).size.width * .09,
+                            width: SizeConfig.blockSizeHorizontal * 9,
                             child: TextField(
                               keyboardType: TextInputType.numberWithOptions(
                                 decimal: false,
@@ -196,8 +218,9 @@ class _CartItemState extends State<CartItem> {
                               ],
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
-                                  contentPadding:
-                                      const EdgeInsets.only(left: 7),
+                                  contentPadding: EdgeInsets.only(
+                                      left:
+                                          SizeConfig.blockSizeHorizontal * .07),
                                   border: InputBorder.none,
                                   hintText: widget.myController.text ??
                                       widget.productQuantity.toString(),
@@ -224,31 +247,33 @@ class _CartItemState extends State<CartItem> {
                               },
                             ),
                           ),
-                          Container(
-                            padding: EdgeInsets.only(right: 5, left: 10),
-                            child: GestureDetector(
-                              onTap: widget.onPlusQuantity,
-                              child: CircleAvatar(
-                                radius: 15,
-                                backgroundColor: Colors.black12,
-                                child: Icon(
-                                  Icons.add,
-                                  size:
-                                      MediaQuery.of(context).size.width * 0.06,
-                                  color: Color(0xff707070),
-                                ),
+                          GestureDetector(
+                            onTap: widget.onPlusQuantity,
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Colors.black12,
+                              child: Icon(
+                                Icons.add,
+                                size: SizeConfig.safeBlockHorizontal * 6,
+                                color: Color(0xff707070),
                               ),
                             ),
                           ),
                           Spacer(),
                           Padding(
-                            padding: const EdgeInsets.only(right: 8, left: 8),
+                            padding: EdgeInsets.only(
+                                right: SizeConfig.blockSizeHorizontal * 3,
+                                left: SizeConfig.blockSizeHorizontal * 1),
                             child: Column(
                               children: [
                                 Text("TOTAL",
+                                    style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal *
+                                                3.5),
                                     textScaleFactor:
                                         MediaQuery.of(context).textScaleFactor *
-                                            .8),
+                                            1.1),
                                 Text(
                                   widget.totalPrice.toStringAsFixed(2) + ' LE',
                                   textScaleFactor:
@@ -256,6 +281,8 @@ class _CartItemState extends State<CartItem> {
                                           1,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4,
                                       color: Color(0xff3A559F)),
 
                                   // style:
@@ -271,8 +298,10 @@ class _CartItemState extends State<CartItem> {
                               child: Text(
                                   '${widget.totalAvailability}  items Available in Stock' ??
                                       '',
-                                  style: const TextStyle(
-                                      color: Colors.red, fontSize: 10)))
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4)))
                           : Container()
                     ],
                   ),

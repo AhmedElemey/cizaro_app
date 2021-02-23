@@ -1,6 +1,7 @@
 import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/profileEditModel.dart' as Edit;
 import 'package:cizaro_app/model/profileModel.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/material.dart';
@@ -204,13 +205,15 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 10, left: 10),
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 1,
+                        left: SizeConfig.blockSizeHorizontal * 1),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          height: MediaQuery.of(context).size.height * .05,
-                          width: double.infinity,
+                          height: SizeConfig.blockSizeVertical * 5,
+                          width: SizeConfig.blockSizeHorizontal * 100,
                           decoration: BoxDecoration(
                             boxShadow: <BoxShadow>[
                               BoxShadow(
@@ -219,24 +222,34 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               ),
                             ],
                           ),
-                          padding: EdgeInsets.only(left: 10, top: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 1,
+                              top: SizeConfig.blockSizeVertical * 1),
                           child: Text(
                             "YOUR PERSONAL DATA",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10, left: 50),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              left: SizeConfig.blockSizeHorizontal * 5),
                           child: Text(
                             "User Name :",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 10, top: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 1,
+                              top: SizeConfig.blockSizeVertical * 1),
                           child: Row(
                             children: [
                               Icon(
@@ -246,9 +259,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               ),
                               Container(
                                 padding: EdgeInsets.only(left: 15),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.05,
+                                width: SizeConfig.blockSizeHorizontal * 80,
+                                height: SizeConfig.blockSizeVertical * 05,
                                 child: TextField(
                                   obscureText: false,
                                   readOnly: false,
@@ -266,15 +278,21 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10, left: 50),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              left: SizeConfig.blockSizeHorizontal * 5),
                           child: Text(
                             "Full Name :",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 1),
                           child: Row(
                             children: [
                               Icon(
@@ -283,10 +301,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                padding: EdgeInsets.only(left: 15, top: 10),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 1.5,
+                                    top: SizeConfig.blockSizeVertical * 1),
+                                width: SizeConfig.blockSizeHorizontal * 80,
+                                height: SizeConfig.blockSizeHorizontal * 7,
                                 child: TextField(
                                   obscureText: false,
                                   readOnly: false,
@@ -304,15 +323,21 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10, left: 50),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              left: SizeConfig.blockSizeHorizontal * 5),
                           child: Text(
                             "Email Address :",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 1),
                           child: Row(
                             children: [
                               Icon(
@@ -321,10 +346,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                padding: EdgeInsets.only(left: 15, top: 10),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 1.5,
+                                    top: SizeConfig.blockSizeVertical * 1),
+                                width: SizeConfig.blockSizeHorizontal * 80,
+                                height: SizeConfig.blockSizeVertical * 7,
                                 child: TextField(
                                   obscureText: false,
                                   readOnly: false,
@@ -343,9 +369,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10, left: 50),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              left: SizeConfig.blockSizeHorizontal * 5),
                           child: Text(
                             "Birth Date :",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1,
                           ),
@@ -360,10 +391,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                padding: EdgeInsets.only(left: 15, top: 10),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 1.5,
+                                    top: SizeConfig.blockSizeVertical * 1),
+                                width: SizeConfig.blockSizeHorizontal * 80,
+                                height: SizeConfig.blockSizeVertical * 7,
                                 child: TextField(
                                   obscureText: false,
                                   readOnly: false,
@@ -434,7 +466,9 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         //   ),
                         // ),
                         Container(
-                          padding: EdgeInsets.only(right: 10, top: 20),
+                          padding: EdgeInsets.only(
+                              right: SizeConfig.blockSizeHorizontal * 1,
+                              top: SizeConfig.blockSizeVertical * 2),
                           child: Row(
                             children: [
                               SizedBox(),
@@ -442,10 +476,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               GestureDetector(
                                 onTap: () => editProfile(),
                                 child: Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  width: MediaQuery.of(context).size.width * .3,
-                                  height:
-                                      MediaQuery.of(context).size.height * .06,
+                                  padding: EdgeInsets.only(
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 1),
+                                  width: SizeConfig.blockSizeHorizontal * 30,
+                                  height: SizeConfig.blockSizeVertical * 6,
                                   decoration: BoxDecoration(
                                       color: Color(0xff3A559F),
                                       borderRadius:
@@ -455,21 +490,24 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                        padding:
-                                            const EdgeInsets.only(left: 15),
+                                        padding: EdgeInsets.only(
+                                            left:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    1.5),
                                         child: Text(
                                           "Update",
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 15,
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  4,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                       CircleAvatar(
-                                          radius: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              .035,
+                                          radius:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  3.5,
                                           backgroundColor: Colors.white,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
@@ -483,12 +521,14 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                         ),
                         Divider(
-                          height: MediaQuery.of(context).size.height * .01,
+                          height: SizeConfig.blockSizeVertical * 1,
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 10, top: 10),
-                          height: MediaQuery.of(context).size.height * .05,
-                          width: double.infinity,
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 1,
+                              top: SizeConfig.blockSizeVertical * 1),
+                          height: SizeConfig.blockSizeVertical * 5,
+                          width: SizeConfig.blockSizeHorizontal * 100,
                           decoration: BoxDecoration(
                             boxShadow: <BoxShadow>[
                               BoxShadow(
@@ -501,13 +541,19 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             "PASSWORD",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10, left: 20),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: Text(
                             " Password :",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1,
                           ),
@@ -522,10 +568,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                padding: EdgeInsets.only(left: 15, top: 10),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 1.5,
+                                    top: SizeConfig.blockSizeVertical * 1),
+                                width: SizeConfig.blockSizeHorizontal * 80,
+                                height: SizeConfig.blockSizeVertical * 7,
                                 child: TextField(
                                   obscureText: true,
                                   readOnly: false,
@@ -540,15 +587,21 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10, left: 20),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: Text(
                             "Confirm Password :",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1,
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 1),
                           child: Row(
                             children: [
                               Icon(
@@ -557,10 +610,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                padding: EdgeInsets.only(left: 15, top: 10),
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 1.5,
+                                    top: SizeConfig.blockSizeVertical * 1),
+                                width: SizeConfig.blockSizeHorizontal * 80,
+                                height: SizeConfig.blockSizeVertical * 7,
                                 child: TextField(
                                   obscureText: true,
                                   readOnly: false,
@@ -575,8 +629,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                           ),
                         ),
                         Container(
-                          padding:
-                              EdgeInsets.only(top: 10, right: 10, bottom: 20),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              right: SizeConfig.blockSizeHorizontal * 1,
+                              bottom: SizeConfig.blockSizeVertical * 2),
                           child: Row(
                             children: [
                               SizedBox(),
@@ -588,11 +644,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       : showConfirmToast()
                                 },
                                 child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * .45,
-                                  height:
-                                      MediaQuery.of(context).size.height * .06,
-                                  margin: const EdgeInsets.only(top: 8),
+                                  width: SizeConfig.blockSizeHorizontal * 40,
+                                  height: SizeConfig.blockSizeHorizontal * 10,
+                                  margin: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * .8),
                                   decoration: BoxDecoration(
                                       color: Color(0xff3A559F),
                                       borderRadius:
@@ -606,8 +661,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                         textScaleFactor: MediaQuery.of(context)
                                                 .textScaleFactor *
                                             1,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Colors.white,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    3,
                                             fontWeight: FontWeight.bold),
                                       ),
                                       CircleAvatar(

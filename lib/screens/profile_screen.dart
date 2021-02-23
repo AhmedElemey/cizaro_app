@@ -9,6 +9,7 @@ import 'package:cizaro_app/screens/pending_shipment_screen.dart';
 import 'package:cizaro_app/screens/policesTerms_screen.dart';
 import 'package:cizaro_app/screens/profileEdit_screen.dart';
 import 'package:cizaro_app/services/auth_service.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -91,7 +92,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
             : SingleChildScrollView(
                 child: Column(children: [
                 Container(
-                  padding: EdgeInsets.only(left: 10, top: 5, right: 10),
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * .1,
+                      top: SizeConfig.blockSizeVertical * .05,
+                      right: SizeConfig.blockSizeHorizontal * .1),
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
@@ -108,9 +112,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       // ),
                       Container(
                         padding: EdgeInsets.only(
-                          left: 10,
+                          left: SizeConfig.blockSizeHorizontal * .1,
                         ),
-                        width: MediaQuery.of(context).size.width,
+                        width: SizeConfig.blockSizeHorizontal * 100,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -118,7 +122,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  padding: EdgeInsets.only(left: 5),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 2,
+                                      left: SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                     userName ?? "",
                                     textScaleFactor:
@@ -126,11 +132,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             2,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 3,
                                         color: Color(0xff515C6F)),
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(left: 5),
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeVertical * 3),
                                   child: Text(
                                     userEmail ?? "",
                                     textScaleFactor:
@@ -138,6 +147,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             1.3,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 3,
                                         color: Color(0xff515C6F)),
                                   ),
                                 ),
@@ -168,7 +179,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ],
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(right: 15),
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * .15),
                               child: GestureDetector(
                                 onTap: () => pushNewScreenWithRouteSettings(
                                     context,
@@ -179,17 +191,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade),
                                 child: Container(
-                                  padding: EdgeInsets.only(top: 10, left: 5),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 2,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 4),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(20)),
                                       color: Color(0xff3A559F),
                                     ),
-                                    height: MediaQuery.of(context).size.height *
-                                        .05,
-                                    width:
-                                        MediaQuery.of(context).size.width * .3,
+                                    height: SizeConfig.blockSizeVertical * 5,
+                                    width: SizeConfig.blockSizeHorizontal * 30,
                                     child: Center(
                                       child: Text(
                                         "Edit Profile",
@@ -209,8 +222,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(top: 20, right: 10, left: 10),
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 3,
+                          right: SizeConfig.blockSizeHorizontal * 4,
+                          left: SizeConfig.blockSizeHorizontal * 4,
+                        ),
                         child: Card(
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
@@ -238,7 +254,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),
                                   child: Container(
-                                    padding: EdgeInsets.only(top: 5, right: 10),
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 1,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 4,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 3),
                                     child: Row(
                                       children: [
                                         // Icon(
@@ -248,21 +269,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/menu.svg',
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.03,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.03,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      3,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4),
                                           child: Text("All My Orders",
                                               style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w400,
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
                                               ),
                                               textScaleFactor:
                                                   MediaQuery.textScaleFactorOf(
@@ -283,12 +308,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 10, top: 5),
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 13,
+                                      right: SizeConfig.blockSizeHorizontal * 5,
+                                      top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .01,
+                                      height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
                                 GestureDetector(
@@ -301,8 +326,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),
                                   child: Container(
-                                    padding:
-                                        EdgeInsets.only(top: 10, right: 10),
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 1,
+                                        left: SizeConfig.blockSizeHorizontal *
+                                            2.5,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 4),
                                     child: Row(
                                       children: [
                                         // Icon(Icons.local_shipping_outlined,
@@ -310,19 +339,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/pending shipments.svg',
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      5,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3),
                                           child: Text("Pending Shipments",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
+                                              ),
                                               textScaleFactor:
                                                   MediaQuery.textScaleFactorOf(
                                                           context) *
@@ -342,16 +377,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 10, top: 5),
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 13,
+                                      right: SizeConfig.blockSizeHorizontal * 5,
+                                      top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .01,
+                                      height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 10, right: 10),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 1,
+                                      left: SizeConfig.blockSizeHorizontal * 3,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 4),
                                   child: GestureDetector(
                                     onTap: () => pushNewScreenWithRouteSettings(
                                         context,
@@ -368,19 +407,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/finished.svg',
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  6,
+                                              height: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  6,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
-                                            padding: EdgeInsets.only(left: 20),
+                                            padding: EdgeInsets.only(
+                                                left: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    5),
                                             child: Text("Address Book ",
+                                                style: TextStyle(
+                                                  fontSize: SizeConfig
+                                                          .safeBlockHorizontal *
+                                                      3,
+                                                ),
                                                 textScaleFactor: MediaQuery
                                                         .textScaleFactorOf(
                                                             context) *
@@ -404,15 +449,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, right: 10, left: 10, bottom: 10),
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 3,
+                          right: SizeConfig.blockSizeHorizontal * 4,
+                          left: SizeConfig.blockSizeHorizontal * 4,
+                        ),
                         child: Card(
                           elevation: 5,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(20),
                             decoration: BoxDecoration(
                               // border:
                               //     Border.all(color: Colors.black12, width: 2),
@@ -422,7 +470,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Column(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.only(top: 5, right: 10),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * .05,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 2),
                                   child: GestureDetector(
                                     onTap: () => pushNewScreenWithRouteSettings(
                                         context,
@@ -441,19 +492,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/rate.svg',
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      4,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3),
                                           child: Text("Wish list",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
+                                              ),
                                               textScaleFactor:
                                                   MediaQuery.textScaleFactorOf(
                                                           context) *
@@ -473,16 +530,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 10, top: 5),
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      right: SizeConfig.blockSizeHorizontal * 3,
+                                      top: SizeConfig.blockSizeVertical * .5),
                                   child: Divider(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .01,
+                                      height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 5, right: 10),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 1,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 2),
                                   child: GestureDetector(
                                     onTap: () => pushNewScreenWithRouteSettings(
                                         context,
@@ -498,19 +558,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/suggest.svg',
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      4,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3),
                                           child: Text("Polices and terms",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
+                                              ),
                                               textScaleFactor:
                                                   MediaQuery.textScaleFactorOf(
                                                           context) *
@@ -530,16 +596,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 10, top: 5),
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      right: SizeConfig.blockSizeHorizontal * 3,
+                                      top: SizeConfig.blockSizeVertical * .5),
                                   child: Divider(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .01,
+                                      height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 5, right: 10),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 1,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 2),
                                   child: GestureDetector(
                                     onTap: () => pushNewScreenWithRouteSettings(
                                         context,
@@ -558,19 +627,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/aboutUs.svg',
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.04,
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      4,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3),
                                           child: Text("About us",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
+                                              ),
                                               textScaleFactor:
                                                   MediaQuery.textScaleFactorOf(
                                                           context) *
@@ -590,16 +665,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 10, top: 5),
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      right: SizeConfig.blockSizeHorizontal * 3,
+                                      top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .01,
+                                      height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 5, right: 10),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * .5,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 2),
                                   child: GestureDetector(
                                     onTap: () => pushNewScreenWithRouteSettings(
                                         context,
@@ -614,8 +692,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Icon(Icons.headset_mic_rounded,
                                             size: 30),
                                         Container(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3),
                                           child: Text("Contact us",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
+                                              ),
                                               textScaleFactor:
                                                   MediaQuery.textScaleFactorOf(
                                                           context) *
@@ -635,16 +721,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 50, right: 10, top: 5),
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      right: SizeConfig.blockSizeHorizontal * 3,
+                                      top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .01,
+                                      height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 5, right: 10),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 1,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 2),
                                   child: GestureDetector(
                                     onTap: () async {
                                       saveToken('');
@@ -661,10 +750,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                     child: Row(
                                       children: [
-                                        Icon(Icons.logout, size: 30),
+                                        Icon(
+                                          Icons.logout,
+                                          size: SizeConfig.safeBlockHorizontal *
+                                              7,
+                                        ),
                                         Container(
-                                          padding: EdgeInsets.only(left: 20),
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3),
                                           child: Text("SignOut",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
+                                              ),
                                               textScaleFactor:
                                                   MediaQuery.textScaleFactorOf(
                                                           context) *

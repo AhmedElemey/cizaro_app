@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteItem extends StatelessWidget {
@@ -23,80 +24,104 @@ class FavoriteItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+      padding: EdgeInsets.only(
+          left: SizeConfig.blockSizeHorizontal * 5,
+          right: SizeConfig.blockSizeHorizontal * 5,
+          top: SizeConfig.blockSizeVertical * 2),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
           elevation: 10,
           child: Container(
-            height: MediaQuery.of(context).size.height * .17,
-            padding: EdgeInsets.only(left: 5, right: 10, top: 5),
+            height: SizeConfig.blockSizeVertical * 17,
+            padding: EdgeInsets.only(
+                left: SizeConfig.blockSizeHorizontal * 1,
+                right: SizeConfig.blockSizeHorizontal * 4,
+                top: SizeConfig.blockSizeVertical * 1,
+                bottom: SizeConfig.blockSizeVertical * .5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      EdgeInsets.only(left: 5, right: 10, top: 5, bottom: 5),
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 1,
+                      top: SizeConfig.blockSizeVertical * 1,
+                      bottom: SizeConfig.blockSizeVertical * .5),
                   child: Image.network(imgUrl),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width * .3,
+                  width: SizeConfig.blockSizeHorizontal * 40,
+                  padding: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical * .05,
+                      left: SizeConfig.blockSizeHorizontal * 7),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.only(top: 5),
                         child: Text(
                           productName,
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                          ),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.5,
                         ),
                       ),
                       Container(
-                        // padding: EdgeInsets.only(right: 5),
                         child: Text(
                           productCategory,
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                          ),
                           textScaleFactor:
                               MediaQuery.of(context).textScaleFactor * 1.2,
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(bottom: 5, left: 15, right: 5),
                         child: Row(
                           children: [
                             Text(
                               productPrice + " LE",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: SizeConfig.safeBlockHorizontal * 3,
+                              ),
                               textScaleFactor:
                                   MediaQuery.of(context).textScaleFactor * 1.1,
                             ),
                             Spacer(),
                             Container(
-                              width: MediaQuery.of(context).size.width * .1,
-                              height: MediaQuery.of(context).size.height * .03,
+                              width: SizeConfig.blockSizeVertical * 9,
+                              height: SizeConfig.blockSizeVertical * 3,
                               decoration: BoxDecoration(
                                   color: Color(0xffFF6969),
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Container(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      child: Icon(
-                                        Icons.star,
-                                        size: 10,
-                                        color: Colors.white,
-                                      ),
-                                      padding: EdgeInsets.only(left: 5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Icon(
+                                      Icons.star,
+                                      size: SizeConfig.safeBlockHorizontal * 3,
+                                      color: Colors.white,
                                     ),
-                                    Text(
-                                      productStar ?? '0.0',
-                                      style: TextStyle(color: Colors.white),
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1,
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * 1,
+                                  ),
+                                  Text(
+                                    productStar ?? '0.0',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4,
+                                    ),
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor *
+                                            1,
+                                  )
+                                ],
                               ),
                             ),
                           ],
@@ -110,7 +135,7 @@ class FavoriteItem extends StatelessWidget {
                   child: IconButton(
                     icon: Icon(
                       Icons.favorite,
-                      size: MediaQuery.of(context).size.width * 0.08,
+                      size: SizeConfig.blockSizeHorizontal * 7,
                       color: Color(0xffFF6969),
                     ),
                     onPressed: unFavorite,

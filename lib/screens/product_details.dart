@@ -568,7 +568,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     productRelated[index]?.offer?.afterPrice ??
                                         0.0,
                                 productStar: productRelated[index].stars ?? 0.0,
-                                offer: productRelated[index]?.offer ?? "",
+                                discount:
+                                    productRelated[index]?.offer?.discount ??
+                                        0.0,
                                 onAddToCart: () {
                                   final cart = Provider.of<CartViewModel>(
                                       context,

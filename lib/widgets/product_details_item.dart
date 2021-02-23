@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,18 +9,17 @@ import 'package:provider/provider.dart';
 
 class ProductDetailItem extends StatefulWidget {
   final String productName, imgUrl;
-  final double productPrice, productPriceAfter, productStar;
+  final double productPrice, productPriceAfter, productStar, discount;
   final int productId;
   int isFav = 0;
   final VoidCallback onAddToCart;
   final VoidCallback onAddToFavorite;
-  Offer offer;
   ProductDetailItem(
       {this.productName,
       this.imgUrl,
       this.productPrice,
       this.productPriceAfter,
-      this.offer,
+      this.discount,
       this.isFav,
       this.onAddToCart,
       this.productId,
@@ -135,7 +133,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
       child: Container(
         height: MediaQuery.of(context).size.height * .95,
         padding: EdgeInsets.only(left: 15),
-        child: widget.offer.discount == 0.0 || widget.offer.discount == null
+        child: widget.discount == 0.0 || widget.discount == null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -478,7 +476,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 5),
                           child: Text(
-                            widget.offer.discount.toString() + " %",
+                            widget.discount.toString() + " %",
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 0.9,
                             style: TextStyle(

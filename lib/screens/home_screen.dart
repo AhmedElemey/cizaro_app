@@ -4,6 +4,7 @@ import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -15,7 +16,7 @@ import 'package:cizaro_app/widgets/hotDeals_item.dart';
 import 'package:cizaro_app/widgets/product_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
 
@@ -61,100 +62,116 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget tabsWidgets(BuildContext context) {
     final fav = Provider.of<FavViewModel>(context, listen: false);
-    ScreenUtil.init(context,
-        allowFontScaling: false,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height);
+    // ScreenUtil.init(context,
+    //     allowFontScaling: false,
+    //     width: MediaQuery.of(context).size.width,
+    //     height: MediaQuery.of(context).size.height);
 
+    // return InfoWidget(
+    //   builder: (context, deviceInfo) {
     return Padding(
       padding: EdgeInsets.only(
-        right: ScreenUtil().setWidth(10),
-        left: ScreenUtil().setWidth(10),
-      ),
+          right: SizeConfig.blockSizeHorizontal * 2,
+          left: SizeConfig.blockSizeHorizontal * 2),
       child: CustomTabView(
         initPosition: initPosition,
         itemCount: newArrivalsList?.length ?? 0,
         tabBuilder: (context, index) => Tab(
-          child: Text(newArrivalsList[index].name,
-              style: TextStyle(
-                fontFamily: 'Poppins',
+          child: Text(
+            newArrivalsList[index].name,
+            // style: TextStyle(
+            //   fontFamily: 'Poppins',
+            //   fontWeight: FontWeight.w700,
+            // ),
+            style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w700,
-              ),
-              textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
+                fontSize: SizeConfig.safeBlockHorizontal * 4),
+            //  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3
+          ),
         ),
-        pageBuilder: (context, index) => ListView.builder(
-            padding: EdgeInsets.only(
-              right: ScreenUtil().setWidth(5),
-              top: ScreenUtil().setHeight(5),
-            ),
-            itemCount: newArrivalsList[index]?.products?.length ?? 0,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (ctx, index) => GestureDetector(
-                  onTap: () => tab.pushNewScreenWithRouteSettings(context,
-                      settings: RouteSettings(
-                          name: ProductDetails.routeName,
-                          arguments: {
-                            'product_id': newArrivalsList[0].products[index].id
-                          }),
-                      screen: ProductDetails(),
-                      withNavBar: true,
-                      pageTransitionAnimation:
-                          tab.PageTransitionAnimation.fade),
-                  child: ProductItem(
-                    productId: newArrivalsList[0]?.products[index]?.id ?? 0,
-                    productName:
-                        newArrivalsList[0]?.products[index]?.name ?? '',
-                    imgUrl: newArrivalsList[0]?.products[index]?.mainImg ?? '',
-                    categoryName:
-                        newArrivalsList[0]?.products[index]?.category?.name ??
-                            '',
-                    productPrice:
-                        newArrivalsList[0]?.products[index]?.price ?? 0.0,
-                    productPriceAfter: newArrivalsList[0]
-                            ?.products[index]
-                            ?.offer
-                            ?.afterPrice ??
-                        0.0,
-                    offer: newArrivalsList[0]?.products[index]?.offer ?? "",
-                    onAddToCart: () {
-                      final cart =
-                          Provider.of<CartViewModel>(context, listen: false);
-                      final productCart = ProductCart(
-                          id: newArrivalsList[0]?.products[index].id,
-                          name: newArrivalsList[0]?.products[index].name,
-                          mainImg: newArrivalsList[0]?.products[index].mainImg,
-                          price: newArrivalsList[0]?.products[index].price,
-                          priceAfterDiscount: newArrivalsList[0]
-                                  ?.products[index]
-                                  .offer
-                                  ?.afterPrice ??
-                              newArrivalsList[0]?.products[index].price,
-                          categoryName:
-                              newArrivalsList[0]?.products[index].category.name,
-                          quantity: 1,
-                          availability:
-                              newArrivalsList[0]?.products[index].availability,
-                          colorSpecValue: '',
-                          sizeSpecValue: '');
-                      cart.addProductToCart(productCart);
-                    },
-                    onAddToFavorite: () {
-                      final productFav = ProductFav(
-                          id: newArrivalsList[0]?.products[index].id,
-                          name: newArrivalsList[0]?.products[index].name,
-                          mainImg: newArrivalsList[0]?.products[index].mainImg,
-                          price: newArrivalsList[0]?.products[index].price,
-                          categoryName:
-                              newArrivalsList[0]?.products[index].category.name,
-                          isFav: 1);
-                      fav.addProductToFav(productFav);
-                    },
-                    // fav.favProductModel.length == 0 ||
-                    //         fav.favProductModel == null
-                    //     ? 0
-                    //     : fav.favProductModel[index]?.isFav ?? 0,
-                  ),
-                )),
+        pageBuilder: (context, index) => Container(
+          child: ListView.builder(
+              padding: EdgeInsets.only(
+                  left: SizeConfig.blockSizeHorizontal * .5,
+                  top: SizeConfig.blockSizeVertical * 2),
+              itemCount: newArrivalsList[index]?.products?.length ?? 0,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (ctx, index) => GestureDetector(
+                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                        settings: RouteSettings(
+                            name: ProductDetails.routeName,
+                            arguments: {
+                              'product_id':
+                                  newArrivalsList[0].products[index].id
+                            }),
+                        screen: ProductDetails(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            tab.PageTransitionAnimation.fade),
+                    child: ProductItem(
+                      productId: newArrivalsList[0]?.products[index]?.id ?? 0,
+                      productName:
+                          newArrivalsList[0]?.products[index]?.name ?? '',
+                      imgUrl:
+                          newArrivalsList[0]?.products[index]?.mainImg ?? '',
+                      categoryName:
+                          newArrivalsList[0]?.products[index]?.category?.name ??
+                              '',
+                      productPrice:
+                          newArrivalsList[0]?.products[index]?.price ?? 0.0,
+                      productPriceAfter: newArrivalsList[0]
+                              ?.products[index]
+                              ?.offer
+                              ?.afterPrice ??
+                          0.0,
+                      offer: newArrivalsList[0]?.products[index]?.offer ?? "",
+                      onAddToCart: () {
+                        final cart =
+                            Provider.of<CartViewModel>(context, listen: false);
+                        final productCart = ProductCart(
+                            id: newArrivalsList[0]?.products[index].id,
+                            name: newArrivalsList[0]?.products[index].name,
+                            mainImg:
+                                newArrivalsList[0]?.products[index].mainImg,
+                            price: newArrivalsList[0]?.products[index].price,
+                            priceAfterDiscount: newArrivalsList[0]
+                                    ?.products[index]
+                                    .offer
+                                    ?.afterPrice ??
+                                newArrivalsList[0]?.products[index].price,
+                            categoryName: newArrivalsList[0]
+                                ?.products[index]
+                                .category
+                                .name,
+                            quantity: 1,
+                            availability: newArrivalsList[0]
+                                ?.products[index]
+                                .availability,
+                            colorSpecValue: '',
+                            sizeSpecValue: '');
+                        cart.addProductToCart(productCart);
+                      },
+                      onAddToFavorite: () {
+                        final productFav = ProductFav(
+                            id: newArrivalsList[0]?.products[index].id,
+                            name: newArrivalsList[0]?.products[index].name,
+                            mainImg:
+                                newArrivalsList[0]?.products[index].mainImg,
+                            price: newArrivalsList[0]?.products[index].price,
+                            categoryName: newArrivalsList[0]
+                                ?.products[index]
+                                .category
+                                .name,
+                            isFav: 1);
+                        fav.addProductToFav(productFav);
+                      },
+                      // fav.favProductModel.length == 0 ||
+                      //         fav.favProductModel == null
+                      //     ? 0
+                      //     : fav.favProductModel[index]?.isFav ?? 0,
+                    ),
+                  )),
+        ),
         onPositionChange: (index) {
           initPosition = index;
         },
@@ -165,29 +182,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget topSellingWidgets(BuildContext context) {
     final fav = Provider.of<FavViewModel>(context, listen: false);
-    ScreenUtil.init(context,
-        allowFontScaling: false,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height);
+    // ScreenUtil.init(context,
+    //     allowFontScaling: false,
+    //     width: MediaQuery.of(context).size.width,
+    //     height: MediaQuery.of(context).size.height);
+    // return InfoWidget(
+    //   builder: (context, deviceInfo) {
     return Padding(
       padding: EdgeInsets.only(
-          right: ScreenUtil().setWidth(8), left: ScreenUtil().setWidth(8)),
+          right: SizeConfig.blockSizeHorizontal * 2,
+          left: SizeConfig.blockSizeHorizontal * 2),
       child: CustomTabView(
         initPosition: initPosition,
         itemCount: topSellingList?.length ?? 0,
         tabBuilder: (context, index) => Tab(
           child: Text(topSellingList[index].name,
-              style: TextStyle(
-                fontFamily: 'Poppins',
+              // style: TextStyle(
+              //   fontFamily: 'Poppins',
+              //   fontWeight: FontWeight.w700,
+              // ),
+              style: GoogleFonts.poppins(
                 fontWeight: FontWeight.w700,
+                fontSize: SizeConfig.safeBlockHorizontal * 3,
               ),
               textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
         ),
         pageBuilder: (context, index) => Container(
           child: ListView.builder(
               padding: EdgeInsets.only(
-                right: ScreenUtil().setWidth(5),
-                top: ScreenUtil().setHeight(5),
+                right: SizeConfig.blockSizeHorizontal * .5,
+                top: SizeConfig.blockSizeVertical * 1,
               ),
               itemCount: topSellingList[index]?.products?.length ?? 0,
               scrollDirection: Axis.horizontal,
@@ -266,10 +290,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(context,
-        allowFontScaling: false,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height);
+    SizeConfig().init(context);
+    // var mediaQueryData = MediaQuery.of(context);
+    // double screenHeight = MediaQuery.of(context).size.height;
+    // double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerLayout(),
@@ -282,88 +306,103 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircularProgressIndicator(),
             )
           : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  hotDealsList.length == 0 || hotDealsList.length == null
-                      ? Container()
-                      : Container(
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Container(
-                                  padding: EdgeInsets.only(
-                                      top: ScreenUtil().setHeight(10)),
-                                  child: Text(
-                                    "Hot Deals",
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.2,
-                                    style: TextStyle(
-                                        //   fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xff294794)),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      spreadRadius: 1,
-                                      blurRadius: 5,
-                                      // changes position of shadow
+              child: Container(
+                // height: MediaQuery.of(context).size.height,
+                // width: double.infinity,
+                // height: SizeConfig.blockSizeVertical * 100,
+                // width: SizeConfig.blockSizeHorizontal * 100,
+                // child: InfoWidget(
+                //   builder: (context, deviceInfo) {
+                //     return
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    hotDealsList.length == 0 || hotDealsList.length == null
+                        ? Container()
+                        : Container(
+                            width: SizeConfig.blockSizeHorizontal * 100,
+                            height: SizeConfig.blockSizeVertical * 38,
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: Container(
+                                    padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 1,
                                     ),
-                                  ],
-                                ),
-                                padding: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(5),
-                                ),
-                                height: ScreenUtil().setHeight(
-                                    MediaQuery.of(context).size.height * .3),
-                                width: double.infinity,
-                                child: CarouselSlider.builder(
-                                  itemCount: hotDealsList.length,
-                                  itemBuilder: (ctx, index) {
-                                    return GestureDetector(
-                                      onTap: () => Navigator.of(context)
-                                          .pushNamed(ProductDetails.routeName),
-                                      child: HotDealsItem(
-                                          id: hotDealsList[index].id,
-                                          itemText: hotDealsList[index].name,
-                                          imgUrl:
-                                              hotDealsList[index].offer.image),
-                                    );
-                                  },
-                                  options: CarouselOptions(
-                                    aspectRatio: 16 / 9,
-                                    viewportFraction: 1,
-                                    initialPage: 0,
-                                    enableInfiniteScroll: true,
-                                    reverse: false,
-                                    autoPlay: true,
-                                    autoPlayInterval: Duration(seconds: 3),
-                                    autoPlayAnimationDuration:
-                                        Duration(milliseconds: 800),
-                                    autoPlayCurve: Curves.fastOutSlowIn,
-                                    enlargeCenterPage: true,
-                                    scrollDirection: Axis.horizontal,
+                                    child: Text(
+                                      "Hot Deals",
+                                      textScaleFactor: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          1.6,
+                                      // style: TextStyle(
+                                      //     //   fontWeight: FontWeight.bold,
+                                      //     fontSize: 20,
+                                      //     fontFamily: 'Poppins',
+                                      //     fontWeight: FontWeight.w700,
+                                      //     color: Color(0xff294794)
+                                      style: GoogleFonts.poppins(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                        color: Color(0xff294794),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.2),
+                                        spreadRadius: 1,
+                                        blurRadius: 5,
+                                        // changes position of shadow
+                                      ),
+                                    ],
+                                  ),
+                                  margin: EdgeInsets.only(
+                                    top: SizeConfig.blockSizeVertical * .1,
+                                  ),
+                                  height: SizeConfig.blockSizeVertical * 28,
+                                  width: SizeConfig.blockSizeHorizontal * 100,
+                                  child: CarouselSlider.builder(
+                                    itemCount: hotDealsList.length,
+                                    itemBuilder: (ctx, index) {
+                                      return GestureDetector(
+                                        onTap: () => Navigator.of(context)
+                                            .pushNamed(
+                                                ProductDetails.routeName),
+                                        child: HotDealsItem(
+                                            id: hotDealsList[index].id,
+                                            itemText: hotDealsList[index].name,
+                                            imgUrl: hotDealsList[index]
+                                                .offer
+                                                .image),
+                                      );
+                                    },
+                                    options: CarouselOptions(
+                                      aspectRatio: 16 / 9,
+                                      viewportFraction: 1,
+                                      initialPage: 0,
+                                      enableInfiniteScroll: true,
+                                      reverse: false,
+                                      autoPlay: true,
+                                      autoPlayInterval: Duration(seconds: 3),
+                                      autoPlayAnimationDuration:
+                                          Duration(milliseconds: 800),
+                                      autoPlayCurve: Curves.fastOutSlowIn,
+                                      enlargeCenterPage: true,
+                                      scrollDirection: Axis.horizontal,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                  collectionsList.length == 0 || collectionsList.length == null
-                      ? Container()
-                      : Container(
-                          padding: EdgeInsets.only(
-                            top: ScreenUtil().setHeight(10),
-                          ),
-                          child: Column(
+                    collectionsList.length == 0 ||
+                            collectionsList.length == null
+                        ? Container()
+                        : Column(
                             children: [
                               Container(
                                 child: Center(
@@ -371,22 +410,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Text(
                                       "Collections",
                                       textScaleFactor:
-                                          ScreenUtil.textScaleFactor * 1.2,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'Poppins',
+                                          MediaQuery.textScaleFactorOf(
+                                                  context) *
+                                              1.5,
+                                      // style: TextStyle(
+                                      //     fontSize: 18,
+                                      //     fontFamily: 'Poppins',
+                                      //     fontWeight: FontWeight.w700,
+                                      //     color: Color(0xff294794)
+                                      // ),
+                                      style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  4,
                                           color: Color(0xff294794)),
                                     ),
                                   ),
                                 ),
                               ),
                               Container(
-                                padding: EdgeInsets.only(
-                                    top: ScreenUtil().setHeight(10),
-                                    left: ScreenUtil().setWidth(10)),
-                                height: ScreenUtil().setHeight(
-                                    MediaQuery.of(context).size.height * .3),
+                                margin: EdgeInsets.only(
+                                  top: SizeConfig.blockSizeVertical * .2,
+                                  left: SizeConfig.blockSizeHorizontal * 2,
+                                ),
+                                height: SizeConfig.blockSizeVertical * 22,
+                                //    width: deviceInfo.localWidth * .2,
                                 child: ListView.builder(
                                     itemCount: collectionsList.length,
                                     scrollDirection: Axis.horizontal,
@@ -415,69 +464,91 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 collectionsList[index].name,
                                             imgUrl: collectionsList[index]
                                                 .imageBanner,
+                                            // width: SizeConfig
+                                            //         .blockSizeHorizontal *
+                                            //     100,
+                                            // height: SizeConfig
+                                            //         .blockSizeVertical *
+                                            //     100,
                                           ),
                                         )),
                               ),
                             ],
                           ),
-                        ),
-                  newArrivalsList.length == 0 || newArrivalsList.length == null
-                      ? Container()
-                      : Container(
-                          padding: EdgeInsets.only(left: 10),
-                          child: Column(
-                            children: [
-                              Center(
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      top: ScreenUtil().setHeight(10)),
-                                  child: Text(
-                                    " New Arrivals",
-                                    textScaleFactor:
-                                        ScreenUtil.textScaleFactor * 1.3,
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w700,
-                                        color: Color(0xff294794)),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                  height: ScreenUtil().setHeight(
-                                      MediaQuery.of(context).size.height * .45),
-                                  child: tabsWidgets(context)),
-                            ],
-                          ),
-                        ),
-                  topSellingList.length == 0 || topSellingList.length == null
-                      ? Container()
-                      : Container(
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Center(
+                    newArrivalsList.length == 0 ||
+                            newArrivalsList.length == null
+                        ? Container()
+                        : Container(
+                            padding: EdgeInsets.only(
+                                left: SizeConfig.blockSizeHorizontal * 1),
+                            child: Column(
+                              children: [
+                                Center(
                                   child: Container(
+                                    margin: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * .1),
                                     child: Text(
-                                      "Top Selling ",
-                                      textScaleFactor:
-                                          ScreenUtil.textScaleFactor * 1.3,
-                                      style: TextStyle(
-                                          fontFamily: 'Poppins',
+                                      " New Arrivals",
+                                      textScaleFactor: MediaQuery.of(context)
+                                              .textScaleFactor *
+                                          1.3,
+                                      // style: TextStyle(
+                                      //     fontFamily: 'Poppins',
+                                      //     fontWeight: FontWeight.w700,
+                                      //     color: Color(0xff294794)),
+                                      style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  4,
                                           color: Color(0xff294794)),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: ScreenUtil().setHeight(
-                                      MediaQuery.of(context).size.height * .45),
-                                  child: topSellingWidgets(context)),
-                            ],
+                                Container(
+                                    height: SizeConfig.blockSizeVertical * 45,
+                                    child: tabsWidgets(context)),
+                              ],
+                            ),
                           ),
-                        ),
-                ],
+                    topSellingList.length == 0 || topSellingList.length == null
+                        ? Container()
+                        : Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Center(
+                                    child: Container(
+                                      child: Text(
+                                        "Top Selling ",
+                                        textScaleFactor: MediaQuery.of(context)
+                                                .textScaleFactor *
+                                            1.3,
+                                        // style: TextStyle(
+                                        //     fontFamily: 'Poppins',
+                                        //     fontWeight: FontWeight.w700,
+                                        //     color: Color(0xff294794)),
+                                        style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
+                                            color: Color(0xff294794)),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1),
+                                    height: SizeConfig.blockSizeVertical * 45,
+                                    child: topSellingWidgets(context)),
+                              ],
+                            ),
+                          ),
+                  ],
+                ),
               ),
             ),
     );
@@ -545,7 +616,7 @@ class CustomTabBar extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(color: Color(0xff3A559F)),
       child: Container(
-        height: ScreenUtil().setHeight(MediaQuery.of(context).size.height * .2),
+        height: MediaQuery.of(context).size.height * .2,
         width: double.infinity,
         child: Expanded(
             child: CustomTabBarButton(

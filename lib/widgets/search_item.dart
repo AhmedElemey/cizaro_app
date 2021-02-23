@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -136,19 +137,23 @@ class _SearchItemState extends State<SearchItem> {
   Widget build(BuildContext context) {
     checkFavItems(context);
     return Padding(
-      padding: EdgeInsets.only(left: 15, right: 15),
+      padding: EdgeInsets.only(
+        left: SizeConfig.blockSizeHorizontal * 5,
+        right: SizeConfig.blockSizeHorizontal * 5,
+      ),
       child: Card(
         elevation: 3,
         child: Container(
-          height: MediaQuery.of(context).size.height * .15,
-          margin: const EdgeInsets.only(top: 5, bottom: 5),
+          height: SizeConfig.blockSizeVertical * 15,
+          margin: EdgeInsets.all(SizeConfig.blockSizeVertical * .5),
           //width: MediaQuery.of(context).size.width * .1,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.network(
                 widget.imgUrl,
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: SizeConfig.blockSizeHorizontal * 20,
+                height: SizeConfig.blockSizeVertical * 15,
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -163,53 +168,82 @@ class _SearchItemState extends State<SearchItem> {
                 },
               ),
               Container(
-                padding: const EdgeInsets.only(left: 5),
-                width: MediaQuery.of(context).size.width * .57,
+                padding: EdgeInsets.only(
+                    left: SizeConfig.blockSizeHorizontal * 5,
+                    top: SizeConfig.blockSizeVertical * 1),
+                width: SizeConfig.blockSizeHorizontal * 65,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.productName,
                       textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.5,
+                          MediaQuery.of(context).textScaleFactor * 1.4,
+                      style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                      ),
                     ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: SizeConfig.blockSizeVertical * .5),
                     Text(
                       widget.productCategory ?? '',
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 1.1,
+                      style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                      ),
                     ),
 
                     widget.productPriceAfter == widget.productPrice
                         ? Container(
-                            padding: EdgeInsets.only(right: 10, top: 10),
+                            padding: EdgeInsets.only(
+                                right: SizeConfig.blockSizeHorizontal * .10,
+                                top: SizeConfig.blockSizeVertical * .10),
                             child: Text(widget.productPrice.toString() + ' LE',
+                                style: TextStyle(
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 3.5,
+                                ),
                                 textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor * 1),
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.1),
                           )
                         : Container(
                             child: Row(
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.only(top: 5, right: 5),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * .05,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                       widget.productPrice.toString() + ' LE',
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
-                                          1,
-                                      style: const TextStyle(
+                                          1.1,
+                                      style: TextStyle(
                                           color: Colors.red,
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  3.5,
                                           decoration:
                                               TextDecoration.lineThrough)),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(top: 5, right: 5),
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * .05,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * .05),
                                   child: Text(
                                       widget.productPriceAfter.toString() +
                                           ' LE',
+                                      style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal *
+                                                3.5,
+                                      ),
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
-                                          1),
+                                          1.1),
                                 )
                               ],
                             ),
@@ -222,7 +256,6 @@ class _SearchItemState extends State<SearchItem> {
                     //         MediaQuery.of(context).textScaleFactor * 1.1,
                     //   ),
                     // ),
-                    Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -259,16 +292,15 @@ class _SearchItemState extends State<SearchItem> {
                         //     },
                         //     child: Icon(Icons.favorite_border,
                         //         size: 25, color: Color(0xff707070))),
-                        const SizedBox(width: 8),
+                        SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
                         GestureDetector(
                             onTap: () {
                               widget.onAddToCart();
                               showCartToast();
                             },
                             child: SvgPicture.asset('assets/images/cart.svg',
-                                width: MediaQuery.of(context).size.width * 0.04,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.035))
+                                width: SizeConfig.blockSizeHorizontal * 4,
+                                height: SizeConfig.blockSizeHorizontal * 5))
                       ],
                     )
                   ],

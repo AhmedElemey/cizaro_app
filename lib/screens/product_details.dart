@@ -310,6 +310,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 30, top: 5),
+                    child: Divider(
+                        height: MediaQuery.of(context).size.height * .001,
+                        color: Color(0xff727C8E)),
+                  ),
                   Container(
                     padding: EdgeInsets.only(left: 20, top: 15),
                     child: Row(
@@ -507,6 +513,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, right: 30, top: 5),
+                    child: Divider(
+                        height: MediaQuery.of(context).size.height * .001,
+                        color: Color(0xff727C8E)),
                   ),
                   Container(
                     padding: const EdgeInsets.only(top: 10, left: 15),

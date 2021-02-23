@@ -5,6 +5,7 @@ import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -125,24 +126,30 @@ class _SearchScreenState extends State<SearchScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 10, top: 10),
+                          padding: EdgeInsets.only(left: 20, top: 10),
                           child: Text(
                             "Filter By :",
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 2,
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 10),
+                          padding: const EdgeInsets.only(top: 10, left: 20),
                           child: Row(
                             children: [
                               Text(
-                                "Filter By Brands :",
+                                "Filter By Brand :",
                                 textScaleFactor:
                                     MediaQuery.of(context).textScaleFactor *
                                         1.3,
+                                style: TextStyle(
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 3.5,
+                                ),
                               ),
-
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: FutureBuilder(
@@ -187,40 +194,40 @@ class _SearchScreenState extends State<SearchScreen> {
                                             ));
                                     }),
                               ),
-
-                              // FutureBuilder(
-                              //     future: getBrandData(),
-                              //     builder: (BuildContext context,
-                              //         AsyncSnapshot<List<brandData.Data>> snapshot) {
-                              //       if (snapshot.hasError)
-                              //         return {Text(snapshot.error.toString());}
-                              //       else{
-                              //         return Container(
-                              //         height: MediaQuery.of(context).size.height * .1,
-                              //         width: MediaQuery.of(context).size.width * .5,
-                              //         padding: EdgeInsets.only(top: 10, right: 40),
-                              //         child: DropdownButton(
-                              //           hint: Text("Select Brand "),
-                              //           value: valueBrand,
-                              //           dropdownColor: Colors.grey.shade400,
-                              //           items: snapshot.data?.map((brandData.Data e) {
-                              //             return DropdownMenuItem(
-                              //               child: Text(e.name),
-                              //               value: e.id,
-                              //             );
-                              //           }).toList(),
-                              //           onChanged: (value) {
-                              //             setState(() {
-                              //               valueBrand = value;
-                              //             });
-                              //           },
-                              //           isExpanded: true,
-                              //         ),
-                              //       );}
-                              //     }),
                             ],
                           ),
                         ),
+                        // FutureBuilder(
+                        //     future: getBrandData(),
+                        //     builder: (BuildContext context,
+                        //         AsyncSnapshot<List<brandData.Data>> snapshot) {
+                        //       if (snapshot.hasError)
+                        //         return {Text(snapshot.error.toString());}
+                        //       else{
+                        //         return Container(
+                        //         height: MediaQuery.of(context).size.height * .1,
+                        //         width: MediaQuery.of(context).size.width * .5,
+                        //         padding: EdgeInsets.only(top: 10, right: 40),
+                        //         child: DropdownButton(
+                        //           hint: Text("Select Brand "),
+                        //           value: valueBrand,
+                        //           dropdownColor: Colors.grey.shade400,
+                        //           items: snapshot.data?.map((brandData.Data e) {
+                        //             return DropdownMenuItem(
+                        //               child: Text(e.name),
+                        //               value: e.id,
+                        //             );
+                        //           }).toList(),
+                        //           onChanged: (value) {
+                        //             setState(() {
+                        //               valueBrand = value;
+                        //             });
+                        //           },
+                        //           isExpanded: true,
+                        //         ),
+                        //       );}
+                        //     }),
+
                         // Padding(
                         //   padding: const EdgeInsets.only(top: 10, left: 10),
                         //   child: Row(
@@ -256,9 +263,17 @@ class _SearchScreenState extends State<SearchScreen> {
                         //     ],
                         //   ),
                         // ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 30, right: 50, bottom: 5),
+                          child: Divider(
+                              height:
+                                  MediaQuery.of(context).size.height * .0001,
+                              color: Color(0xff727C8E)),
+                        ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.1,
-                          padding: EdgeInsets.only(top: 10, left: 10),
+                          height: MediaQuery.of(context).size.height * 0.07,
+                          padding: EdgeInsets.only(top: 5, left: 20),
                           child: Row(
                             children: [
                               Text(
@@ -266,6 +281,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                 textScaleFactor:
                                     MediaQuery.of(context).textScaleFactor *
                                         1.2,
+                                style: TextStyle(
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 3.5,
+                                ),
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.5,
@@ -282,8 +301,16 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, left: 30, right: 50, bottom: 5),
+                          child: Divider(
+                              height:
+                                  MediaQuery.of(context).size.height * .0001,
+                              color: Color(0xff727C8E)),
+                        ),
                         Container(
-                          padding: EdgeInsets.only(top: 10, left: 10),
+                          padding: EdgeInsets.only(top: 10, left: 20),
                           child: Row(
                             children: [
                               Text(
@@ -291,6 +318,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                 textScaleFactor:
                                     MediaQuery.of(context).textScaleFactor *
                                         1.2,
+                                style: TextStyle(
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 3.5,
+                                ),
                               ),
                               Container(
                                 padding: EdgeInsets.only(left: 30),
@@ -355,9 +386,11 @@ class _SearchScreenState extends State<SearchScreen> {
                   ? Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(left: 20, right: 10),
-                          height: MediaQuery.of(context).size.height * .1,
-                          //   width: MediaQuery.of(context).size.width * .9,
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 5,
+                              right: SizeConfig.blockSizeHorizontal * 5),
+                          height: SizeConfig.blockSizeVertical * 6,
+                          width: SizeConfig.blockSizeHorizontal * 99,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -370,8 +403,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                   children: [
                                     Text(
                                       productList?.length.toString() ?? '',
-                                      style:
-                                          TextStyle(color: Color(0xff3A559F)),
+                                      style: TextStyle(
+                                          color: Color(0xff3A559F),
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  4),
                                       textScaleFactor:
                                           MediaQuery.textScaleFactorOf(
                                                   context) *
@@ -383,6 +419,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                           MediaQuery.textScaleFactorOf(
                                                   context) *
                                               1.5,
+                                      style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  4),
                                     )
                                   ],
                                 ),
@@ -399,17 +439,17 @@ class _SearchScreenState extends State<SearchScreen> {
                                       },
                                       child: SvgPicture.asset(
                                         'assets/images/arrow.svg',
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.035,
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            3.5,
                                         height:
-                                            MediaQuery.of(context).size.height *
-                                                0.025,
+                                            SizeConfig.blockSizeVertical * 3,
                                         color: Colors.black,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 1),
+                                      padding: EdgeInsets.only(
+                                          left: SizeConfig.blockSizeHorizontal *
+                                              .03),
                                       child: GestureDetector(
                                         onTap: () =>
                                             displayBottomSheet(context),
@@ -485,14 +525,16 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 30)
+                        SizedBox(height: SizeConfig.blockSizeVertical * 5)
                       ],
                     )
                   : Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(left: 20, right: 10),
-                          height: MediaQuery.of(context).size.height * .1,
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * .20,
+                              right: SizeConfig.blockSizeHorizontal * .10),
+                          height: SizeConfig.blockSizeVertical * 6,
                           //   width: MediaQuery.of(context).size.width * .9,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -519,6 +561,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                           MediaQuery.textScaleFactorOf(
                                                   context) *
                                               1.5,
+                                      style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 3,
+                                      ),
                                     )
                                   ],
                                 ),
@@ -535,12 +581,10 @@ class _SearchScreenState extends State<SearchScreen> {
                                       },
                                       child: SvgPicture.asset(
                                         'assets/images/arrow.svg',
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.035,
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.025,
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            3.5,
+                                        height: SizeConfig.blockSizeHorizontal *
+                                            2.5,
                                         color: Colors.black,
                                       ),
                                     ),

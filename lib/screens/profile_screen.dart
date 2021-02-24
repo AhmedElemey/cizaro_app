@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
@@ -88,7 +90,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           preferredSize: const Size(double.infinity, kToolbarHeight),
         ),
         body: _isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: Platform.isIOS
+                    ? CupertinoActivityIndicator()
+                    : CircularProgressIndicator())
             : SingleChildScrollView(
                 child: Column(children: [
                 Container(

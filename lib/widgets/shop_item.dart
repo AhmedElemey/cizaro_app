@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -85,14 +87,17 @@ class _ShopItemState extends State<ShopItem> {
                       loadingBuilder: (BuildContext context, Widget child,
                           ImageChunkEvent loadingProgress) {
                         if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ),
-                        );
+                        return Platform.isAndroid
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes
+                                      : null,
+                                ),
+                              )
+                            : CupertinoActivityIndicator();
                       },
                     ),
                   ),

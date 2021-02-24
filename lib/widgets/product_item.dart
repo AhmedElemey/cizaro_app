@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cizaro_app/model/home.dart';
@@ -173,16 +174,20 @@ class _ProductItemState extends State<ProductItem> {
                                   Widget child,
                                   ImageChunkEvent loadingProgress) {
                                 if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes
-                                        : null,
-                                  ),
-                                );
+                                return Platform.isAndroid
+                                    ? Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes
+                                              : null,
+                                        ),
+                                      )
+                                    : CupertinoActivityIndicator();
                               },
                               width: SizeConfig.blockSizeHorizontal * 33,
                               height: SizeConfig.blockSizeVertical * 19,

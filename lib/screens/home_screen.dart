@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
@@ -305,8 +307,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
-            )
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               child: Container(
                 // height: MediaQuery.of(context).size.height,

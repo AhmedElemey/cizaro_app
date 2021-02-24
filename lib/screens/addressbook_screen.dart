@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/screens/add_address_screen.dart';
@@ -37,7 +39,6 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     if (this.mounted) setState(() => _isLoading = true);
     final getAddress = Provider.of<ListViewModel>(context, listen: false);
     String token = await getToken();
-    print(token);
     await getAddress.fetchAddresses(token).then((response) {
       addressModel = response;
       addressesList = addressModel.data;
@@ -45,6 +46,12 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     if (this.mounted) {
       setState(() => _isLoading = false);
     }
+  }
+
+  Future deleteAddressesData(int addressId) async {
+    final getAddress = Provider.of<ListViewModel>(context, listen: false);
+    String token = await getToken();
+    await getAddress.deleteAddress(token, addressId);
   }
 
   @override
@@ -66,7 +73,10 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
         physics: ScrollPhysics(),
         child: Container(
           child: _isLoading
-              ? Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: Platform.isIOS
+                      ? CupertinoActivityIndicator()
+                      : CircularProgressIndicator())
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -130,15 +140,36 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                         : Colors.white,
                                     onEdit: () =>
                                         pushNewScreenWithRouteSettings(context,
-                                            settings: RouteSettings(
-                                                arguments:
-                                                    addressesList[index].id,
-                                                name: EditAddressScreen
-                                                    .routeName),
+                                            settings: RouteSettings(arguments: {
+                                              'address_id':
+                                                  indexOfSelectedItemAddress,
+                                              'street_name':
+                                                  addressesList[index]
+                                                      .streetAddress,
+                                              'country_name':
+                                                  addressesList[index]
+                                                      .country
+                                                      .name,
+                                              'city_name': addressesList[index]
+                                                  .city
+                                                  .name,
+                                              'region_name':
+                                                  addressesList[index].region,
+                                              'phone_number':
+                                                  addressesList[index].phone,
+                                              'zip_code':
+                                                  addressesList[index].zipCode
+                                            }),
                                             screen: EditAddressScreen(),
                                             withNavBar: true,
                                             pageTransitionAnimation:
                                                 PageTransitionAnimation.fade),
+                                    onDelete: () {
+                                      deleteAddressesData(
+                                          addressesList[index].id);
+                                      setState(
+                                          () => addressesList.removeAt(index));
+                                    },
                                   ),
                                 )),
                     Row(

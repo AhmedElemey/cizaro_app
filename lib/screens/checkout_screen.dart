@@ -262,7 +262,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: Column(

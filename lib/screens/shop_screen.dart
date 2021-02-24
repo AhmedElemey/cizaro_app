@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -61,8 +63,9 @@ class _ShopScreenState extends State<ShopScreen> {
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
-            )
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: [

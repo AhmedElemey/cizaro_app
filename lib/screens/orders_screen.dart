@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:cizaro_app/model/order.dart';
 import 'package:cizaro_app/screens/order_details_screen.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +55,10 @@ class _OrderScreenState extends State<OrderScreen> {
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: Column(

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
@@ -172,8 +173,9 @@ class _ProductDetailsState extends State<ProductDetails> {
       drawer: DrawerLayout(),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
-            )
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: Column(
@@ -198,11 +200,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         fit: BoxFit.fitWidth,
                                         progressIndicatorBuilder: (context, url,
                                                 downloadProgress) =>
-                                            Center(
-                                                child:
-                                                    CircularProgressIndicator(
-                                                        value: downloadProgress
-                                                            .progress)),
+                                            Platform.isAndroid
+                                                ? Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress))
+                                                : Center(
+                                                    child:
+                                                        CupertinoActivityIndicator()),
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error)),
                                   ),
@@ -219,7 +226,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     padding: EdgeInsets.only(left: 15, top: 15),
                     child: Row(
                       children: [
-                        Text(productName ?? ''),
                         Text(productName ?? "",
                             textScaleFactor:
                                 MediaQuery.of(context).textScaleFactor * 1.5)

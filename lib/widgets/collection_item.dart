@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,14 +66,16 @@ class CollectionItem extends StatelessWidget {
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
-                  return Center(
-                    child: CircularProgressIndicator(
-                      value: loadingProgress.expectedTotalBytes != null
-                          ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
-                          : null,
-                    ),
-                  );
+                  return Platform.isAndroid
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ),
+                        )
+                      : CupertinoActivityIndicator();
                 },
                 width: SizeConfig.blockSizeHorizontal * 100,
                 height: SizeConfig.blockSizeVertical * 16,

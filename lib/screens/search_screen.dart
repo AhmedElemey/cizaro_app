@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/brandModel.dart' as brandData;
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
@@ -119,7 +121,10 @@ class _SearchScreenState extends State<SearchScreen> {
           return StatefulBuilder(builder: (BuildContext context,
               StateSetter setState /*You can rename this!*/) {
             return _isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? Center(
+                    child: Platform.isIOS
+                        ? CupertinoActivityIndicator()
+                        : CircularProgressIndicator())
                 : Container(
                     height: MediaQuery.of(context).size.height * .8,
                     child: Column(
@@ -379,7 +384,10 @@ class _SearchScreenState extends State<SearchScreen> {
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: filterList.length == 0
@@ -442,7 +450,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         width: SizeConfig.blockSizeHorizontal *
                                             3.5,
                                         height:
-                                            SizeConfig.blockSizeVertical * 3,
+                                            SizeConfig.blockSizeVertical * 2.5,
                                         color: Colors.black,
                                       ),
                                     ),
@@ -455,7 +463,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                             displayBottomSheet(context),
                                         child: Icon(
                                           Icons.filter_alt_outlined,
-                                          size: 30,
+                                          size:
+                                              SizeConfig.blockSizeVertical * 3,
                                         ),
                                       ),
                                     )
@@ -671,57 +680,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-// class Search extends SearchDelegate {
-//   @override
-//   List<Widget> buildActions(BuildContext context) {
-//     return <Widget>[
-//       IconButton(
-//           icon: Icon(Icons.close),
-//           onPressed: () {
-//             query = "";
-//           })
-//     ];
-//   }
-//
-//   @override
-//   Widget buildLeading(BuildContext context) {
-//     return IconButton(
-//         icon: Icon(Icons.arrow_back),
-//         onPressed: () {
-//           Navigator.pop(context);
-//         });
-//   }
-//
-//   String selectedResult;
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     return Container(
-//       child: Center(
-//         child: Text(selectedResult),
-//       ),
-//     );
-//   }
-//
-//   List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     List<String> suggestionList = [];
-//     query.isEmpty
-//         ? suggestionList = recentList
-//         : suggestionList
-//             .addAll(recentList.where((element) => element.contains(query)));
-//     return ListView.builder(
-//       itemCount: suggestionList.length,
-//       itemBuilder: (context, index) {
-//         return ListTile(
-//           title: Text(suggestionList[index]),
-//           onTap: () {
-//             selectedResult = suggestionList[index];
-//             showResults(context);
-//           },
-//         );
-//       },
-//     );
-//   }
-// }

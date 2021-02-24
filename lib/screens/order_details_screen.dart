@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/order_details.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/order_details_item.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,7 +78,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
         preferredSize: Size(MediaQuery.of(context).size.width, 150.0),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: _ordersList == null || _ordersList.length == 0

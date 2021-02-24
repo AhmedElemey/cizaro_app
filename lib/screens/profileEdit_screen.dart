@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/profileEditModel.dart' as Edit;
 import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -200,7 +203,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? Center(
+              child: Platform.isIOS
+                  ? CupertinoActivityIndicator()
+                  : CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: [

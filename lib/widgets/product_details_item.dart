@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -131,17 +132,19 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
     return Card(
       elevation: 3,
       child: Container(
-        height: MediaQuery.of(context).size.height * .95,
-        padding: EdgeInsets.only(left: 15),
+        padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 3),
         child: widget.discount == 0.0 || widget.discount == null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.network(
                     widget.imgUrl,
-                    width: MediaQuery.of(context).size.width * .3,
-                    height: MediaQuery.of(context).size.height * .18,
-                    fit: BoxFit.contain,
+                    width: SizeConfig.blockSizeHorizontal * 35,
+                    height: SizeConfig.blockSizeVertical * 16,
+                    fit: BoxFit.fill,
+                    // width: SizeConfig.blockSizeHorizontal * 20,
+                    // height: SizeConfig.blockSizeHorizontal * 18,
+                    // fit: BoxFit.fill,
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent loadingProgress) {
                       if (loadingProgress == null) return child;
@@ -156,26 +159,38 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                     },
                   ),
                   Container(
-                    padding: EdgeInsets.only(right: 15, top: 5),
+                    padding: EdgeInsets.only(
+                        right: SizeConfig.blockSizeHorizontal * 1,
+                        top: SizeConfig.blockSizeVertical * 1),
                     child: Text(
                       widget.productName,
+                      style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 4,
+                      ),
                       textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1,
+                          MediaQuery.of(context).textScaleFactor * 1.3,
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * .33,
+                    width: SizeConfig.blockSizeHorizontal * 33,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        widget.productPriceAfter == widget.productPrice
+                        widget.productPriceAfter == widget.productPrice ||
+                                widget.discount == 0
                             ? Container(
-                                padding: EdgeInsets.only(right: 10, top: 5),
+                                padding: EdgeInsets.only(
+                                    right: SizeConfig.blockSizeHorizontal * 1,
+                                    top: SizeConfig.blockSizeVertical * 1),
                                 child: Text(
                                   widget.productPrice.toString() + ' LE',
+                                  style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 3,
+                                  ),
                                   textScaleFactor:
                                       MediaQuery.of(context).textScaleFactor *
-                                          0.75,
+                                          1.2,
                                 ),
                               )
                             : Container(
@@ -189,21 +204,35 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                         widget.productPrice.toString() + ' LE',
                                         textScaleFactor: MediaQuery.of(context)
                                                 .textScaleFactor *
-                                            0.75,
+                                            1.2,
                                         style: TextStyle(
                                             color: Colors.red,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    3,
                                             decoration:
                                                 TextDecoration.lineThrough),
                                       ),
                                     ),
+                                    SizedBox(
+                                        width:
+                                            SizeConfig.blockSizeHorizontal * 3),
                                     Container(
-                                      padding: EdgeInsets.only(top: 5, left: 5),
+                                      padding: EdgeInsets.only(
+                                          top: SizeConfig.blockSizeVertical * 1,
+                                          left: SizeConfig.blockSizeHorizontal *
+                                              1),
                                       child: Text(
                                         widget.productPriceAfter.toString() +
                                             ' LE',
+                                        style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  3,
+                                        ),
                                         textScaleFactor: MediaQuery.of(context)
                                                 .textScaleFactor *
-                                            0.75,
+                                            1.2,
                                       ),
                                     )
                                   ],
@@ -219,8 +248,9 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 5),
-                    width: MediaQuery.of(context).size.width * .3,
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeHorizontal * 1),
+                    width: SizeConfig.blockSizeHorizontal * 30,
                     child: Row(
                       children: [
                         GestureDetector(
@@ -246,30 +276,62 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                         ),
                         Spacer(),
                         Container(
-                          width: MediaQuery.of(context).size.width * .12,
-                          height: MediaQuery.of(context).size.height * .03,
+                          height: SizeConfig.blockSizeVertical * 3,
+                          width: SizeConfig.blockSizeHorizontal * 12,
                           decoration: BoxDecoration(
                               color: Color(0xffFF6969),
                               borderRadius: BorderRadius.circular(20)),
-                          child: Row(
-                            children: [
-                              Container(
-                                child: Icon(
-                                  Icons.star,
-                                  size: 10,
-                                  color: Colors.white,
-                                ),
-                                padding: EdgeInsets.only(left: 5),
-                              ),
-                              Text(
-                                widget.productStar.toString(),
-                                style: TextStyle(color: Colors.white),
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor * 1,
-                              )
-                            ],
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.star,
+                                    size: SizeConfig.blockSizeHorizontal * 4,
+                                    color: Colors.white),
+                                SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * .3),
+                                Text(widget.productStar.toString() ?? 0.0,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 3,
+                                    ),
+                                    textScaleFactor:
+                                        MediaQuery.of(context).textScaleFactor *
+                                            1)
+                              ],
+                            ),
                           ),
                         ),
+                        // Container(
+                        //   width: SizeConfig.blockSizeHorizontal * 12,
+                        //   height: SizeConfig.blockSizeHorizontal * 3,
+                        //   decoration: BoxDecoration(
+                        //       color: Color(0xffFF6969),
+                        //       borderRadius: BorderRadius.circular(20)),
+                        //   child: Row(
+                        //     children: [
+                        //       Container(
+                        //         child: Icon(
+                        //           Icons.star,
+                        //           size: SizeConfig.blockSizeHorizontal * 1,
+                        //           color: Colors.white,
+                        //         ),
+                        //         padding: EdgeInsets.only(
+                        //             left: SizeConfig.blockSizeHorizontal * 1),
+                        //       ),
+                        //       Text(
+                        //         widget.productStar.toString(),
+                        //         style: TextStyle(
+                        //           color: Colors.white,
+                        //           fontSize: SizeConfig.safeBlockHorizontal * 3,
+                        //         ),
+                        //         textScaleFactor:
+                        //             MediaQuery.of(context).textScaleFactor * 1,
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         Spacer(),
                         GestureDetector(
                           onTap: () {
@@ -278,9 +340,8 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                           },
                           child: Container(
                             child: SvgPicture.asset('assets/images/cart.svg',
-                                width: MediaQuery.of(context).size.width * 0.03,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
+                                width: SizeConfig.blockSizeHorizontal * 3,
+                                height: SizeConfig.blockSizeVertical * 3,
                                 color: Colors.grey[900]),
                           ),
                         ),
@@ -300,9 +361,9 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                     children: [
                       Image.network(
                         widget.imgUrl,
-                        width: MediaQuery.of(context).size.width * .3,
-                        height: MediaQuery.of(context).size.height * .18,
-                        fit: BoxFit.contain,
+                        width: SizeConfig.blockSizeHorizontal * 35,
+                        height: SizeConfig.blockSizeVertical * 16,
+                        fit: BoxFit.fill,
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -317,26 +378,38 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                         },
                       ),
                       Container(
-                        padding: EdgeInsets.only(right: 15, top: 5),
+                        padding: EdgeInsets.only(
+                            right: SizeConfig.blockSizeHorizontal * 1,
+                            top: SizeConfig.blockSizeVertical * .5),
                         child: Text(
                           widget.productName,
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                          ),
                           textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
+                              MediaQuery.of(context).textScaleFactor * 1.3,
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * .33,
+                        width: SizeConfig.blockSizeHorizontal * 33,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             widget.productPriceAfter == widget.productPrice
                                 ? Container(
-                                    padding: EdgeInsets.only(right: 10, top: 5),
+                                    padding: EdgeInsets.only(
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 1,
+                                        top: SizeConfig.blockSizeVertical * 1),
                                     child: Text(
                                       widget.productPrice.toString() + ' LE',
+                                      style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 3,
+                                      ),
                                       textScaleFactor: MediaQuery.of(context)
                                               .textScaleFactor *
-                                          0.75,
+                                          .75,
                                     ),
                                   )
                                 : Container(
@@ -353,24 +426,41 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                               textScaleFactor:
                                                   MediaQuery.of(context)
                                                           .textScaleFactor *
-                                                      0.75,
+                                                      1.2,
                                               style: TextStyle(
                                                   color: Colors.red,
+                                                  fontSize: SizeConfig
+                                                          .safeBlockHorizontal *
+                                                      3,
                                                   decoration: TextDecoration
                                                       .lineThrough),
                                             ),
                                           ),
+                                          SizedBox(
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  2),
                                           Container(
                                             padding: EdgeInsets.only(
-                                                top: 5, left: 5),
+                                                top: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    1,
+                                                left: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    1),
                                             child: Text(
                                               widget.productPriceAfter
                                                       .toString() +
                                                   ' LE',
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    3,
+                                              ),
                                               textScaleFactor:
                                                   MediaQuery.of(context)
                                                           .textScaleFactor *
-                                                      0.75,
+                                                      1.2,
                                             ),
                                           )
                                         ],
@@ -387,8 +477,9 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 5),
-                        width: MediaQuery.of(context).size.width * .3,
+                        padding: EdgeInsets.only(
+                            top: SizeConfig.blockSizeVertical * 1),
+                        width: SizeConfig.blockSizeHorizontal * 30,
                         child: Row(
                           children: [
                             GestureDetector(
@@ -415,31 +506,69 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                             ),
                             Spacer(),
                             Container(
-                              width: MediaQuery.of(context).size.width * .12,
-                              height: MediaQuery.of(context).size.height * .03,
+                              height: SizeConfig.blockSizeVertical * 3,
+                              width: SizeConfig.blockSizeHorizontal * 12,
                               decoration: BoxDecoration(
                                   color: Color(0xffFF6969),
                                   borderRadius: BorderRadius.circular(20)),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    child: Icon(
-                                      Icons.star,
-                                      size: 10,
-                                      color: Colors.white,
-                                    ),
-                                    padding: EdgeInsets.only(left: 5),
-                                  ),
-                                  Text(
-                                    widget.productStar.toString(),
-                                    style: TextStyle(color: Colors.white),
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1,
-                                  )
-                                ],
+                              child: Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.star,
+                                        size:
+                                            SizeConfig.blockSizeHorizontal * 4,
+                                        color: Colors.white),
+                                    SizedBox(
+                                        width: SizeConfig.blockSizeHorizontal *
+                                            .3),
+                                    Text(widget.productStar.toString() ?? 0.0,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  3,
+                                        ),
+                                        textScaleFactor: MediaQuery.of(context)
+                                                .textScaleFactor *
+                                            1)
+                                  ],
+                                ),
                               ),
-                            ),
+                            )
+                            // Container(
+                            //   width: SizeConfig.blockSizeHorizontal * 12,
+                            //   height: SizeConfig.blockSizeVertical * 3,
+                            //   decoration: BoxDecoration(
+                            //       color: Color(0xffFF6969),
+                            //       borderRadius: BorderRadius.circular(20)),
+                            //   child: Row(
+                            //     children: [
+                            //       Container(
+                            //         child: Icon(
+                            //           Icons.star,
+                            //           size: SizeConfig.blockSizeHorizontal * 1,
+                            //           color: Colors.white,
+                            //         ),
+                            //         padding: EdgeInsets.only(
+                            //             left:
+                            //                 SizeConfig.blockSizeHorizontal * 1),
+                            //       ),
+                            //       Text(
+                            //         widget.productStar.toString(),
+                            //         style: TextStyle(
+                            //           color: Colors.white,
+                            //           fontSize:
+                            //               SizeConfig.safeBlockHorizontal * 3,
+                            //         ),
+                            //         textScaleFactor:
+                            //             MediaQuery.of(context).textScaleFactor *
+                            //                 1,
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            ,
                             Spacer(),
                             GestureDetector(
                               onTap: () {
@@ -449,10 +578,8 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                               child: Container(
                                 child: SvgPicture.asset(
                                     'assets/images/cart.svg',
-                                    width: MediaQuery.of(context).size.width *
-                                        0.03,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.03,
+                                    width: SizeConfig.blockSizeHorizontal * 5,
+                                    height: SizeConfig.blockSizeHorizontal * 5,
                                     color: Colors.grey[900]),
                               ),
                             ),
@@ -464,30 +591,31 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                   Positioned(
                     child: SvgPicture.asset(
                       'assets/images/offer.svg',
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      height: MediaQuery.of(context).size.height * 0.1,
+                      width: SizeConfig.blockSizeHorizontal * 11,
+                      height: SizeConfig.blockSizeVertical * 11,
                     ),
-                    top: -MediaQuery.of(context).size.height * 0.01,
-                    left: -MediaQuery.of(context).size.width * 0.01,
+                    top: -SizeConfig.blockSizeVertical * 1,
+                    left: -SizeConfig.blockSizeHorizontal * 1,
                   ),
                   Positioned(
-                      child: Transform.rotate(
-                        angle: -pi / 4,
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: Text(
-                            widget.discount.toString() + " %",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 0.9,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    child: Transform.rotate(
+                      angle: -pi / 4,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: SizeConfig.safeBlockVertical * .4),
+                        child: Text(
+                          widget.discount.toString() + "%",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: SizeConfig.safeBlockVertical * 2.3,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                      top: MediaQuery.of(context).size.height * 0.017,
-                      right: MediaQuery.of(context).size.width * 0.19)
+                    ),
+                    top: 1 * SizeConfig.blockSizeVertical,
+                    left: 1 * SizeConfig.blockSizeHorizontal,
+                  )
                 ],
               ),
       ),

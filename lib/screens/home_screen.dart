@@ -196,16 +196,18 @@ class _HomeScreenState extends State<HomeScreen> {
         initPosition: initPosition,
         itemCount: topSellingList?.length ?? 0,
         tabBuilder: (context, index) => Tab(
-          child: Text(topSellingList[index].name,
-              // style: TextStyle(
-              //   fontFamily: 'Poppins',
-              //   fontWeight: FontWeight.w700,
-              // ),
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w700,
-                fontSize: SizeConfig.safeBlockHorizontal * 3,
-              ),
-              textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3),
+          child: Text(
+            topSellingList[index].name,
+            // style: TextStyle(
+            //   fontFamily: 'Poppins',
+            //   fontWeight: FontWeight.w700,
+            // ),
+            style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w700,
+              fontSize: SizeConfig.safeBlockHorizontal * 3,
+            ),
+            // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3
+          ),
         ),
         pageBuilder: (context, index) => Container(
           child: ListView.builder(
@@ -331,9 +333,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     child: Text(
                                       "Hot Deals",
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1.6,
+                                      // textScaleFactor: MediaQuery.of(context)
+                                      //         .textScaleFactor *
+                                      //     1.6,
                                       // style: TextStyle(
                                       //     //   fontWeight: FontWeight.bold,
                                       //     fontSize: 20,
@@ -343,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w700,
                                         fontSize:
-                                            SizeConfig.safeBlockHorizontal * 4,
+                                            SizeConfig.safeBlockHorizontal * 5,
                                         color: Color(0xff294794),
                                       ),
                                     ),
@@ -409,10 +411,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: Container(
                                     child: Text(
                                       "Collections",
-                                      textScaleFactor:
-                                          MediaQuery.textScaleFactorOf(
-                                                  context) *
-                                              1.5,
+                                      // textScaleFactor:
+                                      //     MediaQuery.textScaleFactorOf(
+                                      //             context) *
+                                      //         1.5,
                                       // style: TextStyle(
                                       //     fontSize: 18,
                                       //     fontFamily: 'Poppins',
@@ -423,7 +425,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fontWeight: FontWeight.w700,
                                           fontSize:
                                               SizeConfig.safeBlockHorizontal *
-                                                  4,
+                                                  5,
                                           color: Color(0xff294794)),
                                     ),
                                   ),
@@ -489,9 +491,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         top: SizeConfig.blockSizeVertical * .1),
                                     child: Text(
                                       " New Arrivals",
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1.3,
+                                      // textScaleFactor: MediaQuery.of(context)
+                                      //         .textScaleFactor *
+                                      //     1.3,
                                       // style: TextStyle(
                                       //     fontFamily: 'Poppins',
                                       //     fontWeight: FontWeight.w700,
@@ -500,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           fontWeight: FontWeight.w700,
                                           fontSize:
                                               SizeConfig.safeBlockHorizontal *
-                                                  4,
+                                                  5,
                                           color: Color(0xff294794)),
                                     ),
                                   ),
@@ -521,9 +523,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Container(
                                       child: Text(
                                         "Top Selling ",
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1.3,
+                                        // textScaleFactor: MediaQuery.of(context)
+                                        //         .textScaleFactor *
+                                        //     1.3,
                                         // style: TextStyle(
                                         //     fontFamily: 'Poppins',
                                         //     fontWeight: FontWeight.w700,
@@ -532,7 +534,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             fontWeight: FontWeight.w700,
                                             fontSize:
                                                 SizeConfig.safeBlockHorizontal *
-                                                    4,
+                                                    5,
                                             color: Color(0xff294794)),
                                       ),
                                     ),

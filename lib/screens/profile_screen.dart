@@ -127,13 +127,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       left: SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                     userName ?? "",
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            2,
+                                    // textScaleFactor:
+                                    //     MediaQuery.of(context).textScaleFactor *
+                                    //         2,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize:
-                                            SizeConfig.safeBlockHorizontal * 3,
+                                            SizeConfig.safeBlockHorizontal * 6,
                                         color: Color(0xff515C6F)),
                                   ),
                                 ),
@@ -142,13 +142,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       left: SizeConfig.blockSizeVertical * 3),
                                   child: Text(
                                     userEmail ?? "",
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.3,
+                                    // textScaleFactor:
+                                    //     MediaQuery.of(context).textScaleFactor *
+                                    //         1.3,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize:
-                                            SizeConfig.safeBlockHorizontal * 3,
+                                            SizeConfig.safeBlockHorizontal * 5,
                                         color: Color(0xff515C6F)),
                                   ),
                                 ),
@@ -206,11 +206,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: Center(
                                       child: Text(
                                         "Edit Profile",
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1.4,
+                                        // textScaleFactor: MediaQuery.of(context)
+                                        //         .textScaleFactor *
+                                        //     1.4,
                                         style: TextStyle(
                                             color: Colors.white,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    5,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -282,17 +285,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   4),
-                                          child: Text("All My Orders",
-                                              style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
-                                              ),
-                                              textScaleFactor:
-                                                  MediaQuery.textScaleFactorOf(
-                                                          context) *
-                                                      1.5),
+                                          child: Text(
+                                            "All My Orders",
+                                            style: GoogleFonts.poppins(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                            // textScaleFactor:
+                                            //     MediaQuery.textScaleFactorOf(
+                                            //             context) *
+                                            //         1.5
+                                          ),
                                         ),
                                         Spacer(),
                                         CircleAvatar(
@@ -300,7 +305,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],
@@ -352,16 +359,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   3),
-                                          child: Text("Pending Shipments",
-                                              style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
-                                              ),
-                                              textScaleFactor:
-                                                  MediaQuery.textScaleFactorOf(
-                                                          context) *
-                                                      1.5),
+                                          child: Text(
+                                            "Pending Shipments",
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                            // textScaleFactor:
+                                            //     MediaQuery.textScaleFactorOf(
+                                            //             context) *
+                                            //         1.5
+                                          ),
                                         ),
                                         Spacer(),
                                         CircleAvatar(
@@ -369,7 +378,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],
@@ -409,10 +420,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               'assets/images/finished.svg',
                                               width: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  6,
+                                                  7,
                                               height: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  6,
+                                                  7,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
@@ -420,23 +431,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 left: SizeConfig
                                                         .blockSizeHorizontal *
                                                     5),
-                                            child: Text("Address Book ",
-                                                style: TextStyle(
-                                                  fontSize: SizeConfig
-                                                          .safeBlockHorizontal *
-                                                      3,
-                                                ),
-                                                textScaleFactor: MediaQuery
-                                                        .textScaleFactorOf(
-                                                            context) *
-                                                    1.5)),
+                                            child: Text(
+                                              "Address Book ",
+                                              style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    5,
+                                              ),
+                                              // textScaleFactor: MediaQuery
+                                              //         .textScaleFactorOf(
+                                              //             context) *
+                                              //     1.5
+                                            )),
                                         Spacer(),
                                         CircleAvatar(
                                           radius: 10,
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],
@@ -505,16 +520,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   3),
-                                          child: Text("Wish list",
-                                              style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
-                                              ),
-                                              textScaleFactor:
-                                                  MediaQuery.textScaleFactorOf(
-                                                          context) *
-                                                      1.5),
+                                          child: Text(
+                                            "Wish list",
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                            // textScaleFactor:
+                                            //     MediaQuery.textScaleFactorOf(
+                                            //             context) *
+                                            //         1.5
+                                          ),
                                         ),
                                         Spacer(),
                                         CircleAvatar(
@@ -522,7 +539,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],
@@ -571,16 +590,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   3),
-                                          child: Text("Polices and terms",
-                                              style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
-                                              ),
-                                              textScaleFactor:
-                                                  MediaQuery.textScaleFactorOf(
-                                                          context) *
-                                                      1.5),
+                                          child: Text(
+                                            "Polices and terms",
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                            // textScaleFactor:
+                                            //     MediaQuery.textScaleFactorOf(
+                                            //             context) *
+                                            //         1.5
+                                          ),
                                         ),
                                         Spacer(),
                                         CircleAvatar(
@@ -588,7 +609,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],
@@ -640,16 +663,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   3),
-                                          child: Text("About us",
-                                              style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
-                                              ),
-                                              textScaleFactor:
-                                                  MediaQuery.textScaleFactorOf(
-                                                          context) *
-                                                      1.5),
+                                          child: Text(
+                                            "About us",
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                            // textScaleFactor:
+                                            //     MediaQuery.textScaleFactorOf(
+                                            //             context) *
+                                            //         1.5
+                                          ),
                                         ),
                                         Spacer(),
                                         CircleAvatar(
@@ -657,7 +682,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],
@@ -690,22 +717,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: Row(
                                       children: [
                                         Icon(Icons.headset_mic_rounded,
-                                            size: 30),
+                                            size:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    8),
                                         Container(
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  3),
-                                          child: Text("Contact us",
-                                              style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
-                                              ),
-                                              textScaleFactor:
-                                                  MediaQuery.textScaleFactorOf(
-                                                          context) *
-                                                      1.5),
+                                                  2),
+                                          child: Text(
+                                            "Contact us",
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                            // textScaleFactor:
+                                            //     MediaQuery.textScaleFactorOf(
+                                            //             context) *
+                                            //         1.5
+                                          ),
                                         ),
                                         Spacer(),
                                         CircleAvatar(
@@ -713,7 +744,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],
@@ -750,26 +783,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     },
                                     child: Row(
                                       children: [
-                                        Icon(
-                                          Icons.logout,
-                                          size: SizeConfig.safeBlockHorizontal *
-                                              7,
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  .5),
+                                          child: Icon(
+                                            Icons.logout,
+                                            size:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    8,
+                                          ),
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   3),
-                                          child: Text("SignOut",
-                                              style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
-                                              ),
-                                              textScaleFactor:
-                                                  MediaQuery.textScaleFactorOf(
-                                                          context) *
-                                                      1.5),
+                                          child: Text(
+                                            "SignOut",
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                            // textScaleFactor:
+                                            //     MediaQuery.textScaleFactorOf(
+                                            //             context) *
+                                            //         1.5
+                                          ),
                                         ),
                                         Spacer(),
                                         CircleAvatar(
@@ -777,7 +819,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           backgroundColor: Colors.black12,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 14,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Colors.black87),
                                         )
                                       ],

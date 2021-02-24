@@ -1,19 +1,15 @@
 import 'package:cizaro_app/model/addressBookModel.dart';
+import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
-import 'package:cizaro_app/screens/login_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
-import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'checkout_screen.dart';
 
 class EditAddressScreen extends StatefulWidget {
   static final routeName = '/edit-address-screen';
@@ -125,27 +121,35 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     return Text(snapshot.error.toString());
                   else
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 15, top: 5),
+                      padding: EdgeInsets.only(
+                          bottom: SizeConfig.blockSizeVertical * 1,
+                          top: SizeConfig.blockSizeVertical * 2),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: SizeConfig.blockSizeHorizontal * 70,
+                        height: SizeConfig.blockSizeVertical * 7,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButtonFormField(
-                              iconSize: 35,
+                              iconSize: SizeConfig.blockSizeHorizontal * 7,
                               iconEnabledColor: Colors.black,
                               dropdownColor: Colors.white,
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4),
                               isExpanded: true,
                               hint: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, left: 12),
+                                padding: EdgeInsets.only(
+                                    right: SizeConfig.blockSizeHorizontal * 2,
+                                    left: SizeConfig.blockSizeHorizontal * 2),
                                 child: Text(
                                     arguments['country_name'] ?? 'Country',
-                                    style:
-                                        const TextStyle(color: Colors.black)),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal *
+                                                5)),
                               ),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(0),
@@ -154,9 +158,20 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                     return DropdownMenuItem(
                                       value: data.id,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 12, left: 12),
-                                        child: Text(data.name),
+                                        padding: EdgeInsets.only(
+                                            right:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    1,
+                                            left:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    1),
+                                        child: Text(
+                                          data.name,
+                                          style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  4),
+                                        ),
                                       ),
                                     );
                                   })?.toList() ??
@@ -180,26 +195,32 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     return Text(snapshot.error.toString());
                   else
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 15, top: 5),
+                      padding: EdgeInsets.only(
+                          bottom: SizeConfig.blockSizeVertical * 1,
+                          top: SizeConfig.blockSizeVertical * 1),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: SizeConfig.blockSizeHorizontal * 70,
+                        height: SizeConfig.blockSizeVertical * 6,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButtonFormField(
-                              iconSize: 35,
+                              iconSize: SizeConfig.blockSizeHorizontal * 7,
                               iconEnabledColor: Colors.black,
                               dropdownColor: Colors.white,
                               style: const TextStyle(color: Colors.black),
                               isExpanded: true,
                               hint: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, left: 12),
+                                padding: EdgeInsets.only(
+                                    right: SizeConfig.blockSizeHorizontal * 2,
+                                    left: SizeConfig.blockSizeHorizontal * 2),
                                 child: Text(arguments['city_name'] ?? 'City',
-                                    style:
-                                        const TextStyle(color: Colors.black)),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal *
+                                                5)),
                               ),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(0),
@@ -210,8 +231,13 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                         return DropdownMenuItem(
                                           value: data.id,
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 12, left: 12),
+                                            padding: EdgeInsets.only(
+                                                right: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    2,
+                                                left: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    2),
                                             child: Text(data.name),
                                           ),
                                         );
@@ -228,9 +254,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     );
                 }),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 5),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -240,12 +268,17 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   textInputType: TextInputType.text,
                   lineCount: 1,
                   hintText: arguments['street_name'] ?? "Street",
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   textEditingController: _streetController),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 10),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 1),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -255,6 +288,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   textInputType: TextInputType.number,
                   lineCount: 1,
                   hintText: arguments['zip_code'] ?? "Zip-Code",
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   textEditingController: _zipCodeController),
               // TextFieldBuild(
               //   textInputType: TextInputType.number,
@@ -272,9 +308,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
               // )
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 10),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 1),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -284,12 +322,17 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   textInputType: TextInputType.text,
                   lineCount: 1,
                   hintText: arguments['region_name'] ?? "Region",
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   textEditingController: _regionController),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 10),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 1),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -299,6 +342,9 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   textInputType: TextInputType.number,
                   lineCount: 1,
                   hintText: arguments['phone_number'] ?? "Phone Number",
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   textEditingController: _phoneController),
             ),
             Row(
@@ -306,9 +352,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
               children: [
                 SizedBox(),
                 Container(
-                  margin: EdgeInsets.only(top: 10, right: 20),
-                  width: MediaQuery.of(context).size.width * .2,
-                  height: MediaQuery.of(context).size.height * .06,
+                  margin: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical * 1,
+                      right: SizeConfig.blockSizeHorizontal * 2),
+                  width: SizeConfig.blockSizeHorizontal * 20,
+                  height: SizeConfig.blockSizeVertical * 6,
                   decoration: BoxDecoration(
                       color: Color(0xff3A559F),
                       borderRadius: BorderRadius.circular(20.0)),
@@ -342,7 +390,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         child: Text("Update",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 15,
+                                // fontSize: 15,
+                                fontSize: SizeConfig.safeBlockHorizontal * 4,
                                 fontWeight: FontWeight.bold))),
                   ),
                 ),

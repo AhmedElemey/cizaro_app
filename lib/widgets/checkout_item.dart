@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,19 +18,28 @@ class CheckoutItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
+      padding: EdgeInsets.only(
+          left: SizeConfig.blockSizeHorizontal * 3,
+          right: SizeConfig.blockSizeHorizontal * 3),
       child: Card(
         elevation: 2,
         child: Container(
-          height: MediaQuery.of(context).size.height * .1,
-          padding: EdgeInsets.only(left: 10, right: 10, top: 5),
+          height: SizeConfig.blockSizeVertical * 10,
+          padding: EdgeInsets.only(
+              left: SizeConfig.blockSizeHorizontal * 2,
+              right: SizeConfig.blockSizeHorizontal * 3,
+              top: SizeConfig.blockSizeVertical * .2),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10, top: 5, bottom: 5),
+                padding: EdgeInsets.only(
+                    right: SizeConfig.blockSizeHorizontal * 5,
+                    top: SizeConfig.blockSizeVertical * .2,
+                    bottom: SizeConfig.blockSizeVertical * .2),
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(80.0),
+                    borderRadius: BorderRadius.circular(
+                        SizeConfig.blockSizeHorizontal * 2),
                     child: Image.network(imgUrl)),
               ),
               Flexible(
@@ -39,15 +49,24 @@ class CheckoutItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          child: Text(productName ?? "",
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor *
-                                      1.25),
+                          child: Text(
+                            productName ?? "",
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 5,
+                            ),
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor *
+                            //         1.25
+                          ),
                         ),
                         Container(
-                          child: Text(productCategory ?? "",
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1),
+                          child: Text(
+                            productCategory ?? "",
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 5),
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1
+                          ),
                         ),
                       ],
                     ),
@@ -56,40 +75,54 @@ class CheckoutItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(productPrice.toString() + ' LE',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.1),
+                        Text(
+                          productPrice.toString() + ' LE',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4.3),
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.1
+                        ),
                         Row(
                           children: [
-                            Text(productSizeSpecs == "" ? '' : "Size: ",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.1),
                             Text(
-                                productSizeSpecs == ""
-                                    ? ''
-                                    : productSizeSpecs.toString(),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xff3A559F)),
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.1),
+                              productSizeSpecs == "" ? '' : "Size: ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 4.3),
+                              // textScaleFactor:
+                              //     MediaQuery.of(context).textScaleFactor *
+                              //         1.1
+                            ),
                             Text(
-                                productColorSpecs == Color(0x000000ff) ||
-                                        productColorSpecs == Color(0xffffffff)
-                                    ? ''
-                                    : " , Color: ",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.1),
+                              productSizeSpecs == ""
+                                  ? ''
+                                  : productSizeSpecs.toString(),
+                              style: TextStyle(
+                                  fontSize: SizeConfig.safeBlockHorizontal * 3,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff3A559F)),
+                              // textScaleFactor:
+                              //     MediaQuery.of(context).textScaleFactor *
+                              //         1.1
+                            ),
+                            Text(
+                              productColorSpecs == Color(0x000000ff) ||
+                                      productColorSpecs == Color(0xffffffff)
+                                  ? ''
+                                  : " , Color: ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 3),
+                              // textScaleFactor:
+                              //     MediaQuery.of(context).textScaleFactor *
+                              //         1.1
+                            ),
                             productColorSpecs == null
                                 ? Container()
                                 : CircleAvatar(
-                                    radius: 8,
+                                    radius: SizeConfig.blockSizeHorizontal * 3,
                                     foregroundColor: productColorSpecs,
                                     backgroundColor: productColorSpecs)
                           ],

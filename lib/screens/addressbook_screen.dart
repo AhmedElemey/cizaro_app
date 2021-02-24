@@ -189,7 +189,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                 top: SizeConfig.blockSizeVertical * 1,
                                 bottom: SizeConfig.blockSizeVertical * 3),
                             width: SizeConfig.blockSizeHorizontal * 16,
-                            height: SizeConfig.blockSizeHorizontal * 6,
+                            height: SizeConfig.blockSizeHorizontal * 7,
                             decoration: BoxDecoration(
                                 color: Color(0xff3A559F),
                                 borderRadius: BorderRadius.circular(20.0)),
@@ -198,7 +198,8 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                 "ADD",
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 4.5,
                                   // fontSize: 15,
                                 ),
                               ),

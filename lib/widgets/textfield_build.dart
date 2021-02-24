@@ -8,15 +8,25 @@ class TextFieldBuild extends StatelessWidget {
   final String hintText;
   final IconData icon;
   final int lineCount;
+  final TextStyle textStyle;
   final Function onClick;
   final bool readOnly;
 
-  TextFieldBuild({this.textEditingController, this.obscureText,this.onClick,this.readOnly,
-    this.textInputType, this.validator, this.hintText,this.icon,this.lineCount});
+  TextFieldBuild(
+      {this.textEditingController,
+      this.obscureText,
+      this.onClick,
+      this.readOnly,
+      this.textInputType,
+      this.validator,
+      this.hintText,
+      this.textStyle,
+      this.icon,
+      this.lineCount});
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       width: MediaQuery.of(context).size.width * 0.89,
       height: MediaQuery.of(context).size.height * 0.07,
       child: TextFormField(
@@ -27,18 +37,21 @@ class TextFieldBuild extends StatelessWidget {
         cursorColor: Color(0xff294794),
         validator: validator,
         readOnly: readOnly,
-        style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 12),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
         decoration: InputDecoration(
             filled: true,
-            suffixIcon: GestureDetector( onTap : onClick,child: Icon(icon,color: Colors.grey,size: MediaQuery.of(context).size.width * 0.06)),
+            suffixIcon: GestureDetector(
+                onTap: onClick,
+                child: Icon(icon,
+                    color: Colors.grey,
+                    size: MediaQuery.of(context).size.width * 0.06)),
             fillColor: Colors.white,
-            contentPadding:
-            const EdgeInsets.only(right: 8, left: 8),
+            contentPadding: const EdgeInsets.only(right: 8, left: 8),
             hintText: hintText,
+            hintStyle: textStyle,
             border: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(8)))),
       ),
     );
   }
-
 }

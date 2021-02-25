@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,8 +53,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
+        width: SizeConfig.blockSizeHorizontal * 100,
+        height: SizeConfig.blockSizeVertical * 100,
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 colors: [Color(0xff05080F), Color(0xff395A9A)],
@@ -60,11 +62,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 end: Alignment.topLeft)),
         child: Center(
             child: Padding(
-                padding: const EdgeInsets.only(left: 23),
+                padding:
+                    EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
                 child: Image.asset('assets/images/cizaro_logo.png',
                     alignment: Alignment.center,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: MediaQuery.of(context).size.height * 0.4))),
+                    width: SizeConfig.blockSizeHorizontal * 80,
+                    height: SizeConfig.blockSizeVertical * 40))),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'dart:io';
+
 import 'package:cizaro_app/model/order.dart';
 import 'package:cizaro_app/screens/order_details_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_item.dart';
@@ -65,9 +67,14 @@ class _OrderScreenState extends State<OrderScreen> {
                 children: [
                   _ordersList == null || _ordersList.length == 0
                       ? Center(
-                          child: Text('There is No Orders Yet!',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.5))
+                          child: Text(
+                          'There is No Orders Yet!',
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 5,
+                          ),
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.5
+                        ))
                       : ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,

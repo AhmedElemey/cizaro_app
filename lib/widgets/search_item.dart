@@ -280,9 +280,9 @@ class _SearchItemState extends State<SearchItem> {
                         child: widget.isFav == 1
                             ? Icon(Icons.favorite,
                                 color: Color(0xffFF6969),
-                                size: SizeConfig.blockSizeHorizontal * 3)
+                                size: SizeConfig.blockSizeHorizontal * 5)
                             : Icon(Icons.favorite_border_outlined,
-                                size: SizeConfig.blockSizeHorizontal * 3),
+                                size: SizeConfig.blockSizeHorizontal * 5),
                       ),
                       // GestureDetector(
                       //     onTap: () {
@@ -298,8 +298,8 @@ class _SearchItemState extends State<SearchItem> {
                             showCartToast();
                           },
                           child: SvgPicture.asset('assets/images/cart.svg',
-                              width: SizeConfig.blockSizeHorizontal * 4,
-                              height: SizeConfig.blockSizeVertical * 2))
+                              width: SizeConfig.blockSizeHorizontal * 2.7,
+                              height: SizeConfig.blockSizeVertical * 2.7))
                     ],
                   )
                 ],

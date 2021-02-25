@@ -238,7 +238,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                                 left: SizeConfig
                                                         .blockSizeHorizontal *
                                                     2),
-                                            child: Text(data.name),
+                                            child: Text(data.name,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: SizeConfig
+                                                            .safeBlockHorizontal *
+                                                        5)),
                                           ),
                                         );
                                       })?.toList() ??

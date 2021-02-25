@@ -412,7 +412,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         )
                       : Container(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -450,7 +451,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 3,
+                        right: SizeConfig.blockSizeHorizontal * 3),
                     child: Divider(
                       color: Color(0xff515C6F),
                     ),

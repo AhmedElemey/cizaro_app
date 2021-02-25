@@ -43,14 +43,16 @@ class _MyCartScreenState extends State<MyCartScreen> {
     return cart.cartProductModel.length == 0
         ? Container(
             height: SizeConfig.blockSizeVertical * 70,
-            padding: const EdgeInsets.all(25),
+            padding: EdgeInsets.symmetric(
+                vertical: SizeConfig.blockSizeVertical * 3,
+                horizontal: SizeConfig.blockSizeHorizontal * 3),
             child: Center(
                 child: Text(
-                    'Cart is Empty, please Search and Add your Product.',
-                    style:
-                        TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.3)))
+              'Cart is Empty, please Search and Add your Product.',
+              style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
+              // textScaleFactor:
+              //     MediaQuery.of(context).textScaleFactor * 1.3
+            )))
         : Container(
             height: SizeConfig.blockSizeVertical * 72,
             child: ListView.builder(
@@ -132,11 +134,13 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Text("TOTAL",
-                              style: TextStyle(
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * .9),
+                          Text(
+                            "TOTAL",
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 4),
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * .9
+                          ),
                           Text(
                             total.totalPrice.toStringAsFixed(2) + ' LE' ??
                                 '00.00',
@@ -181,8 +185,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           children: [
                             Text(
                               "CHECKOUT",
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.11,
+                              // textScaleFactor:
+                              //     MediaQuery.of(context).textScaleFactor * 1.11,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: SizeConfig.safeBlockHorizontal * 4,

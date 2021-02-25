@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/material.dart';
 
 class OrderItem extends StatelessWidget {
@@ -24,8 +25,11 @@ class OrderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.22,
-      margin: const EdgeInsets.only(right: 15, left: 15, top: 10),
+      height: SizeConfig.blockSizeVertical * 24,
+      margin: EdgeInsets.only(
+          right: SizeConfig.blockSizeHorizontal * 4,
+          left: SizeConfig.blockSizeHorizontal * 4,
+          top: SizeConfig.blockSizeVertical * 1),
       child: Column(
         children: [
           Flexible(
@@ -33,50 +37,71 @@ class OrderItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Order ID',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: const TextStyle(
-                        color: Color(0xff707070), fontWeight: FontWeight.bold)),
+                    // textScaleFactor:
+                    //     MediaQuery.of(context).textScaleFactor * 1.1,
+                    style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.7,
+                        color: Color(0xff707070),
+                        fontWeight: FontWeight.bold)),
                 Expanded(
                     child: Text(
-                        '------------------------------------------------------')),
-                Text(orderNumber ?? '162184'),
+                        ' ------------------------------------------------------')),
+                Text(
+                  orderNumber ?? '162184',
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 3.2,
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Order Date',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: const TextStyle(
-                        color: Color(0xff707070), fontWeight: FontWeight.bold)),
+                    // textScaleFactor:
+                    //     MediaQuery.of(context).textScaleFactor * 1.1,
+                    style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.7,
+                        color: Color(0xff707070),
+                        fontWeight: FontWeight.bold)),
                 Expanded(
                     child: Text(
-                        '-----------------------------------------------')),
-                Text(orderDate ?? DateTime.now().toString().split(' ').first),
+                        ' -----------------------------------------------')),
+                Text(
+                  orderDate ?? DateTime.now().toString().split(' ').first,
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 3.2,
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Shipped Address',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: const TextStyle(
-                        color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Expanded(child: Text('--------------')),
-                Text(orderShippingAddress ?? '12 st cairo'),
+                    // textScaleFactor:
+                    //     MediaQuery.of(context).textScaleFactor * 1.1,
+                    style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                        color: Color(0xff707070),
+                        fontWeight: FontWeight.bold)),
+                Expanded(child: Text(' --------------')),
+                Text(
+                  orderShippingAddress ?? '12 st cairo',
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 3.2,
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           // Flexible(
           //   child: Row(
           //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,51 +122,69 @@ class OrderItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Payment Method',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: const TextStyle(
-                        color: Color(0xff707070), fontWeight: FontWeight.bold)),
-                Expanded(child: Text('------------------------------------')),
-                Text(orderPaymentMethod ?? '162184'),
+                    // textScaleFactor:
+                    //     MediaQuery.of(context).textScaleFactor * 1.1,
+                    style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                        color: Color(0xff707070),
+                        fontWeight: FontWeight.bold)),
+                Expanded(child: Text(' ------------------------------------')),
+                Text(
+                  orderPaymentMethod ?? '162184',
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 3.2,
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Total',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: const TextStyle(
-                        color: Color(0xff707070), fontWeight: FontWeight.bold)),
+                    // textScaleFactor:
+                    //     MediaQuery.of(context).textScaleFactor * 1.1,
+
+                    style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                        color: Color(0xff707070),
+                        fontWeight: FontWeight.bold)),
                 Expanded(
                   child: Text(
-                      '--------------------------------------------------------------'),
+                      ' --------------------------------------------------------------'),
                 ),
-                Text(orderTotal.toString() + ' L.E' ?? '162184'),
+                Text(
+                  orderTotal.toString() + ' L.E' ?? '162184',
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 3.2,
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Status',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: const TextStyle(
-                        color: Color(0xff707070), fontWeight: FontWeight.bold)),
+                    // textScaleFactor:
+                    //     MediaQuery.of(context).textScaleFactor * 1.1,
+                    style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                        color: Color(0xff707070),
+                        fontWeight: FontWeight.bold)),
                 Expanded(
                   child: Text(
-                      '----------------------------------------------------------------'),
+                      ' ----------------------------------------------------------------'),
                 ),
                 Text(
                   orderStatus ?? 'Ordered',
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.1,
+                  // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.1,
                   style: TextStyle(
+                      fontSize: SizeConfig.safeBlockHorizontal * 3.2,
                       color: orderStatusId == 1
                           ? Colors.green
                           : orderStatusId == 2
@@ -152,9 +195,9 @@ class OrderItem extends StatelessWidget {
             ),
           ),
           Container(
-              width: MediaQuery.of(context).size.width * 0.94,
-              height: MediaQuery.of(context).size.height * 0.015,
-              margin: const EdgeInsets.only(top: 15),
+              width: SizeConfig.blockSizeHorizontal * 94,
+              height: SizeConfig.blockSizeVertical * 1.5,
+              margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
               color: Colors.grey.shade300)
         ],
       ),

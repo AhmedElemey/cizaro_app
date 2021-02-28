@@ -165,25 +165,29 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       paymentUrl = checkoutResult.data.paymentUrl;
       //  orderId = checkoutResult.data.orderId;
       _checkOutDone = checkoutResult.data.done;
-      // online payment
-      if (paymentUrl != null) {
-        pushNewScreenWithRouteSettings(context,
-            settings: RouteSettings(
-                name: PaymentsScreen.routeName,
-                arguments: {'payment_url': paymentUrl}),
-            screen: PaymentsScreen(),
-            withNavBar: false,
-            pageTransitionAnimation: PageTransitionAnimation.fade);
-      } else {
-        pushNewScreenWithRouteSettings(context,
-            settings: RouteSettings(name: FinishedOrder.routeName),
-            screen: FinishedOrder(),
-            withNavBar: false,
-            pageTransitionAnimation: PageTransitionAnimation.fade);
-      }
+      checkPaymentsOptions();
     }).catchError(
         (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
     if (this.mounted) setState(() => _isLoading = false);
+  }
+
+  checkPaymentsOptions() {
+    // online payments
+    if (paymentUrl != null) {
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(
+              name: PaymentsScreen.routeName,
+              arguments: {'payment_url': paymentUrl}),
+          screen: PaymentsScreen(),
+          withNavBar: false,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+    } else {
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: FinishedOrder.routeName),
+          screen: FinishedOrder(),
+          withNavBar: true,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+    }
   }
 
   fetchSelectedShippingAddress() async {

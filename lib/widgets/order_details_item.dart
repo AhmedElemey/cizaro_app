@@ -1,6 +1,6 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class OrderDetailsItem extends StatefulWidget {
   final String productName,
@@ -38,24 +38,30 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.only(
+          left: SizeConfig.blockSizeHorizontal * 3,
+          right: SizeConfig.blockSizeHorizontal * 3),
       child: Card(
         elevation: 5,
         child: Container(
-          height: MediaQuery.of(context).size.height * .15,
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.only(top: 5, bottom: 5),
+          height: SizeConfig.blockSizeHorizontal * 20,
+          width: SizeConfig.blockSizeHorizontal * 100,
+          margin: EdgeInsets.only(
+              top: SizeConfig.blockSizeHorizontal * 1,
+              bottom: SizeConfig.blockSizeVertical * 1),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeHorizontal * .2,
+                      horizontal: SizeConfig.blockSizeHorizontal * .1),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          height: MediaQuery.of(context).size.height * 0.3,
+                          width: SizeConfig.blockSizeHorizontal * 20,
+                          height: SizeConfig.blockSizeVertical * 30,
                           child: Image.network(widget.imgUrl,
                               fit: BoxFit.fitHeight)))),
               Flexible(
@@ -65,32 +71,45 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                   children: [
                     Row(
                       children: [
-                        Text(widget.productName,
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.3),
+                        Text(
+                          widget.productName,
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.3
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 5,
+                          ),
+                        ),
                         Spacer(),
                         Padding(
-                            padding: const EdgeInsets.only(right: 8, left: 8),
+                            padding: EdgeInsets.only(
+                                right: SizeConfig.blockSizeHorizontal * 3,
+                                left: SizeConfig.blockSizeHorizontal * 2),
                             child: Text(
-                                widget.productPriceAfterDiscount ==
-                                        widget.productPrice
-                                    ? widget.productPrice.toString() + ' LE'
-                                    : widget.productPriceAfterDiscount == null
-                                        ? widget.productPrice.toString() + ' LE'
-                                        : widget.productPriceAfterDiscount
-                                                .toString() +
-                                            ' LE',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor * 1))
+                              widget.productPriceAfterDiscount ==
+                                      widget.productPrice
+                                  ? widget.productPrice.toString() + ' LE'
+                                  : widget.productPriceAfterDiscount == null
+                                      ? widget.productPrice.toString() + ' LE'
+                                      : widget.productPriceAfterDiscount
+                                              .toString() +
+                                          ' LE',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                              ),
+                              // textScaleFactor:
+                              //     MediaQuery.of(context).textScaleFactor * 1
+                            ))
                       ],
                     ),
                     Container(
                       child: Text(widget.productCategory,
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.1,
-                          style: const TextStyle(color: Colors.blueGrey)),
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.1,
+                          style: TextStyle(
+                            color: Colors.blueGrey,
+                            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                          )),
                     ),
                     // Row(
                     //   children: [
@@ -117,18 +136,38 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('Qty :',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1),
-                        const SizedBox(width: 5),
-                        Text(widget.productQuantity.toString()),
-                        const SizedBox(width: 25),
-                        Text("Total : ",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1),
-                        Text(widget.productPrice.toString() + ' LE')
+                        Text(
+                          'Qty :',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                          ),
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1
+                        ),
+                        SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
+                        Text(
+                          widget.productQuantity.toString(),
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                          ),
+                        ),
+                        SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
+                        Text(
+                          "Total : ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                          ),
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1
+                        ),
+                        Text(
+                          widget.productPrice.toString() + ' LE',
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                          ),
+                        )
                       ],
                     ),
                     widget.totalAvailability < widget.productQuantity
@@ -136,8 +175,10 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                             child: Text(
                                 '${widget.totalAvailability}  items Available in Stock' ??
                                     '',
-                                style: const TextStyle(
-                                    color: Colors.red, fontSize: 10)))
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                                )))
                         : Container()
                   ],
                 ),

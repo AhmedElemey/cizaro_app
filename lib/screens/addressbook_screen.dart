@@ -5,6 +5,7 @@ import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/edit_address_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/address_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
@@ -81,8 +82,11 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                   children: [
                     addressesList.length == 0 || addressesList == null
                         ? Center(
-                            child:
-                                Text('No addresses Added yet, please Add One.'))
+                            child: Text(
+                            'No addresses Added yet, please Add One.',
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 4),
+                          ))
                         : ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -136,33 +140,26 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                         : Colors.white,
                                     onEdit: () =>
                                         pushNewScreenWithRouteSettings(context,
-                                            settings: RouteSettings(
-                                                name:
-                                                    EditAddressScreen.routeName,
-                                                arguments: {
-                                                  'address_id':
-                                                      indexOfSelectedItemAddress,
-                                                  'street_name':
-                                                      addressesList[index]
-                                                          .streetAddress,
-                                                  'country_name':
-                                                      addressesList[index]
-                                                          .country
-                                                          .name,
-                                                  'city_name':
-                                                      addressesList[index]
-                                                          .city
-                                                          .name,
-                                                  'region_name':
-                                                      addressesList[index]
-                                                          .region,
-                                                  'phone_number':
-                                                      addressesList[index]
-                                                          .phone,
-                                                  'zip_code':
-                                                      addressesList[index]
-                                                          .zipCode
-                                                }),
+                                            settings: RouteSettings(arguments: {
+                                              'address_id':
+                                                  indexOfSelectedItemAddress,
+                                              'street_name':
+                                                  addressesList[index]
+                                                      .streetAddress,
+                                              'country_name':
+                                                  addressesList[index]
+                                                      .country
+                                                      .name,
+                                              'city_name': addressesList[index]
+                                                  .city
+                                                  .name,
+                                              'region_name':
+                                                  addressesList[index].region,
+                                              'phone_number':
+                                                  addressesList[index].phone,
+                                              'zip_code':
+                                                  addressesList[index].zipCode
+                                            }),
                                             screen: EditAddressScreen(),
                                             withNavBar: true,
                                             pageTransitionAnimation:
@@ -187,22 +184,23 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                               pageTransitionAnimation:
                                   PageTransitionAnimation.fade),
                           child: Container(
-                            margin:
-                                EdgeInsets.only(right: 20, top: 10, bottom: 30),
-                            width: MediaQuery.of(context).size.width * .16,
-                            height: MediaQuery.of(context).size.height * .06,
+                            margin: EdgeInsets.only(
+                                right: SizeConfig.blockSizeHorizontal * 2,
+                                top: SizeConfig.blockSizeVertical * 1,
+                                bottom: SizeConfig.blockSizeVertical * 3),
+                            width: SizeConfig.blockSizeHorizontal * 16,
+                            height: SizeConfig.blockSizeHorizontal * 7,
                             decoration: BoxDecoration(
                                 color: Color(0xff3A559F),
                                 borderRadius: BorderRadius.circular(20.0)),
-                            child: Container(
-                              margin: const EdgeInsets.all(10),
-                              child: Center(
-                                child: Text(
-                                  "ADD",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
+                            child: Center(
+                              child: Text(
+                                "ADD",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 4.5,
+                                  // fontSize: 15,
                                 ),
                               ),
                             ),

@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +22,15 @@ class _PendingShipmentState extends State<PendingShipment> {
         child: Column(
           children: [
             Center(
-                child: Text('There is No Orders Yet!',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.5))
+                child: Text(
+              'There is No Orders Yet!',
+              style: TextStyle(
+                fontSize: SizeConfig.safeBlockHorizontal * 5,
+              ),
+
+              // textScaleFactor:
+              //     MediaQuery.of(context).textScaleFactor * 1.5
+            ))
           ],
         ),
       ),

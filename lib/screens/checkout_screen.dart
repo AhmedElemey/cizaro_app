@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
@@ -12,6 +13,7 @@ import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/finished_order_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/payments_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
@@ -25,7 +27,6 @@ import 'package:flutter/widgets.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class CheckoutScreen extends StatefulWidget {
   static final routeName = '/checkout-screen';
@@ -276,16 +277,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 10, right: 20),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 3,
+                        right: SizeConfig.blockSizeHorizontal * 3),
                     child: Row(
                       children: [
                         Text(
                           "SHIPPING ADDRESS",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1,
                           style: TextStyle(
                               //   fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                              // fontSize: 15,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
                               color: Color(0xff515C6F)),
@@ -295,7 +299,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           children: [
                             IconButton(
                                 icon: Icon(Icons.add),
-                                iconSize: 25,
+                                iconSize: SizeConfig.blockSizeHorizontal * 7,
                                 color: Color(0xff3EC429),
                                 onPressed: () => pushNewScreenWithRouteSettings(
                                     context,
@@ -306,7 +310,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade)),
                             Padding(
-                              padding: const EdgeInsets.only(left: 10),
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.blockSizeHorizontal * 1),
                               child: GestureDetector(
                                 onTap: () => pushNewScreenWithRouteSettings(
                                     context,
@@ -317,11 +322,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade),
                                 child: CircleAvatar(
-                                  radius: 15,
+                                  radius: SizeConfig.blockSizeHorizontal * 3,
                                   backgroundColor: Color(0xff9EA4AF),
                                   child: Icon(
                                     Icons.arrow_forward_ios_rounded,
-                                    size: 15,
+                                    size: SizeConfig.blockSizeHorizontal * 5,
                                     color: Color(0xff3A559F),
                                   ),
                                 ),
@@ -334,7 +339,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   arguments == null
                       ? Container(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 3),
                           child: ListView.builder(
                             itemCount: addressesList.length,
                             physics: NeverScrollableScrollPhysics(),
@@ -347,48 +353,60 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Text(
                                           addressesList[index].streetAddress ??
                                               "John Doe",
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  1.5,
+                                          // textScaleFactor:
+                                          //     MediaQuery.of(context)
+                                          //             .textScaleFactor *
+                                          //         1.5,
                                           style: TextStyle(
                                               // fontWeight: FontWeight.bold,
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w700,
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
                                               color: Color(0xff515C6F))),
                                       Text(
                                           addressesList[index].region ??
                                               "Main Street\,",
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  1.2,
+                                          // textScaleFactor:
+                                          //     MediaQuery.of(context)
+                                          //             .textScaleFactor *
+                                          //         1.2,
                                           style: TextStyle(
                                             // fontWeight: FontWeight.bold,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
                                             fontFamily: 'Poppins',
                                             fontWeight: FontWeight.w400,
                                           )),
                                       Text(
                                           addressesList[index].city.name ??
                                               "City Name, Province\,",
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  1,
+                                          // textScaleFactor:
+                                          //     MediaQuery.of(context)
+                                          //             .textScaleFactor *
+                                          //         1,
                                           style: TextStyle(
                                             // fontWeight: FontWeight.bold,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
                                             fontFamily: 'Poppins',
                                             fontWeight: FontWeight.w400,
                                           )),
                                       Text(
                                           addressesList[index].country.name ??
                                               "Country",
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  1,
+                                          // textScaleFactor:
+                                          //     MediaQuery.of(context)
+                                          //             .textScaleFactor *
+                                          //         1,
                                           style: TextStyle(
                                             // fontWeight: FontWeight.bold,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
                                             fontFamily: 'Poppins',
                                             fontWeight: FontWeight.w400,
                                           )),
@@ -398,53 +416,66 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                         )
                       : Container(
-                          padding: EdgeInsets.only(left: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(arguments['street_name'] ?? "John Doe",
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1.5,
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor *
+                                  //         1.5,
                                   style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 5,
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xff515C6F))),
                               Text(
                                 arguments['region_name'] ?? "Main Street\,",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor * 1,
+                                style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4),
+                                // textScaleFactor:
+                                //     MediaQuery.of(context).textScaleFactor * 1,
                               ),
                               Text(
                                 arguments['city_name'] ??
                                     "City Name, Province\,",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor * 1,
+                                style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4),
                               ),
                               Text(
                                 arguments['country_name'] ?? "Country",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor * 1,
+                                style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4),
                               ),
                             ],
                           ),
                         ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 3,
+                        right: SizeConfig.blockSizeHorizontal * 3),
                     child: Divider(
                       color: Color(0xff515C6F),
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 3),
                     child: Text(
                       "PAYMENT METHOD",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1,
+                      // textScaleFactor:
+                      //     MediaQuery.of(context).textScaleFactor * 1,
+                      style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 4.1),
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * .08,
+                    width: SizeConfig.blockSizeHorizontal * 100,
+                    height: SizeConfig.blockSizeVertical * 10,
                     child: ButtonBar(
                       alignment: MainAxisAlignment.start,
                       children: [
@@ -457,9 +488,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           },
                         ),
                         Text("Credit Card  ",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.5,
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1.5,
                             style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 5.5,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xff515C6F))),
                         Radio(
@@ -471,9 +503,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           },
                         ),
                         Text("Cash",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.5,
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1.5,
                             style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 5.5,
                                 fontWeight: FontWeight.bold,
                                 color: Color(0xff515C6F))),
                       ],
@@ -482,10 +515,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   selectedRadio == 1
                       ? Center(
                           child: _paymentList.isEmpty
-                              ? Text('Not Available Now!.',
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1)
+                              ? Text(
+                                  'Not Available Now!.',
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 5),
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor *
+                                  //         1
+                                )
                               : ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   shrinkWrap: true,
@@ -507,17 +545,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       )))
                       : Container(),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, right: 20),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 3,
+                        right: SizeConfig.blockSizeHorizontal * 3),
                     child: Divider(
                       color: Color(0xff515C6F),
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 3,
+                        bottom: SizeConfig.blockSizeVertical * 1),
                     child: Text(
                       "ITEMS",
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * .9,
+                      style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 4.1),
+                      // textScaleFactor:
+                      //     MediaQuery.of(context).textScaleFactor * .9,
                     ),
                   ),
                   ListView.builder(
@@ -551,8 +595,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * .9,
-                    margin: const EdgeInsets.only(top: 23, bottom: 10),
+                    width: SizeConfig.blockSizeHorizontal * 100,
+                    margin: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 2,
+                        bottom: SizeConfig.blockSizeVertical * 1),
                     child: _selectedPromoCode
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -561,38 +607,55 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 onTap: () =>
                                     setState(() => _selectedPromoCode = false),
                                 child: CircleAvatar(
-                                    radius: 10,
+                                    radius: SizeConfig.blockSizeHorizontal * 3,
                                     backgroundColor: Colors.black26,
                                     child: Icon(Icons.close,
-                                        size: 13, color: Colors.black45)),
+                                        size: SizeConfig.blockSizeHorizontal *
+                                            4.5,
+                                        color: Colors.black45)),
                               ),
                               Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.06,
-                                width: MediaQuery.of(context).size.width * 0.5,
+                                height: SizeConfig.blockSizeVertical * 6,
+                                width: SizeConfig.blockSizeHorizontal * 50,
                                 child: TextField(
                                   controller: _promoCodeController,
                                   keyboardType: TextInputType.text,
                                   decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.white,
-                                      contentPadding: const EdgeInsets.only(
-                                          right: 15, left: 15),
+                                      contentPadding: EdgeInsets.only(
+                                          right:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  1,
+                                          left: SizeConfig.blockSizeHorizontal *
+                                              1),
                                       hintText: 'Promo Code',
+                                      hintStyle: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                      ),
                                       border: OutlineInputBorder(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10)))),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  10)))),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 5, right: 5),
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 3,
+                                    right: SizeConfig.blockSizeHorizontal * 3),
                                 child: Text(
                                   "Add",
-                                  style: TextStyle(color: Color(0xff3A559F)),
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1.4,
+                                  style: TextStyle(
+                                    color: Color(0xff3A559F),
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 5,
+                                  ),
+
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor *
+                                  //         1.4,
                                 ),
                               ),
                             ],
@@ -601,25 +664,44 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             onTap: () =>
                                 setState(() => _selectedPromoCode = true),
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 15),
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.blockSizeHorizontal * 3),
                               child: Row(
                                 children: [
                                   Icon(Icons.local_offer_rounded,
                                       color: Theme.of(context).primaryColor),
-                                  const SizedBox(width: 8),
-                                  Text('Add Promo Code',
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1.2),
-                                  Spacer(),
-                                  CircleAvatar(
-                                    radius: 10,
-                                    backgroundColor: Colors.black26,
-                                    child: Icon(Icons.arrow_forward_ios_rounded,
-                                        size: 10, color: Colors.black45),
+                                  SizedBox(
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 10),
+                                  Text(
+                                    'Add Promo Code',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4.5,
+                                    ),
+
+                                    // textScaleFactor: MediaQuery.of(context)
+                                    //         .textScaleFactor *
+                                    //     1.2
+                                  ),
+                                  SizedBox(
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 20),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 5),
+                                    child: CircleAvatar(
+                                      radius:
+                                          SizeConfig.blockSizeHorizontal * 4,
+                                      backgroundColor: Colors.black26,
+                                      child: Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: SizeConfig.blockSizeHorizontal *
+                                              5,
+                                          color: Colors.black45),
+                                    ),
                                   )
                                 ],
                               ),
@@ -627,17 +709,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * .1,
-                    padding: EdgeInsets.only(right: 20, left: 20, top: 10),
+                    height: SizeConfig.blockSizeVertical * 15,
+                    padding: EdgeInsets.only(
+                        right: SizeConfig.blockSizeHorizontal * 3,
+                        left: SizeConfig.blockSizeHorizontal * 3,
+                        top: SizeConfig.blockSizeVertical * 1),
                     child: Row(
                       children: [
-                        const SizedBox(height: 8),
+                        SizedBox(height: SizeConfig.blockSizeVertical * 1),
                         Expanded(
                           child: Row(
                             children: [
                               Container(
-                                height:
-                                    MediaQuery.of(context).size.height * .07,
+                                height: SizeConfig.blockSizeVertical * 15,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -645,21 +729,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       children: [
                                         Text(
                                           "Shipping Fess : ".toUpperCase(),
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  .9,
+                                          style: TextStyle(
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
+                                          ),
+                                          // textScaleFactor:
+                                          //     MediaQuery.of(context)
+                                          //             .textScaleFactor *
+                                          //         .9,
                                         ),
-                                        const SizedBox(height: 8),
+                                        SizedBox(
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    5),
                                         Container(
                                           child: Text(
                                             shippingFees.toString() + ' LE' ??
                                                 '00.00',
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                        .textScaleFactor *
-                                                    1.3,
+                                            // textScaleFactor:
+                                            //     MediaQuery.of(context)
+                                            //             .textScaleFactor *
+                                            //         1.3,
                                             style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    5,
                                                 color: Color(0xff3A559F)),
                                           ),
                                         )
@@ -669,21 +764,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       children: [
                                         Text(
                                           "TOTAL : ",
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  .9,
+                                          style: TextStyle(
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
+                                          ),
+                                          // textScaleFactor:
+                                          //     MediaQuery.of(context)
+                                          //             .textScaleFactor *
+                                          //         .9,
                                         ),
-                                        const SizedBox(height: 8),
+                                        SizedBox(
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    1),
                                         Container(
                                           child: Text(
                                             totalCost.toString() + ' LE' ??
                                                 '00.00',
-                                            textScaleFactor:
-                                                MediaQuery.of(context)
-                                                        .textScaleFactor *
-                                                    1.3,
+                                            // textScaleFactor:
+                                            //     MediaQuery.of(context)
+                                            //             .textScaleFactor *
+                                            //         1.3,
                                             style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    5,
                                                 color: Color(0xff3A559F)),
                                           ),
                                         )
@@ -698,36 +804,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   sendCheckOut();
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  width: MediaQuery.of(context).size.width * .4,
-                                  height:
-                                      MediaQuery.of(context).size.height * .058,
+                                  padding: EdgeInsets.only(
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 3),
+                                  width: SizeConfig.blockSizeHorizontal * 40,
+                                  height: SizeConfig.blockSizeVertical * 6,
                                   decoration: BoxDecoration(
                                       color: Color(0xff3A559F),
-                                      borderRadius:
-                                          BorderRadius.circular(25.0)),
+                                      borderRadius: BorderRadius.circular(
+                                          SizeConfig.blockSizeHorizontal * 7)),
                                   child: Row(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.only(left: 10),
+                                        padding: EdgeInsets.only(
+                                            left:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    4.5),
                                         child: Text(
                                           "PLACE ORDER",
-                                          textScaleFactor:
-                                              MediaQuery.of(context)
-                                                      .textScaleFactor *
-                                                  1,
+                                          // textScaleFactor:
+                                          //     MediaQuery.of(context)
+                                          //             .textScaleFactor *
+                                          //         1,
                                           style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  3.5,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
                                         ),
                                       ),
                                       Spacer(),
                                       CircleAvatar(
-                                        radius: 10,
+                                        radius: SizeConfig.blockSizeHorizontal *
+                                            3.3,
                                         backgroundColor: Colors.white,
                                         child: Icon(
                                           Icons.arrow_forward_ios_rounded,
-                                          size: 15,
+                                          size: SizeConfig.blockSizeHorizontal *
+                                              5,
                                           color: Color(0xff3A559F),
                                         ),
                                       )
@@ -741,7 +856,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20)
+                  SizedBox(height: SizeConfig.blockSizeVertical * 5)
                 ],
               ),
             ),

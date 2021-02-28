@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cizaro_app/model/contactUsModel.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -98,38 +99,54 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 20, left: 20),
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 2,
+                        left: SizeConfig.blockSizeHorizontal * 2),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "username of logged in user",
-                          textScaleFactor:
-                              MediaQuery.textScaleFactorOf(context) * 1.5,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                        // Text(
+                        //   "username of logged in user",
+                        //   // textScaleFactor:
+                        //   //     MediaQuery.textScaleFactorOf(context) * 1.5,
+                        //   style: TextStyle(
+                        //     fontWeight: FontWeight.bold,
+                        //     fontSize: SizeConfig.safeBlockHorizontal * 5,
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(
+                        //     top: SizeConfig.blockSizeVertical * 2,
+                        //   ),
+                        //   child: Text(
+                        //     "Email of logged in user",
+                        //     style: TextStyle(
+                        //       // fontWeight: FontWeight.bold,
+                        //       fontSize: SizeConfig.safeBlockHorizontal * 5,
+                        //     ),
+                        //     // textScaleFactor:
+                        //     //     MediaQuery.textScaleFactorOf(context) * 1.5,
+                        //   ),
+                        // ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Text(
-                            "Email of logged in user",
-                            textScaleFactor:
-                                MediaQuery.textScaleFactorOf(context) * 1.5,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 2,
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: RichText(
                             text: TextSpan(
                               text: "Address:   ",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                                  // fontSize: 20
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
                                   color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                     text: contactAddress ?? "",
                                     style: TextStyle(
-                                        fontSize: 18,
+                                        // fontSize: 18,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 5,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black38))
                               ],
@@ -137,171 +154,220 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 2,
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: Row(
                             children: [
                               Text(
                                 "Phone:   ",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                // textScaleFactor:
+                                //     MediaQuery.textScaleFactorOf(context) * 1.5,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                ),
                               ),
                               Text(
                                 contactPhone ?? "",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.3,
+                                style: TextStyle(
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                ),
+                                // textScaleFactor:
+                                //     MediaQuery.textScaleFactorOf(context) * 1.3,
                               ),
                             ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 2,
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: Row(
                             children: [
                               Text(
                                 "Email:   ",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.5,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                                // textScaleFactor:
+                                //     MediaQuery.textScaleFactorOf(context) * 1.5,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                ),
                               ),
                               Text(
                                 contactEmail ?? "",
-                                textScaleFactor:
-                                    MediaQuery.textScaleFactorOf(context) * 1.3,
+                                style: TextStyle(
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                ),
+                                // textScaleFactor:
+                                //     MediaQuery.textScaleFactorOf(context) * 1.3,
                               ),
                             ],
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 40),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 4,
+                              left: SizeConfig.blockSizeHorizontal * 2),
                           child: Text(
-                            "Leave A Comment ",
-                            textScaleFactor:
-                                MediaQuery.textScaleFactorOf(context) * 1.5,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40),
-                          child: TextField(
-                            controller: nameController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(hintText: "Your Name"),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20),
-                          child: Divider(
-                              height: MediaQuery.of(context).size.height * .01),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: TextField(
-                            controller: emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(hintText: "Your Email"),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40),
-                          child: TextField(
-                            controller: emailController,
-                            keyboardType: TextInputType.text,
-                            decoration:
-                                InputDecoration(hintText: "Your Message"),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, right: 20, top: 20),
-                          child: Divider(
-                              height: MediaQuery.of(context).size.height * .01),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Center(
-                            child: Text(
-                              "Social Links ",
-                              textScaleFactor:
-                                  MediaQuery.textScaleFactorOf(context) * 1.8,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                            "Leave A Comment : ",
+                            // textScaleFactor:
+                            //     MediaQuery.textScaleFactorOf(context) * 1.5,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 5,
                             ),
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.only(left: 100, right: 30),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    launchURL(contactFaceBook);
-                                  },
-                                  child: Image.asset(
-                                    "assets/images/facebook.png",
-                                    width: MediaQuery.of(context).size.width *
-                                        0.09,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.09,
-                                  ),
-                                ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 2,
+                              right: SizeConfig.blockSizeHorizontal * 6,
+                              left: SizeConfig.blockSizeHorizontal * 2),
+                          child: TextField(
+                            controller: nameController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              hintText: "Your Name",
+                              hintStyle: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 4,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    launchURL(contactYoutube);
-                                  },
-                                  child: Image.asset(
-                                    "assets/images/youtube.png",
-                                    width: MediaQuery.of(context).size.width *
-                                        0.14,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.14,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    launchURL(contactInstagram);
-                                  },
-                                  child: Image.asset(
-                                      "assets/images/instgram.jpg",
-                                      width: MediaQuery.of(context).size.width *
-                                          0.09,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.09),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 5),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    launchURL(contactTwitter);
-                                  },
-                                  child: Image.asset(
-                                    "assets/images/twitter.png",
-                                    width: MediaQuery.of(context).size.width *
-                                        0.13,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.13,
-                                  ),
-                                ),
-                              )
-                            ],
+                            ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, bottom: 50, right: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 2,
+                              right: SizeConfig.blockSizeHorizontal * 2),
+                          child:
+                              Divider(height: SizeConfig.blockSizeVertical * 1),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              right: SizeConfig.blockSizeHorizontal * 6,
+                              left: SizeConfig.blockSizeHorizontal * 2),
+                          child: TextField(
+                            controller: emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              hintText: "Your Email",
+                              hintStyle: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 4,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              right: SizeConfig.blockSizeHorizontal * 6,
+                              left: SizeConfig.blockSizeHorizontal * 2),
+                          child: TextField(
+                            controller: emailController,
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              hintText: "Your Message",
+                              hintStyle: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 4,
+                              ),
+                            ),
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(
+                        //       left: SizeConfig.blockSizeHorizontal * 2,
+                        //       top: SizeConfig.blockSizeVertical * 2,
+                        //       right: SizeConfig.blockSizeHorizontal * 2),
+                        //   child:
+                        //       Divider(height: SizeConfig.blockSizeVertical * 1),
+                        // ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: SizeConfig.blockSizeVertical * 2,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Social Links ",
+                              // textScaleFactor:
+                              //     MediaQuery.textScaleFactorOf(context) * 1.8,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: SizeConfig.safeBlockHorizontal * 6,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * 2),
+                              child: GestureDetector(
+                                onTap: () {
+                                  launchURL(contactFaceBook);
+                                },
+                                child: Image.asset(
+                                  "assets/images/facebook.png",
+                                  width: SizeConfig.blockSizeHorizontal * 10,
+                                  height: SizeConfig.blockSizeVertical * 10,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * 2),
+                              child: GestureDetector(
+                                onTap: () {
+                                  launchURL(contactYoutube);
+                                },
+                                child: Image.asset(
+                                  "assets/images/youtube.png",
+                                  width: SizeConfig.blockSizeHorizontal * 15,
+                                  height: SizeConfig.blockSizeVertical * 15,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * 2),
+                              child: GestureDetector(
+                                onTap: () {
+                                  launchURL(contactInstagram);
+                                },
+                                child: Image.asset(
+                                  "assets/images/instgram.jpg",
+                                  width: SizeConfig.blockSizeHorizontal * 10,
+                                  height: SizeConfig.blockSizeVertical * 10,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * 2),
+                              child: GestureDetector(
+                                onTap: () {
+                                  launchURL(contactTwitter);
+                                },
+                                child: Image.asset(
+                                  "assets/images/twitter.png",
+                                  width: SizeConfig.blockSizeHorizontal * 15,
+                                  height: SizeConfig.blockSizeVertical * 15,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1,
+                              bottom: SizeConfig.blockSizeHorizontal * 5,
+                              right: SizeConfig.blockSizeHorizontal * 2),
                           child: Center(
                             child: Container(
-                              width: MediaQuery.of(context).size.width * .9,
-                              height: MediaQuery.of(context).size.height * .07,
+                              width: SizeConfig.blockSizeHorizontal * 90,
+                              height: SizeConfig.blockSizeVertical * 7,
                               decoration: BoxDecoration(
                                   color: Color(0xff3A559F),
                                   borderRadius: BorderRadius.circular(15.0)),
@@ -310,7 +376,9 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   "Send Comment",
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 15,
+                                      // fontSize: 15,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 5,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),

@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -64,26 +65,34 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     return Text(snapshot.error.toString());
                   else
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 15, top: 5),
+                      padding: EdgeInsets.only(
+                          bottom: SizeConfig.blockSizeVertical * 1,
+                          top: SizeConfig.blockSizeVertical * 2),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: SizeConfig.blockSizeHorizontal * 70,
+                        height: SizeConfig.blockSizeVertical * 7,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButtonFormField(
-                              iconSize: 35,
+                              iconSize: SizeConfig.blockSizeHorizontal * 7,
                               iconEnabledColor: Colors.black,
                               dropdownColor: Colors.white,
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4),
                               isExpanded: true,
                               hint: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, left: 12),
+                                padding: EdgeInsets.only(
+                                    right: SizeConfig.blockSizeHorizontal * 2,
+                                    left: SizeConfig.blockSizeHorizontal * 2),
                                 child: Text('Country',
-                                    style:
-                                        const TextStyle(color: Colors.black)),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal *
+                                                5)),
                               ),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(0),
@@ -92,9 +101,20 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     return DropdownMenuItem(
                                       value: data.id,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: 12, left: 12),
-                                        child: Text(data.name),
+                                        padding: EdgeInsets.only(
+                                            right:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    2,
+                                            left:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    2),
+                                        child: Text(
+                                          data.name,
+                                          style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  4),
+                                        ),
                                       ),
                                     );
                                   })?.toList() ??
@@ -118,26 +138,32 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     return Text(snapshot.error.toString());
                   else
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 15, top: 5),
+                      padding: EdgeInsets.only(
+                          bottom: SizeConfig.blockSizeVertical * 1,
+                          top: SizeConfig.blockSizeVertical * 1),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.height * 0.05,
+                        width: SizeConfig.blockSizeHorizontal * 70,
+                        height: SizeConfig.blockSizeVertical * 6,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButtonFormField(
-                              iconSize: 35,
+                              iconSize: SizeConfig.blockSizeHorizontal * 7,
                               iconEnabledColor: Colors.black,
                               dropdownColor: Colors.white,
                               style: const TextStyle(color: Colors.black),
                               isExpanded: true,
                               hint: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 12, left: 12),
+                                padding: EdgeInsets.only(
+                                    right: SizeConfig.blockSizeHorizontal * 2,
+                                    left: SizeConfig.blockSizeHorizontal * 2),
                                 child: Text('City',
-                                    style:
-                                        const TextStyle(color: Colors.black)),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal *
+                                                5)),
                               ),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.all(0),
@@ -148,9 +174,19 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                         return DropdownMenuItem(
                                           value: data.id,
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 12, left: 12),
-                                            child: Text(data.name),
+                                            padding: EdgeInsets.only(
+                                                right: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    2,
+                                                left: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    2),
+                                            child: Text(data.name,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: SizeConfig
+                                                            .safeBlockHorizontal *
+                                                        5)),
                                           ),
                                         );
                                       })?.toList() ??
@@ -166,9 +202,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     );
                 }),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 5),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -178,12 +216,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   textInputType: TextInputType.text,
                   lineCount: 1,
                   hintText: "Street",
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   textEditingController: _streetController),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 10),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -193,6 +236,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   textInputType: TextInputType.number,
                   lineCount: 1,
                   hintText: "Zip-Code",
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   textEditingController: _zipCodeController),
               // TextFieldBuild(
               //   textInputType: TextInputType.number,
@@ -210,9 +256,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               // )
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 10),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -221,13 +269,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   readOnly: false,
                   textInputType: TextInputType.text,
                   lineCount: 1,
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   hintText: "Region",
                   textEditingController: _regionController),
             ),
             Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: MediaQuery.of(context).size.height * 0.1,
-              padding: const EdgeInsets.only(bottom: 15, top: 10),
+              width: SizeConfig.blockSizeHorizontal * 70,
+              height: SizeConfig.blockSizeVertical * 10,
+              padding: EdgeInsets.only(
+                  bottom: SizeConfig.blockSizeVertical * 1,
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -237,6 +290,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   textInputType: TextInputType.number,
                   lineCount: 1,
                   hintText: "Phone Number",
+                  textStyle: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  ),
                   textEditingController: _phoneController),
             ),
             Row(
@@ -244,9 +300,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               children: [
                 SizedBox(),
                 Container(
-                  margin: EdgeInsets.only(top: 10, right: 20),
-                  width: MediaQuery.of(context).size.width * .16,
-                  height: MediaQuery.of(context).size.height * .06,
+                  margin: EdgeInsets.only(
+                      top: SizeConfig.blockSizeVertical * 1,
+                      right: SizeConfig.blockSizeHorizontal * 2),
+                  width: SizeConfig.blockSizeHorizontal * 20,
+                  height: SizeConfig.blockSizeVertical * 6,
                   decoration: BoxDecoration(
                       color: Color(0xff3A559F),
                       borderRadius: BorderRadius.circular(20.0)),
@@ -273,12 +331,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             pageTransitionAnimation:
                                 PageTransitionAnimation.fade),
                         child: Container(
-                            margin: const EdgeInsets.all(10),
+                            margin: EdgeInsets.symmetric(
+                                horizontal: SizeConfig.blockSizeHorizontal * 1,
+                                vertical: SizeConfig.blockSizeVertical * 1),
                             child: Center(
                                 child: Text("ADD",
                                     style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 15,
+                                        // fontSize: 15,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
                                         fontWeight: FontWeight.bold))))),
                   ),
                 ),

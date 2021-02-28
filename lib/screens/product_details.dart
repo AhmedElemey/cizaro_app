@@ -1,10 +1,12 @@
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart' as rs;
 import 'package:cizaro_app/model/specMdel.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -179,17 +181,19 @@ class _ProductDetailsState extends State<ProductDetails> {
           : SingleChildScrollView(
               physics: ScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   productImages?.length == 0
                       ? Container(
-                          height: MediaQuery.of(context).size.height * .4,
-                          width: double.infinity,
-                          margin: const EdgeInsets.only(top: 10),
+                          height: SizeConfig.blockSizeVertical * .4,
+                          width: SizeConfig.blockSizeHorizontal * 100,
+                          margin: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
                           child: Image.network(imgUrl ?? ''),
                         )
                       : Container(
-                          height: MediaQuery.of(context).size.height * .5,
-                          width: double.infinity,
+                          height: SizeConfig.blockSizeVertical * 50,
+                          width: SizeConfig.blockSizeHorizontal * 100,
                           child: Swiper(
                               itemBuilder: (BuildContext context, int index) {
                                 return PinchZoomImage(
@@ -223,26 +227,38 @@ class _ProductDetailsState extends State<ProductDetails> {
                               pagination: SwiperPagination()),
                         ),
                   Padding(
-                    padding: EdgeInsets.only(left: 15, top: 15),
-                    child: Row(
-                      children: [
-                        Text(productName ?? "",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.5)
-                      ],
-                    ),
-                  ),
+                      padding: EdgeInsets.only(
+                          left: SizeConfig.blockSizeHorizontal * 5,
+                          top: SizeConfig.blockSizeVertical * 2),
+                      child: Text(
+                        productName ?? "",
+                        style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 4,
+                        ),
+                      )
+                      // textScaleFactor:
+                      //     MediaQuery.of(context).textScaleFactor *
+                      ),
                   Padding(
-                    padding:
-                        const EdgeInsets.only(right: 15, left: 15, top: 10),
+                    padding: EdgeInsets.only(
+                        right: SizeConfig.blockSizeHorizontal * 5,
+                        left: SizeConfig.blockSizeHorizontal * 5,
+                        top: SizeConfig.blockSizeVertical * 1),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         productPriceAfter == productPrice
                             ? Container(
-                                child: Text(productPrice.toString() + ' LE',
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.1),
+                                child: Text(
+                                  productPrice.toString() + ' LE',
+                                  style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4,
+                                  ),
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor *
+                                  //         1.1
+                                ),
                               )
                             : Container(
                                 child: Row(
@@ -250,27 +266,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(productPrice.toString() + ' LE',
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1.2,
+                                        // textScaleFactor: MediaQuery.of(context)
+                                        //         .textScaleFactor *
+                                        //     1.2,
                                         style: TextStyle(
                                             color: Colors.red,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
                                             decoration:
                                                 TextDecoration.lineThrough)),
-                                    const SizedBox(width: 10),
+                                    SizedBox(
+                                        width:
+                                            SizeConfig.blockSizeHorizontal * 5),
                                     Text(
                                       productPriceAfter.toString() + ' LE',
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1.2,
+                                      style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                      ),
+                                      // textScaleFactor: MediaQuery.of(context)
+                                      //         .textScaleFactor *
+                                      //     1.2,
                                     )
                                   ],
                                 ),
                               ),
                         Spacer(),
                         Container(
-                          height: MediaQuery.of(context).size.height * .04,
-                          width: MediaQuery.of(context).size.width * 0.12,
+                          height: SizeConfig.blockSizeVertical * 4,
+                          width: SizeConfig.blockSizeHorizontal * 12,
                           decoration: BoxDecoration(
                               color: Color(0xffFF6969),
                               borderRadius: BorderRadius.circular(20)),
@@ -278,13 +303,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.star, size: 13, color: Colors.white),
-                                const SizedBox(width: 3),
-                                Text(productStar.toString() ?? 0.0,
-                                    style: TextStyle(color: Colors.white),
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1)
+                                Icon(Icons.star,
+                                    size: SizeConfig.blockSizeHorizontal * 4,
+                                    color: Colors.white),
+                                SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * .3),
+                                Text(
+                                  productStar.toString() ?? 0.0,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 3,
+                                  ),
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor *
+                                  //         1
+                                )
                               ],
                             ),
                           ),
@@ -293,46 +327,63 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 15, top: 10),
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 5,
+                      top: SizeConfig.blockSizeVertical * 1,
+                    ),
                     child: Row(
                       children: [
                         Text("Description ",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.7,
-                            style: TextStyle(color: Color(0xff3A559F))),
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1.7,
+                            style: TextStyle(
+                              color: Color(0xff3A559F),
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            )),
                       ],
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 5, left: 10),
-                    child: Column(
-                      children: [
-                        Text(
-                          productDescription ?? "",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
-                          style: TextStyle(color: Color(0xff707070)),
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 2,
+                        left: SizeConfig.blockSizeHorizontal * 5),
+                    child: Center(
+                      child: Text(
+                        productDescription ?? "",
+                        // textScaleFactor:
+                        //     MediaQuery.of(context).textScaleFactor * 1,
+                        style: TextStyle(
+                          color: Color(0xff707070),
+                          fontSize: SizeConfig.safeBlockHorizontal * 4,
                         ),
-                      ],
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30, top: 5),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 5,
+                        right: SizeConfig.blockSizeHorizontal * 5,
+                        top: SizeConfig.blockSizeVertical * 1),
                     child: Divider(
-                        height: MediaQuery.of(context).size.height * .001,
+                        height: SizeConfig.blockSizeVertical * .1,
                         color: Color(0xff727C8E)),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 20, top: 15),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * .20,
+                        top: SizeConfig.blockSizeVertical * .15),
                     child: Row(
                       children: [
                         Text(
                           specTitle == ''
                               ? ''
                               : "Select $specTitle".toUpperCase(),
-                          style: TextStyle(color: Color(0xff515C6F)),
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1,
+                          style: TextStyle(
+                            color: Color(0xff515C6F),
+                            fontSize: SizeConfig.safeBlockHorizontal * 3,
+                          ),
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1,
                         ),
                       ],
                     ),
@@ -384,8 +435,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: productSpecs.length,
-                          padding: const EdgeInsets.only(
-                              right: 10, left: 10, top: 10),
+                          padding: EdgeInsets.only(
+                              right: SizeConfig.blockSizeHorizontal * 5,
+                              left: SizeConfig.blockSizeHorizontal * 5,
+                              top: SizeConfig.blockSizeVertical * 1),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   childAspectRatio: 2.1,
@@ -405,17 +458,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 getSpecData();
                               },
                               child: Container(
-                                padding: EdgeInsets.only(left: 5),
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * .05),
                                 child: Text(
                                   productSpecs[index].value,
                                   style: TextStyle(
                                     color: _selectedSize == index
                                         ? Color(0xffE7A646)
                                         : Color(0xff707070),
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 3,
                                   ),
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1.2,
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor *
+                                  //         1.2,
                                 ),
                               ),
                             );
@@ -491,58 +547,71 @@ class _ProductDetailsState extends State<ProductDetails> {
                       cart.addProductToCart(productCart);
                       showToast();
                     },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * .44,
-                      height: MediaQuery.of(context).size.height * .066,
-                      decoration: BoxDecoration(
-                          color: Color(0xff3A559F),
-                          borderRadius: BorderRadius.circular(25.0)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "ADD TO CART",
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: Colors.white,
-                            child: Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 15,
-                              color: Colors.red.shade900,
+                    child: Center(
+                      child: Container(
+                        width: SizeConfig.blockSizeHorizontal * 42,
+                        height: SizeConfig.blockSizeHorizontal * 10,
+                        decoration: BoxDecoration(
+                            color: Color(0xff3A559F),
+                            borderRadius: BorderRadius.circular(25.0)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "ADD TO CART",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  //  fontSize: 15,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                                  fontWeight: FontWeight.bold),
                             ),
-                          )
-                        ],
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundColor: Colors.white,
+                              child: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: SizeConfig.blockSizeHorizontal * 3,
+                                color: Colors.red.shade900,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30, top: 5),
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 5,
+                        right: SizeConfig.blockSizeHorizontal * 5,
+                        top: SizeConfig.blockSizeVertical * 3),
                     child: Divider(
-                        height: MediaQuery.of(context).size.height * .001,
+                        height: SizeConfig.blockSizeVertical * .1,
                         color: Color(0xff727C8E)),
                   ),
                   Container(
-                    padding: const EdgeInsets.only(top: 10, left: 15),
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 1,
+                        left: SizeConfig.blockSizeHorizontal * 5),
                     child: Row(
                       children: [
                         Text(
                           "Related Products ",
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.5,
-                          style: const TextStyle(color: Color(0xff3A559F)),
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.5,
+                          style: TextStyle(
+                            color: Color(0xff3A559F),
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                          ),
                         ),
                       ],
                     ),
                   ),
                   Container(
-                    padding:
-                        const EdgeInsets.only(top: 10, left: 10, bottom: 20),
-                    height: MediaQuery.of(context).size.height * .35,
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 3,
+                        left: SizeConfig.blockSizeHorizontal * 5,
+                        bottom: SizeConfig.blockSizeVertical * 2),
+                    height: SizeConfig.blockSizeVertical * 36,
                     child: ListView.builder(
                         itemCount: productRelated.length,
                         scrollDirection: Axis.horizontal,

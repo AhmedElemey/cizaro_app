@@ -1,11 +1,16 @@
 import 'dart:io';
 
+import 'package:cizaro_app/model/cartModel.dart';
+import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/size_config.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
+import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
-import 'package:cizaro_app/widgets/shop_item.dart';
+import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -70,8 +75,9 @@ class _ShopScreenState extends State<ShopScreen> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.only(top: 10),
-                    height: MediaQuery.of(context).size.height,
+                    padding:
+                        EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
+                    height: SizeConfig.blockSizeVertical * 100,
                     child: ListView.builder(
                       itemCount: productList.length,
                       itemBuilder: (ctx, index) => GestureDetector(
@@ -87,16 +93,56 @@ class _ShopScreenState extends State<ShopScreen> {
                         // Navigator.of(context).pushNamed(
                         // ProductDetails.routeName,
                         // arguments: {'product_id': productList[index].id}),
-                        child: ShopItem(
+                        child: SearchItem(
+                          productId: productList[index].id,
                           imgUrl: productList[index].mainImg,
                           productName: productList[index].name,
-                          productPrice: productList[index].price,
+                          productPrice: productList[index].price ?? 0.0,
                           productPriceAfter:
                               productList[index]?.offer?.afterPrice ?? 0.0,
-                          productId: productList[index].id,
                           productCategory: productList[index].category.name,
-                          productStars: productList[index].stars,
+                          onAddToFavorite: () {
+                            final fav = Provider.of<FavViewModel>(context,
+                                listen: false);
+                            final productFav = ProductFav(
+                                id: productList[index].id,
+                                name: productList[index].name,
+                                mainImg: productList[index].mainImg,
+                                price: productList[index].price,
+                                categoryName: productList[index].category.name,
+                                isFav: 1);
+                            fav.addProductToFav(productFav);
+                          },
+                          onAddToCart: () {
+                            final cart = Provider.of<CartViewModel>(context,
+                                listen: false);
+                            final productCart = ProductCart(
+                                id: productList[index].id,
+                                name: productList[index].name,
+                                mainImg: productList[index].mainImg,
+                                price: productList[index].price,
+                                priceAfterDiscount:
+                                    productList[index].offer?.afterPrice ??
+                                        productList[index].price,
+                                categoryName: productList[index].category.name,
+                                quantity: 1,
+                                availability: productList[index].availability,
+                                colorSpecValue: '',
+                                sizeSpecValue: '');
+                            cart.addProductToCart(productCart);
+                          },
+                          //  productQuantity: ,
                         ),
+                        // ShopItem(
+                        //   imgUrl: productList[index].mainImg,
+                        //   productName: productList[index].name,
+                        //   productPrice: productList[index].price,
+                        //   productPriceAfter:
+                        //       productList[index]?.offer?.afterPrice ?? 0.0,
+                        //   productId: productList[index].id,
+                        //   productCategory: productList[index].category.name,
+                        //   productStars: productList[index].stars,
+                        // ),
                       ),
                     ),
                   ),

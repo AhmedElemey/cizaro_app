@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,8 +24,10 @@ class AddressItem extends StatelessWidget {
       child: Card(
         elevation: 4,
         child: Container(
-          height: MediaQuery.of(context).size.height * .2,
-          padding: EdgeInsets.only(left: 5, top: 2),
+          height: SizeConfig.blockSizeVertical * 20,
+          padding: EdgeInsets.only(
+              left: SizeConfig.blockSizeHorizontal * 2,
+              top: SizeConfig.blockSizeVertical * .25),
           color: bgColor,
           child: Row(children: [
             Column(
@@ -32,8 +35,9 @@ class AddressItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width * .3,
+                  padding:
+                      EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 3),
+                  width: SizeConfig.blockSizeHorizontal * 30,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -42,41 +46,50 @@ class AddressItem extends StatelessWidget {
                         // style: TextStyle(fontWeight: FontWeight.bold),
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w700,
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                             color: Color(0xff515C6F)),
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1.3,
+                        // textScaleFactor:
+                        //     MediaQuery.of(context).textScaleFactor * 1.3,
                       ),
                       Text(
                         strNumber,
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
+                        // textScaleFactor:
+                        //     MediaQuery.of(context).textScaleFactor * 1,
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                             color: Color(0xff515C6F)),
                       ),
                       Text(
                         strMain,
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
+                        // textScaleFactor:
+                        //     MediaQuery.of(context).textScaleFactor * 1,
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                             color: Color(0xff515C6F)),
                       ),
                       Text(
                         cityName,
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
+                        // textScaleFactor:
+                        //     MediaQuery.of(context).textScaleFactor * 1,
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w600,
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                             color: Color(0xff515C6F)),
                       ),
-                      Text(
-                        countryName,
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff515C6F)),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: SizeConfig.blockSizeVertical * .25),
+                        child: Text(
+                          countryName,
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1,
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w600,
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                              color: Color(0xff515C6F)),
+                        ),
                       )
                     ],
                   ),
@@ -85,22 +98,26 @@ class AddressItem extends StatelessWidget {
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.only(right: 10),
+              padding:
+                  EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 1),
               child: GestureDetector(
                   onTap: () => onEdit(),
-                  child: Text("Edit",
-                      // style: TextStyle(color: Color(0xff3A559F)),
-                      style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xff3A559F)),
-                      textScaleFactor:
-                          MediaQuery.of(context).textScaleFactor * 1.3)),
+                  child: Text(
+                    "Edit",
+                    // style: TextStyle(color: Color(0xff3A559F)),
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600,
+                        fontSize: SizeConfig.safeBlockHorizontal * 5,
+                        color: Color(0xff3A559F)),
+                    // textScaleFactor:
+                    //     MediaQuery.of(context).textScaleFactor * 1.3
+                  )),
             ),
             IconButton(
                 icon: Icon(CupertinoIcons.delete_simple),
                 color: Colors.red,
                 onPressed: () => onDelete()),
-            const SizedBox(width: 5)
+            SizedBox(width: SizeConfig.blockSizeHorizontal * 2)
           ]),
         ),
       ),

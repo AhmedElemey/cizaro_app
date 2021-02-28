@@ -199,15 +199,15 @@ class _ProductItemState extends State<ProductItem> {
                               left: SizeConfig.blockSizeHorizontal * 1),
                           child: Text(
                             widget.productName,
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.5,
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1.5,
                             // style: TextStyle(
                             //   fontFamily: 'NeusaNextStd',
                             //   fontWeight: FontWeight.w600,
                             // ),
                             style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                            ),
+                                fontWeight: FontWeight.w500,
+                                fontSize: SizeConfig.safeBlockHorizontal * 4),
                           ),
                         ),
                         widget.productPriceAfter == widget.productPrice
@@ -218,16 +218,17 @@ class _ProductItemState extends State<ProductItem> {
                                     left: SizeConfig.blockSizeHorizontal * 1),
                                 child: Text(
                                   widget.productPrice.toString() + ' LE',
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1,
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor *
+                                  //         1,
                                   // style: TextStyle(
                                   //   fontFamily: 'NeusaNextStd',
                                   //   fontWeight: FontWeight.w700,
                                   // ),
                                   style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                      fontWeight: FontWeight.w500,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4),
                                 ),
                               )
                             : Container(
@@ -244,12 +245,15 @@ class _ProductItemState extends State<ProductItem> {
                                               1),
                                       child: Text(
                                         widget.productPrice.toString() + ' LE',
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1,
+                                        // textScaleFactor: MediaQuery.of(context)
+                                        //         .textScaleFactor *
+                                        //     1,
                                         style: TextStyle(
                                             fontFamily: 'NeusaNextStd',
                                             fontWeight: FontWeight.w700,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
                                             color: Colors.red,
                                             decoration:
                                                 TextDecoration.lineThrough),
@@ -267,11 +271,14 @@ class _ProductItemState extends State<ProductItem> {
                                       child: Text(
                                         widget.productPriceAfter.toString() +
                                             ' LE',
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1,
+                                        // textScaleFactor: MediaQuery.of(context)
+                                        //         .textScaleFactor *
+                                        //     1,
                                         style: TextStyle(
                                           fontFamily: 'NeusaNextStd',
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  4,
                                           fontWeight: FontWeight.w700,
                                         ),
                                       ),
@@ -395,9 +402,9 @@ class _ProductItemState extends State<ProductItem> {
                                             SizeConfig.blockSizeHorizontal * 2),
                                     child: Text(
                                       widget.productPrice.toString() + ' LE',
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1,
+                                      // textScaleFactor: MediaQuery.of(context)
+                                      //         .textScaleFactor *
+                                      //     1,
                                       // style: TextStyle(
                                       //   fontFamily: 'NeusaNextStd',
                                       //   fontWeight: FontWeight.w700,

@@ -1,4 +1,5 @@
 import 'package:cizaro_app/screens/orders_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -16,8 +17,8 @@ class FinishedOrder extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.15,
-              height: MediaQuery.of(context).size.height * 0.15,
+              width: SizeConfig.blockSizeHorizontal * 15,
+              height: SizeConfig.blockSizeVertical * 15,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
@@ -32,17 +33,24 @@ class FinishedOrder extends StatelessWidget {
               ),
               child: Icon(Icons.check,
                   color: Theme.of(context).primaryColor,
-                  size: MediaQuery.of(context).size.height * 0.06),
+                  size: SizeConfig.blockSizeVertical * 7),
             ),
             Text('Order Placed!',
-                textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.5,
-                style: const TextStyle(fontWeight: FontWeight.bold)),
+                // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.5,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                )),
             Padding(
-              padding: const EdgeInsets.all(20),
+              padding: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.blockSizeHorizontal * 6,
+                  vertical: SizeConfig.blockSizeVertical * 2),
               child: Text(
                   'Your order was placed successfully. For more details, check All My Orders page under Profile tab.',
-                  textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3,
-                  style: const TextStyle()),
+                  // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3,
+                  style: TextStyle(
+                    fontSize: SizeConfig.safeBlockHorizontal * 5,
+                  )),
             ),
             GestureDetector(
               onTap: () => pushNewScreenWithRouteSettings(context,
@@ -51,31 +59,35 @@ class FinishedOrder extends StatelessWidget {
                   withNavBar: true,
                   pageTransitionAnimation: PageTransitionAnimation.fade),
               child: Container(
-                padding: EdgeInsets.only(right: 10),
-                width: MediaQuery.of(context).size.width * .4,
-                height: MediaQuery.of(context).size.height * .058,
+                padding:
+                    EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 4),
+                width: SizeConfig.blockSizeHorizontal * 40,
+                height: SizeConfig.blockSizeVertical * 6,
                 decoration: BoxDecoration(
                     color: Color(0xff3A559F),
                     borderRadius: BorderRadius.circular(25.0)),
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(
+                          left: SizeConfig.blockSizeHorizontal * 3),
                       child: Text(
                         "MY ORDERS",
-                        textScaleFactor:
-                            MediaQuery.of(context).textScaleFactor * 1,
+                        // textScaleFactor:
+                        //     MediaQuery.of(context).textScaleFactor * 1,
                         style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold),
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     Spacer(),
                     CircleAvatar(
-                      radius: 10,
+                      radius: SizeConfig.blockSizeHorizontal * 3,
                       backgroundColor: Colors.white,
                       child: Icon(
                         Icons.arrow_forward_ios_rounded,
-                        size: 15,
+                        size: SizeConfig.blockSizeHorizontal * 5,
                         color: Color(0xff3A559F),
                       ),
                     )
@@ -83,7 +95,7 @@ class FinishedOrder extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 30)
+            SizedBox(height: SizeConfig.blockSizeVertical * 4)
           ],
         ),
       ),

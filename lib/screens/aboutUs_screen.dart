@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -64,12 +65,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 10),
+                    padding: EdgeInsets.only(
+                        top: SizeConfig.blockSizeVertical * 1,
+                        left: SizeConfig.blockSizeHorizontal * 1),
                     child: Text(
                       _details ?? "",
-                      textScaleFactor:
-                          MediaQuery.textScaleFactorOf(context) * 2,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: SizeConfig.safeBlockHorizontal * 4),
                     ),
                   )
                 ],

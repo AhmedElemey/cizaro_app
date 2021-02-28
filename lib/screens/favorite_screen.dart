@@ -55,7 +55,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return fav.favProductModel.length == 0
         ? Container(
             height: SizeConfig.blockSizeVertical * 90,
-            padding: const EdgeInsets.all(25),
+            padding: EdgeInsets.symmetric(
+                vertical: SizeConfig.blockSizeVertical * 3,
+                horizontal: SizeConfig.blockSizeHorizontal * 3),
             child: Center(
                 child: Text(
                     'Your Favorites is Empty, please Add your Favorites.',
@@ -101,7 +103,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           children: [
             favProductList(),
             SizedBox(
-              height: 20,
+              height: SizeConfig.blockSizeVertical * 2,
             )
           ],
         ),

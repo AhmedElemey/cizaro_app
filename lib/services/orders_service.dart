@@ -67,7 +67,6 @@ class OrderServices {
     if (response.statusCode == 200 || body['message'] == '') {
       return CheckoutResult.fromJson(body);
     } else {
-      print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }

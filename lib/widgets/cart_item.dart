@@ -189,18 +189,12 @@ class _CartItemState extends State<CartItem> {
                           Spacer(),
                           GestureDetector(
                             onTap: widget.onMinusQuantity,
-                            child: Container(
-                              width: SizeConfig.blockSizeHorizontal * 7.5,
-                              height: SizeConfig.blockSizeVertical * 7.5,
-                              padding: EdgeInsets.only(
-                                  right: SizeConfig.blockSizeHorizontal * .5,
-                                  bottom: SizeConfig.blockSizeVertical * 3),
-                              decoration: BoxDecoration(
-                                  color: Colors.black12,
-                                  shape: BoxShape.circle),
+                            child: CircleAvatar(
+                              radius: SizeConfig.safeBlockHorizontal * 4,
+                              backgroundColor: Colors.black12,
                               child: Center(
-                                child: Icon(Icons.minimize_outlined,
-                                    size: SizeConfig.safeBlockHorizontal * 7,
+                                child: Icon(CupertinoIcons.minus,
+                                    size: SizeConfig.safeBlockHorizontal * 5,
                                     color: Color(0xff707070)),
                               ),
                             ),
@@ -224,8 +218,10 @@ class _CartItemState extends State<CartItem> {
                                   border: InputBorder.none,
                                   hintText: widget.myController.text ??
                                       widget.productQuantity.toString(),
-                                  hintStyle:
-                                      const TextStyle(color: Colors.black)),
+                                  hintStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: SizeConfig.blockSizeHorizontal *
+                                          .07)),
                               controller: widget.myController,
                               onChanged: (value) {
                                 // widget.myController.addListener((){
@@ -250,12 +246,14 @@ class _CartItemState extends State<CartItem> {
                           GestureDetector(
                             onTap: widget.onPlusQuantity,
                             child: CircleAvatar(
-                              radius: 15,
+                              radius: SizeConfig.safeBlockHorizontal * 4,
                               backgroundColor: Colors.black12,
-                              child: Icon(
-                                Icons.add,
-                                size: SizeConfig.safeBlockHorizontal * 6,
-                                color: Color(0xff707070),
+                              child: Center(
+                                child: Icon(
+                                  Icons.add,
+                                  size: SizeConfig.safeBlockHorizontal * 5,
+                                  color: Color(0xff707070),
+                                ),
                               ),
                             ),
                           ),

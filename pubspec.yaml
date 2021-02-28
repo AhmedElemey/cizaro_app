@@ -36,7 +36,7 @@ dependencies:
   smooth_page_indicator: ^0.2.0
   pinch_zoom_image_last: ^0.3.2
   url_launcher: ^5.7.10
-  webview_flutter: ^1.0.7
+  flutter_inappwebview: ^4.0.0+4
   google_fonts: ^1.1.2
 
 

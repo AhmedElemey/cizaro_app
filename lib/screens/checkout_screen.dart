@@ -42,8 +42,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       productId,
       productQuantity,
       selectedPaymentRadio,
-      selectedPaymentId,
-      orderId;
+      selectedPaymentId;
+  //Float orderId;
   String addressName,
       countryName,
       cityName,
@@ -163,7 +163,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     await getAddress.checkOutMethod(token, checkout).then((response) {
       checkoutResult = response;
       paymentUrl = checkoutResult.data.paymentUrl;
-      orderId = checkoutResult.data.orderId;
+      //  orderId = checkoutResult.data.orderId;
       _checkOutDone = checkoutResult.data.done;
       // online payment
       if (paymentUrl != null) {

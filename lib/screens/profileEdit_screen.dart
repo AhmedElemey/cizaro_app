@@ -473,7 +473,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         // ),
                         Container(
                           padding: EdgeInsets.only(
-                              right: SizeConfig.blockSizeHorizontal * 1,
+                              right: SizeConfig.blockSizeHorizontal * 3,
                               top: SizeConfig.blockSizeVertical * 2),
                           child: Row(
                             children: [
@@ -483,8 +483,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 onTap: () => editProfile(),
                                 child: Container(
                                   padding: EdgeInsets.only(
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 1),
+                                      right: SizeConfig.blockSizeHorizontal * 3,
+                                      left: SizeConfig.blockSizeHorizontal * 2),
                                   width: SizeConfig.blockSizeHorizontal * 30,
                                   height: SizeConfig.blockSizeVertical * 6,
                                   decoration: BoxDecoration(
@@ -513,11 +513,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       CircleAvatar(
                                           radius:
                                               SizeConfig.blockSizeHorizontal *
-                                                  3.5,
+                                                  3,
                                           backgroundColor: Colors.white,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 15,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Color(0xff3A559F)))
                                     ],
                                   ),
@@ -637,7 +639,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         Container(
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 1,
-                              right: SizeConfig.blockSizeHorizontal * 1,
+                              right: SizeConfig.blockSizeHorizontal * 3,
                               bottom: SizeConfig.blockSizeVertical * 2),
                           child: Row(
                             children: [
@@ -675,14 +677,15 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                             fontWeight: FontWeight.bold),
                                       ),
                                       CircleAvatar(
-                                          radius: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              .035,
+                                          radius:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  3,
                                           backgroundColor: Colors.white,
                                           child: Icon(
                                               Icons.arrow_forward_ios_rounded,
-                                              size: 15,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
                                               color: Color(0xff3A559F)))
                                     ],
                                   ),

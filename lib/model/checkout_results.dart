@@ -28,21 +28,20 @@ class CheckoutResult {
 class Data {
   String paymentUrl;
   bool done;
-  int orderId;
+  //Float orderId;
 
-  Data({this.paymentUrl, this.done, this.orderId});
+  Data({this.paymentUrl, this.done});
 
   Data.fromJson(Map<String, dynamic> json) {
     paymentUrl = json['payment_url'];
     done = json['done'];
-    orderId = json['order_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['payment_url'] = this.paymentUrl;
     data['done'] = this.done;
-    data['order_id'] = this.orderId;
+
     return data;
   }
 }

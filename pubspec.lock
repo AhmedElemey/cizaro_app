@@ -195,6 +195,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2+2"
+  flutter_inappwebview:
+    dependency: "direct main"
+    description:
+      name: flutter_inappwebview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.0+4"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -350,6 +357,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0-nullsafety.3"
+  mime:
+    dependency: transitive
+    description:
+      name: mime
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.7"
   nested:
     dependency: transitive
     description:
@@ -677,13 +691,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.3"
-  webview_flutter:
-    dependency: "direct main"
-    description:
-      name: webview_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.7"
   win32:
     dependency: transitive
     description:

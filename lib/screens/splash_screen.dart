@@ -51,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: Container(
         width: SizeConfig.blockSizeHorizontal * 100,

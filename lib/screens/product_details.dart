@@ -67,7 +67,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       productName = productDetails.data.name;
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
-      productPriceAfter = productDetails.data.offer.afterPrice;
+      productPriceAfter = productDetails.data.offer.afterPrice ?? 0;
 
       productStar = productDetails.data.stars ?? 0.0;
       productDescription = productDetails.data.shortDescription;
@@ -600,7 +600,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           //     MediaQuery.of(context).textScaleFactor * 1.5,
                           style: TextStyle(
                             color: Color(0xff3A559F),
-                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            fontSize: SizeConfig.safeBlockHorizontal * 5,
                           ),
                         ),
                       ],
@@ -611,7 +611,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         top: SizeConfig.blockSizeVertical * 3,
                         left: SizeConfig.blockSizeHorizontal * 5,
                         bottom: SizeConfig.blockSizeVertical * 2),
-                    height: SizeConfig.blockSizeVertical * 36,
+                    height: SizeConfig.blockSizeVertical * 40,
                     child: ListView.builder(
                         itemCount: productRelated.length,
                         scrollDirection: Axis.horizontal,

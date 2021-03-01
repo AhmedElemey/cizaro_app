@@ -75,7 +75,7 @@ class _CartItemState extends State<CartItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeVertical * 20,
+          height: SizeConfig.blockSizeVertical * 23,
           width: SizeConfig.blockSizeHorizontal * 100,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,13 +99,18 @@ class _CartItemState extends State<CartItem> {
                     children: [
                       Row(
                         children: [
-                          Text(widget.productName,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
-                                  color: Color(0xff515C6F)),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.2),
+                          Container(
+                            width: SizeConfig.blockSizeHorizontal * 40,
+                            child: Text(widget.productName,
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4,
+                                    color: Color(0xff515C6F)),
+                                textScaleFactor:
+                                    MediaQuery.of(context).textScaleFactor *
+                                        1.2),
+                          ),
                           Spacer(),
                           Padding(
                               padding: EdgeInsets.only(

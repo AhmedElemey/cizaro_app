@@ -1,6 +1,7 @@
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
 import 'constants.dart';
 
 class DataBaseHelper {
@@ -68,4 +69,9 @@ class DataBaseHelper {
     return await dbClient
         .delete(tableCart, where: '$columnId = ?', whereArgs: [id]);
   }
+
+  // Future<void> deleteTable() async {
+  //   var dbClient = await database;
+  //   return await dbClient.delete(tableCart);
+  // }
 }

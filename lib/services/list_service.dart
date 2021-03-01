@@ -3,13 +3,15 @@ import 'dart:convert';
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
-import 'package:cizaro_app/model/brandModel.dart'as BrandModel;
+import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
+import 'package:cizaro_app/model/checkPaymentModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/home.dart';
+import 'package:cizaro_app/model/order_id_model.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/product_details.dart';
@@ -35,8 +37,6 @@ class ListServices {
       throw Exception("Unable to perform Request");
     }
   }
-
-
 
   Future<ShopModel> fetchFilterItems(
       var minimum, var maximum, var brand) async {
@@ -145,6 +145,24 @@ class ListServices {
     }
   }
 
+  Future<CheckPaymentModel> checkPayment(
+      OrderIdModel orderIdModel, String token) async {
+    final response = await http.post(API + '/check-payment-status/',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': '${'Token'} $token'
+        },
+        body: jsonEncode(orderIdModel.toJson()));
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return CheckPaymentModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
   Future<List<productOffer.Data>> checkOfferInCart(
       CheckProductsOfferInCart checkProductsOfferInCart) async {
     final response = await http.post(API + '/shopping-cart-check-offer/',
@@ -199,6 +217,7 @@ class ListServices {
       throw Exception("Unable to perform request!");
     }
   }
+
   Future<List<BrandModel.Data>> fetchBrand() async {
     final response = await http.get(API + '/brands');
     if (response.statusCode == 200) {
@@ -208,7 +227,7 @@ class ListServices {
       return json
           .map<BrandModel.Data>((brands) => BrandModel.Data.fromJson(brands))
           .toList();
-   //   return BrandModel.fromJson(body);
+      //   return BrandModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }

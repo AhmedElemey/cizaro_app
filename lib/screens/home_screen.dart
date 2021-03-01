@@ -96,57 +96,100 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(
                   left: SizeConfig.blockSizeHorizontal * .5,
                   top: SizeConfig.blockSizeVertical * 2),
-              itemCount: newArrivalsList[index]?.products?.length ?? 0,
+              itemCount:
+                  newArrivalsList?.elementAt(index)?.products?.length ?? 0,
               scrollDirection: Axis.horizontal,
               itemBuilder: (ctx, index) => GestureDetector(
                     onTap: () => tab.pushNewScreenWithRouteSettings(context,
                         settings: RouteSettings(
                             name: ProductDetails.routeName,
                             arguments: {
-                              'product_id':
-                                  newArrivalsList[0].products[index].id
+                              'product_id': newArrivalsList
+                                  ?.elementAt(index)
+                                  ?.products[index]
+                                  .id
                             }),
                         screen: ProductDetails(),
                         withNavBar: true,
                         pageTransitionAnimation:
                             tab.PageTransitionAnimation.fade),
                     child: ProductItem(
-                      productId: newArrivalsList[0]?.products[index]?.id ?? 0,
-                      productName:
-                          newArrivalsList[0]?.products[index]?.name ?? '',
-                      imgUrl:
-                          newArrivalsList[0]?.products[index]?.mainImg ?? '',
-                      categoryName:
-                          newArrivalsList[0]?.products[index]?.category?.name ??
-                              '',
-                      productPrice:
-                          newArrivalsList[0]?.products[index]?.price ?? 0.0,
-                      productPriceAfter: newArrivalsList[0]
+                      productId: newArrivalsList
+                              ?.elementAt(index)
+                              ?.products[index]
+                              ?.id ??
+                          0,
+                      productName: newArrivalsList
+                              ?.elementAt(index)
+                              ?.products[index]
+                              ?.name ??
+                          '',
+
+                      imgUrl: newArrivalsList
+                              ?.elementAt(index)
+                              ?.products[index]
+                              ?.mainImg ??
+                          '',
+                      categoryName: newArrivalsList
+                              ?.elementAt(index)
+                              ?.products[index]
+                              ?.category
+                              ?.name ??
+                          '',
+                      productPrice: newArrivalsList
+                              ?.elementAt(index)
+                              ?.products[index]
+                              ?.price ??
+                          0.0,
+                      productPriceAfter: newArrivalsList
+                              ?.elementAt(index)
                               ?.products[index]
                               ?.offer
                               ?.afterPrice ??
                           0.0,
-                      offer: newArrivalsList[0]?.products[index]?.offer ?? "",
+                      discount: newArrivalsList
+                              ?.elementAt(index)
+                              ?.products[index]
+                              ?.offer
+                              ?.discount ??
+                          0.0,
                       onAddToCart: () {
                         final cart =
                             Provider.of<CartViewModel>(context, listen: false);
                         final productCart = ProductCart(
-                            id: newArrivalsList[0]?.products[index].id,
-                            name: newArrivalsList[0]?.products[index].name,
-                            mainImg:
-                                newArrivalsList[0]?.products[index].mainImg,
-                            price: newArrivalsList[0]?.products[index].price,
-                            priceAfterDiscount: newArrivalsList[0]
+                            id: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .id,
+                            name: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .name,
+                            mainImg: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .mainImg,
+                            price: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .price,
+                            priceAfterDiscount: newArrivalsList
+                                    ?.elementAt(index)
                                     ?.products[index]
                                     .offer
                                     ?.afterPrice ??
-                                newArrivalsList[0]?.products[index].price,
-                            categoryName: newArrivalsList[0]
+                                newArrivalsList
+                                    ?.elementAt(index)
+                                    ?.products[index]
+                                    .price,
+                            categoryName: newArrivalsList
+                                ?.elementAt(index)
                                 ?.products[index]
                                 .category
                                 .name,
                             quantity: 1,
-                            availability: newArrivalsList[0]
+                            availability: newArrivalsList
+                                ?.elementAt(index)
                                 ?.products[index]
                                 .availability,
                             colorSpecValue: '',
@@ -155,12 +198,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       onAddToFavorite: () {
                         final productFav = ProductFav(
-                            id: newArrivalsList[0]?.products[index].id,
-                            name: newArrivalsList[0]?.products[index].name,
-                            mainImg:
-                                newArrivalsList[0]?.products[index].mainImg,
-                            price: newArrivalsList[0]?.products[index].price,
-                            categoryName: newArrivalsList[0]
+                            id: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .id,
+                            name: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .name,
+                            mainImg: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .mainImg,
+                            price: newArrivalsList
+                                ?.elementAt(index)
+                                ?.products[index]
+                                .price,
+                            categoryName: newArrivalsList
+                                ?.elementAt(index)
                                 ?.products[index]
                                 .category
                                 .name,
@@ -242,7 +297,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.offer
                               ?.afterPrice ??
                           0.0,
-                      offer: topSellingList[0]?.products[index]?.offer ?? "",
+                      discount:
+                          topSellingList[0]?.products[index]?.offer?.discount ??
+                              0.0,
                       onAddToCart: () {
                         final cart =
                             Provider.of<CartViewModel>(context, listen: false);

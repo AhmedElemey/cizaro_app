@@ -24,7 +24,7 @@ class CheckoutItem extends StatelessWidget {
       child: Card(
         elevation: 2,
         child: Container(
-          height: SizeConfig.blockSizeVertical * 10,
+          height: SizeConfig.blockSizeVertical * 15,
           padding: EdgeInsets.only(
               left: SizeConfig.blockSizeHorizontal * 2,
               right: SizeConfig.blockSizeHorizontal * 3,
@@ -49,6 +49,7 @@ class CheckoutItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
+                          width: SizeConfig.blockSizeHorizontal * 45,
                           child: Text(
                             productName ?? "",
                             style: TextStyle(

@@ -38,7 +38,7 @@ class FavoriteItem extends StatelessWidget {
                 left: SizeConfig.blockSizeHorizontal * 1,
                 right: SizeConfig.blockSizeHorizontal * 4,
                 top: SizeConfig.blockSizeVertical * 1,
-                bottom: SizeConfig.blockSizeVertical * .5),
+                bottom: SizeConfig.blockSizeVertical * 1.5),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -59,13 +59,14 @@ class FavoriteItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        width: SizeConfig.blockSizeHorizontal * 50,
                         child: Text(
                           productName,
                           style: TextStyle(
                             fontSize: SizeConfig.safeBlockHorizontal * 4,
                           ),
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.5,
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.5,
                         ),
                       ),
                       Container(
@@ -74,8 +75,8 @@ class FavoriteItem extends StatelessWidget {
                           style: TextStyle(
                             fontSize: SizeConfig.safeBlockHorizontal * 4,
                           ),
-                          textScaleFactor:
-                              MediaQuery.of(context).textScaleFactor * 1.2,
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.2,
                         ),
                       ),
                       Container(
@@ -87,8 +88,8 @@ class FavoriteItem extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: SizeConfig.safeBlockHorizontal * 3,
                               ),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
+                              // textScaleFactor:
+                              //     MediaQuery.of(context).textScaleFactor * 1.1,
                             ),
                             Spacer(),
                             Container(
@@ -117,9 +118,9 @@ class FavoriteItem extends StatelessWidget {
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 4,
                                     ),
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1,
+                                    // textScaleFactor:
+                                    //     MediaQuery.of(context).textScaleFactor *
+                                    //         1,
                                   )
                                 ],
                               ),

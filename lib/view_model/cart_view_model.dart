@@ -11,6 +11,7 @@ class CartViewModel extends ChangeNotifier {
   int productId, quantity;
 
   List<ProductCart> get cartProductModel => _cartItemsList;
+
   double get totalPrice => _totalPrice;
   double _totalPrice = 0.0;
   var dbHelper = DataBaseHelper.db;
@@ -42,6 +43,9 @@ class CartViewModel extends ChangeNotifier {
   }
 
   getTotalPrice() {
+    if (_cartItemsList.length == 0 || _cartItemsList == null) {
+      _totalPrice = 0.0;
+    }
     for (int i = 0; i < _cartItemsList.length; i++) {
       if (_cartItemsList[i].price == _cartItemsList[i].priceAfterDiscount) {
         _totalPrice += _cartItemsList[i].price * _cartItemsList[i].quantity;
@@ -133,4 +137,8 @@ class CartViewModel extends ChangeNotifier {
     getTotalPrice();
     notifyListeners();
   }
+
+  // deleteTable() {
+  //   return dbHelper.deleteTable;
+  // }
 }

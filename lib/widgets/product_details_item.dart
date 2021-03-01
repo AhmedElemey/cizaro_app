@@ -133,7 +133,6 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
     return Card(
       elevation: 3,
       child: Container(
-        padding: EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 3),
         child: widget.discount == 0.0 || widget.discount == null
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,13 +162,15 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                     },
                   ),
                   Container(
+                    width: SizeConfig.blockSizeHorizontal * 35,
                     padding: EdgeInsets.only(
                         right: SizeConfig.blockSizeHorizontal * 1,
+                        left: SizeConfig.blockSizeHorizontal * 1,
                         top: SizeConfig.blockSizeVertical * 1),
                     child: Text(
                       widget.productName,
                       style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 4,
+                        fontSize: SizeConfig.safeBlockHorizontal * 3,
                       ),
                       textScaleFactor:
                           MediaQuery.of(context).textScaleFactor * 1.3,
@@ -177,6 +178,9 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                   ),
                   Container(
                     width: SizeConfig.blockSizeHorizontal * 33,
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 1,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -253,6 +257,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                   ),
                   Container(
                     padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 1,
                         top: SizeConfig.blockSizeHorizontal * 1),
                     width: SizeConfig.blockSizeHorizontal * 30,
                     child: Row(

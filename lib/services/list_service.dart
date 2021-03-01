@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
-import 'package:cizaro_app/model/brandModel.dart'as BrandModel;
+import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
@@ -35,8 +35,6 @@ class ListServices {
       throw Exception("Unable to perform Request");
     }
   }
-
-
 
   Future<ShopModel> fetchFilterItems(
       var minimum, var maximum, var brand) async {
@@ -199,6 +197,7 @@ class ListServices {
       throw Exception("Unable to perform request!");
     }
   }
+
   Future<List<BrandModel.Data>> fetchBrand() async {
     final response = await http.get(API + '/brands');
     if (response.statusCode == 200) {
@@ -208,7 +207,7 @@ class ListServices {
       return json
           .map<BrandModel.Data>((brands) => BrandModel.Data.fromJson(brands))
           .toList();
-   //   return BrandModel.fromJson(body);
+      //   return BrandModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }
@@ -246,7 +245,7 @@ class ListServices {
       body: jsonEncode(address.toJson()),
     );
     var data = json.decode(response.body);
-    //print(response.body);
+    print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       jsonDecode(response.body);
     } else {

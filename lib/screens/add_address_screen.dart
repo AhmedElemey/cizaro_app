@@ -309,40 +309,38 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       color: Color(0xff3A559F),
                       borderRadius: BorderRadius.circular(20.0)),
                   child: GestureDetector(
-                    onTap: () async {
-                      final data = CreateAddress(
-                          country: _currentItemSelectedCountries,
-                          city: _currentItemSelectedCities,
-                          streetAddress: _streetController?.text,
-                          phone: _phoneController?.text,
-                          region: _regionController?.text,
-                          zipCode: _zipCodeController?.text);
-                      final getData =
-                          Provider.of<ListViewModel>(context, listen: false);
-                      String token = await getToken();
-                      await getData.fetchAddress(data, token);
-                    },
-                    child: GestureDetector(
-                        onTap: () => pushNewScreenWithRouteSettings(context,
+                      onTap: () async {
+                        final data = CreateAddress(
+                            country: _currentItemSelectedCountries,
+                            city: _currentItemSelectedCities,
+                            streetAddress: _streetController?.text,
+                            phone: _phoneController?.text,
+                            region: _regionController?.text,
+                            zipCode: _zipCodeController?.text);
+                        final getData =
+                            Provider.of<ListViewModel>(context, listen: false);
+                        String token = await getToken();
+                        await getData.fetchAddress(data, token);
+                        pushNewScreenWithRouteSettings(context,
                             settings:
                                 RouteSettings(name: CheckoutScreen.routeName),
                             screen: CheckoutScreen(),
                             withNavBar: true,
                             pageTransitionAnimation:
-                                PageTransitionAnimation.fade),
-                        child: Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SizeConfig.blockSizeHorizontal * 1,
-                                vertical: SizeConfig.blockSizeVertical * 1),
-                            child: Center(
-                                child: Text("ADD",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        // fontSize: 15,
-                                        fontSize:
-                                            SizeConfig.safeBlockHorizontal * 4,
-                                        fontWeight: FontWeight.bold))))),
-                  ),
+                                PageTransitionAnimation.fade);
+                      },
+                      child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: SizeConfig.blockSizeHorizontal * 1,
+                              vertical: SizeConfig.blockSizeVertical * 1),
+                          child: Center(
+                              child: Text("ADD",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      // fontSize: 15,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4,
+                                      fontWeight: FontWeight.bold))))),
                 ),
               ],
             ),

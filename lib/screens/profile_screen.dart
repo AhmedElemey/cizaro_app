@@ -63,6 +63,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (this.mounted) setState(() => _isLoading = true);
     String token = await getToken();
     int userId = await getId();
+    if (token == null || userId == null) {
+      if (this.mounted) setState(() => _isLoading = false);
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(name: LoginScreen.routeName),
+          screen: LoginScreen(),
+          withNavBar: true,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+    }
     final getProfile = Provider.of<ListViewModel>(context, listen: false);
     await getProfile.fetchProfile(userId, token).then((response) {
       profile = response;
@@ -70,13 +78,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       userEmail = profile.data.email;
       userBirthDate = profile.data.birthDate;
       userGender = profile.data.gender;
-    });
+    }).catchError((error) => print(error));
     if (this.mounted) setState(() => _isLoading = false);
   }
 
   @override
   void initState() {
-    super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+    super.initState();
     Future.microtask(() => getProfileData());
   }
 
@@ -104,17 +112,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
-                      // Container(
-                      //   height: MediaQuery.of(context).size.height * .09,
-                      //   child: Center(
-                      //     child: Text(
-                      //       "Welcome",
-                      //       style: TextStyle(fontWeight: FontWeight.bold),
-                      //       textScaleFactor:
-                      //           MediaQuery.of(context).textScaleFactor * 3,
-                      //     ),
-                      //   ),
-                      // ),
                       Container(
                         padding: EdgeInsets.only(
                           left: SizeConfig.blockSizeHorizontal * .1,
@@ -132,9 +129,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       left: SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                     userName ?? "",
-                                    // textScaleFactor:
-                                    //     MediaQuery.of(context).textScaleFactor *
-                                    //         2,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize:
@@ -147,9 +141,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       left: SizeConfig.blockSizeVertical * 3),
                                   child: Text(
                                     userEmail ?? "",
-                                    // textScaleFactor:
-                                    //     MediaQuery.of(context).textScaleFactor *
-                                    //         1.3,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize:
@@ -241,7 +232,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           elevation: 5,
                           child: Container(
-                            padding: const EdgeInsets.all(10),
+                            padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.blockSizeVertical * 2,
+                                horizontal: SizeConfig.blockSizeHorizontal * 1),
                             decoration: BoxDecoration(
                               // border: Border.all(
                               //   color: Colors.black12,
@@ -346,17 +339,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             SizeConfig.blockSizeHorizontal * 4),
                                     child: Row(
                                       children: [
-                                        // Icon(Icons.local_shipping_outlined,
-                                        //     size: 30),
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/pending shipments.svg',
                                               width: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  5,
+                                                  1,
                                               height:
                                                   SizeConfig.blockSizeVertical *
-                                                      5,
+                                                      4,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
@@ -480,7 +471,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Container(
-                            padding: EdgeInsets.all(20),
+                            padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.blockSizeVertical * 2,
+                                horizontal:
+                                    SizeConfig.blockSizeHorizontal * 2.3),
                             decoration: BoxDecoration(
                               // border:
                               //     Border.all(color: Colors.black12, width: 2),
@@ -514,10 +508,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               'assets/images/rate.svg',
                                               width: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  4,
+                                                  3.6,
                                               height:
                                                   SizeConfig.blockSizeVertical *
-                                                      4,
+                                                      3.6,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
@@ -584,10 +578,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               'assets/images/suggest.svg',
                                               width: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  4,
+                                                  3.6,
                                               height:
                                                   SizeConfig.blockSizeVertical *
-                                                      4,
+                                                      3.6,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(
@@ -657,10 +651,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               'assets/images/aboutUs.svg',
                                               width: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  4,
+                                                  3.6,
                                               height:
                                                   SizeConfig.blockSizeVertical *
-                                                      4,
+                                                      3.6,
                                               color: Colors.grey[900]),
                                         ),
                                         Container(

@@ -30,16 +30,16 @@ class _SplashScreenState extends State<SplashScreen> {
     pushNewScreenWithRouteSettings(context,
         settings: RouteSettings(name: TabsScreen.routeName),
         screen: TabsScreen(),
-        withNavBar: false,
+        withNavBar: true,
         pageTransitionAnimation: PageTransitionAnimation.fade);
   }
 
   void navigationPageWel() {
-    Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+    Navigator.pushReplacementNamed(context, TabsScreen.routeName);
     pushNewScreenWithRouteSettings(context,
-        settings: RouteSettings(name: LoginScreen.routeName),
-        screen: LoginScreen(),
-        withNavBar: false,
+        settings: RouteSettings(name: TabsScreen.routeName),
+        screen: TabsScreen(),
+        withNavBar: true,
         pageTransitionAnimation: PageTransitionAnimation.fade);
   }
 

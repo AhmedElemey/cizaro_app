@@ -31,7 +31,7 @@ class TabsScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(10.0),
         colorBehindNavBar: Colors.white,
       ),
-      popAllScreensOnTapOfSelectedTab: true,
+      popAllScreensOnTapOfSelectedTab: false,
       popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: ItemAnimationProperties(
         // Navigation Bar's items animation properties.

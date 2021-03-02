@@ -33,7 +33,6 @@ dependencies:
   firebase_auth: ^0.18.3
   flutter_facebook_auth: ^1.0.1
   flutter_screenutil: ^1.1.0
-  smooth_page_indicator: ^0.2.0
   pinch_zoom_image_last: ^0.3.2
   url_launcher: ^5.7.10
   flutter_inappwebview: ^4.0.0+4

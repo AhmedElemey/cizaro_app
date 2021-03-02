@@ -86,11 +86,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       addressModel = response;
       addressesList = addressModel.data;
       addressId = addressModel.data[0].id;
-    }).catchError((error) => pushNewScreenWithRouteSettings(context,
-        settings: RouteSettings(name: LoginScreen.routeName),
-        screen: LoginScreen(),
-        withNavBar: true,
-        pageTransitionAnimation: PageTransitionAnimation.fade));
+    }).catchError((error) => print(error));
+    // pushNewScreenWithRouteSettings(context,
+    // settings: RouteSettings(name: LoginScreen.routeName),
+    // screen: LoginScreen(),
+    // withNavBar: true,
+    // pageTransitionAnimation: PageTransitionAnimation.fade));
     fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
@@ -248,11 +249,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       countryName = addressBookModel.data.country.name;
       cityName = addressBookModel.data.city.name;
       regionName = addressBookModel.data.region;
-    }).catchError((error) => pushNewScreenWithRouteSettings(context,
-        settings: RouteSettings(name: LoginScreen.routeName),
-        screen: LoginScreen(),
-        withNavBar: true,
-        pageTransitionAnimation: PageTransitionAnimation.fade));
+    }).catchError((error) => print(error));
+    // pushNewScreenWithRouteSettings(context,
+    // settings: RouteSettings(name: LoginScreen.routeName),
+    // screen: LoginScreen(),
+    // withNavBar: true,
+    // pageTransitionAnimation: PageTransitionAnimation.fade));
     fetchTotalOrder();
     if (this.mounted) setState(() => _isLoading = false);
   }
@@ -674,7 +676,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                               SizeConfig.blockSizeHorizontal *
                                                   1,
                                           left: SizeConfig.blockSizeHorizontal *
-                                              1),
+                                              4),
                                       hintText: 'Promo Code',
                                       hintStyle: TextStyle(
                                         fontSize:
@@ -684,7 +686,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(SizeConfig
                                                       .blockSizeHorizontal *
-                                                  10)))),
+                                                  4)))),
                                 ),
                               ),
                               Padding(
@@ -791,8 +793,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                     5),
                                         Container(
                                           child: Text(
-                                            shippingFees.toString() + ' LE' ??
-                                                '00.00',
+                                            shippingFees == null
+                                                ? '0.0'
+                                                : shippingFees.toString() +
+                                                        ' LE' ??
+                                                    '00.00',
                                             // textScaleFactor:
                                             //     MediaQuery.of(context)
                                             //             .textScaleFactor *
@@ -826,8 +831,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                     1),
                                         Container(
                                           child: Text(
-                                            totalCost.toString() + ' LE' ??
-                                                '00.00',
+                                            totalCost == null
+                                                ? "0.0"
+                                                : totalCost.toString() +
+                                                        ' LE' ??
+                                                    '00.00',
                                             // textScaleFactor:
                                             //     MediaQuery.of(context)
                                             //             .textScaleFactor *

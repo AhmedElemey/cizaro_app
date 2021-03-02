@@ -125,9 +125,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
               Container(
                 height: SizeConfig.blockSizeVertical * 7,
                 padding: EdgeInsets.only(
-                  right: SizeConfig.blockSizeHorizontal * 5,
-                  left: SizeConfig.blockSizeHorizontal * 5,
-                ),
+                    right: SizeConfig.blockSizeHorizontal * 5,
+                    left: SizeConfig.blockSizeHorizontal * 5,
+                    bottom: SizeConfig.blockSizeVertical * 1),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -137,16 +137,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           Text(
                             "TOTAL",
                             style: TextStyle(
-                                fontSize: SizeConfig.safeBlockHorizontal * 4),
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor * .9
+                                fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                           ),
                           Text(
                             total.totalPrice.toStringAsFixed(2) + ' LE' ??
                                 '00.00',
                             style: TextStyle(
                                 color: Color(0xff3A559F),
-                                fontSize: SizeConfig.safeBlockHorizontal * 4),
+                                fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                           )
                         ]),
                     GestureDetector(
@@ -185,8 +183,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           children: [
                             Text(
                               "CHECKOUT",
-                              // textScaleFactor:
-                              //     MediaQuery.of(context).textScaleFactor * 1.11,
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: SizeConfig.safeBlockHorizontal * 4,
@@ -196,7 +192,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 radius: SizeConfig.blockSizeHorizontal * 3,
                                 backgroundColor: Colors.white,
                                 child: Icon(Icons.arrow_forward_ios_rounded,
-                                    size: 15, color: Color(0xff3A559F)))
+                                    size: SizeConfig.blockSizeHorizontal * 4,
+                                    color: Color(0xff3A559F)))
                           ],
                         ),
                       ),

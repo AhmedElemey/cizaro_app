@@ -10,6 +10,7 @@ import 'package:cizaro_app/model/checkPaymentModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
+import 'package:cizaro_app/model/emailModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/order_id_model.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
@@ -284,6 +285,25 @@ class ListServices {
         'Authorization': '${'Token'} $token'
       },
       body: jsonEncode(changePasswordModel.toJson()),
+    );
+    var data = json.decode(response.body);
+    //print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      jsonDecode(response.body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future resetPassword(EmailModel emailModel) async {
+    final response = await http.post(
+      API + '/password_reset/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode(emailModel.toJson()),
     );
     var data = json.decode(response.body);
     //print(response.body);

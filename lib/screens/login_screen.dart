@@ -5,6 +5,7 @@ import 'package:cizaro_app/main.dart';
 import 'package:cizaro_app/model/SignUpModel.dart';
 import 'package:cizaro_app/model/loginModel.dart';
 import 'package:cizaro_app/model/socialLoginModel.dart';
+import 'package:cizaro_app/screens/forgetPassword_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:cizaro_app/services/auth_service.dart';
 import 'package:cizaro_app/size_config.dart';
@@ -549,15 +550,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                         onPressed: () => loginButton())),
                                 SizedBox(
                                     height: SizeConfig.blockSizeVertical * 2),
-                                Text('Forgot your password?',
-                                    style: TextStyle(
-                                      fontSize:
-                                          SizeConfig.safeBlockHorizontal * 3.5,
-                                    )
-                                    // textScaleFactor:
-                                    //     MediaQuery.of(context).textScaleFactor *
-                                    //         1.1
-                                    ),
+                                GestureDetector(
+                                  // ForgetPasswordScreen
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: ForgetPasswordScreen.routeName),
+                                      screen: ForgetPasswordScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: Text('Forgot your password?',
+                                      style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal *
+                                                3.5,
+                                      )
+                                      // textScaleFactor:
+                                      //     MediaQuery.of(context).textScaleFactor *
+                                      //         1.1
+                                      ),
+                                ),
                                 Divider(
                                     thickness: 0.8,
                                     color: Colors.grey,

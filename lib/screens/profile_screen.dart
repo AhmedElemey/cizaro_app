@@ -132,9 +132,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       left: SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                     userName ?? "",
-                                    // textScaleFactor:
-                                    //     MediaQuery.of(context).textScaleFactor *
-                                    //         2,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize:
@@ -147,9 +144,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       left: SizeConfig.blockSizeVertical * 3),
                                   child: Text(
                                     userEmail ?? "",
-                                    // textScaleFactor:
-                                    //     MediaQuery.of(context).textScaleFactor *
-                                    //         1.3,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize:

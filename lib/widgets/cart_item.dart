@@ -75,14 +75,16 @@ class _CartItemState extends State<CartItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeVertical * 23,
+          height: SizeConfig.blockSizeVertical * 24,
           width: SizeConfig.blockSizeHorizontal * 100,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 2,
+                      horizontal: SizeConfig.blockSizeHorizontal * 2),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
@@ -100,16 +102,14 @@ class _CartItemState extends State<CartItem> {
                       Row(
                         children: [
                           Container(
-                            width: SizeConfig.blockSizeHorizontal * 40,
-                            child: Text(widget.productName,
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize:
-                                        SizeConfig.safeBlockHorizontal * 4,
-                                    color: Color(0xff515C6F)),
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.2),
+                            width: SizeConfig.blockSizeHorizontal * 35,
+                            child: Text(
+                              widget.productName,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                                  color: Color(0xff515C6F)),
+                            ),
                           ),
                           Spacer(),
                           Padding(
@@ -117,25 +117,22 @@ class _CartItemState extends State<CartItem> {
                                   right: SizeConfig.blockSizeHorizontal * 3,
                                   left: SizeConfig.blockSizeHorizontal * 1),
                               child: Text(
-                                  widget.productPriceAfterDiscount ==
-                                          widget.productPrice
-                                      ? widget.productPrice.toString() + ' LE'
-                                      : widget.productPriceAfterDiscount == null
-                                          ? widget.productPrice.toString() +
-                                              ' LE'
-                                          : widget.productPriceAfterDiscount
-                                                  .toString() +
-                                              ' LE',
-                                  // style: const TextStyle(
-                                  //     fontWeight: FontWeight.bold),
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize:
-                                          SizeConfig.safeBlockHorizontal * 4,
-                                      color: Color(0xff515C6F)),
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1))
+                                widget.productPriceAfterDiscount ==
+                                        widget.productPrice
+                                    ? widget.productPrice.toString() + ' LE'
+                                    : widget.productPriceAfterDiscount == null
+                                        ? widget.productPrice.toString() + ' LE'
+                                        : widget.productPriceAfterDiscount
+                                                .toString() +
+                                            ' LE',
+                                // style: const TextStyle(
+                                //     fontWeight: FontWeight.bold),
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 3.5,
+                                    color: Color(0xff515C6F)),
+                              ))
                         ],
                       ),
                       Container(
@@ -146,8 +143,7 @@ class _CartItemState extends State<CartItem> {
                           children: [
                             Text(
                               widget.productCategory,
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1,
+
                               // style: const TextStyle(color: Colors.blueGrey)
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
@@ -205,7 +201,8 @@ class _CartItemState extends State<CartItem> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.only(left: 5),
+                            padding: EdgeInsets.only(
+                                left: SizeConfig.blockSizeHorizontal * 2),
                             width: SizeConfig.blockSizeHorizontal * 9,
                             child: TextField(
                               keyboardType: TextInputType.numberWithOptions(
@@ -269,19 +266,14 @@ class _CartItemState extends State<CartItem> {
                                 left: SizeConfig.blockSizeHorizontal * 1),
                             child: Column(
                               children: [
-                                Text("TOTAL",
-                                    style: TextStyle(
-                                        fontSize:
-                                            SizeConfig.safeBlockHorizontal *
-                                                3.5),
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.1),
+                                Text(
+                                  "TOTAL",
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 3.5),
+                                ),
                                 Text(
                                   widget.totalPrice.toStringAsFixed(2) + ' LE',
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1,
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
                                       fontSize:

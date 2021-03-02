@@ -6,10 +6,12 @@ import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
+import 'package:cizaro_app/model/checkPaymentModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/home.dart';
+import 'package:cizaro_app/model/order_id_model.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/product_details.dart';
@@ -140,6 +142,24 @@ class ListServices {
     } else {
       //   print(response.body);
       throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
+  Future<CheckPaymentModel> checkPayment(
+      OrderIdModel orderIdModel, String token) async {
+    final response = await http.post(API + '/check-payment-status/',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': '${'Token'} $token'
+        },
+        body: jsonEncode(orderIdModel.toJson()));
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return CheckPaymentModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
     }
   }
 

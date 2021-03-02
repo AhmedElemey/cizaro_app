@@ -42,8 +42,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       productId,
       productQuantity,
       selectedPaymentRadio,
-      selectedPaymentId,
-      orderId;
+      selectedPaymentId;
+  dynamic orderId;
   String addressName,
       countryName,
       cityName,
@@ -153,7 +153,53 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         });
   }
 
+  _showAndroidErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text('Plz! Select Payment Method before Submit your Order',
+              style: const TextStyle(fontWeight: FontWeight.bold)),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Close',
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _isLoading = false;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showIosErrorDialog() {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text('Error'),
+            content:
+                Text('Plz! Select Payment Method before Submit your Order'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _isLoading = false;
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   sendCheckOut() async {
+    if (selectedRadio == 0 || selectedRadio == null)
+      return Platform.isIOS ? _showIosErrorDialog() : _showAndroidErrorDialog();
     if (this.mounted) setState(() => _isLoading = true);
     final getAddress = Provider.of<OrdersViewModel>(context, listen: false);
     String token = await getToken();
@@ -178,7 +224,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       pushNewScreenWithRouteSettings(context,
           settings: RouteSettings(
               name: PaymentsScreen.routeName,
-              arguments: {'payment_url': paymentUrl}),
+              arguments: {'payment_url': paymentUrl, 'order_id': orderId}),
           screen: PaymentsScreen(),
           withNavBar: false,
           pageTransitionAnimation: PageTransitionAnimation.fade);

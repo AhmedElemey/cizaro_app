@@ -1,12 +1,12 @@
-class CheckoutResult {
+class CheckPaymentModel {
   int status;
   int statusCode;
   String message;
   Data data;
 
-  CheckoutResult({this.status, this.statusCode, this.message, this.data});
+  CheckPaymentModel({this.status, this.statusCode, this.message, this.data});
 
-  CheckoutResult.fromJson(Map<String, dynamic> json) {
+  CheckPaymentModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     statusCode = json['status_code'];
     message = json['message'];
@@ -26,24 +26,17 @@ class CheckoutResult {
 }
 
 class Data {
-  String paymentUrl;
-  bool done;
-  dynamic orderId;
+  bool success;
 
-  Data({this.paymentUrl, this.done});
+  Data({this.success});
 
   Data.fromJson(Map<String, dynamic> json) {
-    paymentUrl = json['payment_url'];
-    done = json['done'];
-    orderId = json['order_id'];
+    success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['payment_url'] = this.paymentUrl;
-    data['done'] = this.done;
-    data['order_id'] = this.orderId;
-
+    data['success'] = this.success;
     return data;
   }
 }

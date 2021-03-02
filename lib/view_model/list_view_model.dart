@@ -4,10 +4,12 @@ import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
+import 'package:cizaro_app/model/checkPaymentModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/home.dart';
+import 'package:cizaro_app/model/order_id_model.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/profileEditModel.dart';
@@ -47,6 +49,13 @@ class ListViewModel extends ChangeNotifier {
       ChangePasswordModel changePasswordModel, String token) async {
     final results =
         await ListServices().changePassword(changePasswordModel, token);
+    notifyListeners();
+    return results;
+  }
+
+  Future<CheckPaymentModel> checkPayment(
+      OrderIdModel orderIdModel, String token) async {
+    final results = await ListServices().checkPayment(orderIdModel, token);
     notifyListeners();
     return results;
   }

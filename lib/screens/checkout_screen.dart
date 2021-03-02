@@ -628,7 +628,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               cart.cartProductModel[index].priceAfterDiscount
                           ? cart.cartProductModel[index].price
                           : cart.cartProductModel[index].priceAfterDiscount ==
-                                  0.0
+                                      0.0 ||
+                                  cart.cartProductModel[index]
+                                          .priceAfterDiscount ==
+                                      null
                               ? cart.cartProductModel[index].price
                               : cart.cartProductModel[index]
                                       .priceAfterDiscount ??

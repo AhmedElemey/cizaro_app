@@ -49,7 +49,7 @@ class CheckoutItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: SizeConfig.blockSizeHorizontal * 45,
+                          width: SizeConfig.blockSizeHorizontal * 40,
                           child: Text(
                             productName ?? "",
                             style: TextStyle(

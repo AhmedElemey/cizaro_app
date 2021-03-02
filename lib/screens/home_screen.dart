@@ -220,9 +220,8 @@ class _HomeScreenState extends State<HomeScreen> {
             topSellingList[index].name,
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.safeBlockHorizontal * 3,
+              fontSize: SizeConfig.safeBlockHorizontal * 4,
             ),
-            // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3
           ),
         ),
         pageBuilder: (context, index) => Container(
@@ -337,7 +336,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             isFav: 1);
                         fav.addProductToFav(productFav);
                       },
-                      //   isFav: fav.favProductModel[index].isFav,
                     ),
                   )),
         ),
@@ -527,7 +525,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Container(
-                                    height: SizeConfig.blockSizeVertical * 45,
+                                    height: SizeConfig.blockSizeVertical * 43,
                                     child: tabsWidgets(context)),
                               ],
                             ),
@@ -556,7 +554,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: EdgeInsets.only(
                                         left:
                                             SizeConfig.blockSizeHorizontal * 1),
-                                    height: SizeConfig.blockSizeVertical * 45,
+                                    height: SizeConfig.blockSizeVertical * 40,
                                     child: topSellingWidgets(context)),
                               ],
                             ),

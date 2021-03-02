@@ -67,7 +67,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       productName = productDetails.data.name;
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
-      productPriceAfter = productDetails.data.offer.afterPrice ?? 0;
+      productPriceAfter = productDetails.data.offer?.afterPrice ?? 0;
 
       productStar = productDetails.data.stars ?? 0.0;
       productDescription = productDetails.data.shortDescription;
@@ -370,8 +370,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * .20,
-                        top: SizeConfig.blockSizeVertical * .15),
+                        left: SizeConfig.blockSizeHorizontal * 5,
+                        top: SizeConfig.blockSizeVertical * 1),
                     child: Row(
                       children: [
                         Text(
@@ -389,93 +389,104 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                   _isColor == true
-                      ? GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: productSpecs.length,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 1.9,
-                                  crossAxisCount: 6,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 5),
-                          itemBuilder: (BuildContext context, int index) {
-                            return GridTile(
-                                child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedColor = productSpecs[index].id;
-                                  _selectedColor = index;
-                                  _isSelected = true;
-                                });
-                                getSpecData();
-                              },
-                              child: CircleAvatar(
-                                  radius: .3,
-                                  child: _selectedColor == index
-                                      ? Center(
-                                          child: Icon(Icons.check,
-                                              color: Theme.of(context)
-                                                  .primaryColor))
-                                      : Text(''),
-                                  foregroundColor: Color(int.parse('0xff' +
-                                      productSpecs[index]
-                                          .value
-                                          .split('#')
-                                          .last)),
-                                  backgroundColor: Color(int.parse('0xff' +
-                                      productSpecs[index]
-                                          .value
-                                          .split('#')
-                                          .last))),
-                            ));
-                          },
-                        )
-                      : GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: productSpecs.length,
+                      ? Container(
                           padding: EdgeInsets.only(
-                              right: SizeConfig.blockSizeHorizontal * 5,
                               left: SizeConfig.blockSizeHorizontal * 5,
                               top: SizeConfig.blockSizeVertical * 1),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 2.1,
-                                  crossAxisCount: 6,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 5),
-                          itemBuilder: (BuildContext context, int index) {
-                            return GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _selectedSize = productSpecs[index].id;
-                                  _selectedSize = index;
-                                  _isSelected = true;
-                                  sizeSpecValue = productSpecs[index].value;
-                                  print(sizeSpecValue);
-                                });
-                                getSpecData();
-                              },
-                              child: Container(
-                                padding: EdgeInsets.only(
-                                    left: SizeConfig.blockSizeHorizontal * .05),
-                                child: Text(
-                                  productSpecs[index].value,
-                                  style: TextStyle(
-                                    color: _selectedSize == index
-                                        ? Color(0xffE7A646)
-                                        : Color(0xff707070),
-                                    fontSize:
-                                        SizeConfig.safeBlockHorizontal * 3,
+                          child: GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: productSpecs.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 1.9,
+                                    crossAxisCount: 6,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 5),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GridTile(
+                                  child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedColor = productSpecs[index].id;
+                                    _selectedColor = index;
+                                    _isSelected = true;
+                                  });
+                                  getSpecData();
+                                },
+                                child: CircleAvatar(
+                                    radius: .3,
+                                    child: _selectedColor == index
+                                        ? Center(
+                                            child: Icon(Icons.check,
+                                                color: Theme.of(context)
+                                                    .primaryColor))
+                                        : Text(''),
+                                    foregroundColor: Color(int.parse('0xff' +
+                                        productSpecs[index]
+                                            .value
+                                            .split('#')
+                                            .last)),
+                                    backgroundColor: Color(int.parse('0xff' +
+                                        productSpecs[index]
+                                            .value
+                                            .split('#')
+                                            .last))),
+                              ));
+                            },
+                          ),
+                        )
+                      : Container(
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 5,
+                              top: SizeConfig.blockSizeVertical * 1),
+                          child: GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: productSpecs.length,
+                            padding: EdgeInsets.only(
+                                right: SizeConfig.blockSizeHorizontal * 5,
+                                left: SizeConfig.blockSizeHorizontal * 5,
+                                top: SizeConfig.blockSizeVertical * 1),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    childAspectRatio: 2.1,
+                                    crossAxisCount: 6,
+                                    crossAxisSpacing: 5,
+                                    mainAxisSpacing: 5),
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _selectedSize = productSpecs[index].id;
+                                    _selectedSize = index;
+                                    _isSelected = true;
+                                    sizeSpecValue = productSpecs[index].value;
+                                    print(sizeSpecValue);
+                                  });
+                                  getSpecData();
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(
+                                      left:
+                                          SizeConfig.blockSizeHorizontal * .05),
+                                  child: Text(
+                                    productSpecs[index].value,
+                                    style: TextStyle(
+                                      color: _selectedSize == index
+                                          ? Color(0xffE7A646)
+                                          : Color(0xff707070),
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 3,
+                                    ),
+                                    // textScaleFactor:
+                                    //     MediaQuery.of(context).textScaleFactor *
+                                    //         1.2,
                                   ),
-                                  // textScaleFactor:
-                                  //     MediaQuery.of(context).textScaleFactor *
-                                  //         1.2,
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                   _isSelected == true
                       ? _isLoading2
@@ -485,51 +496,58 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: CircularProgressIndicator(
                                   valueColor: AlwaysStoppedAnimation<Color>(
                                       Colors.white)))
-                          : GridView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: relatedSpecList?.length ?? 0,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      childAspectRatio: 2.1,
-                                      crossAxisCount: 6,
-                                      crossAxisSpacing: 5,
-                                      mainAxisSpacing: 5),
-                              itemBuilder: (BuildContext context, int index) {
-                                return GridTile(
-                                    child: GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      _selectedColor = index;
-                                      colorSpecValue = relatedSpecList[index]
-                                          .values[index]
-                                          .value
-                                          .split('#')
-                                          .last;
-                                    });
-                                  },
-                                  child: CircleAvatar(
-                                      radius: .3,
-                                      child: _selectedColor == index
-                                          ? Center(
-                                              child: Icon(Icons.check,
-                                                  color: Theme.of(context)
-                                                      .primaryColor))
-                                          : Text(''),
-                                      foregroundColor: Color(int.parse('0xff' +
-                                          relatedSpecList[index]
-                                              .values[index]
-                                              .value
-                                              .split('#')
-                                              .last)),
-                                      backgroundColor: Color(int.parse('0xff' +
-                                          relatedSpecList[index]
-                                              .values[index]
-                                              .value
-                                              .split('#')
-                                              .last))),
-                                ));
-                              },
+                          : Container(
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.blockSizeHorizontal * 5,
+                                  top: SizeConfig.blockSizeVertical * 1),
+                              child: GridView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: relatedSpecList?.length ?? 0,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        childAspectRatio: 2.1,
+                                        crossAxisCount: 6,
+                                        crossAxisSpacing: 5,
+                                        mainAxisSpacing: 5),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GridTile(
+                                      child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _selectedColor = index;
+                                        colorSpecValue = relatedSpecList[index]
+                                            .values[index]
+                                            .value
+                                            .split('#')
+                                            .last;
+                                      });
+                                    },
+                                    child: CircleAvatar(
+                                        radius: .3,
+                                        child: _selectedColor == index
+                                            ? Center(
+                                                child: Icon(Icons.check,
+                                                    color: Theme.of(context)
+                                                        .primaryColor))
+                                            : Text(''),
+                                        foregroundColor: Color(int.parse(
+                                            '0xff' +
+                                                relatedSpecList[index]
+                                                    .values[index]
+                                                    .value
+                                                    .split('#')
+                                                    .last)),
+                                        backgroundColor: Color(int.parse(
+                                            '0xff' +
+                                                relatedSpecList[index]
+                                                    .values[index]
+                                                    .value
+                                                    .split('#')
+                                                    .last))),
+                                  ));
+                                },
+                              ),
                             )
                       : Container(),
                   GestureDetector(

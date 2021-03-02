@@ -4,6 +4,7 @@ import 'package:cizaro_app/model/aboutUsModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
+import 'package:cizaro_app/model/checkMailModel.dart';
 import 'package:cizaro_app/model/checkPaymentModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
@@ -61,7 +62,7 @@ class ListViewModel extends ChangeNotifier {
     return results;
   }
 
-  Future resetPassword(EmailModel emailModel) async {
+  Future<CheckMailModel> resetPassword(EmailModel emailModel) async {
     final result = await ListServices().resetPassword(emailModel);
     notifyListeners();
     return result;

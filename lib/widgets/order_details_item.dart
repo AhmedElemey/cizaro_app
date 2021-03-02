@@ -44,7 +44,7 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeHorizontal * 20,
+          height: SizeConfig.blockSizeHorizontal * 25,
           width: SizeConfig.blockSizeHorizontal * 100,
           margin: EdgeInsets.only(
               top: SizeConfig.blockSizeHorizontal * 1,
@@ -65,122 +65,131 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                           child: Image.network(widget.imgUrl,
                               fit: BoxFit.fitHeight)))),
               Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          widget.productName,
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1.3
-                          style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 5,
-                          ),
-                        ),
-                        Spacer(),
-                        Padding(
-                            padding: EdgeInsets.only(
-                                right: SizeConfig.blockSizeHorizontal * 3,
-                                left: SizeConfig.blockSizeHorizontal * 2),
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: SizeConfig.blockSizeHorizontal * 40,
                             child: Text(
-                              widget.productPriceAfterDiscount ==
-                                      widget.productPrice
-                                  ? widget.productPrice.toString() + ' LE'
-                                  : widget.productPriceAfterDiscount == null
-                                      ? widget.productPrice.toString() + ' LE'
-                                      : widget.productPriceAfterDiscount
-                                              .toString() +
-                                          ' LE',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: SizeConfig.safeBlockHorizontal * 4.5,
-                              ),
+                              widget.productName,
                               // textScaleFactor:
-                              //     MediaQuery.of(context).textScaleFactor * 1
-                            ))
-                      ],
-                    ),
-                    Container(
-                      child: Text(widget.productCategory,
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1.1,
-                          style: TextStyle(
-                            color: Colors.blueGrey,
-                            fontSize: SizeConfig.safeBlockHorizontal * 4.5,
-                          )),
-                    ),
-                    // Row(
-                    //   children: [
-                    //     Text(
-                    //       widget.sizeSpecValue == ""
-                    //           ? ''
-                    //           : 'Size : ${widget.sizeSpecValue}',
-                    //       style: const TextStyle(color: Colors.black),
-                    //     ),
-                    //     Text(widget.colorSpecValue == "" ? '' : ' , ',
-                    //         style: const TextStyle(color: Colors.black)),
-                    //     Text(widget.colorSpecValue == "" ? '' : 'Color : ',
-                    //         style: const TextStyle(color: Colors.black)),
-                    //     widget.colorSpecValue == ""
-                    //         ? Container()
-                    //         : CircleAvatar(
-                    //             radius: 10,
-                    //             backgroundColor: Color(
-                    //                 int.parse('0xff${widget.colorSpecValue}')),
-                    //             foregroundColor: Color(
-                    //                 int.parse('0xff${widget.colorSpecValue}'))),
-                    //   ],
-                    // ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Qty :',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                              //     MediaQuery.of(context).textScaleFactor * 1.3
+                              style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 5,
+                              ),
+                            ),
                           ),
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1
-                        ),
-                        SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
-                        Text(
-                          widget.productQuantity.toString(),
-                          style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-                          ),
-                        ),
-                        SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
-                        Text(
-                          "Total : ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: SizeConfig.safeBlockHorizontal * 4,
-                          ),
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1
-                        ),
-                        Text(
-                          widget.productPrice.toString() + ' LE',
-                          style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-                          ),
-                        )
-                      ],
-                    ),
-                    widget.totalAvailability < widget.productQuantity
-                        ? Center(
-                            child: Text(
-                                '${widget.totalAvailability}  items Available in Stock' ??
-                                    '',
+                          Spacer(),
+                          Padding(
+                              padding: EdgeInsets.only(
+                                  right: SizeConfig.blockSizeHorizontal * 3,
+                                  left: SizeConfig.blockSizeHorizontal * 2),
+                              child: Text(
+                                widget.productPriceAfterDiscount ==
+                                        widget.productPrice
+                                    ? widget.productPrice.toString() + ' LE'
+                                    : widget.productPriceAfterDiscount == null
+                                        ? widget.productPrice.toString() + ' LE'
+                                        : widget.productPriceAfterDiscount
+                                                .toString() +
+                                            ' LE',
                                 style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
-                                )))
-                        : Container()
-                  ],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 4.5,
+                                ),
+                                // textScaleFactor:
+                                //     MediaQuery.of(context).textScaleFactor * 1
+                              ))
+                        ],
+                      ),
+                      Container(
+                        child: Text(widget.productCategory,
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1.1,
+                            style: TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                            )),
+                      ),
+                      // Row(
+                      //   children: [
+                      //     Text(
+                      //       widget.sizeSpecValue == ""
+                      //           ? ''
+                      //           : 'Size : ${widget.sizeSpecValue}',
+                      //       style: const TextStyle(color: Colors.black),
+                      //     ),
+                      //     Text(widget.colorSpecValue == "" ? '' : ' , ',
+                      //         style: const TextStyle(color: Colors.black)),
+                      //     Text(widget.colorSpecValue == "" ? '' : 'Color : ',
+                      //         style: const TextStyle(color: Colors.black)),
+                      //     widget.colorSpecValue == ""
+                      //         ? Container()
+                      //         : CircleAvatar(
+                      //             radius: 10,
+                      //             backgroundColor: Color(
+                      //                 int.parse('0xff${widget.colorSpecValue}')),
+                      //             foregroundColor: Color(
+                      //                 int.parse('0xff${widget.colorSpecValue}'))),
+                      //   ],
+                      // ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Qty :',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1
+                          ),
+                          SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
+                          Text(
+                            widget.productQuantity.toString(),
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            ),
+                          ),
+                          SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
+                          Text(
+                            "Total : ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
+                            // textScaleFactor:
+                            //     MediaQuery.of(context).textScaleFactor * 1
+                          ),
+                          Text(
+                            widget.productPrice.toString() + ' LE',
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            ),
+                          )
+                        ],
+                      ),
+                      widget.totalAvailability < widget.productQuantity
+                          ? Center(
+                              child: Text(
+                                  '${widget.totalAvailability}  items Available in Stock' ??
+                                      '',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4,
+                                  )))
+                          : Container()
+                    ],
+                  ),
                 ),
               ),
             ],

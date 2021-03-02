@@ -1,3 +1,4 @@
+import 'package:cizaro_app/model/checkMailModel.dart';
 import 'package:cizaro_app/model/emailModel.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/size_config.dart';
@@ -21,7 +22,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey50 = GlobalKey<ScaffoldState>();
   TextEditingController emailController = TextEditingController();
   bool _isLoading = false;
-  EmailModel responseStatus;
+  CheckMailModel responseStatus;
+  String responseMessage;
 
   @override
   void initState() {
@@ -35,8 +37,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     final getProfile = Provider.of<ListViewModel>(context, listen: false);
     String email = emailController?.text;
     final emailModel = EmailModel(email: email);
-    await getProfile.resetPassword(emailModel).then((respnse) {
-      showSendMailToast();
+    await getProfile.resetPassword(emailModel).then((response) {
+      responseStatus = response;
+      responseMessage = responseStatus.message;
+      if (responseMessage == "Password reset e-mail has been sent.") {
+        showSendMailToast();
+      } else {
+        showSendErrorToast();
+      }
     });
 
     if (this.mounted) setState(() => _isLoading = false);
@@ -53,11 +61,38 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.check, color: Colors.white),
-          SizedBox(width: SizeConfig.blockSizeHorizontal * 10),
+          SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
           Text("Mail Sent ..!",
               style: TextStyle(
                 color: Colors.white,
-                fontSize: SizeConfig.safeBlockHorizontal * 5,
+                fontSize: SizeConfig.safeBlockHorizontal * 4,
+              ))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  showSendErrorToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0), color: Colors.red
+          // color: Color(0xff3A559F),
+          ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.close, color: Colors.white),
+          SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
+          Text(" Please enter you registered email or username.!",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: SizeConfig.safeBlockHorizontal * 3,
               ))
         ],
       ),

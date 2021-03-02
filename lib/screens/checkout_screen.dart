@@ -735,26 +735,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 4.5,
                                     ),
-
-                                    // textScaleFactor: MediaQuery.of(context)
-                                    //         .textScaleFactor *
-                                    //     1.2
                                   ),
-                                  SizedBox(
-                                      width:
-                                          SizeConfig.blockSizeHorizontal * 20),
+                                  Spacer(),
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left:
+                                            SizeConfig.blockSizeHorizontal * 5,
+                                        right:
                                             SizeConfig.blockSizeHorizontal * 5),
                                     child: CircleAvatar(
                                       radius:
-                                          SizeConfig.blockSizeHorizontal * 4,
+                                          SizeConfig.blockSizeHorizontal * 3.4,
                                       backgroundColor: Colors.black26,
                                       child: Icon(
                                           Icons.arrow_forward_ios_rounded,
                                           size: SizeConfig.blockSizeHorizontal *
-                                              5,
+                                              4.5,
                                           color: Colors.black45),
                                     ),
                                   )

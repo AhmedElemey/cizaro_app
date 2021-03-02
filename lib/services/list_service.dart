@@ -5,6 +5,7 @@ import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
+import 'package:cizaro_app/model/checkMailModel.dart';
 import 'package:cizaro_app/model/checkOfferModel.dart';
 import 'package:cizaro_app/model/checkPaymentModel.dart';
 import 'package:cizaro_app/model/contactUsModel.dart';
@@ -164,6 +165,26 @@ class ListServices {
     }
   }
 
+  Future<CheckMailModel> resetPassword(EmailModel emailModel) async {
+    final response = await http.post(
+      API + '/password_reset/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode(emailModel.toJson()),
+    );
+    var data = json.decode(response.body);
+    //print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      final body = jsonDecode(response.body);
+      return CheckMailModel.fromJson(body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
+    }
+  }
+
   Future<List<productOffer.Data>> checkOfferInCart(
       CheckProductsOfferInCart checkProductsOfferInCart) async {
     final response = await http.post(API + '/shopping-cart-check-offer/',
@@ -285,25 +306,6 @@ class ListServices {
         'Authorization': '${'Token'} $token'
       },
       body: jsonEncode(changePasswordModel.toJson()),
-    );
-    var data = json.decode(response.body);
-    //print(response.body);
-    if (response.statusCode == 200 || data['message'] == '') {
-      jsonDecode(response.body);
-    } else {
-      print(response.body);
-      throw Exception("Unable to perform request .. Try again!");
-    }
-  }
-
-  Future resetPassword(EmailModel emailModel) async {
-    final response = await http.post(
-      API + '/password_reset/',
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json; charset=UTF-8'
-      },
-      body: jsonEncode(emailModel.toJson()),
     );
     var data = json.decode(response.body);
     //print(response.body);

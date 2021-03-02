@@ -239,12 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget topSellingWidgets(BuildContext context) {
     final fav = Provider.of<FavViewModel>(context, listen: false);
-    // ScreenUtil.init(context,
-    //     allowFontScaling: false,
-    //     width: MediaQuery.of(context).size.width,
-    //     height: MediaQuery.of(context).size.height);
-    // return InfoWidget(
-    //   builder: (context, deviceInfo) {
+
     return Padding(
       padding: EdgeInsets.only(
           right: SizeConfig.blockSizeHorizontal * 2,
@@ -255,15 +250,10 @@ class _HomeScreenState extends State<HomeScreen> {
         tabBuilder: (context, index) => Tab(
           child: Text(
             topSellingList[index].name,
-            // style: TextStyle(
-            //   fontFamily: 'Poppins',
-            //   fontWeight: FontWeight.w700,
-            // ),
             style: GoogleFonts.poppins(
               fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.safeBlockHorizontal * 3,
+              fontSize: SizeConfig.safeBlockHorizontal * 4,
             ),
-            // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3
           ),
         ),
         pageBuilder: (context, index) => Container(
@@ -337,7 +327,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             isFav: 1);
                         fav.addProductToFav(productFav);
                       },
-                      //   isFav: fav.favProductModel[index].isFav,
                     ),
                   )),
         ),
@@ -352,9 +341,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // var mediaQueryData = MediaQuery.of(context);
-    // double screenHeight = MediaQuery.of(context).size.height;
-    // double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerLayout(),
@@ -369,13 +355,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   : CircularProgressIndicator())
           : SingleChildScrollView(
               child: Container(
-                // height: MediaQuery.of(context).size.height,
-                // width: double.infinity,
-                // height: SizeConfig.blockSizeVertical * 100,
-                // width: SizeConfig.blockSizeHorizontal * 100,
-                // child: InfoWidget(
-                //   builder: (context, deviceInfo) {
-                //     return
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -551,13 +530,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         top: SizeConfig.blockSizeVertical * .1),
                                     child: Text(
                                       " New Arrivals",
-                                      // textScaleFactor: MediaQuery.of(context)
-                                      //         .textScaleFactor *
-                                      //     1.3,
-                                      // style: TextStyle(
-                                      //     fontFamily: 'Poppins',
-                                      //     fontWeight: FontWeight.w700,
-                                      //     color: Color(0xff294794)),
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
                                           fontSize:
@@ -568,7 +540,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Container(
-                                    height: SizeConfig.blockSizeVertical * 45,
+                                    height: SizeConfig.blockSizeVertical * 43,
                                     child: tabsWidgets(context)),
                               ],
                             ),
@@ -583,13 +555,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Container(
                                       child: Text(
                                         "Top Selling ",
-                                        // textScaleFactor: MediaQuery.of(context)
-                                        //         .textScaleFactor *
-                                        //     1.3,
-                                        // style: TextStyle(
-                                        //     fontFamily: 'Poppins',
-                                        //     fontWeight: FontWeight.w700,
-                                        //     color: Color(0xff294794)),
                                         style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w700,
                                             fontSize:
@@ -604,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: EdgeInsets.only(
                                         left:
                                             SizeConfig.blockSizeHorizontal * 1),
-                                    height: SizeConfig.blockSizeVertical * 45,
+                                    height: SizeConfig.blockSizeVertical * 40,
                                     child: topSellingWidgets(context)),
                               ],
                             ),

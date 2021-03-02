@@ -75,7 +75,7 @@ class _CartItemState extends State<CartItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeVertical * 24,
+          height: SizeConfig.blockSizeVertical * 22,
           width: SizeConfig.blockSizeHorizontal * 100,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,7 +102,7 @@ class _CartItemState extends State<CartItem> {
                       Row(
                         children: [
                           Container(
-                            width: SizeConfig.blockSizeHorizontal * 35,
+                            width: SizeConfig.blockSizeHorizontal * 40,
                             child: Text(
                               widget.productName,
                               style: GoogleFonts.poppins(
@@ -141,14 +141,18 @@ class _CartItemState extends State<CartItem> {
                             right: SizeConfig.blockSizeHorizontal * 3),
                         child: Row(
                           children: [
-                            Text(
-                              widget.productCategory,
+                            Container(
+                              width: SizeConfig.blockSizeHorizontal * 40,
+                              child: Text(
+                                widget.productCategory,
 
-                              // style: const TextStyle(color: Colors.blueGrey)
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 3,
-                                  color: Color(0xff515C6F)),
+                                // style: const TextStyle(color: Colors.blueGrey)
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 3,
+                                    color: Color(0xff515C6F)),
+                              ),
                             ),
                             Spacer(),
                             IconButton(

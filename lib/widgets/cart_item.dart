@@ -75,7 +75,7 @@ class _CartItemState extends State<CartItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeVertical * 22,
+          height: SizeConfig.blockSizeVertical * 25,
           width: SizeConfig.blockSizeHorizontal * 100,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,11 +103,13 @@ class _CartItemState extends State<CartItem> {
                         children: [
                           Container(
                             width: SizeConfig.blockSizeHorizontal * 40,
+                            height: SizeConfig.blockSizeVertical * 5.5,
                             child: Text(
                               widget.productName,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 3.5,
                                   color: Color(0xff515C6F)),
                             ),
                           ),
@@ -136,13 +138,13 @@ class _CartItemState extends State<CartItem> {
                         ],
                       ),
                       Container(
-                        height: SizeConfig.blockSizeVertical * 3,
                         padding: EdgeInsets.only(
-                            right: SizeConfig.blockSizeHorizontal * 3),
+                            right: SizeConfig.blockSizeHorizontal * 4),
                         child: Row(
                           children: [
                             Container(
                               width: SizeConfig.blockSizeHorizontal * 40,
+                              height: SizeConfig.blockSizeVertical * 5,
                               child: Text(
                                 widget.productCategory,
 
@@ -164,19 +166,27 @@ class _CartItemState extends State<CartItem> {
                         ),
                       ),
                       Container(
-                        height: SizeConfig.blockSizeVertical * 3.5,
+                        height: SizeConfig.blockSizeVertical * 2.5,
                         child: Row(
                           children: [
                             Text(
                               widget.sizeSpecValue == ""
                                   ? ''
                                   : 'Size : ${widget.sizeSpecValue}',
-                              style: const TextStyle(color: Colors.black),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 4),
                             ),
                             Text(widget.colorSpecValue == "" ? '' : ' , ',
-                                style: const TextStyle(color: Colors.black)),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4)),
                             Text(widget.colorSpecValue == "" ? '' : 'Color : ',
-                                style: const TextStyle(color: Colors.black)),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4)),
                             widget.colorSpecValue == ""
                                 ? Container()
                                 : CircleAvatar(
@@ -195,7 +205,7 @@ class _CartItemState extends State<CartItem> {
                           GestureDetector(
                             onTap: widget.onMinusQuantity,
                             child: CircleAvatar(
-                              radius: SizeConfig.safeBlockHorizontal * 4,
+                              radius: SizeConfig.blockSizeHorizontal * 3,
                               backgroundColor: Colors.black12,
                               child: Center(
                                 child: Icon(CupertinoIcons.minus,
@@ -252,7 +262,7 @@ class _CartItemState extends State<CartItem> {
                           GestureDetector(
                             onTap: widget.onPlusQuantity,
                             child: CircleAvatar(
-                              radius: SizeConfig.safeBlockHorizontal * 4,
+                              radius: SizeConfig.blockSizeHorizontal * 3,
                               backgroundColor: Colors.black12,
                               child: Center(
                                 child: Icon(

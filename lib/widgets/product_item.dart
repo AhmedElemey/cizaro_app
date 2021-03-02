@@ -141,18 +141,13 @@ class _ProductItemState extends State<ProductItem> {
 
   @override
   Widget build(BuildContext context) {
-    // ScreenUtil.init(context,
-    //     allowFontScaling: false,
-    //     width: MediaQuery.of(context).size.width,
-    //     height: MediaQuery.of(context).size.height);
     // TODO: implement build
     final fav = Provider.of<FavViewModel>(context, listen: false);
-    //  List favProducts = fav.favProductModel;
     checkFavItems(context);
     return Padding(
         padding: EdgeInsets.only(
-            left: SizeConfig.blockSizeHorizontal * 3,
-            bottom: SizeConfig.blockSizeVertical * 1),
+          left: SizeConfig.blockSizeHorizontal * 3,
+        ),
         child: Container(
           width: SizeConfig.blockSizeHorizontal * 33,
           child: Column(

@@ -123,7 +123,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
             children: [
               cartProductsList(),
               Container(
-                height: SizeConfig.blockSizeVertical * 7,
+                height: SizeConfig.blockSizeVertical * 8,
                 padding: EdgeInsets.only(
                     right: SizeConfig.blockSizeHorizontal * 5,
                     left: SizeConfig.blockSizeHorizontal * 5,

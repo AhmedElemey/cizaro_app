@@ -506,6 +506,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? Container()
                         : Container(
                             padding: EdgeInsets.only(
+                                top: SizeConfig.blockSizeVertical * 3,
                                 left: SizeConfig.blockSizeHorizontal * 1),
                             child: Column(
                               children: [
@@ -554,7 +555,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: EdgeInsets.only(
                                         left:
                                             SizeConfig.blockSizeHorizontal * 1),
-                                    height: SizeConfig.blockSizeVertical * 40,
+                                    height: SizeConfig.blockSizeVertical * 43,
                                     child: topSellingWidgets(context)),
                               ],
                             ),

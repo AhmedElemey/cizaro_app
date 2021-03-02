@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -134,38 +135,39 @@ class _SearchItemState extends State<SearchBarItem> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
           child: Container(
-            height: MediaQuery.of(context).size.height * .2,
-            padding: EdgeInsets.only(left: 10, right: 10),
+            height: SizeConfig.blockSizeVertical * 20,
+            padding: EdgeInsets.only(
+                left: SizeConfig.blockSizeHorizontal * 2,
+                right: SizeConfig.blockSizeHorizontal * 2),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding:
-                      EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
-                  child: Image.network(
-                    widget.imgUrl,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Platform.isAndroid
-                          ? Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes !=
-                                        null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes
-                                    : null,
-                              ),
-                            )
-                          : CupertinoActivityIndicator();
-                    },
-                  ),
+                Image.network(
+                  widget.imgUrl,
+                  width: SizeConfig.blockSizeHorizontal * 20,
+                  height: SizeConfig.blockSizeVertical * 100,
+                  loadingBuilder: (BuildContext context, Widget child,
+                      ImageChunkEvent loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Platform.isAndroid
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes
+                                  : null,
+                            ),
+                          )
+                        : CupertinoActivityIndicator();
+                  },
                 ),
                 Container(
                   padding: EdgeInsets.only(left: 15),
@@ -175,28 +177,35 @@ class _SearchItemState extends State<SearchBarItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
+                          width: SizeConfig.blockSizeHorizontal * 60,
                           padding: EdgeInsets.only(top: 20),
                           child: Text(
                             widget.productName,
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.5,
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                            ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 10),
+                          width: SizeConfig.blockSizeHorizontal * 60,
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
                           child: Text(
                             widget.productCategory ?? '',
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.1,
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            ),
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
                           child: Text(
                             widget.productPrice.toString() + ' LE',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 1.1,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            ),
                           ),
                         ),
                         Row(
@@ -236,7 +245,7 @@ class _SearchItemState extends State<SearchBarItem> {
                             //     },
                             //     child: Icon(Icons.favorite_border,
                             //         size: 25, color: Color(0xff707070))),
-                            const SizedBox(width: 10),
+                            SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
                             GestureDetector(
                                 onTap: () {
                                   widget.onAddToCart();
@@ -244,124 +253,12 @@ class _SearchItemState extends State<SearchBarItem> {
                                 },
                                 child: SvgPicture.asset(
                                   'assets/images/cart.svg',
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.04,
-                                  height: MediaQuery.of(context).size.height *
-                                      0.035,
+                                  width: SizeConfig.blockSizeHorizontal * 5.5,
+                                  height: SizeConfig.blockSizeHorizontal * 5.5,
                                   color: Colors.grey[900],
                                 ))
                           ],
                         )
-                        // Container(
-                        //   padding: EdgeInsets.only(top: 10),
-                        //   child: Row(
-                        //     children: [
-                        //       Container(
-                        //         width: MediaQuery.of(context).size.width * .3,
-                        //         child: Row(
-                        //           children: [
-                        //             Container(
-                        //               child: GestureDetector(
-                        //                 onTap: () {
-                        //                   setState(() {
-                        //                     int value = int.parse(
-                        //                             quantityController.text) -
-                        //                         1;
-                        //                     widget.productQuantity =
-                        //                         value.toString();
-                        //                   });
-                        //                 },
-                        //                 child: CircleAvatar(
-                        //                   radius: 15,
-                        //                   backgroundColor: Colors.black12,
-                        //                   child: Container(
-                        //                     padding: EdgeInsets.only(bottom: 10),
-                        //                     child: Icon(
-                        //                       Icons.minimize,
-                        //                       size: 20,
-                        //                       color: Color(0xff707070),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             Container(
-                        //               child: Container(
-                        //                 padding: EdgeInsets.only(left: 2),
-                        //                 width: MediaQuery.of(context).size.width *
-                        //                     .1,
-                        //                 child: TextField(
-                        //                   controller: quantityController,
-                        //                   keyboardType: TextInputType.number,
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             Container(
-                        //               padding: EdgeInsets.only(right: 5),
-                        //               child: GestureDetector(
-                        //                 onTap: () {
-                        //                   setState(() {
-                        //                     int value = int.parse(
-                        //                             quantityController.text) +
-                        //                         1;
-                        //                     widget.productQuantity =
-                        //                         value.toString();
-                        //                   });
-                        //                 },
-                        //                 child: CircleAvatar(
-                        //                   radius: 15,
-                        //                   backgroundColor: Colors.black12,
-                        //                   child: Container(
-                        //                     padding: EdgeInsets.only(bottom: 2),
-                        //                     child: Icon(
-                        //                       Icons.add,
-                        //                       size: 20,
-                        //                       color: Color(0xff707070),
-                        //                     ),
-                        //                   ),
-                        //                 ),
-                        //               ),
-                        //             )
-                        //           ],
-                        //         ),
-                        //       ),
-                        //       Container(
-                        //         width: MediaQuery.of(context).size.width * .2,
-                        //         padding: EdgeInsets.only(left: 30),
-                        //         child: Row(
-                        //           children: [
-                        //             Container(
-                        //               padding: EdgeInsets.only(top: 5),
-                        //               child: Container(
-                        //                 padding: EdgeInsets.only(bottom: 10),
-                        //                 child: Icon(
-                        //                   Icons.favorite,
-                        //                   size: 25,
-                        //                   color: Color(0xff707070),
-                        //                 ),
-                        //               ),
-                        //             ),
-                        //             Spacer(),
-                        //             Container(
-                        //               child: Container(
-                        //                 padding: EdgeInsets.only(bottom: 2),
-                        //                 child: SvgPicture.asset(
-                        //                   'assets/images/cart.svg',
-                        //                   width:
-                        //                       MediaQuery.of(context).size.width *
-                        //                           0.03,
-                        //                   height:
-                        //                       MediaQuery.of(context).size.height *
-                        //                           0.03,
-                        //                 ),
-                        //               ),
-                        //             )
-                        //           ],
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // )
                       ],
                     ),
                   ),

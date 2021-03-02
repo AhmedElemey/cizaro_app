@@ -2,6 +2,7 @@ import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -25,12 +26,7 @@ class _SearchBarItemState extends State<SearchBarScreen> {
   FloatingSearchBarController controller;
 
   // The "raw" history that we don't access from the UI, prefilled with values
-  List<String> _searchHistory = [
-    // 'fuchsia',
-    // 'flutter',
-    // 'widgets',
-    // 'resocoder',
-  ];
+  List<String> _searchHistory = [];
 // The filtered & ordered history that's accessed from the UI
   List<String> filteredSearchHistory;
 
@@ -109,6 +105,7 @@ class _SearchBarItemState extends State<SearchBarScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       body: FloatingSearchBar(
         transition: CircularFloatingSearchBarTransition(),
@@ -163,29 +160,6 @@ class _SearchBarItemState extends State<SearchBarScreen> {
                         style: Theme.of(context).textTheme.caption,
                       ),
                     );
-                    // Container(
-                    //    height: MediaQuery.of(context).size.height,
-                    //    width: double.infinity,
-                    //    child: ListView.builder(
-                    //      itemCount: productList?.length ?? 0,
-                    //      itemBuilder: (ctx, index) => GestureDetector(
-                    //        onTap: () => Navigator.of(context).pushNamed(
-                    //            ProductDetails.routeName,
-                    //            arguments: {
-                    //              'product_id': productList[index].id
-                    //            }),
-                    //        child: SearchItem(
-                    //          imgUrl: productList[index].mainImg,
-                    //          productName: productList[index].name,
-                    //          productPrice: productList[index].price,
-                    //          productCategory:
-                    //              productList[index].category.name,
-                    //          //  productQuantity: ,
-                    //        ),
-                    //      ),
-                    //    ),
-                    //  );
-
                   } else if (filteredSearchHistory.isEmpty) {
                     return ListTile(
                       title: Text(controller.query),
@@ -276,8 +250,8 @@ class SearchResultsListView extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
       child: Container(
-        height: MediaQuery.of(context).size.height,
-        margin: const EdgeInsets.only(bottom: 25),
+        height: SizeConfig.blockSizeVertical * 100,
+        margin: EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 3),
         width: double.infinity,
         child: ListView.builder(
           itemCount: productList?.length ?? 0,
@@ -291,9 +265,6 @@ class SearchResultsListView extends StatelessWidget {
               withNavBar: true,
               pageTransitionAnimation: PageTransitionAnimation.fade,
             ),
-            // Navigator.of(context).pushNamed(
-            // ProductDetails.routeName,
-            // arguments: {'product_id': productList[index].id}),
             child: SearchBarItem(
               imgUrl: productList[index].mainImg,
               productName: productList[index].name,

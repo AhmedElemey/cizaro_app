@@ -49,11 +49,11 @@ class CheckoutItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: SizeConfig.blockSizeHorizontal * 40,
+                          width: SizeConfig.blockSizeHorizontal * 30,
                           child: Text(
                             productName ?? "",
                             style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 5,
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
                             ),
                             // textScaleFactor:
                             //     MediaQuery.of(context).textScaleFactor *
@@ -61,12 +61,16 @@ class CheckoutItem extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          child: Text(
-                            productCategory ?? "",
-                            style: TextStyle(
-                                fontSize: SizeConfig.safeBlockHorizontal * 5),
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor * 1
+                          child: Container(
+                            width: SizeConfig.blockSizeHorizontal * 30,
+                            child: Text(
+                              productCategory ?? "",
+                              style: TextStyle(
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 3.5),
+                              // textScaleFactor:
+                              //     MediaQuery.of(context).textScaleFactor * 1
+                            ),
                           ),
                         ),
                       ],
@@ -80,11 +84,9 @@ class CheckoutItem extends StatelessWidget {
                           productPrice.toString() + ' LE',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: SizeConfig.safeBlockHorizontal * 4.3),
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1.1
+                              fontSize: SizeConfig.safeBlockHorizontal * 4),
                         ),
-                        Row(
+                        Column(
                           children: [
                             Text(
                               productSizeSpecs == "" ? '' : "Size: ",
@@ -92,9 +94,6 @@ class CheckoutItem extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize:
                                       SizeConfig.safeBlockHorizontal * 4.3),
-                              // textScaleFactor:
-                              //     MediaQuery.of(context).textScaleFactor *
-                              //         1.1
                             ),
                             Text(
                               productSizeSpecs == ""
@@ -104,9 +103,6 @@ class CheckoutItem extends StatelessWidget {
                                   fontSize: SizeConfig.safeBlockHorizontal * 3,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xff3A559F)),
-                              // textScaleFactor:
-                              //     MediaQuery.of(context).textScaleFactor *
-                              //         1.1
                             ),
                             Text(
                               productColorSpecs == Color(0x000000ff) ||

@@ -91,10 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         settings: RouteSettings(
                             name: ProductDetails.routeName,
                             arguments: {
-                              'product_id': newArrivalsList
-                                  ?.elementAt(index)
-                                  ?.products[index]
-                                  .id
+                              'product_id':
+                                  newArrivalsList[initPosition > 0 ? 1 : 0]
+                                      ?.products[index]
+                                      .id
                             }),
                         screen: ProductDetails(),
                         withNavBar: true,

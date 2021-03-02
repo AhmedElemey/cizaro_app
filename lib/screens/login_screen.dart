@@ -354,8 +354,7 @@ class _LoginScreenState extends State<LoginScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Error'),
-          content: Text(
-              'This password is too short. It must contain at least 8 characters. Plz Add valid Information!',
+          content: Text('Something Wrong Try Again!',
               style: const TextStyle(fontWeight: FontWeight.bold)),
           actions: <Widget>[
             FlatButton(
@@ -378,8 +377,7 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Text('Error'),
-            content: Text(
-                'This password is too short. It must contain at least 8 characters. Plz Add valid Information!'),
+            content: Text('Something Wrong Try Again!'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Close'),
@@ -410,6 +408,13 @@ class _LoginScreenState extends State<LoginScreen> {
   String validatePassword(String value) {
     if (value.isEmpty) {
       return 'Password is Required';
+    }
+    return null;
+  }
+
+  String validateBirthDate(String value) {
+    if (value.isEmpty) {
+      return 'BirthDate is Required';
     }
     return null;
   }
@@ -935,6 +940,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   3.2,
                                         ),
                                         lineCount: 1,
+                                        validator: validateBirthDate,
                                         textEditingController:
                                             _birthDateController,
                                         icon: CupertinoIcons.calendar,

@@ -9,6 +9,7 @@ import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/edit_address_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
 import 'package:cizaro_app/screens/finished_order_screen.dart';
+import 'package:cizaro_app/screens/forgetPassword_screen.dart';
 import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
@@ -105,7 +106,8 @@ void main() async {
               PendingShipment.routeName: (ctx) => PendingShipment(),
               FinishedOrder.routeName: (ctx) => FinishedOrder(),
               EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
-              PaymentsScreen.routeName: (ctx) => PaymentsScreen()
+              PaymentsScreen.routeName: (ctx) => PaymentsScreen(),
+              ForgetPasswordScreen.routeName: (ctx) => ForgetPasswordScreen()
             },
           ),
         ),

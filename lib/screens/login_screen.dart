@@ -278,7 +278,9 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailSignUpController.text,
         newPassword1: _passwordSignUpController.text,
         newPassword2: _confirmPasswordController.text,
-        birthDate: _birthDateController.text,
+        birthDate: _birthDateController.text == ""
+            ? "1995-03-03"
+            : _birthDateController.text ?? "1995-03-03",
         gender: _currentItemSelectedGender == 'Male' ? 1 : 2);
     setState(() => showSpinner = true);
     await postRegister.customerRegisterData(register, 'en').then((_) {
@@ -953,7 +955,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   3.2,
                                         ),
                                         lineCount: 1,
-                                        validator: validateBirthDate,
+                                        // validator: validateBirthDate,
                                         textEditingController:
                                             _birthDateController,
                                         icon: CupertinoIcons.calendar,

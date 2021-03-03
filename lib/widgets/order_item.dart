@@ -57,27 +57,29 @@ class OrderItem extends StatelessWidget {
           ),
           SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Order Date',
-                    // textScaleFactor:
-                    //     MediaQuery.of(context).textScaleFactor * 1.1,
-                    style: TextStyle(
-                        fontSize: SizeConfig.safeBlockHorizontal * 3.7,
-                        color: Color(0xff707070),
-                        fontWeight: FontWeight.bold)),
-                Expanded(
-                    child: Text(
-                        ' -----------------------------------------------')),
-                Text(
-                  orderDate ?? DateTime.now().toString().split(' ').first,
-                  style: TextStyle(
-                    fontSize: SizeConfig.safeBlockHorizontal * 3.2,
+            child: orderDate == null
+                ? Container()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Order Date',
+                          // textScaleFactor:
+                          //     MediaQuery.of(context).textScaleFactor * 1.1,
+                          style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.7,
+                              color: Color(0xff707070),
+                              fontWeight: FontWeight.bold)),
+                      Expanded(
+                          child: Text(
+                              ' -----------------------------------------------')),
+                      Text(
+                        orderDate ?? '',
+                        style: TextStyle(
+                          fontSize: SizeConfig.safeBlockHorizontal * 3.2,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
           SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(

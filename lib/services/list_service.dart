@@ -329,7 +329,7 @@ class ListServices {
       body: jsonEncode(shoppingCartModel.toJson()),
     );
     var data = json.decode(response.body);
-    // print(response.body);
+    print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       final body = jsonDecode(response.body);
       return ResultShoppingCartModel.fromJson(body);

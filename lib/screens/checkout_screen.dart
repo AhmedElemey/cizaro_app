@@ -281,6 +281,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
     final shoppingCart =
         ShoppingCartModel(addressBookId: addressId, items: itemsList);
+    print(itemsList);
     await getTotalOrder
         .fetchResultOfShippingCart(shoppingCart, token)
         .then((response) {
@@ -617,13 +618,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     shrinkWrap: true,
                     itemCount: cart.cartProductModel.length,
                     itemBuilder: (ctx, index) => CheckoutItem(
-                      imgUrl: cart.cartProductModel[index].mainImg ??
-                          "assets/images/collection.png",
-                      productName:
-                          cart.cartProductModel[index].name ?? "White Treecode",
+                      imgUrl: cart.cartProductModel[index].mainImg ?? "",
+                      productName: cart.cartProductModel[index].name ?? "",
                       productCategory:
-                          cart.cartProductModel[index].categoryName ??
-                              "men fashion ",
+                          cart.cartProductModel[index].categoryName ?? "",
                       productPrice: cart.cartProductModel[index].price ==
                               cart.cartProductModel[index].priceAfterDiscount
                           ? cart.cartProductModel[index].price

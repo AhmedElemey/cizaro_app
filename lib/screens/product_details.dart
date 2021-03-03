@@ -139,6 +139,29 @@ class _ProductDetailsState extends State<ProductDetails> {
     );
   }
 
+  showErrorToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Please, Select Specification of Project First!",
+              style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+        child: toast,
+        toastDuration: Duration(seconds: 2),
+        gravity: ToastGravity.BOTTOM);
+  }
+
   showFavToast() {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -552,18 +575,37 @@ class _ProductDetailsState extends State<ProductDetails> {
                       : Container(),
                   GestureDetector(
                     onTap: () {
-                      final productCart = ProductCart(
-                          id: productId,
-                          name: productName,
-                          mainImg: imgUrl,
-                          price: productPrice,
-                          categoryName: productName,
-                          quantity: 1,
-                          availability: productAvailability,
-                          colorSpecValue: colorSpecValue,
-                          sizeSpecValue: sizeSpecValue);
-                      cart.addProductToCart(productCart);
-                      showToast();
+                      if (productSpecs.length == 0) {
+                        final productCart = ProductCart(
+                            id: productId,
+                            name: productName,
+                            mainImg: imgUrl,
+                            price: productPrice,
+                            categoryName: productName,
+                            quantity: 1,
+                            availability: productAvailability,
+                            colorSpecValue: colorSpecValue,
+                            sizeSpecValue: sizeSpecValue);
+                        cart.addProductToCart(productCart);
+                        showToast();
+                      } else {
+                        if (_selectedSize == -1 || _selectedColor == -1) {
+                          showErrorToast();
+                        } else {
+                          final productCart = ProductCart(
+                              id: productId,
+                              name: productName,
+                              mainImg: imgUrl,
+                              price: productPrice,
+                              categoryName: productName,
+                              quantity: 1,
+                              availability: productAvailability,
+                              colorSpecValue: colorSpecValue,
+                              sizeSpecValue: sizeSpecValue);
+                          cart.addProductToCart(productCart);
+                          showToast();
+                        }
+                      }
                     },
                     child: Center(
                       child: Container(

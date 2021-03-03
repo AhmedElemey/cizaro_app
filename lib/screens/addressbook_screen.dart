@@ -29,6 +29,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
   AddressModel addressModel;
   List<address.Data> addressesList = [];
   int indexOfSelectedItemAddress = -1;
+  bool fromCheckout = false;
 
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -138,32 +139,34 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                             indexOfSelectedItemAddress
                                         ? Colors.blue
                                         : Colors.white,
-                                    onEdit: () =>
-                                        pushNewScreenWithRouteSettings(context,
-                                            settings: RouteSettings(arguments: {
-                                              'address_id':
-                                                  indexOfSelectedItemAddress,
-                                              'street_name':
-                                                  addressesList[index]
-                                                      .streetAddress,
-                                              'country_name':
-                                                  addressesList[index]
-                                                      .country
-                                                      .name,
-                                              'city_name': addressesList[index]
-                                                  .city
-                                                  .name,
-                                              'region_name':
-                                                  addressesList[index].region,
-                                              'phone_number':
-                                                  addressesList[index].phone,
-                                              'zip_code':
-                                                  addressesList[index].zipCode
-                                            }),
-                                            screen: EditAddressScreen(),
-                                            withNavBar: true,
-                                            pageTransitionAnimation:
-                                                PageTransitionAnimation.fade),
+                                    onEdit: () {
+                                      setState(() {
+                                        indexOfSelectedItemAddress =
+                                            addressesList[index].id;
+                                      });
+                                      pushNewScreenWithRouteSettings(context,
+                                          settings: RouteSettings(arguments: {
+                                            'address_id':
+                                                indexOfSelectedItemAddress,
+                                            'street_name': addressesList[index]
+                                                .streetAddress,
+                                            'country_name': addressesList[index]
+                                                .country
+                                                .name,
+                                            'city_name':
+                                                addressesList[index].city.name,
+                                            'region_name':
+                                                addressesList[index].region,
+                                            'phone_number':
+                                                addressesList[index].phone,
+                                            'zip_code':
+                                                addressesList[index].zipCode
+                                          }),
+                                          screen: EditAddressScreen(),
+                                          withNavBar: true,
+                                          pageTransitionAnimation:
+                                              PageTransitionAnimation.fade);
+                                    },
                                     onDelete: () {
                                       deleteAddressesData(
                                           addressesList[index].id);
@@ -178,7 +181,8 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                         GestureDetector(
                           onTap: () => pushNewScreenWithRouteSettings(context,
                               settings: RouteSettings(
-                                  name: AddAddressScreen.routeName),
+                                  name: AddAddressScreen.routeName,
+                                  arguments: {'from_checkout': fromCheckout}),
                               screen: AddAddressScreen(),
                               withNavBar: true,
                               pageTransitionAnimation:

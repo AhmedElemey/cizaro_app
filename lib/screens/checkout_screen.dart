@@ -11,7 +11,6 @@ import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/finished_order_screen.dart';
-import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/payments_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -54,6 +53,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   bool _isLoading = false,
       isVerified = false,
       _selectedPromoCode = false,
+      fromCheckout = true,
       _checkOutDone = false;
   AddressModel addressModel;
   CheckoutResult checkoutResult;
@@ -201,13 +201,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (selectedRadio == 0 || selectedRadio == null)
       return Platform.isIOS ? _showIosErrorDialog() : _showAndroidErrorDialog();
     if (this.mounted) setState(() => _isLoading = true);
-    final getAddress = Provider.of<OrdersViewModel>(context, listen: false);
+    final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
     String token = await getToken();
     final checkout = CheckOut(
         addressBookId: addressId,
         isCash: selectedRadio == 1 ? false : true,
         paymentApiId: selectedPaymentId);
-    await getAddress.checkOutMethod(token, checkout).then((response) {
+    await getCheckout.checkOutMethod(token, checkout).then((response) {
       checkoutResult = response;
       paymentUrl = checkoutResult.data.paymentUrl;
       orderId = checkoutResult.data.orderId;
@@ -232,7 +232,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       pushNewScreenWithRouteSettings(context,
           settings: RouteSettings(name: FinishedOrder.routeName),
           screen: FinishedOrder(),
-          withNavBar: true,
+          withNavBar: false,
           pageTransitionAnimation: PageTransitionAnimation.fade);
     }
   }
@@ -307,6 +307,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     final cart = Provider.of<CartViewModel>(context, listen: true);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+
     return Scaffold(
       key: _scaffoldKey6,
       drawer: DrawerLayout(),
@@ -352,7 +353,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 onPressed: () => pushNewScreenWithRouteSettings(
                                     context,
                                     settings: RouteSettings(
-                                        name: AddAddressScreen.routeName),
+                                        name: AddAddressScreen.routeName,
+                                        arguments: {
+                                          'from_checkout': fromCheckout
+                                        }),
                                     screen: AddAddressScreen(),
                                     withNavBar: true,
                                     pageTransitionAnimation:

@@ -46,7 +46,7 @@ class ListServices {
         API + '/products/?min_price=$minimum&max_price=$maximum&brand=$brand');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      // print(response.body);
+      print(response.body);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");

@@ -4,6 +4,7 @@ import 'package:cizaro_app/model/order.dart';
 import 'package:cizaro_app/screens/order_details_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,6 +53,7 @@ class _OrderScreenState extends State<OrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      drawer: DrawerLayout(),
       appBar: PreferredSize(
         child: GradientAppBar("My Orders", _scaffoldKey),
         preferredSize: const Size(double.infinity, kToolbarHeight),
@@ -72,8 +74,6 @@ class _OrderScreenState extends State<OrderScreen> {
                           style: TextStyle(
                             fontSize: SizeConfig.safeBlockHorizontal * 5,
                           ),
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1.5
                         ))
                       : ListView.builder(
                           physics: NeverScrollableScrollPhysics(),

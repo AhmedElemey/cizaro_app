@@ -44,7 +44,7 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeHorizontal * 25,
+          height: SizeConfig.blockSizeHorizontal * 28,
           width: SizeConfig.blockSizeHorizontal * 100,
           margin: EdgeInsets.only(
               top: SizeConfig.blockSizeHorizontal * 1,

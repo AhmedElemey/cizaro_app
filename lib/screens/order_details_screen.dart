@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cizaro_app/model/order_details.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
+import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_details_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,7 +19,7 @@ class OrderDetailsScreen extends StatefulWidget {
 }
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey90 = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey57 = GlobalKey<ScaffoldState>();
   bool _isLoading = false;
   OrderDetails order;
   List<Items> _ordersList = [];
@@ -52,9 +53,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey90,
+      key: _scaffoldKey57,
+      drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Order Details", _scaffoldKey90),
+        child: GradientAppBar("Order Details", _scaffoldKey57),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       // appBar: PreferredSize(

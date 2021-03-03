@@ -35,6 +35,20 @@ class _FinishedOrderState extends State<FinishedOrder> {
   //       ) ??
   //       false;
   // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 3), () {
+      pushNewScreenWithRouteSettings(context,
+          settings: RouteSettings(
+            name: TabsScreen.routeName,
+          ),
+          screen: TabsScreen(),
+          withNavBar: true,
+          pageTransitionAnimation: PageTransitionAnimation.fade);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

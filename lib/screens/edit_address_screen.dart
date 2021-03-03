@@ -1,6 +1,7 @@
 import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
+import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
@@ -8,6 +9,7 @@ import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -110,7 +112,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Add New Address", _scaffoldKey4),
+            GradientAppBar("Edit Your Address", _scaffoldKey4),
             FutureBuilder(
                 future: Provider.of<ListViewModel>(context, listen: false)
                     .fetchCountries(
@@ -390,6 +392,14 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       await getData.updateAddress(
                           data, token, arguments['address_id']);
                       showUpdatedToast();
+
+                      pushNewScreenWithRouteSettings(context,
+                          settings:
+                              RouteSettings(name: AddressBookScreen.routeName),
+                          screen: AddressBookScreen(),
+                          withNavBar: true,
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.fade);
                     },
                     child: Center(
                         child: Text("Update",

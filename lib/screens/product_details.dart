@@ -251,12 +251,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                   Padding(
                       padding: EdgeInsets.only(
-                          left: SizeConfig.blockSizeHorizontal * 5,
+                          left: SizeConfig.blockSizeHorizontal * 7,
+                          right: SizeConfig.blockSizeHorizontal * 7,
                           top: SizeConfig.blockSizeVertical * 2),
                       child: Text(
                         productName ?? "",
                         style: TextStyle(
-                          fontSize: SizeConfig.safeBlockHorizontal * 4,
+                          fontSize: SizeConfig.safeBlockHorizontal * 5,
+                          fontWeight: FontWeight.bold,
                         ),
                       )
                       // textScaleFactor:
@@ -264,9 +266,18 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                   Padding(
                     padding: EdgeInsets.only(
-                        right: SizeConfig.blockSizeHorizontal * 5,
                         left: SizeConfig.blockSizeHorizontal * 5,
-                        top: SizeConfig.blockSizeVertical * 1),
+                        right: SizeConfig.blockSizeHorizontal * 5,
+                        top: SizeConfig.blockSizeVertical * 2),
+                    child: Divider(
+                        height: SizeConfig.blockSizeVertical * .1,
+                        color: Color(0xff727C8E)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: SizeConfig.blockSizeHorizontal * 7,
+                        left: SizeConfig.blockSizeHorizontal * 7,
+                        top: SizeConfig.blockSizeVertical * 2),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -275,8 +286,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: Text(
                                   productPrice.toString() + ' LE',
                                   style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     fontSize:
-                                        SizeConfig.safeBlockHorizontal * 4,
+                                        SizeConfig.safeBlockHorizontal * 5,
                                   ),
                                   // textScaleFactor:
                                   //     MediaQuery.of(context).textScaleFactor *
@@ -284,19 +296,19 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 ),
                               )
                             : Container(
+                                padding: EdgeInsets.only(
+                                    right: SizeConfig.blockSizeHorizontal * 7,
+                                    top: SizeConfig.blockSizeVertical * 2),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Text(productPrice.toString() + ' LE',
-                                        // textScaleFactor: MediaQuery.of(context)
-                                        //         .textScaleFactor *
-                                        //     1.2,
                                         style: TextStyle(
                                             color: Colors.red,
                                             fontSize:
                                                 SizeConfig.safeBlockHorizontal *
-                                                    4,
+                                                    5,
                                             decoration:
                                                 TextDecoration.lineThrough)),
                                     SizedBox(
@@ -306,7 +318,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       productPriceAfter.toString() + ' LE',
                                       style: TextStyle(
                                         fontSize:
-                                            SizeConfig.safeBlockHorizontal * 4,
+                                            SizeConfig.safeBlockHorizontal * 5,
                                       ),
                                       // textScaleFactor: MediaQuery.of(context)
                                       //         .textScaleFactor *
@@ -335,6 +347,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   productStar.toString() ?? 0.0,
                                   style: TextStyle(
                                     color: Colors.white,
+                                    fontWeight: FontWeight.bold,
                                     fontSize:
                                         SizeConfig.safeBlockHorizontal * 3,
                                   ),
@@ -351,34 +364,39 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 5,
-                      top: SizeConfig.blockSizeVertical * 1,
+                        left: SizeConfig.blockSizeHorizontal * 5,
+                        right: SizeConfig.blockSizeHorizontal * 5,
+                        top: SizeConfig.blockSizeVertical * 2),
+                    child: Divider(
+                        height: SizeConfig.blockSizeVertical * .1,
+                        color: Color(0xff727C8E)),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 7,
+                      top: SizeConfig.blockSizeVertical * 2,
                     ),
                     child: Row(
                       children: [
                         Text("Description ",
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor * 1.7,
                             style: TextStyle(
                               color: Color(0xff3A559F),
-                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.safeBlockHorizontal * 5,
                             )),
                       ],
                     ),
                   ),
-                  Container(
+                  Padding(
                     padding: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 2,
-                        left: SizeConfig.blockSizeHorizontal * 5),
-                    child: Center(
-                      child: Text(
-                        productDescription ?? "",
-                        // textScaleFactor:
-                        //     MediaQuery.of(context).textScaleFactor * 1,
-                        style: TextStyle(
-                          color: Color(0xff707070),
-                          fontSize: SizeConfig.safeBlockHorizontal * 4,
-                        ),
+                        left: SizeConfig.blockSizeHorizontal * 7),
+                    child: Text(
+                      productDescription ?? "",
+                      style: TextStyle(
+                        color: Color(0xff707070),
+                        fontWeight: FontWeight.w400,
+                        fontSize: SizeConfig.safeBlockHorizontal * 4,
                       ),
                     ),
                   ),
@@ -386,15 +404,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                     padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 5,
                         right: SizeConfig.blockSizeHorizontal * 5,
-                        top: SizeConfig.blockSizeVertical * 1),
+                        top: SizeConfig.blockSizeVertical * 2),
                     child: Divider(
                         height: SizeConfig.blockSizeVertical * .1,
                         color: Color(0xff727C8E)),
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 5,
-                        top: SizeConfig.blockSizeVertical * 1),
+                        left: SizeConfig.blockSizeHorizontal * 7,
+                        top: SizeConfig.blockSizeVertical * 2),
                     child: Row(
                       children: [
                         Text(
@@ -402,9 +420,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ? ''
                               : "Select $specTitle".toUpperCase(),
                           style: TextStyle(
-                            color: Color(0xff515C6F),
-                            fontSize: SizeConfig.safeBlockHorizontal * 3,
-                          ),
+                              color: Color(0xff515C6F),
+                              fontSize: SizeConfig.safeBlockHorizontal * 4,
+                              fontWeight: FontWeight.bold),
                           // textScaleFactor:
                           //     MediaQuery.of(context).textScaleFactor * 1,
                         ),
@@ -414,8 +432,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   _isColor == true
                       ? Container(
                           padding: EdgeInsets.only(
-                              left: SizeConfig.blockSizeHorizontal * 5,
-                              top: SizeConfig.blockSizeVertical * 1),
+                              left: SizeConfig.blockSizeHorizontal * 7,
+                              top: SizeConfig.blockSizeVertical * 2),
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -461,8 +479,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                         )
                       : Container(
                           padding: EdgeInsets.only(
-                              left: SizeConfig.blockSizeHorizontal * 5,
-                              top: SizeConfig.blockSizeVertical * 1),
+                              left: SizeConfig.blockSizeHorizontal * 7,
+                              top: SizeConfig.blockSizeVertical * 2),
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -470,7 +488,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             padding: EdgeInsets.only(
                                 right: SizeConfig.blockSizeHorizontal * 5,
                                 left: SizeConfig.blockSizeHorizontal * 5,
-                                top: SizeConfig.blockSizeVertical * 1),
+                                top: SizeConfig.blockSizeVertical * .5),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                     childAspectRatio: 2.1,
@@ -502,9 +520,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 3,
                                     ),
-                                    // textScaleFactor:
-                                    //     MediaQuery.of(context).textScaleFactor *
-                                    //         1.2,
                                   ),
                                 ),
                               );
@@ -521,7 +536,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       Colors.white)))
                           : Container(
                               padding: EdgeInsets.only(
-                                  left: SizeConfig.blockSizeHorizontal * 5,
+                                  left: SizeConfig.blockSizeHorizontal * 7,
                                   top: SizeConfig.blockSizeVertical * 1),
                               child: GridView.builder(
                                 physics: NeverScrollableScrollPhysics(),
@@ -641,8 +656,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 5,
-                        right: SizeConfig.blockSizeHorizontal * 5,
+                        left: SizeConfig.blockSizeHorizontal * 7,
+                        right: SizeConfig.blockSizeHorizontal * 7,
                         top: SizeConfig.blockSizeVertical * 3),
                     child: Divider(
                         height: SizeConfig.blockSizeVertical * .1,
@@ -650,16 +665,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        top: SizeConfig.blockSizeVertical * 1,
-                        left: SizeConfig.blockSizeHorizontal * 5),
+                        top: SizeConfig.blockSizeVertical * 2,
+                        left: SizeConfig.blockSizeHorizontal * 7),
                     child: Row(
                       children: [
                         Text(
                           "Related Products ",
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1.5,
                           style: TextStyle(
                             color: Color(0xff3A559F),
+                            fontWeight: FontWeight.bold,
                             fontSize: SizeConfig.safeBlockHorizontal * 5,
                           ),
                         ),
@@ -669,9 +683,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Container(
                     padding: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 3,
-                        left: SizeConfig.blockSizeHorizontal * 5,
+                        left: SizeConfig.blockSizeHorizontal * 7,
                         bottom: SizeConfig.blockSizeVertical * 2),
-                    height: SizeConfig.blockSizeVertical * 40,
+                    height: SizeConfig.blockSizeVertical * 35,
                     child: ListView.builder(
                         itemCount: productRelated.length,
                         scrollDirection: Axis.horizontal,
@@ -688,11 +702,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 pageTransitionAnimation:
                                     PageTransitionAnimation.fade,
                               ),
-                              // Navigator.of(context).pushNamed(
-                              // ProductDetails.routeName,
-                              // arguments: {
-                              //   'product_id': productRelated[index].id
-                              // }),
                               child: ProductDetailItem(
                                 productId: productRelated[index]?.id ?? 0,
                                 imgUrl: productRelated[index].mainImg,

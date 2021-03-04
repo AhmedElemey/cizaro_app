@@ -82,12 +82,18 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     addressesList.length == 0 || addressesList == null
-                        ? Center(
-                            child: Text(
-                            'No addresses Added yet, please Add One.',
-                            style: TextStyle(
-                                fontSize: SizeConfig.safeBlockHorizontal * 4),
-                          ))
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                                top: SizeConfig.blockSizeVertical * 3),
+                            child: Center(
+                                child: Text(
+                              'No addresses Added yet, please Add One.',
+                              style: TextStyle(
+                                  // color: Color(0xff3A559F),
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 4.5),
+                            )),
+                          )
                         : ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,

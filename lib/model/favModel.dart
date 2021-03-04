@@ -5,7 +5,6 @@ class ProductFav {
   String name;
   String mainImg;
   double price;
-
   String categoryName;
   double stars;
   int isFav;

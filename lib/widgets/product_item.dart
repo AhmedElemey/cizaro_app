@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class ProductItem extends StatefulWidget {
   final double productPrice, productPriceAfter, discount;
   final double stars;
   int isFav = 0;
+  int inCart = 0;
   final VoidCallback onAddToCart;
   final VoidCallback onAddToFavorite;
   Offer offer;
@@ -32,6 +34,7 @@ class ProductItem extends StatefulWidget {
       this.productPriceAfter,
       this.stars,
       this.isFav,
+      this.inCart,
       this.offer,
       this.onAddToCart,
       this.onAddToFavorite});
@@ -45,10 +48,7 @@ class _ProductItemState extends State<ProductItem> {
 
   @override
   void initState() {
-    //   Future.microtask(() => getHomeData());
-    // Future.microtask(() => checkFavItems());
     super.initState();
-
     fToast = FToast();
     fToast.init(context);
     // de 3ashan awel lama aload el screen t7mel el data
@@ -93,6 +93,21 @@ class _ProductItemState extends State<ProductItem> {
     });
   }
 
+  checkCartItems(BuildContext context) async {
+    final cart = Provider.of<CartViewModel>(context, listen: false);
+    cart.cartProductModel.forEach((element) {
+      if (widget.productId == element.id) {
+        setState(() {
+          widget.inCart = 1;
+        });
+      } else {
+        setState(() {
+          widget.inCart = 0;
+        });
+      }
+    });
+  }
+
   showFavToast() {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
@@ -116,7 +131,7 @@ class _ProductItemState extends State<ProductItem> {
     );
   }
 
-  showCartToast() {
+  showInCartAlreadyToast() {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
@@ -128,7 +143,7 @@ class _ProductItemState extends State<ProductItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("Already In Cart", style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -139,11 +154,13 @@ class _ProductItemState extends State<ProductItem> {
     );
   }
 
+  showCartToast() {}
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    final fav = Provider.of<FavViewModel>(context, listen: false);
     checkFavItems(context);
+    checkCartItems(context);
     return Padding(
         padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 3,
@@ -191,10 +208,12 @@ class _ProductItemState extends State<ProductItem> {
                                 height: SizeConfig.blockSizeVertical * 19,
                                 fit: BoxFit.fill,
                               )),
-                          Padding(
+                          Container(
                             padding: EdgeInsets.only(
                                 right: SizeConfig.blockSizeHorizontal * 1,
                                 left: SizeConfig.blockSizeHorizontal * 1),
+                            width: SizeConfig.blockSizeHorizontal * 35,
+                            height: SizeConfig.blockSizeVertical * 3,
                             child: Text(
                               widget.productName,
                               overflow: TextOverflow.ellipsis,
@@ -235,9 +254,6 @@ class _ProductItemState extends State<ProductItem> {
                                         child: Text(
                                           widget.productPrice.toString() +
                                               ' LE',
-                                          // textScaleFactor: MediaQuery.of(context)
-                                          //         .textScaleFactor *
-                                          //     1,
                                           style: TextStyle(
                                               fontFamily: 'NeusaNextStd',
                                               fontWeight: FontWeight.w700,
@@ -368,18 +384,13 @@ class _ProductItemState extends State<ProductItem> {
                                     fit: BoxFit.fill,
                                   )),
                               Container(
+                                width: SizeConfig.blockSizeHorizontal * 35,
+                                height: SizeConfig.blockSizeVertical * 3,
                                 padding: EdgeInsets.only(
                                     right: SizeConfig.blockSizeHorizontal * 2,
                                     left: SizeConfig.blockSizeHorizontal * 2),
                                 child: Text(
                                   widget.productName,
-                                  // textScaleFactor:
-                                  //     MediaQuery.of(context).textScaleFactor *
-                                  //         1.3,
-                                  // style: TextStyle(
-                                  //   fontFamily: 'NeusaNextStd',
-                                  //   fontWeight: FontWeight.w600,
-                                  // ),
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w500,
                                     fontSize:
@@ -397,13 +408,6 @@ class _ProductItemState extends State<ProductItem> {
                                               2),
                                       child: Text(
                                         widget.productPrice.toString() + ' LE',
-                                        // textScaleFactor: MediaQuery.of(context)
-                                        //         .textScaleFactor *
-                                        //     1,
-                                        // style: TextStyle(
-                                        //   fontFamily: 'NeusaNextStd',
-                                        //   fontWeight: FontWeight.w700,
-                                        // ),
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600,
                                           fontSize:
@@ -428,16 +432,6 @@ class _ProductItemState extends State<ProductItem> {
                                             child: Text(
                                               widget.productPrice.toString() +
                                                   ' LE',
-                                              // textScaleFactor:
-                                              //     MediaQuery.of(context)
-                                              //             .textScaleFactor *
-                                              //         1,
-                                              // style: TextStyle(
-                                              //     fontFamily: 'NeusaNextStd',
-                                              //     fontWeight: FontWeight.w700,
-                                              //     color: Colors.red,
-                                              //     decoration:
-                                              //         TextDecoration.lineThrough),
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.red,
@@ -460,14 +454,6 @@ class _ProductItemState extends State<ProductItem> {
                                               widget.productPriceAfter
                                                       .toString() +
                                                   ' LE',
-                                              // textScaleFactor:
-                                              //     MediaQuery.of(context)
-                                              //             .textScaleFactor *
-                                              //         1,
-                                              // style: TextStyle(
-                                              //   fontFamily: 'NeusaNextStd',
-                                              //   fontWeight: FontWeight.w700,
-                                              // ),
                                               style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: SizeConfig
@@ -481,7 +467,6 @@ class _ProductItemState extends State<ProductItem> {
                                     ),
                               Container(
                                   padding: EdgeInsets.only(
-                                      // bottom: SizeConfig.blockSizeVertical * .5,
                                       left: SizeConfig.blockSizeHorizontal * 1),
                                   width: SizeConfig.blockSizeHorizontal * 30,
                                   child: Row(
@@ -493,14 +478,11 @@ class _ProductItemState extends State<ProductItem> {
                                           if (widget.isFav == 1) {
                                             setState(() {
                                               showFavAlreadyToast();
-                                              // widget.isFav = 0;
-                                              //print("already here");
                                             });
                                           } else {
                                             setState(() {
                                               widget.isFav = 1;
                                               widget.onAddToFavorite();
-                                              //  print(" here");
                                               showFavToast();
                                             });
                                           }
@@ -512,20 +494,39 @@ class _ProductItemState extends State<ProductItem> {
                                                 Icons.favorite_border_outlined),
                                       ),
                                       GestureDetector(
-                                        onTap: () {
-                                          widget.onAddToCart();
-                                          showCartToast();
+                                        onTap: () async {
+                                          if (widget.inCart == 1) {
+                                            setState(() {
+                                              showInCartAlreadyToast();
+                                            });
+                                          } else {
+                                            setState(() {
+                                              widget.inCart = 1;
+                                              widget.onAddToCart();
+                                              showCartToast();
+                                            });
+                                          }
                                         },
                                         child: Container(
-                                          child: SvgPicture.asset(
-                                              'assets/images/cart.svg',
-                                              width: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  2.7,
-                                              height:
-                                                  SizeConfig.blockSizeVertical *
+                                          child: widget.inCart == 1
+                                              ? SvgPicture.asset(
+                                                  'assets/images/cart.svg',
+                                                  width: SizeConfig
+                                                          .blockSizeHorizontal *
+                                                      2.7,
+                                                  height: SizeConfig
+                                                          .blockSizeVertical *
                                                       2.6,
-                                              color: Colors.grey[900]),
+                                                  color: Colors.green[900])
+                                              : SvgPicture.asset(
+                                                  'assets/images/cart.svg',
+                                                  width: SizeConfig
+                                                          .blockSizeHorizontal *
+                                                      2.7,
+                                                  height: SizeConfig
+                                                          .blockSizeVertical *
+                                                      2.6,
+                                                  color: Colors.grey[900]),
                                         ),
                                       ),
                                     ],

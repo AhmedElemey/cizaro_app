@@ -163,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .category
                                     .name,
                             quantity: 1,
+                            inCart: 1,
                             availability:
                                 newArrivalsList[initPosition > 0 ? 1 : 0]
                                     ?.products[index]
@@ -310,6 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 topSellingList[initPosition2 > 0 ? 1 : 0]
                                     ?.products[index]
                                     .availability,
+                            inCart: 1,
                             colorSpecValue: '',
                             sizeSpecValue: '');
                         cart.addProductToCart(productCart);
@@ -379,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Center(
                                   child: Container(
                                     padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 1,
+                                      top: SizeConfig.blockSizeVertical * 1.5,
                                     ),
                                     child: Text(
                                       "Hot Deals",
@@ -404,7 +406,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                   margin: EdgeInsets.only(
-                                    top: SizeConfig.blockSizeVertical * .1,
+                                    top: SizeConfig.blockSizeVertical * 2,
                                   ),
                                   height: SizeConfig.blockSizeVertical * 28,
                                   width: SizeConfig.blockSizeHorizontal * 100,
@@ -442,6 +444,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //     left: SizeConfig.blockSizeHorizontal * 5,
+                    //     right: SizeConfig.blockSizeHorizontal * 5,
+                    //   ),
+                    //   child: Divider(
+                    //       height: SizeConfig.blockSizeVertical * .1,
+                    //       color: Color(0xff727C8E)),
+                    // ),
                     collectionsList.length == 0 ||
                             collectionsList.length == null
                         ? Container()
@@ -450,6 +461,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                 child: Center(
                                   child: Container(
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 1),
                                     child: Text(
                                       "Collections",
                                       style: GoogleFonts.poppins(
@@ -501,6 +514,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
+
                     newArrivalsList.length == 0 ||
                             newArrivalsList.length == null
                         ? Container()
@@ -531,23 +545,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
+
                     topSellingList.length == 0 || topSellingList.length == null
                         ? Container()
                         : Container(
                             child: Column(
                               children: [
                                 Container(
+                                  padding: EdgeInsets.only(
+                                      top: SizeConfig.blockSizeVertical * 3),
                                   child: Center(
-                                    child: Container(
-                                      child: Text(
-                                        "Top Selling ",
-                                        style: GoogleFonts.poppins(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize:
-                                                SizeConfig.safeBlockHorizontal *
-                                                    5,
-                                            color: Color(0xff294794)),
-                                      ),
+                                    child: Text(
+                                      "Top Selling ",
+                                      style: GoogleFonts.poppins(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  5,
+                                          color: Color(0xff294794)),
                                     ),
                                   ),
                                 ),

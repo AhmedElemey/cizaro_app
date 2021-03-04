@@ -46,7 +46,7 @@ class ListServices {
         API + '/products/?min_price=$minimum&max_price=$maximum&brand=$brand');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //   print(response.body);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -158,7 +158,7 @@ class ListServices {
         body: jsonEncode(orderIdModel.toJson()));
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      //  print(response.body);
       return CheckPaymentModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -180,7 +180,7 @@ class ListServices {
       final body = jsonDecode(response.body);
       return CheckMailModel.fromJson(body);
     } else {
-      print(response.body);
+      // print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -287,11 +287,11 @@ class ListServices {
       body: jsonEncode(address.toJson()),
     );
     var data = json.decode(response.body);
-    print(response.body);
+    //  print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       jsonDecode(response.body);
     } else {
-      print(response.body);
+      //    print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -312,7 +312,7 @@ class ListServices {
     if (response.statusCode == 200 || data['message'] == '') {
       jsonDecode(response.body);
     } else {
-      print(response.body);
+      // print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -329,7 +329,7 @@ class ListServices {
       body: jsonEncode(shoppingCartModel.toJson()),
     );
     var data = json.decode(response.body);
-    print(response.body);
+    //print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       final body = jsonDecode(response.body);
       return ResultShoppingCartModel.fromJson(body);
@@ -353,7 +353,7 @@ class ListServices {
       final body = jsonDecode(response.body);
       return address.AddressModel.fromJson(body);
     } else {
-      print(response.body);
+      //  print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -368,11 +368,11 @@ class ListServices {
       },
     );
     var data = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       return jsonDecode(response.body);
     } else {
-      print(response.body);
+      //   print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -387,11 +387,11 @@ class ListServices {
         },
         body: jsonEncode(createAddress.toJson()));
     var data = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       return jsonDecode(response.body);
     } else {
-      print(response.body);
+      //  print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }
@@ -412,7 +412,7 @@ class ListServices {
       final body = jsonDecode(response.body);
       return AddressBookModel.fromJson(body);
     } else {
-      print(response.body);
+      //  print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
   }

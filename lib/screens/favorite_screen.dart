@@ -1,3 +1,4 @@
+import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
@@ -5,6 +6,7 @@ import 'package:cizaro_app/widgets/favorite_item.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -70,21 +72,34 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: fav.favProductModel?.length ?? 0,
-            itemBuilder: (ctx, index) => FavoriteItem(
-                  imgUrl: fav.favProductModel[index].mainImg,
-                  productName: fav.favProductModel[index].name,
-                  productCategory: fav.favProductModel[index].categoryName,
-                  productStar:
-                      fav.favProductModel[index]?.stars.toString() ?? '0.0',
-                  productPrice: fav.favProductModel[index].price.toString(),
-                  unFavorite: () {
-                    fav.deleteFavProduct(index, fav.favProductModel[index].id);
-                    setState(() {
-                      fav.favProductModel?.removeAt(index);
-                      // fav.favProductModel[index].isFav = 0;
-                    });
-                    showUnFavToast();
-                  },
+            itemBuilder: (ctx, index) => GestureDetector(
+                  onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                      settings: RouteSettings(
+                          name: ProductDetails.routeName,
+                          arguments: {
+                            'product_id': fav.favProductModel[index]?.id
+                          }),
+                      screen: ProductDetails(),
+                      withNavBar: true,
+                      pageTransitionAnimation:
+                          tab.PageTransitionAnimation.fade),
+                  child: FavoriteItem(
+                    imgUrl: fav.favProductModel[index].mainImg,
+                    productName: fav.favProductModel[index].name,
+                    productCategory: fav.favProductModel[index].categoryName,
+                    productStar:
+                        fav.favProductModel[index]?.stars.toString() ?? '0.0',
+                    productPrice: fav.favProductModel[index].price.toString(),
+                    unFavorite: () {
+                      fav.deleteFavProduct(
+                          index, fav.favProductModel[index].id);
+                      setState(() {
+                        fav.favProductModel?.removeAt(index);
+                        // fav.favProductModel[index].isFav = 0;
+                      });
+                      showUnFavToast();
+                    },
+                  ),
                 ));
   }
 

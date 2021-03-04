@@ -36,7 +36,8 @@ class DataBaseHelper {
       $columnAvailability INTEGER,
       $columnTotalPrice Double,
       $columnColorSpecs TEXT,
-      $columnSizeSpecs TEXT)
+      $columnSizeSpecs TEXT,
+      $columnInCart INTEGER NOT NULL  )
       ''');
     });
   }

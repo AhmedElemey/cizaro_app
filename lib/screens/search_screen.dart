@@ -303,348 +303,359 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey13,
-      drawer: DrawerLayout(),
-      appBar: PreferredSize(
-        child: GradientAppBar("", _scaffoldKey13),
-        preferredSize: const Size(double.infinity, kToolbarHeight),
-      ),
-      body: _isLoading
-          ? Center(
-              child: Platform.isIOS
-                  ? CupertinoActivityIndicator()
-                  : CircularProgressIndicator())
-          : SingleChildScrollView(
-              physics: ScrollPhysics(),
-              child: filterList.length == 0 && wannaFilter == true
-                  ? Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            top: SizeConfig.blockSizeVertical * 20,
-                            right: SizeConfig.blockSizeHorizontal * 2,
-                            left: SizeConfig.blockSizeHorizontal * 2),
-                        child: Text(
-                          "There is no Available Items Matches Your Filter ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: SizeConfig.safeBlockHorizontal * 4,
-                              // color: Color(0xff3A559F),
-                              color: Color(0xff515C6F)),
+    return WillPopScope(
+      onWillPop: () async {
+        wannaFilter = false;
+        await pushNewScreenWithRouteSettings(context,
+            settings: RouteSettings(name: SearchScreen.routeName),
+            screen: SearchScreen(),
+            withNavBar: false,
+            pageTransitionAnimation: PageTransitionAnimation.fade);
+        return true;
+      },
+      child: Scaffold(
+        key: _scaffoldKey13,
+        drawer: DrawerLayout(),
+        appBar: PreferredSize(
+          child: GradientAppBar("", _scaffoldKey13),
+          preferredSize: const Size(double.infinity, kToolbarHeight),
+        ),
+        body: _isLoading
+            ? Center(
+                child: Platform.isIOS
+                    ? CupertinoActivityIndicator()
+                    : CircularProgressIndicator())
+            : SingleChildScrollView(
+                physics: ScrollPhysics(),
+                child: filterList.length == 0 && wannaFilter == true
+                    ? Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 20,
+                              right: SizeConfig.blockSizeHorizontal * 2,
+                              left: SizeConfig.blockSizeHorizontal * 2),
+                          child: Text(
+                            "There is no Available Items Matches Your Filter ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: SizeConfig.safeBlockHorizontal * 4,
+                                // color: Color(0xff3A559F),
+                                color: Color(0xff515C6F)),
+                          ),
                         ),
-                      ),
-                    )
-                  : filterList.length == 0 && wannaFilter == false
-                      ? Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(
-                                  left: SizeConfig.blockSizeHorizontal * 5,
-                                  right: SizeConfig.blockSizeHorizontal * 5),
-                              height: SizeConfig.blockSizeVertical * 6,
-                              width: SizeConfig.blockSizeHorizontal * 99,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    // width: MediaQuery.of(context)
-                                    //         .size
-                                    //         .width *
-                                    //     .24,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          productList?.length.toString() ?? '',
-                                          style: TextStyle(
-                                              color: Color(0xff3A559F),
-                                              fontSize: SizeConfig
-                                                      .safeBlockHorizontal *
-                                                  4),
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        ),
-                                        Text(
-                                          " Items",
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                          style: TextStyle(
-                                              fontSize: SizeConfig
-                                                      .safeBlockHorizontal *
-                                                  4),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              productList =
-                                                  productList.reversed.toList();
-                                            });
-                                          },
-                                          child: SvgPicture.asset(
-                                            'assets/images/arrow.svg',
-                                            width:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    3.5,
-                                            height:
-                                                SizeConfig.blockSizeVertical *
-                                                    2.5,
-                                            color: Colors.black,
+                      )
+                    : filterList.length == 0 && wannaFilter == false
+                        ? Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 5,
+                                    right: SizeConfig.blockSizeHorizontal * 5),
+                                height: SizeConfig.blockSizeVertical * 6,
+                                width: SizeConfig.blockSizeHorizontal * 99,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            productList?.length.toString() ??
+                                                '',
+                                            style: TextStyle(
+                                                color: Color(0xff3A559F),
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    4),
+                                            textScaleFactor:
+                                                MediaQuery.textScaleFactorOf(
+                                                        context) *
+                                                    1.5,
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: SizeConfig
+                                          Text(
+                                            " Items",
+                                            textScaleFactor:
+                                                MediaQuery.textScaleFactorOf(
+                                                        context) *
+                                                    1.5,
+                                            style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    4),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                productList = productList
+                                                    .reversed
+                                                    .toList();
+                                              });
+                                            },
+                                            child: SvgPicture.asset(
+                                              'assets/images/arrow.svg',
+                                              width: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  .03),
-                                          child: GestureDetector(
-                                            onTap: () =>
-                                                displayBottomSheet(context),
-                                            child: Icon(
-                                              Icons.filter_alt_outlined,
-                                              size:
+                                                  3.5,
+                                              height:
                                                   SizeConfig.blockSizeVertical *
-                                                      3,
+                                                      2.5,
+                                              color: Colors.black,
                                             ),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: productList?.length ?? 0,
-                              itemBuilder: (ctx, index) => GestureDetector(
-                                onTap: () => pushNewScreenWithRouteSettings(
-                                    context,
-                                    settings: RouteSettings(
-                                        name: ProductDetails.routeName,
-                                        arguments: {
-                                          'product_id': productList[index].id
-                                        }),
-                                    screen: ProductDetails(),
-                                    withNavBar: true,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.fade),
-                                child: SearchItem(
-                                  productId: productList[index].id,
-                                  imgUrl: productList[index].mainImg,
-                                  productName: productList[index].name,
-                                  productPrice: productList[index].price ?? 0.0,
-                                  productPriceAfter:
-                                      productList[index]?.offer?.afterPrice ??
-                                          0.0,
-                                  productCategory:
-                                      productList[index].category.name,
-                                  onAddToFavorite: () {
-                                    final fav = Provider.of<FavViewModel>(
-                                        context,
-                                        listen: false);
-                                    final productFav = ProductFav(
-                                        id: productList[index].id,
-                                        name: productList[index].name,
-                                        mainImg: productList[index].mainImg,
-                                        price: productList[index].price,
-                                        categoryName:
-                                            productList[index].category.name,
-                                        isFav: 1);
-                                    fav.addProductToFav(productFav);
-                                  },
-                                  onAddToCart: () {
-                                    final cart = Provider.of<CartViewModel>(
-                                        context,
-                                        listen: false);
-                                    final productCart = ProductCart(
-                                        id: productList[index].id,
-                                        name: productList[index].name,
-                                        mainImg: productList[index].mainImg,
-                                        price: productList[index].price,
-                                        priceAfterDiscount: productList[index]
-                                                .offer
-                                                ?.afterPrice ??
-                                            productList[index].price,
-                                        categoryName:
-                                            productList[index].category.name,
-                                        quantity: 1,
-                                        availability:
-                                            productList[index].availability,
-                                        colorSpecValue: '',
-                                        sizeSpecValue: '');
-                                    cart.addProductToCart(productCart);
-                                  },
-                                  //  productQuantity: ,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 5)
-                          ],
-                        )
-                      : Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.only(
-                                  left: SizeConfig.blockSizeHorizontal * 6,
-                                  right: SizeConfig.blockSizeHorizontal * 4),
-                              height: SizeConfig.blockSizeVertical * 6,
-                              //   width: MediaQuery.of(context).size.width * .9,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    // width: MediaQuery.of(context)
-                                    //         .size
-                                    //         .width *
-                                    //     .24,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          filterList?.length.toString() ?? '',
-                                          style: TextStyle(
-                                              color: Color(0xff3A559F)),
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                        ),
-                                        Text(
-                                          " Items",
-                                          textScaleFactor:
-                                              MediaQuery.textScaleFactorOf(
-                                                      context) *
-                                                  1.5,
-                                          style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.safeBlockHorizontal *
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    .03),
+                                            child: GestureDetector(
+                                              onTap: () =>
+                                                  displayBottomSheet(context),
+                                              child: Icon(
+                                                Icons.filter_alt_outlined,
+                                                size: SizeConfig
+                                                        .blockSizeVertical *
                                                     3,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              filterList =
-                                                  filterList.reversed.toList();
-                                            });
-                                          },
-                                          child: SvgPicture.asset(
-                                            'assets/images/arrow.svg',
-                                            width:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    5,
-                                            height:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    5,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 1),
-                                          child: GestureDetector(
-                                            onTap: () =>
-                                                displayBottomSheet(context),
-                                            child: Icon(
-                                              Icons.filter_alt_outlined,
-                                              size: SizeConfig
-                                                      .blockSizeHorizontal *
-                                                  7,
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: filterList?.length ?? 0,
-                              itemBuilder: (ctx, index) => GestureDetector(
-                                onTap: () => pushNewScreenWithRouteSettings(
-                                    context,
-                                    settings: RouteSettings(
-                                        name: ProductDetails.routeName,
-                                        arguments: {
-                                          'product_id': filterList[index].id
-                                        }),
-                                    screen: ProductDetails(),
-                                    withNavBar: true,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.fade),
-                                child: SearchItem(
-                                  imgUrl: filterList[index].mainImg,
-                                  productName: filterList[index].name,
-                                  productPrice: filterList[index].price ?? 0.0,
-                                  productPriceAfter:
-                                      productList[index]?.offer?.afterPrice ??
-                                          0.0,
-                                  productCategory:
-                                      filterList[index].category.name,
-                                  onAddToFavorite: () {
-                                    final fav = Provider.of<FavViewModel>(
-                                        context,
-                                        listen: false);
-                                    final productFav = ProductFav(
-                                        id: filterList[index].id,
-                                        name: filterList[index].name,
-                                        mainImg: filterList[index].mainImg,
-                                        price: filterList[index].price,
-                                        categoryName:
-                                            filterList[index].category.name,
-                                        isFav: 1);
-                                    fav.addProductToFav(productFav);
-                                  },
-                                  onAddToCart: () {
-                                    final cart = Provider.of<CartViewModel>(
-                                        context,
-                                        listen: false);
-                                    final productCart = ProductCart(
-                                        id: filterList[index].id,
-                                        name: filterList[index].name,
-                                        mainImg: filterList[index].mainImg,
-                                        price: filterList[index].price,
-                                        priceAfterDiscount: filterList[index]
-                                                .offer
-                                                ?.afterPrice ??
-                                            filterList[index].price,
-                                        categoryName:
-                                            filterList[index].category.name,
-                                        quantity: 1,
-                                        availability:
-                                            filterList[index].availability,
-                                        colorSpecValue: '',
-                                        sizeSpecValue: '');
-                                    cart.addProductToCart(productCart);
-                                  },
-                                  //  productQuantity: ,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
-                            ),
-                            SizedBox(height: SizeConfig.blockSizeVertical * 2)
-                          ],
-                        ),
-            ),
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: productList?.length ?? 0,
+                                itemBuilder: (ctx, index) => GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: ProductDetails.routeName,
+                                          arguments: {
+                                            'product_id': productList[index].id
+                                          }),
+                                      screen: ProductDetails(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: SearchItem(
+                                    productId: productList[index].id,
+                                    imgUrl: productList[index].mainImg,
+                                    productName: productList[index].name,
+                                    productPrice:
+                                        productList[index].price ?? 0.0,
+                                    productPriceAfter:
+                                        productList[index]?.offer?.afterPrice ??
+                                            0.0,
+                                    productCategory:
+                                        productList[index].category.name,
+                                    onAddToFavorite: () {
+                                      final fav = Provider.of<FavViewModel>(
+                                          context,
+                                          listen: false);
+                                      final productFav = ProductFav(
+                                          id: productList[index].id,
+                                          name: productList[index].name,
+                                          mainImg: productList[index].mainImg,
+                                          price: productList[index].price,
+                                          categoryName:
+                                              productList[index].category.name,
+                                          isFav: 1);
+                                      fav.addProductToFav(productFav);
+                                    },
+                                    onAddToCart: () {
+                                      final cart = Provider.of<CartViewModel>(
+                                          context,
+                                          listen: false);
+                                      final productCart = ProductCart(
+                                          id: productList[index].id,
+                                          name: productList[index].name,
+                                          mainImg: productList[index].mainImg,
+                                          price: productList[index].price,
+                                          priceAfterDiscount: productList[index]
+                                                  .offer
+                                                  ?.afterPrice ??
+                                              productList[index].price,
+                                          categoryName:
+                                              productList[index].category.name,
+                                          quantity: 1,
+                                          availability:
+                                              productList[index].availability,
+                                          colorSpecValue: '',
+                                          sizeSpecValue: '');
+                                      cart.addProductToCart(productCart);
+                                    },
+                                    //  productQuantity: ,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: SizeConfig.blockSizeVertical * 5)
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 6,
+                                    right: SizeConfig.blockSizeHorizontal * 4),
+                                height: SizeConfig.blockSizeVertical * 6,
+                                //   width: MediaQuery.of(context).size.width * .9,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      // width: MediaQuery.of(context)
+                                      //         .size
+                                      //         .width *
+                                      //     .24,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            filterList?.length.toString() ?? '',
+                                            style: TextStyle(
+                                                color: Color(0xff3A559F)),
+                                            textScaleFactor:
+                                                MediaQuery.textScaleFactorOf(
+                                                        context) *
+                                                    1.5,
+                                          ),
+                                          Text(
+                                            " Items",
+                                            textScaleFactor:
+                                                MediaQuery.textScaleFactorOf(
+                                                        context) *
+                                                    1.5,
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  3,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                filterList = filterList.reversed
+                                                    .toList();
+                                              });
+                                            },
+                                            child: SvgPicture.asset(
+                                              'assets/images/arrow.svg',
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
+                                              height: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 1),
+                                            child: GestureDetector(
+                                              onTap: () =>
+                                                  displayBottomSheet(context),
+                                              child: Icon(
+                                                Icons.filter_alt_outlined,
+                                                size: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    7,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: filterList?.length ?? 0,
+                                itemBuilder: (ctx, index) => GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: ProductDetails.routeName,
+                                          arguments: {
+                                            'product_id': filterList[index].id
+                                          }),
+                                      screen: ProductDetails(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: SearchItem(
+                                    imgUrl: filterList[index].mainImg,
+                                    productName: filterList[index].name,
+                                    productPrice:
+                                        filterList[index].price ?? 0.0,
+                                    productPriceAfter:
+                                        productList[index]?.offer?.afterPrice ??
+                                            0.0,
+                                    productCategory:
+                                        filterList[index].category.name,
+                                    onAddToFavorite: () {
+                                      final fav = Provider.of<FavViewModel>(
+                                          context,
+                                          listen: false);
+                                      final productFav = ProductFav(
+                                          id: filterList[index].id,
+                                          name: filterList[index].name,
+                                          mainImg: filterList[index].mainImg,
+                                          price: filterList[index].price,
+                                          categoryName:
+                                              filterList[index].category.name,
+                                          isFav: 1);
+                                      fav.addProductToFav(productFav);
+                                    },
+                                    onAddToCart: () {
+                                      final cart = Provider.of<CartViewModel>(
+                                          context,
+                                          listen: false);
+                                      final productCart = ProductCart(
+                                          id: filterList[index].id,
+                                          name: filterList[index].name,
+                                          mainImg: filterList[index].mainImg,
+                                          price: filterList[index].price,
+                                          priceAfterDiscount: filterList[index]
+                                                  .offer
+                                                  ?.afterPrice ??
+                                              filterList[index].price,
+                                          categoryName:
+                                              filterList[index].category.name,
+                                          quantity: 1,
+                                          availability:
+                                              filterList[index].availability,
+                                          colorSpecValue: '',
+                                          sizeSpecValue: '');
+                                      cart.addProductToCart(productCart);
+                                    },
+                                    //  productQuantity: ,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: SizeConfig.blockSizeVertical * 2)
+                            ],
+                          ),
+              ),
+      ),
     );
   }
 }

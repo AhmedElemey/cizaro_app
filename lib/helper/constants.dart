@@ -10,6 +10,7 @@ final String columnAvailability = 'availability';
 final String columnTotalPrice = 'total_price';
 final String columnColorSpecs = 'color';
 final String columnSizeSpecs = 'size';
+final String columnInCart = 'in_cart';
 //Favorite
 final String tableFav = 'fav';
 final String columnStars = 'stars';

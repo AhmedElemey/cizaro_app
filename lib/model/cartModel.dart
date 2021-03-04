@@ -9,6 +9,7 @@ class ProductCart {
   String categoryName;
   int availability;
   int quantity;
+  int inCart;
   double totalPrice;
   String colorSpecValue;
   String sizeSpecValue;
@@ -22,6 +23,7 @@ class ProductCart {
       this.categoryName,
       this.quantity,
       this.totalPrice,
+      this.inCart,
       this.availability,
       this.colorSpecValue,
       this.sizeSpecValue});
@@ -38,6 +40,7 @@ class ProductCart {
     availability = map[columnAvailability];
     colorSpecValue = map[columnColorSpecs];
     sizeSpecValue = map[columnSizeSpecs];
+    inCart = map[columnInCart];
   }
 
   Map<String, dynamic> toJson() {
@@ -52,7 +55,8 @@ class ProductCart {
       columnQuantity: quantity,
       columnAvailability: availability,
       columnColorSpecs: colorSpecValue,
-      columnSizeSpecs: sizeSpecValue
+      columnSizeSpecs: sizeSpecValue,
+      columnInCart: inCart
     };
   }
 }

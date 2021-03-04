@@ -202,9 +202,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: Center(
                                       child: Text(
                                         "Edit Profile",
-                                        // textScaleFactor: MediaQuery.of(context)
-                                        //         .textScaleFactor *
-                                        //     1.4,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize:
@@ -236,10 +233,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 vertical: SizeConfig.blockSizeVertical * 2,
                                 horizontal: SizeConfig.blockSizeHorizontal * 1),
                             decoration: BoxDecoration(
-                              // border: Border.all(
-                              //   color: Colors.black12,
-                              //   width: 2,
-                              // ),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
                             ),
@@ -255,6 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),
                                   child: Container(
+                                    color: Colors.white,
                                     padding: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * 1,
                                         right:
@@ -263,10 +257,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             SizeConfig.blockSizeHorizontal * 3),
                                     child: Row(
                                       children: [
-                                        // Icon(
-                                        //   CupertinoIcons.text_quote,
-                                        //   size: 30,
-                                        // ),
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/menu.svg',
@@ -331,6 +321,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),
                                   child: Container(
+                                    color: Colors.white,
                                     padding: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * 1,
                                         left: SizeConfig.blockSizeHorizontal *
@@ -362,10 +353,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .safeBlockHorizontal *
                                                   5,
                                             ),
-                                            // textScaleFactor:
-                                            //     MediaQuery.textScaleFactorOf(
-                                            //             context) *
-                                            //         1.5
                                           ),
                                         ),
                                         Spacer(),
@@ -392,25 +379,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 1,
-                                      left: SizeConfig.blockSizeHorizontal * 3,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 4),
-                                  child: GestureDetector(
-                                    onTap: () => pushNewScreenWithRouteSettings(
-                                        context,
-                                        settings: RouteSettings(
-                                            name: AddressBookScreen.routeName),
-                                        screen: AddressBookScreen(),
-                                        withNavBar: true,
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.fade),
+                                GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: AddressBookScreen.routeName),
+                                      screen: AddressBookScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 1,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 3,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 4),
                                     child: Row(
                                       children: [
-                                        // Icon(Icons.add_business_rounded,
-                                        //     size: 30),
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/finished.svg',
@@ -434,10 +421,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         .safeBlockHorizontal *
                                                     5,
                                               ),
-                                              // textScaleFactor: MediaQuery
-                                              //         .textScaleFactorOf(
-                                              //             context) *
-                                              //     1.5
                                             )),
                                         Spacer(),
                                         CircleAvatar(
@@ -483,26 +466,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             child: Column(
                               children: [
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * .05,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 2),
-                                  child: GestureDetector(
-                                    onTap: () => pushNewScreenWithRouteSettings(
-                                        context,
-                                        settings: RouteSettings(
-                                            name: FavoriteScreen.routeName),
-                                        screen: FavoriteScreen(),
-                                        withNavBar: true,
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.fade),
+                                GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: FavoriteScreen.routeName),
+                                      screen: FavoriteScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * .05,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
                                       children: [
-                                        // Icon(
-                                        //   Icons.star,
-                                        //   size: 30,
-                                        // ),
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/rate.svg',
@@ -556,23 +536,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 1,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 2),
-                                  child: GestureDetector(
-                                    onTap: () => pushNewScreenWithRouteSettings(
-                                        context,
-                                        settings: RouteSettings(
-                                            name: PolicesTermsScreen.routeName),
-                                        screen: PolicesTermsScreen(),
-                                        withNavBar: true,
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.fade),
+                                GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: PolicesTermsScreen.routeName),
+                                      screen: PolicesTermsScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 1,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
                                       children: [
-                                        // Icon(Icons.mail_sharp, size: 30),
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/suggest.svg',
@@ -596,10 +576,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .safeBlockHorizontal *
                                                   5,
                                             ),
-                                            // textScaleFactor:
-                                            //     MediaQuery.textScaleFactorOf(
-                                            //             context) *
-                                            //         1.5
                                           ),
                                         ),
                                         Spacer(),
@@ -626,26 +602,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 1,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 2),
-                                  child: GestureDetector(
-                                    onTap: () => pushNewScreenWithRouteSettings(
-                                        context,
-                                        settings: RouteSettings(
-                                            name: AboutUsScreen.routeName),
-                                        screen: AboutUsScreen(),
-                                        withNavBar: true,
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.fade),
+                                GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: AboutUsScreen.routeName),
+                                      screen: AboutUsScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 1,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
                                       children: [
-                                        // Icon(
-                                        //   Icons.email_outlined,
-                                        //   size: 30,
-                                        // ),
                                         Container(
                                           child: SvgPicture.asset(
                                               'assets/images/aboutUs.svg',
@@ -669,10 +642,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .safeBlockHorizontal *
                                                   5,
                                             ),
-                                            // textScaleFactor:
-                                            //     MediaQuery.textScaleFactorOf(
-                                            //             context) *
-                                            //         1.5
                                           ),
                                         ),
                                         Spacer(),
@@ -699,26 +668,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * .5,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 2),
-                                  child: GestureDetector(
-                                    onTap: () => pushNewScreenWithRouteSettings(
-                                        context,
-                                        settings: RouteSettings(
-                                            name: ContactUsScreen.routeName),
-                                        screen: ContactUsScreen(),
-                                        withNavBar: true,
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.fade),
+                                GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: ContactUsScreen.routeName),
+                                      screen: ContactUsScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * .5,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.headset_mic_rounded,
-                                            size:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    8),
+                                        Container(
+                                          child: SvgPicture.asset(
+                                              'assets/images/support.svg',
+                                              width: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3.6,
+                                              height:
+                                                  SizeConfig.blockSizeVertical *
+                                                      3.6,
+                                              color: Colors.grey[900]),
+                                        ),
                                         Container(
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
@@ -731,10 +708,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .safeBlockHorizontal *
                                                   5,
                                             ),
-                                            // textScaleFactor:
-                                            //     MediaQuery.textScaleFactorOf(
-                                            //             context) *
-                                            //         1.5
                                           ),
                                         ),
                                         Spacer(),
@@ -761,25 +734,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       height: SizeConfig.blockSizeVertical * 1,
                                       color: Color(0xff727C8E)),
                                 ),
-                                Container(
-                                  padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 1,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 2),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      saveToken('');
-                                      saveId(0);
-                                      // _logOut();
-                                      logOut();
-                                      pushNewScreenWithRouteSettings(context,
-                                          settings: RouteSettings(
-                                              name: LoginScreen.routeName),
-                                          screen: LoginScreen(),
-                                          withNavBar: false,
-                                          pageTransitionAnimation:
-                                              PageTransitionAnimation.fade);
-                                    },
+                                GestureDetector(
+                                  onTap: () async {
+                                    saveToken('');
+                                    saveId(0);
+                                    // _logOut();
+                                    logOut();
+                                    pushNewScreenWithRouteSettings(context,
+                                        settings: RouteSettings(
+                                            name: LoginScreen.routeName),
+                                        screen: LoginScreen(),
+                                        withNavBar: false,
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.fade);
+                                  },
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 1,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
                                       children: [
                                         Padding(
@@ -806,10 +780,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .safeBlockHorizontal *
                                                   5,
                                             ),
-                                            // textScaleFactor:
-                                            //     MediaQuery.textScaleFactorOf(
-                                            //             context) *
-                                            //         1.5
                                           ),
                                         ),
                                         Spacer(),

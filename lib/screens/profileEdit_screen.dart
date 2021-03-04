@@ -6,6 +6,7 @@ import 'package:cizaro_app/model/profileModel.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -34,9 +35,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   String valueUserName,
       valueFullName,
       valueEmail,
-      valueBirthDate,
       valueConfirmPassword,
       valuePassword;
+
+  TextEditingController valueBirthDate = TextEditingController();
 
   getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -175,7 +177,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         fullName: valueFullName ?? userFullName,
         email: valueEmail ?? userEmail,
         //   gender: valueGender ?? userGender.value,
-        birthDate: valueBirthDate ?? userBirthDate);
+        birthDate: valueBirthDate.text ?? userBirthDate);
     await getProfile
         .updateProfile(id, profileEditingModel, token)
         .then((response) {});
@@ -397,25 +399,63 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 color: Colors.grey,
                               ),
                               Container(
-                                padding: EdgeInsets.only(
-                                    left: SizeConfig.blockSizeHorizontal * 1.5,
-                                    top: SizeConfig.blockSizeVertical * 1),
-                                width: SizeConfig.blockSizeHorizontal * 80,
-                                height: SizeConfig.blockSizeVertical * 7,
-                                child: TextField(
-                                  obscureText: false,
-                                  readOnly: false,
-                                  keyboardType: TextInputType.datetime,
-                                  decoration: InputDecoration(
+                                  padding: EdgeInsets.only(
+                                      left:
+                                          SizeConfig.blockSizeHorizontal * 1.5,
+                                      top: SizeConfig.blockSizeVertical * 1),
+                                  width: SizeConfig.blockSizeHorizontal * 80,
+                                  height: SizeConfig.blockSizeVertical * 7,
+                                  child: TextFieldBuild(
+                                    obscureText: false,
+                                    readOnly: true,
                                     hintText: userBirthDate,
-                                  ),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      valueBirthDate = value;
-                                    });
-                                  },
-                                ),
-                              )
+                                    textStyle: TextStyle(
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 3.2,
+                                    ),
+                                    lineCount: 1,
+                                    // validator: validateBirthDate,
+                                    textEditingController: valueBirthDate,
+                                    icon: CupertinoIcons.calendar,
+                                    onClick: () {
+                                      showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext builder) {
+                                            return Container(
+                                                height: MediaQuery.of(context)
+                                                        .copyWith()
+                                                        .size
+                                                        .height /
+                                                    3,
+                                                child: CupertinoDatePicker(
+                                                    initialDateTime:
+                                                        DateTime.now(),
+                                                    onDateTimeChanged: (DateTime
+                                                            newDate) =>
+                                                        valueBirthDate.text =
+                                                            '${newDate.year}-${newDate.month}-${newDate.day}',
+                                                    use24hFormat: true,
+                                                    minuteInterval: 1,
+                                                    mode:
+                                                        CupertinoDatePickerMode
+                                                            .date));
+                                          });
+                                    },
+                                  )
+                                  // TextField(
+                                  //   obscureText: false,
+                                  //   readOnly: false,
+                                  //   keyboardType: TextInputType.datetime,
+                                  //   decoration: InputDecoration(
+                                  //     hintText: userBirthDate,
+                                  //   ),
+                                  //   onChanged: (value) {
+                                  //     setState(() {
+                                  //       valueBirthDate = value;
+                                  //     });
+                                  //   },
+                                  // ),
+                                  )
                             ],
                           ),
                         ),

@@ -4,6 +4,7 @@ import 'package:cizaro_app/model/checkout.dart';
 import 'package:cizaro_app/model/checkout_results.dart';
 import 'package:cizaro_app/model/order.dart';
 import 'package:cizaro_app/model/order_details.dart';
+import 'package:cizaro_app/model/pendingShipment.dart';
 import 'package:http/http.dart' as http;
 
 class OrderServices {
@@ -49,6 +50,21 @@ class OrderServices {
       final body = jsonDecode(response.body);
       print(response.body);
       return OrderDetails.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
+  Future<PendingShipments> fetchPendingShipment(String token) async {
+    final response = await http.get(API + '/pending-shipment/', headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': '${'Token'} $token'
+    });
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      print(response.body);
+      return PendingShipments.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }

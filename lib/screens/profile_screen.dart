@@ -315,8 +315,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   onTap: () => pushNewScreenWithRouteSettings(
                                       context,
                                       settings: RouteSettings(
-                                          name: PendingShipment.routeName),
-                                      screen: PendingShipment(),
+                                          name:
+                                              PendingShipmentScreen.routeName),
+                                      screen: PendingShipmentScreen(),
                                       withNavBar: true,
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),
@@ -806,59 +807,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               ])));
-  }
-}
-
-class Search extends SearchDelegate {
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return <Widget>[
-      IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        });
-  }
-
-  String selectedResult;
-  @override
-  Widget buildResults(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(selectedResult),
-      ),
-    );
-  }
-
-  List<String> recentList = ["Amr", "Baiomey", "Ahmed", "Kareem"];
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    List<String> suggestionList = [];
-    query.isEmpty
-        ? suggestionList = recentList
-        : suggestionList
-            .addAll(recentList.where((element) => element.contains(query)));
-    return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(suggestionList[index]),
-          onTap: () {
-            selectedResult = suggestionList[index];
-            showResults(context);
-          },
-        );
-      },
-    );
   }
 }

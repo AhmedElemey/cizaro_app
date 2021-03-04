@@ -43,7 +43,7 @@ class ProductItem extends StatefulWidget {
   _ProductItemState createState() => _ProductItemState();
 }
 
-class _ProductItemState extends State<ProductItem> {
+class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
   FToast fToast;
 
   @override
@@ -52,6 +52,12 @@ class _ProductItemState extends State<ProductItem> {
     fToast = FToast();
     fToast.init(context);
     // de 3ashan awel lama aload el screen t7mel el data
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // WidgetsBinding.instance.removeObserver(this);
   }
 
   showFavAlreadyToast() {
@@ -159,8 +165,9 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    checkFavItems(context);
+    // checkFavItems(context);
     checkCartItems(context);
+
     return Padding(
         padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 3,

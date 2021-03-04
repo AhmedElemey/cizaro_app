@@ -103,7 +103,7 @@ void main() async {
               AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
               ProfileEditScreen.routeName: (ctx) => ProfileEditScreen(),
               OrderScreen.routeName: (ctx) => OrderScreen(),
-              PendingShipment.routeName: (ctx) => PendingShipment(),
+              PendingShipmentScreen.routeName: (ctx) => PendingShipmentScreen(),
               FinishedOrder.routeName: (ctx) => FinishedOrder(),
               EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
               PaymentsScreen.routeName: (ctx) => PaymentsScreen(),

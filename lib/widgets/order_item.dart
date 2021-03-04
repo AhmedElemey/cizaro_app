@@ -55,7 +55,9 @@ class OrderItem extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+          orderDate == null
+              ? Container()
+              : SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(
             child: orderDate == null
                 ? Container()
@@ -81,7 +83,9 @@ class OrderItem extends StatelessWidget {
                     ],
                   ),
           ),
-          SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
+          orderDate == null
+              ? Container()
+              : SizedBox(height: SizeConfig.blockSizeVertical * 1.5),
           Flexible(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

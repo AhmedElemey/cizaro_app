@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
@@ -40,7 +39,7 @@ class ProductItem extends StatefulWidget {
   _ProductItemState createState() => _ProductItemState();
 }
 
-class _ProductItemState extends State<ProductItem> {
+class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
   FToast fToast;
 
   @override
@@ -48,11 +47,31 @@ class _ProductItemState extends State<ProductItem> {
     //   Future.microtask(() => getHomeData());
     // Future.microtask(() => checkFavItems());
     super.initState();
-
+    // WidgetsBinding.instance.addObserver(this);
     fToast = FToast();
     fToast.init(context);
     // de 3ashan awel lama aload el screen t7mel el data
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // WidgetsBinding.instance.removeObserver(this);
+  }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   super.didChangeAppLifecycleState(state);
+  //   if (state == AppLifecycleState.resumed) {
+  //     checkFavItems(context);
+  //   } else if (state == AppLifecycleState.inactive) {
+  //     checkFavItems(context);
+  //   } else if (state == AppLifecycleState.detached) {
+  //     checkFavItems(context);
+  //   } else if (state == AppLifecycleState.paused) {
+  //     checkFavItems(context);
+  //   }
+  // }
 
   showFavAlreadyToast() {
     Widget toast = Container(
@@ -143,7 +162,7 @@ class _ProductItemState extends State<ProductItem> {
   Widget build(BuildContext context) {
     // TODO: implement build
     final fav = Provider.of<FavViewModel>(context, listen: false);
-    checkFavItems(context);
+    // checkFavItems(context);
     return Padding(
         padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 3,

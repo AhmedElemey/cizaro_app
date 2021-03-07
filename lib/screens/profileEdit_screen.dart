@@ -67,8 +67,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       userBirthDate = profile.data.birthDate;
       userGender = profile.data.gender;
       userFullName = profile.data.fullName;
-
-      //  profileList = response.data;
     });
     if (this.mounted) {
       setState(() {
@@ -170,8 +168,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     final getProfile = Provider.of<ListViewModel>(context, listen: false);
     String token = await getToken();
     int id = await getId();
-    // final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-
     final profileEditingModel = Edit.ProfileEditingModel(
         username: valueUserName ?? userName,
         fullName: valueFullName ?? userFullName,

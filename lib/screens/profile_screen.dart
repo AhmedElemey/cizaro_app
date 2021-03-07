@@ -41,15 +41,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return prefs.getString('token');
   }
 
-  // Future<void> _logOut() async {
-  //   await FacebookAuth.instance.logOut();
-  //   String token = await getFacebookToken();
-  //   setState(() {
-  //     token = null;
-  //   });
-  //   Navigator.of(context).pushNamed(LoginScreen.routeName);
-  // }
-
   logOut() {
     gSignIn.signOut();
   }

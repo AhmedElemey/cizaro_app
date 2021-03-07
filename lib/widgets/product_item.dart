@@ -160,7 +160,28 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
     );
   }
 
-  showCartToast() {}
+  showCartToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -286,9 +307,6 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                         child: Text(
                                           widget.productPriceAfter.toString() +
                                               ' LE',
-                                          // textScaleFactor: MediaQuery.of(context)
-                                          //         .textScaleFactor *
-                                          //     1,
                                           style: TextStyle(
                                             fontFamily: 'NeusaNextStd',
                                             fontSize:

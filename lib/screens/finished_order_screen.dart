@@ -14,27 +14,6 @@ class FinishedOrder extends StatefulWidget {
 }
 
 class _FinishedOrderState extends State<FinishedOrder> {
-  // Future<bool> _onBackPressed() {
-  //   return showDialog(
-  //         context: context,
-  //         builder: (context) => new AlertDialog(
-  //           title: new Text('Are you sure?'),
-  //           content: new Text('Do you want to exit an App'),
-  //           actions: <Widget>[
-  //             new GestureDetector(
-  //               onTap: () => Navigator.of(context).pop(false),
-  //               child: Text("NO"),
-  //             ),
-  //             SizedBox(height: 16),
-  //             new GestureDetector(
-  //               onTap: () => Navigator.of(context).pop(true),
-  //               child: Text("YES"),
-  //             ),
-  //           ],
-  //         ),
-  //       ) ??
-  //       false;
-  // }
   @override
   void initState() {
     // TODO: implement initState
@@ -54,7 +33,6 @@ class _FinishedOrderState extends State<FinishedOrder> {
   Widget build(BuildContext context) {
     final cart = Provider.of<CartViewModel>(context, listen: false);
     cart.cartProductModel.removeRange(0, cart.cartProductModel.length);
-    // cart.deleteTable();
     cart.getTotalPrice();
     return WillPopScope(
       onWillPop: () async {

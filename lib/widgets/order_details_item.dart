@@ -120,28 +120,6 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                               fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                             )),
                       ),
-                      // Row(
-                      //   children: [
-                      //     Text(
-                      //       widget.sizeSpecValue == ""
-                      //           ? ''
-                      //           : 'Size : ${widget.sizeSpecValue}',
-                      //       style: const TextStyle(color: Colors.black),
-                      //     ),
-                      //     Text(widget.colorSpecValue == "" ? '' : ' , ',
-                      //         style: const TextStyle(color: Colors.black)),
-                      //     Text(widget.colorSpecValue == "" ? '' : 'Color : ',
-                      //         style: const TextStyle(color: Colors.black)),
-                      //     widget.colorSpecValue == ""
-                      //         ? Container()
-                      //         : CircleAvatar(
-                      //             radius: 10,
-                      //             backgroundColor: Color(
-                      //                 int.parse('0xff${widget.colorSpecValue}')),
-                      //             foregroundColor: Color(
-                      //                 int.parse('0xff${widget.colorSpecValue}'))),
-                      //   ],
-                      // ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -168,8 +146,6 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 4,
                             ),
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor * 1
                           ),
                           Text(
                             widget.productPrice.toString() + ' LE',

@@ -90,9 +90,6 @@ class _ShopScreenState extends State<ShopScreen> {
                           withNavBar: true,
                           pageTransitionAnimation: PageTransitionAnimation.fade,
                         ),
-                        // Navigator.of(context).pushNamed(
-                        // ProductDetails.routeName,
-                        // arguments: {'product_id': productList[index].id}),
                         child: SearchItem(
                           productId: productList[index].id,
                           imgUrl: productList[index].mainImg,
@@ -127,6 +124,7 @@ class _ShopScreenState extends State<ShopScreen> {
                                 categoryName: productList[index].category.name,
                                 quantity: 1,
                                 availability: productList[index].availability,
+                                inCart: 1,
                                 colorSpecValue: '',
                                 sizeSpecValue: '');
                             cart.addProductToCart(productCart);

@@ -68,7 +68,6 @@ class CollectionItem extends StatelessWidget {
                   top: SizeConfig.blockSizeVertical * .2),
               child: Text(
                 itemText,
-                // textScaleFactor: mediaQueryData.textScaleFactor * 1.3,
                 style: TextStyle(
                     fontFamily: 'Poppins',
                     fontStyle: FontStyle.normal,

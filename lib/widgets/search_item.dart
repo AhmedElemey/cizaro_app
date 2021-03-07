@@ -320,14 +320,6 @@ class _SearchItemState extends State<SearchItem> {
                                   color: Colors.grey[900]),
                         ),
                       ),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       widget.onAddToCart();
-                      //       showCartToast();
-                      //     },
-                      //     child: SvgPicture.asset('assets/images/cart.svg',
-                      //         width: SizeConfig.blockSizeHorizontal * 2.7,
-                      //         height: SizeConfig.blockSizeVertical * 2.7))
                     ],
                   )
                 ],

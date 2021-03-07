@@ -15,6 +15,7 @@ class ProductDetailItem extends StatefulWidget {
   final double productPrice, productPriceAfter, productStar, discount;
   final int productId;
   int isFav = 0;
+  int inCart = 0;
   final VoidCallback onAddToCart;
   final VoidCallback onAddToFavorite;
   ProductDetailItem(
@@ -56,6 +57,29 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
         });
       }
     });
+  }
+
+  showInCartAlreadyToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Already In Cart", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
   }
 
   showFavToast() {
@@ -246,8 +270,6 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                               if (widget.isFav == 1) {
                                 setState(() {
                                   showFavAlreadyToast();
-                                  // widget.isFav = 0;
-                                  //print("already here");
                                 });
                               } else {
                                 setState(() {
@@ -293,17 +315,47 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                           ),
                           Spacer(),
                           GestureDetector(
-                            onTap: () {
-                              widget.onAddToCart();
-                              showCartToast();
+                            onTap: () async {
+                              if (widget.inCart == 1) {
+                                setState(() {
+                                  showInCartAlreadyToast();
+                                });
+                              } else {
+                                setState(() {
+                                  widget.inCart = 1;
+                                  widget.onAddToCart();
+                                  showCartToast();
+                                });
+                              }
                             },
                             child: Container(
-                              child: SvgPicture.asset('assets/images/cart.svg',
-                                  width: SizeConfig.blockSizeHorizontal * 3,
-                                  height: SizeConfig.blockSizeVertical * 3,
-                                  color: Colors.grey[900]),
+                              child: widget.inCart == 1
+                                  ? SvgPicture.asset('assets/images/cart.svg',
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 2.7,
+                                      height:
+                                          SizeConfig.blockSizeVertical * 2.6,
+                                      color: Colors.green[900])
+                                  : SvgPicture.asset('assets/images/cart.svg',
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 2.7,
+                                      height:
+                                          SizeConfig.blockSizeVertical * 2.6,
+                                      color: Colors.grey[900]),
                             ),
                           ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     widget.onAddToCart();
+                          //     showCartToast();
+                          //   },
+                          //   child: Container(
+                          //     child: SvgPicture.asset('assets/images/cart.svg',
+                          //         width: SizeConfig.blockSizeHorizontal * 3,
+                          //         height: SizeConfig.blockSizeVertical * 3,
+                          //         color: Colors.grey[900]),
+                          //   ),
+                          // ),
                         ],
                       ),
                     )

@@ -10,13 +10,6 @@ class HotDealsItem extends StatelessWidget {
   const HotDealsItem({this.id, this.itemText, this.imgUrl});
   @override
   Widget build(BuildContext context) {
-    //   SizeConfig().init(context);
-    // ScreenUtil.init(context,
-    //     allowFontScaling: false,
-    //     width: MediaQuery.of(context).size.width,
-    //     height: MediaQuery.of(context).size.height);
-    // return InfoWidget(
-    //   builder: (context, deviceInfo) {
     return Stack(children: [
       Container(
         padding: EdgeInsets.only(left: 1, right: 1),

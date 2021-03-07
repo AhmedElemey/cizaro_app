@@ -15,6 +15,7 @@ class SearchItem extends StatefulWidget {
   String productQuantity;
   final int productId;
   int isFav = 0;
+  int inCart = 0;
   final VoidCallback onAddToCart;
   final VoidCallback onAddToFavorite;
 
@@ -64,6 +65,29 @@ class _SearchItemState extends State<SearchItem> {
           SizedBox(width: 12.0),
           Text("Already in Favorites",
               style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  showInCartAlreadyToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Already In Cart", style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -148,62 +172,66 @@ class _SearchItemState extends State<SearchItem> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              widget.imgUrl,
-              width: SizeConfig.blockSizeHorizontal * 20,
-              height: SizeConfig.blockSizeVertical * 15,
-              loadingBuilder: (BuildContext context, Widget child,
-                  ImageChunkEvent loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Platform.isAndroid
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          value: loadingProgress.expectedTotalBytes != null
-                              ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
-                              : null,
-                        ),
-                      )
-                    : CupertinoActivityIndicator();
-              },
-            ),
+            Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.blockSizeVertical * 1,
+                    horizontal: SizeConfig.blockSizeHorizontal * 1),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                        width: SizeConfig.blockSizeHorizontal * 20,
+                        height: SizeConfig.blockSizeVertical * 17,
+                        child: Image.network(widget.imgUrl, loadingBuilder:
+                            (BuildContext context, Widget child,
+                                ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Platform.isAndroid
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes
+                                        : null,
+                                  ),
+                                )
+                              : CupertinoActivityIndicator();
+                        }, fit: BoxFit.fitHeight)))),
             Container(
               padding: EdgeInsets.only(
-                  left: SizeConfig.blockSizeHorizontal * 5,
+                  left: SizeConfig.blockSizeHorizontal * 3,
                   top: SizeConfig.blockSizeVertical * 1),
-              width: SizeConfig.blockSizeHorizontal * 65,
+              width: SizeConfig.blockSizeHorizontal * 60,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     widget.productName,
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.4,
                     style: TextStyle(
-                      fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                      fontSize: SizeConfig.safeBlockHorizontal * 4,
                     ),
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical * .5),
                   Text(
                     widget.productCategory ?? '',
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.1,
                     style: TextStyle(
-                      fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                      fontSize: SizeConfig.safeBlockHorizontal * 4,
                     ),
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical * .5),
-                  widget.productPriceAfter == widget.productPrice
+                  widget.productPriceAfter == widget.productPrice ||
+                          widget.productPriceAfter == 0
                       ? Container(
                           padding: EdgeInsets.only(
                               right: SizeConfig.blockSizeHorizontal * .10,
                               top: SizeConfig.blockSizeVertical * .10),
-                          child: Text(widget.productPrice.toString() + ' LE',
-                              style: TextStyle(
-                                fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-                              ),
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.1),
+                          child: Text(
+                            widget.productPrice.toString() + ' LE',
+                            style: TextStyle(
+                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            ),
+                          ),
                         )
                       : Container(
                           child: Row(
@@ -214,14 +242,10 @@ class _SearchItemState extends State<SearchItem> {
                                     right: SizeConfig.blockSizeHorizontal * 5),
                                 child: Text(
                                     widget.productPrice.toString() + ' LE',
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.1,
                                     style: TextStyle(
                                         color: Colors.red,
                                         fontSize:
-                                            SizeConfig.safeBlockHorizontal *
-                                                3.5,
+                                            SizeConfig.safeBlockHorizontal * 4,
                                         decoration:
                                             TextDecoration.lineThrough)),
                               ),
@@ -231,27 +255,17 @@ class _SearchItemState extends State<SearchItem> {
                                     right:
                                         SizeConfig.blockSizeHorizontal * .05),
                                 child: Text(
-                                    widget.productPriceAfter.toString() + ' LE',
-                                    style: TextStyle(
-                                      fontSize:
-                                          SizeConfig.safeBlockHorizontal * 3.5,
-                                    ),
-                                    textScaleFactor:
-                                        MediaQuery.of(context).textScaleFactor *
-                                            1.1),
+                                  widget.productPriceAfter.toString() + ' LE',
+                                  style: TextStyle(
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4,
+                                  ),
+                                ),
                               )
                             ],
                           ),
                         ),
-                  // Container(
-                  //   child: Text(
-                  //     widget.productPrice.toString() + ' LE',
-                  //     style: TextStyle(fontWeight: FontWeight.bold),
-                  //     textScaleFactor:
-                  //         MediaQuery.of(context).textScaleFactor * 1.1,
-                  //   ),
-                  // ),
-                  SizedBox(height: SizeConfig.blockSizeVertical * 2),
+                  SizedBox(height: SizeConfig.blockSizeVertical * .5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -262,11 +276,6 @@ class _SearchItemState extends State<SearchItem> {
                           if (widget.isFav == 1) {
                             setState(() {
                               showFavAlreadyToast();
-                              //  widget.isFav = 0;
-                              // final fav = Provider.of<FavViewModel>(context, listen: true);
-                              // fav.deleteFavProduct(
-                              //     index, fav.favProductModel[index].id);
-                              //print("already here");
                             });
                           } else {
                             setState(() {
@@ -284,22 +293,41 @@ class _SearchItemState extends State<SearchItem> {
                             : Icon(Icons.favorite_border_outlined,
                                 size: SizeConfig.blockSizeHorizontal * 5),
                       ),
-                      // GestureDetector(
-                      //     onTap: () {
-                      //       widget.onAddToFavorite();
-                      //       showFavToast();
-                      //     },
-                      //     child: Icon(Icons.favorite_border,
-                      //         size: 25, color: Color(0xff707070))),
                       SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
                       GestureDetector(
-                          onTap: () {
-                            widget.onAddToCart();
-                            showCartToast();
-                          },
-                          child: SvgPicture.asset('assets/images/cart.svg',
-                              width: SizeConfig.blockSizeHorizontal * 2.7,
-                              height: SizeConfig.blockSizeVertical * 2.7))
+                        onTap: () async {
+                          if (widget.inCart == 1) {
+                            setState(() {
+                              showInCartAlreadyToast();
+                            });
+                          } else {
+                            setState(() {
+                              widget.inCart = 1;
+                              widget.onAddToCart();
+                              showCartToast();
+                            });
+                          }
+                        },
+                        child: Container(
+                          child: widget.inCart == 1
+                              ? SvgPicture.asset('assets/images/cart.svg',
+                                  width: SizeConfig.blockSizeHorizontal * 2.7,
+                                  height: SizeConfig.blockSizeVertical * 2.6,
+                                  color: Colors.green[900])
+                              : SvgPicture.asset('assets/images/cart.svg',
+                                  width: SizeConfig.blockSizeHorizontal * 2.7,
+                                  height: SizeConfig.blockSizeVertical * 2.6,
+                                  color: Colors.grey[900]),
+                        ),
+                      ),
+                      // GestureDetector(
+                      //     onTap: () {
+                      //       widget.onAddToCart();
+                      //       showCartToast();
+                      //     },
+                      //     child: SvgPicture.asset('assets/images/cart.svg',
+                      //         width: SizeConfig.blockSizeHorizontal * 2.7,
+                      //         height: SizeConfig.blockSizeVertical * 2.7))
                     ],
                   )
                 ],

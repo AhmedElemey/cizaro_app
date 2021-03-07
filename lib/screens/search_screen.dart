@@ -490,6 +490,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           quantity: 1,
                                           availability:
                                               productList[index].availability,
+                                          inCart: 1,
                                           colorSpecValue: '',
                                           sizeSpecValue: '');
                                       cart.addProductToCart(productCart);
@@ -514,10 +515,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      // width: MediaQuery.of(context)
-                                      //         .size
-                                      //         .width *
-                                      //     .24,
                                       child: Row(
                                         children: [
                                           Text(
@@ -643,6 +640,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           quantity: 1,
                                           availability:
                                               filterList[index].availability,
+                                          inCart: 1,
                                           colorSpecValue: '',
                                           sizeSpecValue: '');
                                       cart.addProductToCart(productCart);

@@ -33,7 +33,7 @@ class FavoriteItem extends StatelessWidget {
         child: Card(
           elevation: 10,
           child: Container(
-            height: SizeConfig.blockSizeVertical * 17,
+            height: SizeConfig.blockSizeVertical * 20,
             padding: EdgeInsets.only(
                 left: SizeConfig.blockSizeHorizontal * 1,
                 right: SizeConfig.blockSizeHorizontal * 4,
@@ -65,8 +65,6 @@ class FavoriteItem extends StatelessWidget {
                           style: TextStyle(
                             fontSize: SizeConfig.safeBlockHorizontal * 4,
                           ),
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1.5,
                         ),
                       ),
                       Container(
@@ -75,8 +73,6 @@ class FavoriteItem extends StatelessWidget {
                           style: TextStyle(
                             fontSize: SizeConfig.safeBlockHorizontal * 4,
                           ),
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1.2,
                         ),
                       ),
                       Container(
@@ -88,8 +84,6 @@ class FavoriteItem extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontSize: SizeConfig.safeBlockHorizontal * 3,
                               ),
-                              // textScaleFactor:
-                              //     MediaQuery.of(context).textScaleFactor * 1.1,
                             ),
                             Spacer(),
                             Container(
@@ -118,9 +112,6 @@ class FavoriteItem extends StatelessWidget {
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 4,
                                     ),
-                                    // textScaleFactor:
-                                    //     MediaQuery.of(context).textScaleFactor *
-                                    //         1,
                                   )
                                 ],
                               ),

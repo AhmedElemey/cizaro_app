@@ -37,26 +37,6 @@ class CollectionItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image.network(
-            //   imgUrl,
-            //   width: ScreenUtil()
-            //       .setWidth(MediaQuery.of(context).size.width * .3),
-            //   height: ScreenUtil()
-            //       .setHeight(MediaQuery.of(context).size.height * .2),
-            //   fit: BoxFit.contain,
-            //   loadingBuilder: (BuildContext context, Widget child,
-            //       ImageChunkEvent loadingProgress) {
-            //     if (loadingProgress == null) return child;
-            //     return Center(
-            //       child: CircularProgressIndicator(
-            //         value: loadingProgress.expectedTotalBytes != null
-            //             ? loadingProgress.cumulativeBytesLoaded /
-            //                 loadingProgress.expectedTotalBytes
-            //             : null,
-            //       ),
-            //     );
-            //   },
-            // ),
             ClipRRect(
               borderRadius: BorderRadius.all(
                 Radius.circular(10),

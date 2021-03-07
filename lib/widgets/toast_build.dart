@@ -40,13 +40,6 @@ class _ToastBuildState extends State<ToastBuild> {
     fToast.showToast(
       child: toast,
       toastDuration: Duration(seconds: 2),
-      // positionedToastBuilder: (context, child) {
-      //   return Positioned(
-      //     child: child,
-      //     bottom: 16.0,
-      //     left: 16.0,
-      //   );
-      // } da law 3ayz tezbat el postion ele hayzhar feh
       gravity: ToastGravity.BOTTOM,
     );
   }

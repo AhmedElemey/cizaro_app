@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:cizaro_app/model/addressModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/edit_address_screen.dart';
+import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/address_item.dart';
@@ -59,6 +61,23 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
   void initState() {
     super.initState();
     Future.microtask(() => getAddressesData());
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    //  print("BACK BUTTON!"); // Do some stuff.
+    pushNewScreenWithRouteSettings(context,
+        settings: RouteSettings(name: ProfileScreen.routeName),
+        screen: ProfileScreen(),
+        withNavBar: false,
+        pageTransitionAnimation: PageTransitionAnimation.fade);
+    return true;
   }
 
   @override

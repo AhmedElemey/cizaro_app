@@ -281,7 +281,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        productPriceAfter == productPrice
+                        productPriceAfter == productPrice ||
+                                productPriceAfter == 0
                             ? Container(
                                 child: Text(
                                   productPrice.toString() + ' LE',
@@ -290,9 +291,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     fontSize:
                                         SizeConfig.safeBlockHorizontal * 5,
                                   ),
-                                  // textScaleFactor:
-                                  //     MediaQuery.of(context).textScaleFactor *
-                                  //         1.1
                                 ),
                               )
                             : Container(
@@ -320,9 +318,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         fontSize:
                                             SizeConfig.safeBlockHorizontal * 5,
                                       ),
-                                      // textScaleFactor: MediaQuery.of(context)
-                                      //         .textScaleFactor *
-                                      //     1.2,
                                     )
                                   ],
                                 ),
@@ -600,6 +595,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             quantity: 1,
                             availability: productAvailability,
                             colorSpecValue: colorSpecValue,
+                            inCart: 1,
                             sizeSpecValue: sizeSpecValue);
                         cart.addProductToCart(productCart);
                         showToast();
@@ -616,6 +612,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               quantity: 1,
                               availability: productAvailability,
                               colorSpecValue: colorSpecValue,
+                              inCart: 1,
                               sizeSpecValue: sizeSpecValue);
                           cart.addProductToCart(productCart);
                           showToast();
@@ -682,74 +679,70 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        top: SizeConfig.blockSizeVertical * 3,
+                        top: SizeConfig.blockSizeVertical * 2,
                         left: SizeConfig.blockSizeHorizontal * 7,
                         bottom: SizeConfig.blockSizeVertical * 2),
                     height: SizeConfig.blockSizeVertical * 35,
                     child: ListView.builder(
-                        itemCount: productRelated.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (ctx, index) => GestureDetector(
-                              onTap: () => pushNewScreenWithRouteSettings(
-                                context,
-                                settings: RouteSettings(
-                                    name: ProductDetails.routeName,
-                                    arguments: {
-                                      'product_id': productRelated[index].id
-                                    }),
-                                screen: ProductDetails(),
-                                withNavBar: true,
-                                pageTransitionAnimation:
-                                    PageTransitionAnimation.fade,
-                              ),
-                              child: ProductDetailItem(
-                                productId: productRelated[index]?.id ?? 0,
-                                imgUrl: productRelated[index].mainImg,
-                                productName: productRelated[index].name ?? "",
-                                productPrice:
-                                    productRelated[index].price ?? 0.0,
-                                productPriceAfter:
-                                    productRelated[index]?.offer?.afterPrice ??
-                                        0.0,
-                                productStar: productRelated[index].stars ?? 0.0,
-                                discount:
-                                    productRelated[index]?.offer?.discount ??
-                                        0.0,
-                                onAddToCart: () {
-                                  final cart = Provider.of<CartViewModel>(
-                                      context,
-                                      listen: false);
-                                  final productCart = ProductCart(
-                                      id: productRelated[index].id,
-                                      name: productRelated[index].name,
-                                      mainImg: productRelated[index].mainImg,
-                                      price: productRelated[index].price,
-                                      priceAfterDiscount: productRelated[index]
-                                              .offer
-                                              ?.afterPrice ??
-                                          productRelated[index].price,
-                                      categoryName:
-                                          productRelated[index].category.name,
-                                      quantity: 1,
-                                      availability:
-                                          productRelated[index].availability,
-                                      colorSpecValue: '',
-                                      sizeSpecValue: '');
-                                  cart.addProductToCart(productCart);
-                                },
-                                onAddToFavorite: () {
-                                  final productFav = ProductFav(
-                                      id: productRelated[index].id,
-                                      name: productRelated[index].name,
-                                      mainImg: productRelated[index].mainImg,
-                                      price: productRelated[index].price,
-                                      categoryName:
-                                          productRelated[index].category.name,
-                                      isFav: 1);
-                                  fav.addProductToFav(productFav);
-                                },
-                              ),
-                            )),
+                      itemCount: productRelated.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (ctx, index) => GestureDetector(
+                        onTap: () => pushNewScreenWithRouteSettings(
+                          context,
+                          settings: RouteSettings(
+                              name: ProductDetails.routeName,
+                              arguments: {
+                                'product_id': productRelated[index].id
+                              }),
+                          screen: ProductDetails(),
+                          withNavBar: true,
+                          pageTransitionAnimation: PageTransitionAnimation.fade,
+                        ),
+                        child: ProductDetailItem(
+                          productId: productRelated[index]?.id ?? 0,
+                          imgUrl: productRelated[index].mainImg,
+                          productName: productRelated[index].name ?? "",
+                          productPrice: productRelated[index].price ?? 0.0,
+                          productPriceAfter:
+                              productRelated[index]?.offer?.afterPrice ?? 0.0,
+                          productStar: productRelated[index].stars ?? 0.0,
+                          discount:
+                              productRelated[index]?.offer?.discount ?? 0.0,
+                          onAddToCart: () {
+                            final cart = Provider.of<CartViewModel>(context,
+                                listen: false);
+                            final productCart = ProductCart(
+                                id: productRelated[index].id,
+                                name: productRelated[index].name,
+                                mainImg: productRelated[index].mainImg,
+                                price: productRelated[index].price,
+                                priceAfterDiscount:
+                                    productRelated[index].offer?.afterPrice ??
+                                        productRelated[index].price,
+                                categoryName:
+                                    productRelated[index].category.name,
+                                quantity: 1,
+                                availability:
+                                    productRelated[index].availability,
+                                inCart: 1,
+                                colorSpecValue: '',
+                                sizeSpecValue: '');
+                            cart.addProductToCart(productCart);
+                          },
+                          onAddToFavorite: () {
+                            final productFav = ProductFav(
+                                id: productRelated[index].id,
+                                name: productRelated[index].name,
+                                mainImg: productRelated[index].mainImg,
+                                price: productRelated[index].price,
+                                categoryName:
+                                    productRelated[index].category.name,
+                                isFav: 1);
+                            fav.addProductToFav(productFav);
+                          },
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),

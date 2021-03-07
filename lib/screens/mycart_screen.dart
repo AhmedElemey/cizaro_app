@@ -5,9 +5,9 @@ import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
-import 'package:cizaro_app/widgets/toast_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +21,7 @@ class MyCartScreen extends StatefulWidget {
 
 class _MyCartScreenState extends State<MyCartScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey9 = GlobalKey<ScaffoldState>();
+  FToast fToast;
 
   getProductsOffer() async {
     await Provider.of<CartViewModel>(context, listen: false)
@@ -36,6 +37,55 @@ class _MyCartScreenState extends State<MyCartScreen> {
   void initState() {
     super.initState();
     Future.microtask(() => getProductsOffer());
+    fToast = FToast();
+    fToast.init(context);
+  }
+
+  showToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
+  }
+
+  showAvailabilityToast() {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("There is a Product out of Stock..",
+              style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
   }
 
   Widget cartProductsList() {
@@ -50,8 +100,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 child: Text(
               'Cart is Empty, please Search and Add your Product.',
               style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
-              // textScaleFactor:
-              //     MediaQuery.of(context).textScaleFactor * 1.3
             )))
         : Container(
             height: SizeConfig.blockSizeVertical * 72,
@@ -111,6 +159,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
   @override
   Widget build(BuildContext context) {
     final total = Provider.of<CartViewModel>(context, listen: true);
+    final cart = Provider.of<CartViewModel>(context, listen: true);
     return Scaffold(
         key: _scaffoldKey9,
         drawer: DrawerLayout(),
@@ -151,11 +200,12 @@ class _MyCartScreenState extends State<MyCartScreen> {
                       onTap: () async {
                         String token = await getToken();
                         total.cartProductModel.length == 0
-                            ? ToastBuild(
-                                toastMessage:
-                                    'Please Add Products in Cart First!',
-                                toastIcon: Icons.add,
-                                bgColor: Color(0xff3A559F))
+                            ? showToast()
+                            // ToastBuild(
+                            //         toastMessage:
+                            //             'Please Add Products in Cart First!',
+                            //         toastIcon: Icons.add,
+                            //         bgColor: Color(0xff3A559F))
                             : token == null || token.isEmpty
                                 ? pushNewScreenWithRouteSettings(context,
                                     settings: RouteSettings(
@@ -164,13 +214,18 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     withNavBar: false,
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade)
-                                : pushNewScreenWithRouteSettings(context,
-                                    settings: RouteSettings(
-                                        name: CheckoutScreen.routeName),
-                                    screen: CheckoutScreen(),
-                                    withNavBar: true,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.fade);
+                                : cart.cartProductModel.forEach((element) {
+                                    element.availability > 0
+                                        ? pushNewScreenWithRouteSettings(
+                                            context,
+                                            settings: RouteSettings(
+                                                name: CheckoutScreen.routeName),
+                                            screen: CheckoutScreen(),
+                                            withNavBar: true,
+                                            pageTransitionAnimation:
+                                                PageTransitionAnimation.fade)
+                                        : showAvailabilityToast();
+                                  });
                       },
                       child: Container(
                         width: SizeConfig.blockSizeHorizontal * 40,

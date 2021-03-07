@@ -96,9 +96,11 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                                     ? widget.productPrice.toString() + ' LE'
                                     : widget.productPriceAfterDiscount == null
                                         ? widget.productPrice.toString() + ' LE'
-                                        : widget.productPriceAfterDiscount
-                                                .toString() +
-                                            ' LE',
+                                        : widget.productPriceAfterDiscount == 0
+                                            ? widget.productPrice
+                                            : widget.productPriceAfterDiscount
+                                                    .toString() +
+                                                ' LE',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize:

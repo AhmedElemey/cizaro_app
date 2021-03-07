@@ -73,28 +73,6 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
     );
   }
 
-  // fetchSelectedShippingAddress() async {
-  //   if (this.mounted) setState(() => _isLoading = true);
-  //   final getAddress = Provider.of<ListViewModel>(context, listen: false);
-  //   String token = await getToken();
-  //   final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-  //   addressId = arguments['address_id'];
-  //   await getAddress.fetchShippingAddress(token, addressId).then((response) {
-  //     addressBookModel = response;
-  //     addressName = addressBookModel.data.streetAddress;
-  //     countryName = addressBookModel.data.country.name;
-  //     cityName = addressBookModel.data.city.name;
-  //     regionName = addressBookModel.data.region;
-  //     zipCode = addressBookModel.data.zipCode;
-  //     phoneNumber = addressBookModel.data.phone;
-  //   }).catchError((error) => pushNewScreenWithRouteSettings(context,
-  //       settings: RouteSettings(name: LoginScreen.routeName),
-  //       screen: LoginScreen(),
-  //       withNavBar: true,
-  //       pageTransitionAnimation: PageTransitionAnimation.fade));
-  //   if (this.mounted) setState(() => _isLoading = false);
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -113,80 +91,85 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         child: Column(
           children: [
             GradientAppBar("Edit Your Address", _scaffoldKey4),
-            FutureBuilder(
-                future: Provider.of<ListViewModel>(context, listen: false)
-                    .fetchCountries(
-                        token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f'),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<country.Data>> snapshot) {
-                  if (snapshot.hasError)
-                    return Text(snapshot.error.toString());
-                  else
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          bottom: SizeConfig.blockSizeVertical * 1,
-                          top: SizeConfig.blockSizeVertical * 2),
-                      child: Container(
-                        width: SizeConfig.blockSizeHorizontal * 70,
-                        height: SizeConfig.blockSizeVertical * 7,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButtonFormField(
-                              iconSize: SizeConfig.blockSizeHorizontal * 7,
-                              iconEnabledColor: Colors.black,
-                              dropdownColor: Colors.white,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4),
-                              isExpanded: true,
-                              hint: Padding(
-                                padding: EdgeInsets.only(
-                                    right: SizeConfig.blockSizeHorizontal * 2,
-                                    left: SizeConfig.blockSizeHorizontal * 2),
-                                child: Text(
-                                    arguments['country_name'] ?? 'Country',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize:
-                                            SizeConfig.safeBlockHorizontal *
-                                                5)),
-                              ),
-                              decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(0),
-                                  isDense: true),
-                              items: snapshot.data?.map((country.Data data) {
-                                    return DropdownMenuItem(
-                                      value: data.id,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            right:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    1,
-                                            left:
-                                                SizeConfig.blockSizeHorizontal *
-                                                    1),
-                                        child: Text(
-                                          data.name,
-                                          style: TextStyle(
-                                              fontSize: SizeConfig
-                                                      .safeBlockHorizontal *
-                                                  4),
+            Padding(
+              padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 5),
+              child: FutureBuilder(
+                  future: Provider.of<ListViewModel>(context, listen: false)
+                      .fetchCountries(
+                          token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f'),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<country.Data>> snapshot) {
+                    if (snapshot.hasError)
+                      return Text(snapshot.error.toString());
+                    else
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            bottom: SizeConfig.blockSizeVertical * 1,
+                            top: SizeConfig.blockSizeVertical * 2),
+                        child: Container(
+                          width: SizeConfig.blockSizeHorizontal * 70,
+                          height: SizeConfig.blockSizeVertical * 7,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButtonFormField(
+                                iconSize: SizeConfig.blockSizeHorizontal * 7,
+                                iconEnabledColor: Colors.black,
+                                dropdownColor: Colors.white,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4),
+                                isExpanded: true,
+                                hint: Padding(
+                                  padding: EdgeInsets.only(
+                                      right: SizeConfig.blockSizeHorizontal * 2,
+                                      left: SizeConfig.blockSizeHorizontal * 2),
+                                  child: Text(
+                                      arguments['country_name'] ?? 'Country',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  5)),
+                                ),
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.all(0),
+                                    isDense: true),
+                                items: snapshot.data?.map((country.Data data) {
+                                      return DropdownMenuItem(
+                                        value: data.id,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  1,
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  1),
+                                          child: Text(
+                                            data.name,
+                                            style: TextStyle(
+                                                fontSize: SizeConfig
+                                                        .safeBlockHorizontal *
+                                                    4),
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  })?.toList() ??
-                                  null,
-                              onChanged: (newValueSelected) {
-                                setState(() => _currentItemSelectedCountries =
-                                    newValueSelected);
-                              },
-                              value: _currentItemSelectedCountries),
+                                      );
+                                    })?.toList() ??
+                                    null,
+                                onChanged: (newValueSelected) {
+                                  setState(() => _currentItemSelectedCountries =
+                                      newValueSelected);
+                                },
+                                value: _currentItemSelectedCountries),
+                          ),
                         ),
-                      ),
-                    );
-                }),
+                      );
+                  }),
+            ),
             FutureBuilder(
                 future: Provider.of<ListViewModel>(context, listen: false)
                     .fetchCountries(
@@ -285,7 +268,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
               height: SizeConfig.blockSizeVertical * 10,
               padding: EdgeInsets.only(
                   bottom: SizeConfig.blockSizeVertical * 1,
-                  top: SizeConfig.blockSizeVertical * 1),
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -299,27 +282,13 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     fontSize: SizeConfig.safeBlockHorizontal * 4,
                   ),
                   textEditingController: _zipCodeController),
-              // TextFieldBuild(
-              //   textInputType: TextInputType.number,
-              //   textEditingController: _zipCodeController,
-              //   // decoration: InputDecoration(
-              //   //   hintText: "Zip Code",
-              //   //   hintStyle: const TextStyle(color: Colors.black),
-              //   //   border: OutlineInputBorder(borderSide: BorderSide()),
-              //   // ),
-              //   // onClick: (value) {
-              //   //   setState(() {
-              //   //     _zipCodeController.text = value;
-              //   //   });
-              //   // },
-              // )
             ),
             Container(
               width: SizeConfig.blockSizeHorizontal * 70,
               height: SizeConfig.blockSizeVertical * 10,
               padding: EdgeInsets.only(
                   bottom: SizeConfig.blockSizeVertical * 1,
-                  top: SizeConfig.blockSizeVertical * 1),
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -339,7 +308,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
               height: SizeConfig.blockSizeVertical * 10,
               padding: EdgeInsets.only(
                   bottom: SizeConfig.blockSizeVertical * 1,
-                  top: SizeConfig.blockSizeVertical * 1),
+                  top: SizeConfig.blockSizeVertical * 2),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -360,7 +329,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 SizedBox(),
                 Container(
                   margin: EdgeInsets.only(
-                      top: SizeConfig.blockSizeVertical * 1,
+                      top: SizeConfig.blockSizeVertical * 2,
                       right: SizeConfig.blockSizeHorizontal * 2),
                   width: SizeConfig.blockSizeHorizontal * 20,
                   height: SizeConfig.blockSizeVertical * 6,
@@ -372,8 +341,10 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                       final data = CreateAddress(
                           country: _currentItemSelectedCountries ?? 1,
                           city: _currentItemSelectedCities ?? 1,
-                          streetAddress: _streetController?.text ??
-                              arguments['street_name'],
+                          streetAddress: _streetController?.text == ""
+                              ? arguments['street_name']
+                              : _streetController?.text ??
+                                  arguments['street_name'],
                           phone: _phoneController?.text == ""
                               ? arguments['phone_number']
                               : _phoneController?.text ??

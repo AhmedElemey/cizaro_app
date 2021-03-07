@@ -230,7 +230,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                             ),
                           ),
                           widget.productPriceAfter == widget.productPrice ||
-                                  widget.offer == null
+                                  widget.offer == null ||
+                                  widget.productPriceAfter == 0
                               ? Container(
                                   padding: EdgeInsets.only(
                                       top: SizeConfig.blockSizeVertical * .005,

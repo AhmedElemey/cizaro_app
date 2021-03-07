@@ -124,9 +124,11 @@ class _CartItemState extends State<CartItem> {
                                     ? widget.productPrice.toString() + ' LE'
                                     : widget.productPriceAfterDiscount == null
                                         ? widget.productPrice.toString() + ' LE'
-                                        : widget.productPriceAfterDiscount
-                                                .toString() +
-                                            ' LE',
+                                        : widget.productPriceAfterDiscount == 0
+                                            ? widget.productPrice
+                                            : widget.productPriceAfterDiscount
+                                                    .toString() +
+                                                ' LE',
                                 // style: const TextStyle(
                                 //     fontWeight: FontWeight.bold),
                                 style: GoogleFonts.poppins(

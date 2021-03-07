@@ -675,7 +675,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         top: SizeConfig.blockSizeVertical * 2,
                         left: SizeConfig.blockSizeHorizontal * 7,
                         bottom: SizeConfig.blockSizeVertical * 2),
-                    height: SizeConfig.blockSizeVertical * 35,
+                    height: SizeConfig.blockSizeVertical * 40,
                     child: ListView.builder(
                       itemCount: productRelated.length,
                       scrollDirection: Axis.horizontal,

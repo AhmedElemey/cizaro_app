@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:cizaro_app/model/brandModel.dart' as brandData;
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
@@ -78,6 +79,23 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
     fToast = FToast();
     fToast.init(context);
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    //  print("BACK BUTTON!"); // Do some stuff.
+    pushNewScreenWithRouteSettings(context,
+        settings: RouteSettings(name: SearchScreen.routeName),
+        screen: SearchScreen(),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.fade);
+    return true;
   }
 
   Future getFilterData() async {

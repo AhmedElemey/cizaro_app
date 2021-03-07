@@ -192,14 +192,14 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                 : CupertinoActivityIndicator();
                           },
                           width: SizeConfig.blockSizeHorizontal * 35,
-                          height: SizeConfig.blockSizeVertical * 16,
+                          height: SizeConfig.blockSizeVertical * 18,
                           fit: BoxFit.fill,
                         )),
                     Container(
                       width: SizeConfig.blockSizeHorizontal * 35,
-                      height: SizeConfig.blockSizeVertical * 4,
+                      height: SizeConfig.blockSizeVertical * 5,
                       padding: EdgeInsets.only(
-                          top: SizeConfig.blockSizeVertical * .3,
+                          top: SizeConfig.blockSizeVertical * 1.5,
                           right: SizeConfig.blockSizeHorizontal * 2,
                           left: SizeConfig.blockSizeHorizontal * 2),
                       child: Text(
@@ -261,7 +261,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                     Container(
                       padding: EdgeInsets.only(
                           left: SizeConfig.blockSizeHorizontal * 2,
-                          top: SizeConfig.blockSizeHorizontal * 1),
+                          top: SizeConfig.blockSizeHorizontal * 3),
                       width: SizeConfig.blockSizeHorizontal * 30,
                       child: Row(
                         children: [
@@ -392,14 +392,14 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                     : CupertinoActivityIndicator();
                               },
                               width: SizeConfig.blockSizeHorizontal * 35,
-                              height: SizeConfig.blockSizeVertical * 16,
+                              height: SizeConfig.blockSizeVertical * 18,
                               fit: BoxFit.fill,
                             )),
                         Container(
                           width: SizeConfig.blockSizeHorizontal * 35,
                           height: SizeConfig.blockSizeVertical * 4,
                           padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * .2,
+                              top: SizeConfig.blockSizeVertical * 1,
                               right: SizeConfig.blockSizeHorizontal * 2,
                               left: SizeConfig.blockSizeHorizontal * 2),
                           child: Text(
@@ -423,8 +423,8 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                           right:
                                               SizeConfig.blockSizeHorizontal *
                                                   1,
-                                          top: SizeConfig.blockSizeVertical *
-                                              .5),
+                                          top:
+                                              SizeConfig.blockSizeVertical * 3),
                                       child: Text(
                                         widget.productPrice.toString() + ' LE',
                                         style: TextStyle(
@@ -436,8 +436,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                     )
                                   : Container(
                                       padding: EdgeInsets.only(
-                                          top:
-                                              SizeConfig.blockSizeVertical * .5,
+                                          top: SizeConfig.blockSizeVertical * 2,
                                           left: SizeConfig.blockSizeHorizontal *
                                               2),
                                       child: Row(
@@ -476,7 +475,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                         Container(
                           padding: EdgeInsets.only(
                               left: SizeConfig.blockSizeHorizontal * 1,
-                              top: SizeConfig.blockSizeVertical * 1),
+                              top: SizeConfig.blockSizeVertical * 2),
                           width: SizeConfig.blockSizeHorizontal * 30,
                           child: Row(
                             children: [

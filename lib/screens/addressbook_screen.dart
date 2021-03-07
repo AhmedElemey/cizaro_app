@@ -75,7 +75,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     pushNewScreenWithRouteSettings(context,
         settings: RouteSettings(name: ProfileScreen.routeName),
         screen: ProfileScreen(),
-        withNavBar: false,
+        withNavBar: true,
         pageTransitionAnimation: PageTransitionAnimation.fade);
     return true;
   }

@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:cizaro_app/model/changePasswordModel.dart';
 import 'package:cizaro_app/model/profileEditModel.dart' as Edit;
 import 'package:cizaro_app/model/profileModel.dart';
+import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -10,6 +12,7 @@ import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -189,6 +192,23 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
     fToast = FToast();
     fToast.init(context);
+    BackButtonInterceptor.add(myInterceptor);
+  }
+
+  @override
+  void dispose() {
+    BackButtonInterceptor.remove(myInterceptor);
+    super.dispose();
+  }
+
+  bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
+    pushNewScreenWithRouteSettings(context,
+        settings: RouteSettings(name: ProfileScreen.routeName),
+        screen: ProfileScreen(),
+        withNavBar: true,
+        pageTransitionAnimation: PageTransitionAnimation.fade);
+
+    return true;
   }
 
   @override

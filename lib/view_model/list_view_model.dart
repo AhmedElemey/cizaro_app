@@ -16,6 +16,7 @@ import 'package:cizaro_app/model/policesTermsModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/profileEditModel.dart';
 import 'package:cizaro_app/model/profileModel.dart';
+import 'package:cizaro_app/model/promo.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/searchModel.dart';
@@ -176,6 +177,12 @@ class ListViewModel extends ChangeNotifier {
 
   Future fetchShippingAddress(String token, int addressId) async {
     final results = await ListServices().fetchShippingAddress(token, addressId);
+    notifyListeners();
+    return results;
+  }
+
+  Future fetchPromo(Promo promo, String token) async {
+    final results = await ListServices().createPromo(promo, token);
     notifyListeners();
     return results;
   }

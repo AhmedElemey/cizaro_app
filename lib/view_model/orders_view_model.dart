@@ -31,6 +31,7 @@ class OrdersViewModel extends ChangeNotifier {
     notifyListeners();
     return result;
   }
+
   Future<PendingShipments> fetchPendingShipmentsOrders(String token) async {
     final result = await OrderServices().fetchPendingShipment(token);
     notifyListeners();

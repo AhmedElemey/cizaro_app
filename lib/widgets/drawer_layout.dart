@@ -103,11 +103,23 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: hotDeals.length,
-                              itemBuilder: (ctx, index) => Text(
-                                  ' - ' + hotDeals[index].name,
-                                  textScaleFactor:
-                                      MediaQuery.of(context).textScaleFactor *
-                                          1.25),
+                              itemBuilder: (ctx, index) => GestureDetector(
+                                    onTap: () => pushNewScreenWithRouteSettings(
+                                        context,
+                                        settings: RouteSettings(
+                                            name: ShopScreen.routeName,
+                                            arguments: {
+                                              'category_id': hotDeals[index].id
+                                            }),
+                                        screen: ShopScreen(),
+                                        withNavBar: true,
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.fade),
+                                    child: Text(' - ' + hotDeals[index].name,
+                                        textScaleFactor: MediaQuery.of(context)
+                                                .textScaleFactor *
+                                            1.25),
+                                  ),
                               separatorBuilder:
                                   (BuildContext context, int index) =>
                                       SizedBox(height: 10))

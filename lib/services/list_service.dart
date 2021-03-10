@@ -19,6 +19,8 @@ import 'package:cizaro_app/model/productOfferCart.dart' as productOffer;
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/profileEditModel.dart';
 import 'package:cizaro_app/model/profileModel.dart';
+import 'package:cizaro_app/model/promo.dart' as promo;
+import 'package:cizaro_app/model/promoModel.dart';
 import 'package:cizaro_app/model/related_spec.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/searchModel.dart';
@@ -307,6 +309,25 @@ class ListServices {
     }
   }
 
+  Future<PromoModel> createPromo(promo.Promo promo, String token) async {
+    final response = await http.post(
+      API + '/send-promo-code/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+      body: jsonEncode(promo.toJson()),
+    );
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      //   print(response.body);
+      return PromoModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
   Future changePassword(
       ChangePasswordModel changePasswordModel, String token) async {
     final response = await http.post(
@@ -340,7 +361,7 @@ class ListServices {
       body: jsonEncode(shoppingCartModel.toJson()),
     );
     var data = json.decode(response.body);
-    //print(response.body);
+    print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       final body = jsonDecode(response.body);
       return ResultShoppingCartModel.fromJson(body);
@@ -398,7 +419,7 @@ class ListServices {
         },
         body: jsonEncode(createAddress.toJson()));
     var data = json.decode(response.body);
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       return jsonDecode(response.body);
     } else {

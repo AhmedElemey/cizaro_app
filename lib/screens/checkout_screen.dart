@@ -6,6 +6,7 @@ import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/available_payments.dart';
 import 'package:cizaro_app/model/checkout.dart';
 import 'package:cizaro_app/model/checkout_results.dart';
+import 'package:cizaro_app/model/promo.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
@@ -197,6 +198,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         });
   }
 
+  sendPromoRequest() async {
+    if (this.mounted) setState(() => _isLoading = true);
+    final getPromo = Provider.of<ListViewModel>(context, listen: false);
+    final promo =
+        Promo(addressId: addressId, promoCode: _promoCodeController.text);
+    String token = await getToken();
+    await getPromo.fetchPromo(promo, token).then((response) {
+      checkoutResult = response;
+    }).catchError(
+        (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
+    if (this.mounted) setState(() => _isLoading = false);
+  }
+
   sendCheckOut() async {
     if (selectedRadio == 0 || selectedRadio == null)
       return Platform.isIOS ? _showIosErrorDialog() : _showAndroidErrorDialog();
@@ -279,8 +293,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           quantity: productQuantity,
           specs: productSpec ?? ''));
     });
-    final shoppingCart =
-        ShoppingCartModel(addressBookId: addressId, items: itemsList);
+    final shoppingCart = ShoppingCartModel(addressBookId: 35, items: itemsList);
     print(itemsList);
     await getTotalOrder
         .fetchResultOfShippingCart(shoppingCart, token)
@@ -702,17 +715,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 padding: EdgeInsets.only(
                                     left: SizeConfig.blockSizeHorizontal * 3,
                                     right: SizeConfig.blockSizeHorizontal * 3),
-                                child: Text(
-                                  "Add",
-                                  style: TextStyle(
-                                    color: Color(0xff3A559F),
-                                    fontSize:
-                                        SizeConfig.safeBlockHorizontal * 5,
+                                child: GestureDetector(
+                                  onTap: () => sendPromoRequest(),
+                                  child: Text(
+                                    "Add",
+                                    style: TextStyle(
+                                      color: Color(0xff3A559F),
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 5,
+                                    ),
                                   ),
-
-                                  // textScaleFactor:
-                                  //     MediaQuery.of(context).textScaleFactor *
-                                  //         1.4,
                                 ),
                               ),
                             ],
@@ -787,10 +799,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 SizeConfig.safeBlockHorizontal *
                                                     4,
                                           ),
-                                          // textScaleFactor:
-                                          //     MediaQuery.of(context)
-                                          //             .textScaleFactor *
-                                          //         .9,
                                         ),
                                         SizedBox(
                                             height:
@@ -803,10 +811,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 : shippingFees.toString() +
                                                         ' LE' ??
                                                     '00.00',
-                                            // textScaleFactor:
-                                            //     MediaQuery.of(context)
-                                            //             .textScaleFactor *
-                                            //         1.3,
                                             style: TextStyle(
                                                 fontSize: SizeConfig
                                                         .safeBlockHorizontal *
@@ -825,10 +829,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 SizeConfig.safeBlockHorizontal *
                                                     4,
                                           ),
-                                          // textScaleFactor:
-                                          //     MediaQuery.of(context)
-                                          //             .textScaleFactor *
-                                          //         .9,
                                         ),
                                         SizedBox(
                                             height:
@@ -841,10 +841,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 : totalCost.toString() +
                                                         ' LE' ??
                                                     '00.00',
-                                            // textScaleFactor:
-                                            //     MediaQuery.of(context)
-                                            //             .textScaleFactor *
-                                            //         1.3,
                                             style: TextStyle(
                                                 fontSize: SizeConfig
                                                         .safeBlockHorizontal *

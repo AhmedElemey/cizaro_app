@@ -100,7 +100,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       left: SizeConfig.blockSizeHorizontal * .1,
                       top: SizeConfig.blockSizeVertical * .05,
                       right: SizeConfig.blockSizeHorizontal * .1),
-                  width: MediaQuery.of(context).size.width,
+                  width: SizeConfig.blockSizeHorizontal * 100,
                   child: Column(
                     children: [
                       Container(
@@ -116,7 +116,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Container(
                                   padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 2,
+                                      top: SizeConfig.blockSizeVertical * 1,
                                       left: SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                     userName ?? "",
@@ -139,30 +139,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         color: Color(0xff515C6F)),
                                   ),
                                 ),
-
-                                // Container(
-                                //     padding: EdgeInsets.only(top: 5, left: 10),
-                                //     child: Container(
-                                //       decoration: BoxDecoration(
-                                //         border: Border.all(
-                                //           color: Colors.black26,
-                                //           width: 2,
-                                //         ),
-                                //         borderRadius: BorderRadius.all(Radius.circular(20)),
-                                //       ),
-                                //       height: MediaQuery.of(context).size.height * .05,
-                                //       width: MediaQuery.of(context).size.width * .4,
-                                //       child: Center(
-                                //         child: Text(
-                                //           "EDIT PROFILE",
-                                //           textScaleFactor:
-                                //               MediaQuery.of(context).textScaleFactor * 1.3,
-                                //           style: TextStyle(
-                                //               color: Colors.black38,
-                                //               fontWeight: FontWeight.bold),
-                                //         ),
-                                //       ),
-                                //     )),
                               ],
                             ),
                             Padding(
@@ -179,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         PageTransitionAnimation.fade),
                                 child: Container(
                                   padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 2,
+                                      top: SizeConfig.blockSizeVertical * 1,
                                       right:
                                           SizeConfig.blockSizeHorizontal * 4),
                                   child: Container(
@@ -210,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: SizeConfig.blockSizeVertical * 3,
+                          top: SizeConfig.blockSizeVertical * 2,
                           right: SizeConfig.blockSizeHorizontal * 4,
                           left: SizeConfig.blockSizeHorizontal * 4,
                         ),
@@ -263,7 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  4),
+                                                  5),
                                           child: Text(
                                             "All My Orders",
                                             style: GoogleFonts.poppins(
@@ -272,10 +248,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .safeBlockHorizontal *
                                                   5,
                                             ),
-                                            // textScaleFactor:
-                                            //     MediaQuery.textScaleFactorOf(
-                                            //             context) *
-                                            //         1.5
                                           ),
                                         ),
                                         Spacer(),
@@ -295,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 13,
+                                      left: SizeConfig.blockSizeHorizontal * 14,
                                       right: SizeConfig.blockSizeHorizontal * 5,
                                       top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
@@ -337,7 +309,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  3),
+                                                  5),
                                           child: Text(
                                             "Pending Shipments",
                                             style: TextStyle(
@@ -364,7 +336,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 13,
+                                      left: SizeConfig.blockSizeHorizontal * 14,
                                       right: SizeConfig.blockSizeHorizontal * 5,
                                       top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
@@ -471,6 +443,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: Colors.white,
                                     padding: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * .05,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1,
                                         right:
                                             SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
@@ -490,7 +464,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  3),
+                                                  5),
                                           child: Text(
                                             "Wish list",
                                             style: TextStyle(
@@ -498,10 +472,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                       .safeBlockHorizontal *
                                                   5,
                                             ),
-                                            // textScaleFactor:
-                                            //     MediaQuery.textScaleFactorOf(
-                                            //             context) *
-                                            //         1.5
                                           ),
                                         ),
                                         Spacer(),
@@ -521,7 +491,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      left: SizeConfig.blockSizeHorizontal * 13,
                                       right: SizeConfig.blockSizeHorizontal * 3,
                                       top: SizeConfig.blockSizeVertical * .5),
                                   child: Divider(
@@ -541,6 +511,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: Colors.white,
                                     padding: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * 1,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1,
                                         right:
                                             SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
@@ -560,7 +532,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  3),
+                                                  5),
                                           child: Text(
                                             "Polices and terms",
                                             style: TextStyle(
@@ -587,7 +559,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      left: SizeConfig.blockSizeHorizontal * 13,
                                       right: SizeConfig.blockSizeHorizontal * 3,
                                       top: SizeConfig.blockSizeVertical * .5),
                                   child: Divider(
@@ -607,6 +579,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: Colors.white,
                                     padding: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * 1,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1,
                                         right:
                                             SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
@@ -626,7 +600,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  3),
+                                                  5),
                                           child: Text(
                                             "About us",
                                             style: TextStyle(
@@ -653,7 +627,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      left: SizeConfig.blockSizeHorizontal * 13,
                                       right: SizeConfig.blockSizeHorizontal * 3,
                                       top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
@@ -673,6 +647,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     color: Colors.white,
                                     padding: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * .5,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1,
                                         right:
                                             SizeConfig.blockSizeHorizontal * 2),
                                     child: Row(
@@ -692,7 +668,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  2),
+                                                  5),
                                           child: Text(
                                             "Contact us",
                                             style: TextStyle(
@@ -719,7 +695,70 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 10,
+                                      left: SizeConfig.blockSizeHorizontal * 13,
+                                      right: SizeConfig.blockSizeHorizontal * 3,
+                                      top: SizeConfig.blockSizeVertical * 1),
+                                  child: Divider(
+                                      height: SizeConfig.blockSizeVertical * 1,
+                                      color: Color(0xff727C8E)),
+                                ),
+                                GestureDetector(
+                                  onTap: () => pushNewScreenWithRouteSettings(
+                                      context,
+                                      settings: RouteSettings(
+                                          name: ContactUsScreen.routeName),
+                                      screen: ContactUsScreen(),
+                                      withNavBar: true,
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.fade),
+                                  child: Container(
+                                    color: Colors.white,
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * .5,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 2),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          child: Icon(
+                                            Icons.language,
+                                            size:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    8,
+                                          ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4),
+                                          child: Text(
+                                            "Change Language",
+                                            style: TextStyle(
+                                              fontSize: SizeConfig
+                                                      .safeBlockHorizontal *
+                                                  5,
+                                            ),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        CircleAvatar(
+                                          radius: 10,
+                                          backgroundColor: Colors.black12,
+                                          child: Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  4,
+                                              color: Colors.black87),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: SizeConfig.blockSizeHorizontal * 13,
                                       right: SizeConfig.blockSizeHorizontal * 3,
                                       top: SizeConfig.blockSizeVertical * 1),
                                   child: Divider(
@@ -764,7 +803,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
-                                                  3),
+                                                  4),
                                           child: Text(
                                             "SignOut",
                                             style: TextStyle(

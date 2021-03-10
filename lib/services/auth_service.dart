@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:cizaro_app/model/SignUpModel.dart';
 import 'package:cizaro_app/model/loginModel.dart';
+import 'package:cizaro_app/model/otp_verification.dart';
 import 'package:cizaro_app/model/socialLoginModel.dart';
+import 'package:cizaro_app/model/verification_result.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -136,6 +138,28 @@ class AuthServices {
         );
       default:
         throw UnimplementedError();
+    }
+  }
+
+  Future<VerificationResult> otpVerification(
+      OtpVerification otpVerification, String token) async {
+    final response = await http.post(
+      API + '/otp-verifications/',
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': '${'Token'} $token'
+      },
+      body: jsonEncode(otpVerification.toJson()),
+    );
+    var data = json.decode(response.body);
+    print(response.body);
+    if (response.statusCode == 200 || data['message'] == '') {
+      final body = jsonDecode(response.body);
+      return VerificationResult.fromJson(body);
+    } else {
+      print(response.body);
+      throw Exception("Unable to perform request .. Try again!");
     }
   }
 }

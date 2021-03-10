@@ -1,3 +1,4 @@
+import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldBuild extends StatelessWidget {
@@ -37,7 +38,9 @@ class TextFieldBuild extends StatelessWidget {
         cursorColor: Color(0xff294794),
         validator: validator,
         readOnly: readOnly,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: SizeConfig.safeBlockVertical * 2.2),
         decoration: InputDecoration(
             filled: true,
             suffixIcon: GestureDetector(

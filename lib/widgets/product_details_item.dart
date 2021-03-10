@@ -344,18 +344,6 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                       color: Colors.grey[900]),
                             ),
                           ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     widget.onAddToCart();
-                          //     showCartToast();
-                          //   },
-                          //   child: Container(
-                          //     child: SvgPicture.asset('assets/images/cart.svg',
-                          //         width: SizeConfig.blockSizeHorizontal * 3,
-                          //         height: SizeConfig.blockSizeVertical * 3,
-                          //         color: Colors.grey[900]),
-                          //   ),
-                          // ),
                         ],
                       ),
                     )

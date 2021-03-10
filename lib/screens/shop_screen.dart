@@ -30,6 +30,7 @@ class _ShopScreenState extends State<ShopScreen> {
   double productPrice, productStar;
   bool _isLoading = false;
   List<Products> productList = [];
+  List<Products> productDealsList = [];
 
   Future getShopData() async {
     if (this.mounted)
@@ -51,9 +52,30 @@ class _ShopScreenState extends State<ShopScreen> {
       });
   }
 
+  Future getDealsData() async {
+    if (this.mounted)
+      setState(() {
+        _isLoading = true;
+      });
+
+    final getDeals = Provider.of<ListViewModel>(context, listen: false);
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    await getDeals.fetchDeals(arguments['category_id']).then((response) {
+      shopModel = response;
+      productDealsList = shopModel.data.products;
+      print(productDealsList.length);
+      // print(productList.data.relatedProducts.length);
+    });
+    if (this.mounted)
+      setState(() {
+        _isLoading = false;
+      });
+  }
+
   @override
   void initState() {
     Future.microtask(() => getShopData());
+    Future.microtask(() => getDealsData());
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
   }
 
@@ -72,80 +94,168 @@ class _ShopScreenState extends State<ShopScreen> {
                   ? CupertinoActivityIndicator()
                   : CircularProgressIndicator())
           : SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    padding:
-                        EdgeInsets.only(top: SizeConfig.blockSizeVertical * 1),
-                    height: SizeConfig.blockSizeVertical * 100,
-                    child: ListView.builder(
-                      itemCount: productList.length,
-                      itemBuilder: (ctx, index) => GestureDetector(
-                        onTap: () => pushNewScreenWithRouteSettings(
-                          context,
-                          settings: RouteSettings(
-                              name: ProductDetails.routeName,
-                              arguments: {'product_id': productList[index].id}),
-                          screen: ProductDetails(),
-                          withNavBar: true,
-                          pageTransitionAnimation: PageTransitionAnimation.fade,
+              child: productDealsList.length == 0
+                  ? Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
+                          height: SizeConfig.blockSizeVertical * 100,
+                          child: ListView.builder(
+                            itemCount: productList.length,
+                            itemBuilder: (ctx, index) => GestureDetector(
+                              onTap: () => pushNewScreenWithRouteSettings(
+                                context,
+                                settings: RouteSettings(
+                                    name: ProductDetails.routeName,
+                                    arguments: {
+                                      'product_id': productList[index].id
+                                    }),
+                                screen: ProductDetails(),
+                                withNavBar: true,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.fade,
+                              ),
+                              child: SearchItem(
+                                productId: productList[index].id,
+                                imgUrl: productList[index].mainImg,
+                                productName: productList[index].name,
+                                productPrice: productList[index].price ?? 0.0,
+                                productPriceAfter:
+                                    productList[index]?.offer?.afterPrice ??
+                                        0.0,
+                                productCategory:
+                                    productList[index].category.name,
+                                onAddToFavorite: () {
+                                  final fav = Provider.of<FavViewModel>(context,
+                                      listen: false);
+                                  final productFav = ProductFav(
+                                      id: productList[index].id,
+                                      name: productList[index].name,
+                                      mainImg: productList[index].mainImg,
+                                      price: productList[index].price,
+                                      categoryName:
+                                          productList[index].category.name,
+                                      isFav: 1);
+                                  fav.addProductToFav(productFav);
+                                },
+                                onAddToCart: () {
+                                  final cart = Provider.of<CartViewModel>(
+                                      context,
+                                      listen: false);
+                                  final productCart = ProductCart(
+                                      id: productList[index].id,
+                                      name: productList[index].name,
+                                      mainImg: productList[index].mainImg,
+                                      price: productList[index].price,
+                                      priceAfterDiscount: productList[index]
+                                              .offer
+                                              ?.afterPrice ??
+                                          productList[index].price,
+                                      categoryName:
+                                          productList[index].category.name,
+                                      quantity: 1,
+                                      availability:
+                                          productList[index].availability,
+                                      inCart: 1,
+                                      colorSpecValue: '',
+                                      sizeSpecValue: '');
+                                  cart.addProductToCart(productCart);
+                                },
+                                //  productQuantity: ,
+                              ),
+                              // ShopItem(
+                              //   imgUrl: productList[index].mainImg,
+                              //   productName: productList[index].name,
+                              //   productPrice: productList[index].price,
+                              //   productPriceAfter:
+                              //       productList[index]?.offer?.afterPrice ?? 0.0,
+                              //   productId: productList[index].id,
+                              //   productCategory: productList[index].category.name,
+                              //   productStars: productList[index].stars,
+                              // ),
+                            ),
+                          ),
                         ),
-                        child: SearchItem(
-                          productId: productList[index].id,
-                          imgUrl: productList[index].mainImg,
-                          productName: productList[index].name,
-                          productPrice: productList[index].price ?? 0.0,
-                          productPriceAfter:
-                              productList[index]?.offer?.afterPrice ?? 0.0,
-                          productCategory: productList[index].category.name,
-                          onAddToFavorite: () {
-                            final fav = Provider.of<FavViewModel>(context,
-                                listen: false);
-                            final productFav = ProductFav(
-                                id: productList[index].id,
-                                name: productList[index].name,
-                                mainImg: productList[index].mainImg,
-                                price: productList[index].price,
-                                categoryName: productList[index].category.name,
-                                isFav: 1);
-                            fav.addProductToFav(productFav);
-                          },
-                          onAddToCart: () {
-                            final cart = Provider.of<CartViewModel>(context,
-                                listen: false);
-                            final productCart = ProductCart(
-                                id: productList[index].id,
-                                name: productList[index].name,
-                                mainImg: productList[index].mainImg,
-                                price: productList[index].price,
-                                priceAfterDiscount:
-                                    productList[index].offer?.afterPrice ??
-                                        productList[index].price,
-                                categoryName: productList[index].category.name,
-                                quantity: 1,
-                                availability: productList[index].availability,
-                                inCart: 1,
-                                colorSpecValue: '',
-                                sizeSpecValue: '');
-                            cart.addProductToCart(productCart);
-                          },
-                          //  productQuantity: ,
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 1),
+                          height: SizeConfig.blockSizeVertical * 100,
+                          child: ListView.builder(
+                            itemCount: productDealsList.length,
+                            itemBuilder: (ctx, index) => GestureDetector(
+                              onTap: () => pushNewScreenWithRouteSettings(
+                                context,
+                                settings: RouteSettings(
+                                    name: ProductDetails.routeName,
+                                    arguments: {
+                                      'product_id': productDealsList[index].id
+                                    }),
+                                screen: ProductDetails(),
+                                withNavBar: true,
+                                pageTransitionAnimation:
+                                    PageTransitionAnimation.fade,
+                              ),
+                              child: SearchItem(
+                                productId: productDealsList[index].id,
+                                imgUrl: productDealsList[index].mainImg,
+                                productName: productDealsList[index].name,
+                                productPrice:
+                                    productDealsList[index].price ?? 0.0,
+                                productPriceAfter: productDealsList[index]
+                                        ?.offer
+                                        ?.afterPrice ??
+                                    0.0,
+                                productCategory:
+                                    productDealsList[index].category.name,
+                                onAddToFavorite: () {
+                                  final fav = Provider.of<FavViewModel>(context,
+                                      listen: false);
+                                  final productFav = ProductFav(
+                                      id: productDealsList[index].id,
+                                      name: productDealsList[index].name,
+                                      mainImg: productDealsList[index].mainImg,
+                                      price: productDealsList[index].price,
+                                      categoryName:
+                                          productDealsList[index].category.name,
+                                      isFav: 1);
+                                  fav.addProductToFav(productFav);
+                                },
+                                onAddToCart: () {
+                                  final cart = Provider.of<CartViewModel>(
+                                      context,
+                                      listen: false);
+                                  final productCart = ProductCart(
+                                      id: productDealsList[index].id,
+                                      name: productDealsList[index].name,
+                                      mainImg: productDealsList[index].mainImg,
+                                      price: productDealsList[index].price,
+                                      priceAfterDiscount:
+                                          productDealsList[index]
+                                                  .offer
+                                                  ?.afterPrice ??
+                                              productDealsList[index].price,
+                                      categoryName:
+                                          productDealsList[index].category.name,
+                                      quantity: 1,
+                                      availability:
+                                          productDealsList[index].availability,
+                                      inCart: 1,
+                                      colorSpecValue: '',
+                                      sizeSpecValue: '');
+                                  cart.addProductToCart(productCart);
+                                },
+                                //  productQuantity: ,
+                              ),
+                            ),
+                          ),
                         ),
-                        // ShopItem(
-                        //   imgUrl: productList[index].mainImg,
-                        //   productName: productList[index].name,
-                        //   productPrice: productList[index].price,
-                        //   productPriceAfter:
-                        //       productList[index]?.offer?.afterPrice ?? 0.0,
-                        //   productId: productList[index].id,
-                        //   productCategory: productList[index].category.name,
-                        //   productStars: productList[index].stars,
-                        // ),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
             ),
     );
   }

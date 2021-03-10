@@ -76,6 +76,17 @@ class ListServices {
     }
   }
 
+  Future<ShopModel> fetchDeals(int categoryId) async {
+    final response = await http.get(API + '/products/?category=$categoryId');
+    if (response.statusCode == 200) {
+      final body = jsonDecode(response.body);
+      //  print(response.body);
+      return ShopModel.fromJson(body);
+    } else {
+      throw Exception("Unable to perform Request");
+    }
+  }
+
   Future<SearchModel> fetchSearch() async {
     final response = await http.get(API + '/products/?search');
     if (response.statusCode == 200) {

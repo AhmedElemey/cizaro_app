@@ -80,6 +80,12 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
+  Future<ShopModel> fetchDeals(int categoryId) async {
+    final result = await ListServices().fetchDeals(categoryId);
+    notifyListeners();
+    return result;
+  }
+
   Future<SearchModel> fetchSearch() async {
     final result = await ListServices().fetchSearch();
     notifyListeners();

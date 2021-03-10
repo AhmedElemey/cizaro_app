@@ -414,9 +414,23 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemCount: hotDealsList.length,
                                     itemBuilder: (ctx, index) {
                                       return GestureDetector(
-                                        onTap: () => Navigator.of(context)
-                                            .pushNamed(
-                                                ProductDetails.routeName),
+                                        // onTap: () => Navigator.of(context)
+                                        //     .pushNamed(
+                                        //         ProductDetails.routeName),
+                                        onTap: () =>
+                                            tab.pushNewScreenWithRouteSettings(
+                                                context,
+                                                settings: RouteSettings(
+                                                    name: ShopScreen.routeName,
+                                                    arguments: {
+                                                      'category_id':
+                                                          hotDealsList[index].id
+                                                    }),
+                                                screen: ShopScreen(),
+                                                withNavBar: true,
+                                                pageTransitionAnimation: tab
+                                                    .PageTransitionAnimation
+                                                    .fade),
                                         child: HotDealsItem(
                                             id: hotDealsList[index].id,
                                             itemText: hotDealsList[index].name,
@@ -444,15 +458,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-                    // Padding(
-                    //   padding: EdgeInsets.only(
-                    //     left: SizeConfig.blockSizeHorizontal * 5,
-                    //     right: SizeConfig.blockSizeHorizontal * 5,
-                    //   ),
-                    //   child: Divider(
-                    //       height: SizeConfig.blockSizeVertical * .1,
-                    //       color: Color(0xff727C8E)),
-                    // ),
                     collectionsList.length == 0 ||
                             collectionsList.length == null
                         ? Container()
@@ -514,7 +519,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-
                     newArrivalsList.length == 0 ||
                             newArrivalsList.length == null
                         ? Container()
@@ -545,7 +549,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                           ),
-
                     topSellingList.length == 0 || topSellingList.length == null
                         ? Container()
                         : Container(

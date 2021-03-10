@@ -335,7 +335,7 @@ class _SearchScreenState extends State<SearchScreen> {
         key: _scaffoldKey13,
         drawer: DrawerLayout(),
         appBar: PreferredSize(
-          child: GradientAppBar("", _scaffoldKey13),
+          child: GradientAppBar("", _scaffoldKey13, false),
           preferredSize: const Size(double.infinity, kToolbarHeight),
         ),
         body: _isLoading

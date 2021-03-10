@@ -51,7 +51,7 @@ class _PendingShipmentScreenState extends State<PendingShipmentScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        child: GradientAppBar("My Pending Shipment", _scaffoldKey),
+        child: GradientAppBar("My Pending Shipment", _scaffoldKey, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

@@ -86,7 +86,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       key: _scaffoldKey7,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("", _scaffoldKey7),
+        child: GradientAppBar("", _scaffoldKey7, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

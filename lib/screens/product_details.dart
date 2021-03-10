@@ -185,7 +185,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
       key: _scaffoldKey10,
       appBar: PreferredSize(
-        child: GradientAppBar("", _scaffoldKey10),
+        child: GradientAppBar("", _scaffoldKey10, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       drawer: DrawerLayout(),

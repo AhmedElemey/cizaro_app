@@ -488,7 +488,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       key: _scaffoldKey6,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Complete Order", _scaffoldKey6),
+        child: GradientAppBar("Complete Order", _scaffoldKey6, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

@@ -30,8 +30,12 @@ import 'package:http/http.dart' as http;
 class ListServices {
   static const API = 'http://cizaro.tree-code.com/api/v1';
 
-  Future<Home> fetchHome() async {
-    final response = await http.get(API + '/home/');
+  Future<Home> fetchHome(String lang) async {
+    final response = await http.get(API + '/home/', headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept-Language': lang
+    });
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
       return Home.fromJson(body);

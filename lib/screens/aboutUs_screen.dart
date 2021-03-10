@@ -52,7 +52,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
       key: _scaffoldKey2,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("About Us", _scaffoldKey2),
+        child: GradientAppBar("About Us", _scaffoldKey2, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

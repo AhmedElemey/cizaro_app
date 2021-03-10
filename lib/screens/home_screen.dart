@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   static final routeName = '/home-screen';
@@ -44,10 +45,16 @@ class _HomeScreenState extends State<HomeScreen> {
   int initPosition2 = 0;
   bool _isLoading = false;
 
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   Future getHomeData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
-    await getHome.fetchHomeList().then((response) {
+    bool lang = await getLang();
+    await getHome.fetchHomeList(lang == false ? 'en' : 'ar').then((response) {
       home = response;
       hotDealsList = home.data.hotDeals;
       collectionsList = home.data.collections;
@@ -97,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .id
                             }),
                         screen: ProductDetails(),
-                        withNavBar: true,
+                        // withNavBar: true,
                         pageTransitionAnimation:
                             tab.PageTransitionAnimation.fade),
                     child: ProductItem(
@@ -358,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
       key: _scaffoldKey,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("", _scaffoldKey),
+        child: GradientAppBar("", _scaffoldKey, false),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
@@ -384,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       top: SizeConfig.blockSizeVertical * 1.5,
                                     ),
                                     child: Text(
-                                      "Hot Deals",
+                                      'hot_deals_title'.tr(),
                                       style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w700,
                                         fontSize:

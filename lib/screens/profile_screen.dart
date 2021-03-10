@@ -85,7 +85,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         key: _scaffoldKey12,
         drawer: DrawerLayout(),
         appBar: PreferredSize(
-          child: GradientAppBar("Profile", _scaffoldKey12),
+          child: GradientAppBar("Profile", _scaffoldKey12, false),
           preferredSize: const Size(double.infinity, kToolbarHeight),
         ),
         body: _isLoading

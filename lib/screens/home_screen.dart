@@ -489,8 +489,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 margin: EdgeInsets.only(
                                   top: SizeConfig.blockSizeVertical * .2,
                                   left: SizeConfig.blockSizeHorizontal * 2,
+                                  right: SizeConfig.blockSizeHorizontal * 2,
                                 ),
-                                height: SizeConfig.blockSizeVertical * 22,
+                                height: SizeConfig.blockSizeVertical * 23,
                                 //    width: deviceInfo.localWidth * .2,
                                 child: ListView.builder(
                                     itemCount: collectionsList.length,
@@ -529,8 +530,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? Container()
                         : Container(
                             padding: EdgeInsets.only(
-                                top: SizeConfig.blockSizeVertical * 3,
-                                left: SizeConfig.blockSizeHorizontal * 1),
+                              top: SizeConfig.blockSizeVertical * 3,
+                              left: SizeConfig.blockSizeHorizontal * 1,
+                              right: SizeConfig.blockSizeHorizontal * 1,
+                            ),
                             child: Column(
                               children: [
                                 Center(

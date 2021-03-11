@@ -192,6 +192,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
     return Padding(
         padding: EdgeInsets.only(
           left: SizeConfig.blockSizeHorizontal * 3,
+          right: SizeConfig.blockSizeHorizontal * 3,
         ),
         child: Container(
           width: SizeConfig.blockSizeHorizontal * 33,
@@ -238,7 +239,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                               )),
                           Container(
                             padding: EdgeInsets.only(
-                                right: SizeConfig.blockSizeHorizontal * 1,
+                                right: SizeConfig.blockSizeHorizontal * 2,
                                 left: SizeConfig.blockSizeHorizontal * 1),
                             width: SizeConfig.blockSizeHorizontal * 35,
                             height: SizeConfig.blockSizeVertical * 3,
@@ -256,7 +257,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                               ? Container(
                                   padding: EdgeInsets.only(
                                       top: SizeConfig.blockSizeVertical * .005,
-                                      right: SizeConfig.blockSizeHorizontal * 1,
+                                      right: SizeConfig.blockSizeHorizontal * 2,
                                       left: SizeConfig.blockSizeHorizontal * 1),
                                   child: Text(
                                     widget.productPrice.toString() + ' LE',
@@ -276,7 +277,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                         padding: EdgeInsets.only(
                                             right:
                                                 SizeConfig.blockSizeHorizontal *
-                                                    1,
+                                                    2,
                                             left:
                                                 SizeConfig.blockSizeHorizontal *
                                                     1),
@@ -300,7 +301,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                 .5,
                                             right:
                                                 SizeConfig.blockSizeHorizontal *
-                                                    1,
+                                                    2,
                                             left:
                                                 SizeConfig.blockSizeHorizontal *
                                                     1),
@@ -322,7 +323,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                           Container(
                               padding: EdgeInsets.only(
                                   bottom: SizeConfig.blockSizeVertical * .5,
-                                  left: SizeConfig.blockSizeHorizontal * 1),
+                                  left: SizeConfig.blockSizeHorizontal * 1,
+                                  right: SizeConfig.blockSizeHorizontal * 1),
                               width: SizeConfig.blockSizeHorizontal * 30,
                               child: Row(
                                 mainAxisAlignment:
@@ -451,7 +453,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                             padding: EdgeInsets.only(
                                                 right: SizeConfig
                                                         .blockSizeHorizontal *
-                                                    1,
+                                                    2,
                                                 left: SizeConfig
                                                         .blockSizeHorizontal *
                                                     2),
@@ -472,7 +474,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                             padding: EdgeInsets.only(
                                                 right: SizeConfig
                                                         .blockSizeHorizontal *
-                                                    1,
+                                                    2,
                                                 left: SizeConfig
                                                         .blockSizeHorizontal *
                                                     2),
@@ -493,7 +495,9 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                     ),
                               Container(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 1),
+                                      left: SizeConfig.blockSizeHorizontal * 1,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 1),
                                   width: SizeConfig.blockSizeHorizontal * 30,
                                   child: Row(
                                     mainAxisAlignment:

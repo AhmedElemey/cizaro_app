@@ -5,6 +5,7 @@ import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/widgets/cart_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -164,7 +165,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         key: _scaffoldKey9,
         drawer: DrawerLayout(),
         appBar: PreferredSize(
-          child: GradientAppBar("My Cart", _scaffoldKey9, false),
+          child: GradientAppBar('cart'.tr(), _scaffoldKey9, false),
           preferredSize: const Size(double.infinity, kToolbarHeight),
         ),
         body: SingleChildScrollView(

@@ -201,6 +201,7 @@ class _SearchItemState extends State<SearchItem> {
             Container(
               padding: EdgeInsets.only(
                   left: SizeConfig.blockSizeHorizontal * 3,
+                  right: SizeConfig.blockSizeHorizontal * 3,
                   top: SizeConfig.blockSizeVertical * 1),
               width: SizeConfig.blockSizeHorizontal * 60,
               child: Column(
@@ -228,9 +229,9 @@ class _SearchItemState extends State<SearchItem> {
                               top: SizeConfig.blockSizeVertical * .10),
                           child: Text(
                             widget.productPrice.toString() + ' LE',
-                            style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-                            ),
+                            // style: TextStyle(
+                            //   fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                            // ),
                           ),
                         )
                       : Container(
@@ -251,9 +252,8 @@ class _SearchItemState extends State<SearchItem> {
                               ),
                               Container(
                                 padding: EdgeInsets.only(
-                                    top: SizeConfig.blockSizeVertical * .05,
-                                    right:
-                                        SizeConfig.blockSizeHorizontal * .05),
+                                    top: SizeConfig.blockSizeVertical * 1,
+                                    right: SizeConfig.blockSizeHorizontal * 5),
                                 child: Text(
                                   widget.productPriceAfter.toString() + ' LE',
                                   style: TextStyle(

@@ -16,15 +16,8 @@ class CollectionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    // var mediaQueryData = MediaQuery.of(context);
-    // ScreenUtil.init(context,
-    //     allowFontScaling: false,
-    //     width: MediaQuery.of(context).size.width,
-    //     height: MediaQuery.of(context).size.height);
     // TODO: implement build
     return Container(
-      // width: MediaQuery.of(context).size.width * .3,
-      // height: MediaQuery.of(context).size.height * .19,
       width: SizeConfig.blockSizeHorizontal * 30,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -65,6 +58,7 @@ class CollectionItem extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(
                   left: SizeConfig.blockSizeHorizontal * 1,
+                  right: SizeConfig.blockSizeHorizontal * 1,
                   top: SizeConfig.blockSizeVertical * .2),
               child: Text(
                 itemText,

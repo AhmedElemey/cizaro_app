@@ -2,6 +2,7 @@ import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
 import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/screens/search_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -63,25 +64,25 @@ List<PersistentBottomNavBarItem> _navBarsItems() {
   return [
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.home),
-      title: ("Home"),
+      title: ('home'.tr()),
       activeColor: Color(0xff3A559F),
       inactiveColor: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.search),
-      title: ("Search"),
+      title: ('search'.tr()),
       activeColor: Color(0xff3A559F),
       inactiveColor: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.cart),
-      title: ("Cart"),
+      title: ('cart'.tr()),
       activeColor: Color(0xff3A559F),
       inactiveColor: CupertinoColors.systemGrey,
     ),
     PersistentBottomNavBarItem(
       icon: Icon(CupertinoIcons.person_solid),
-      title: ("Profile"),
+      title: ('profile'.tr()),
       activeColor: Color(0xff3A559F),
       inactiveColor: CupertinoColors.systemGrey,
     ),

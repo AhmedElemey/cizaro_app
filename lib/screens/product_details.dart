@@ -13,6 +13,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/product_details_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -253,14 +254,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                           fontSize: SizeConfig.safeBlockHorizontal * 5,
                           fontWeight: FontWeight.bold,
                         ),
-                      )
-                      // textScaleFactor:
-                      //     MediaQuery.of(context).textScaleFactor *
-                      ),
+                      )),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 5,
-                        right: SizeConfig.blockSizeHorizontal * 5,
+                        left: SizeConfig.blockSizeHorizontal * 7,
+                        right: SizeConfig.blockSizeHorizontal * 7,
                         top: SizeConfig.blockSizeVertical * 2),
                     child: Divider(
                         height: SizeConfig.blockSizeVertical * .1,
@@ -288,8 +286,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               )
                             : Container(
                                 padding: EdgeInsets.only(
-                                    right: SizeConfig.blockSizeHorizontal * 7,
-                                    top: SizeConfig.blockSizeVertical * 2),
+                                  right: SizeConfig.blockSizeHorizontal * 1,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -339,9 +337,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     fontSize:
                                         SizeConfig.safeBlockHorizontal * 3,
                                   ),
-                                  // textScaleFactor:
-                                  //     MediaQuery.of(context).textScaleFactor *
-                                  //         1
                                 )
                               ],
                             ),
@@ -352,8 +347,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 5,
-                        right: SizeConfig.blockSizeHorizontal * 5,
+                        left: SizeConfig.blockSizeHorizontal * 7,
+                        right: SizeConfig.blockSizeHorizontal * 7,
                         top: SizeConfig.blockSizeVertical * 2),
                     child: Divider(
                         height: SizeConfig.blockSizeVertical * .1,
@@ -362,11 +357,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Padding(
                     padding: EdgeInsets.only(
                       left: SizeConfig.blockSizeHorizontal * 7,
+                      right: SizeConfig.blockSizeHorizontal * 7,
                       top: SizeConfig.blockSizeVertical * 2,
                     ),
                     child: Row(
                       children: [
-                        Text("Description ",
+                        Text('description'.tr(),
                             style: TextStyle(
                               color: Color(0xff3A559F),
                               fontWeight: FontWeight.bold,
@@ -378,7 +374,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 2,
-                        left: SizeConfig.blockSizeHorizontal * 7),
+                        left: SizeConfig.blockSizeHorizontal * 7,
+                        right: SizeConfig.blockSizeHorizontal * 7),
                     child: Text(
                       productDescription ?? "",
                       style: TextStyle(
@@ -390,8 +387,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 5,
-                        right: SizeConfig.blockSizeHorizontal * 5,
+                        left: SizeConfig.blockSizeHorizontal * 7,
+                        right: SizeConfig.blockSizeHorizontal * 7,
                         top: SizeConfig.blockSizeVertical * 2),
                     child: Divider(
                         height: SizeConfig.blockSizeVertical * .1,
@@ -400,6 +397,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Container(
                     padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 7,
+                        right: SizeConfig.blockSizeHorizontal * 7,
                         top: SizeConfig.blockSizeVertical * 2),
                     child: Row(
                       children: [
@@ -421,6 +419,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ? Container(
                           padding: EdgeInsets.only(
                               left: SizeConfig.blockSizeHorizontal * 7,
+                              right: SizeConfig.blockSizeHorizontal * 7,
                               top: SizeConfig.blockSizeVertical * 2),
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
@@ -468,6 +467,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       : Container(
                           padding: EdgeInsets.only(
                               left: SizeConfig.blockSizeHorizontal * 7,
+                              right: SizeConfig.blockSizeHorizontal * 7,
                               top: SizeConfig.blockSizeVertical * 2),
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
@@ -525,6 +525,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           : Container(
                               padding: EdgeInsets.only(
                                   left: SizeConfig.blockSizeHorizontal * 7,
+                                  right: SizeConfig.blockSizeHorizontal * 7,
                                   top: SizeConfig.blockSizeVertical * 1),
                               child: GridView.builder(
                                 physics: NeverScrollableScrollPhysics(),
@@ -623,7 +624,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              "ADD TO CART",
+                              'add_to_cart'.tr(),
                               style: TextStyle(
                                   color: Colors.white,
                                   //  fontSize: 15,
@@ -656,11 +657,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   Container(
                     padding: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 2,
+                        right: SizeConfig.blockSizeHorizontal * 7,
                         left: SizeConfig.blockSizeHorizontal * 7),
                     child: Row(
                       children: [
                         Text(
-                          "Related Products ",
+                          'related_products'.tr(),
                           style: TextStyle(
                             color: Color(0xff3A559F),
                             fontWeight: FontWeight.bold,
@@ -674,6 +676,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                     padding: EdgeInsets.only(
                         top: SizeConfig.blockSizeVertical * 2,
                         left: SizeConfig.blockSizeHorizontal * 7,
+                        right: SizeConfig.blockSizeHorizontal * 3,
                         bottom: SizeConfig.blockSizeVertical * 2),
                     height: SizeConfig.blockSizeVertical * 40,
                     child: ListView.builder(

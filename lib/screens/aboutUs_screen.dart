@@ -5,6 +5,7 @@ import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
       key: _scaffoldKey2,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("About Us", _scaffoldKey2, true),
+        child: GradientAppBar('about_us'.tr(), _scaffoldKey2, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

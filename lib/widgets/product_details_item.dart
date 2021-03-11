@@ -215,7 +215,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                             widget.productPriceAfter == 0
                         ? Container(
                             padding: EdgeInsets.only(
-                                right: SizeConfig.blockSizeHorizontal * 1,
+                                right: SizeConfig.blockSizeHorizontal * 2,
                                 left: SizeConfig.blockSizeHorizontal * 2,
                                 top: SizeConfig.blockSizeVertical * 1),
                             child: Text(
@@ -246,7 +246,9 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                 Container(
                                   padding: EdgeInsets.only(
                                       top: SizeConfig.blockSizeVertical * 1,
-                                      left: SizeConfig.blockSizeHorizontal * 1),
+                                      left: SizeConfig.blockSizeHorizontal * 1,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 1),
                                   child: Text(
                                     widget.productPriceAfter.toString() + ' LE',
                                     style: TextStyle(
@@ -261,6 +263,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                     Container(
                       padding: EdgeInsets.only(
                           left: SizeConfig.blockSizeHorizontal * 2,
+                          right: SizeConfig.blockSizeHorizontal * 2,
                           top: SizeConfig.blockSizeHorizontal * 3),
                       width: SizeConfig.blockSizeHorizontal * 30,
                       child: Row(
@@ -410,7 +413,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                               2,
                                           right:
                                               SizeConfig.blockSizeHorizontal *
-                                                  1,
+                                                  4,
                                           top:
                                               SizeConfig.blockSizeVertical * 3),
                                       child: Text(
@@ -425,6 +428,9 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                   : Container(
                                       padding: EdgeInsets.only(
                                           top: SizeConfig.blockSizeVertical * 2,
+                                          right:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  1,
                                           left: SizeConfig.blockSizeHorizontal *
                                               2),
                                       child: Row(
@@ -463,6 +469,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                         Container(
                           padding: EdgeInsets.only(
                               left: SizeConfig.blockSizeHorizontal * 1,
+                              right: SizeConfig.blockSizeHorizontal * 2,
                               top: SizeConfig.blockSizeVertical * 2),
                           width: SizeConfig.blockSizeHorizontal * 30,
                           child: Row(

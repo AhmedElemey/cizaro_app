@@ -16,6 +16,7 @@ import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -385,22 +386,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 color: Color(0xff3A559F),
                                                 fontSize: SizeConfig
                                                         .safeBlockHorizontal *
-                                                    4),
-                                            textScaleFactor:
-                                                MediaQuery.textScaleFactorOf(
-                                                        context) *
-                                                    1.5,
+                                                    6),
+                                          ),
+                                          SizedBox(
+                                            width:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    2,
                                           ),
                                           Text(
-                                            " Items",
-                                            textScaleFactor:
-                                                MediaQuery.textScaleFactorOf(
-                                                        context) *
-                                                    1.5,
+                                            'items'.tr(),
                                             style: TextStyle(
                                                 fontSize: SizeConfig
                                                         .safeBlockHorizontal *
-                                                    4),
+                                                    5),
                                           )
                                         ],
                                       ),
@@ -539,21 +537,18 @@ class _SearchScreenState extends State<SearchScreen> {
                                             filterList?.length.toString() ?? '',
                                             style: TextStyle(
                                                 color: Color(0xff3A559F)),
-                                            textScaleFactor:
-                                                MediaQuery.textScaleFactorOf(
-                                                        context) *
-                                                    1.5,
+                                          ),
+                                          SizedBox(
+                                            width:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    2,
                                           ),
                                           Text(
-                                            " Items",
-                                            textScaleFactor:
-                                                MediaQuery.textScaleFactorOf(
-                                                        context) *
-                                                    1.5,
+                                            'items'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
-                                                  3,
+                                                  5,
                                             ),
                                           )
                                         ],

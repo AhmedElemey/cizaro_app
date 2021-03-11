@@ -1,4 +1,5 @@
 import 'package:cizaro_app/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,6 +28,7 @@ class AddressItem extends StatelessWidget {
           height: SizeConfig.blockSizeVertical * 20,
           padding: EdgeInsets.only(
               left: SizeConfig.blockSizeHorizontal * 2,
+              right: SizeConfig.blockSizeHorizontal * 4,
               top: SizeConfig.blockSizeVertical * .25),
           color: bgColor,
           child: Row(children: [
@@ -103,7 +105,7 @@ class AddressItem extends StatelessWidget {
               child: GestureDetector(
                   onTap: () => onEdit(),
                   child: Text(
-                    "Edit",
+                    'edit'.tr(),
                     // style: TextStyle(color: Color(0xff3A559F)),
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w600,

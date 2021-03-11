@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cizaro_app/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +56,7 @@ class HotDealsItem extends StatelessWidget {
                   Container(
                       margin: new EdgeInsets.all(10),
                       child: Text(
-                        "SEE MORE",
+                        'see_more'.tr(),
                         style: TextStyle(
                             fontSize: 15, fontWeight: FontWeight.bold),
                       )),

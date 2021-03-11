@@ -12,6 +12,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/address_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -86,7 +87,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
       key: _scaffoldKey5,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Select Address", _scaffoldKey5, true),
+        child: GradientAppBar('select_address'.tr(), _scaffoldKey5, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: SingleChildScrollView(
@@ -106,7 +107,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                 top: SizeConfig.blockSizeVertical * 3),
                             child: Center(
                                 child: Text(
-                              'No addresses Added yet, please Add One.',
+                              'no_address'.tr(),
                               style: TextStyle(
                                   // color: Color(0xff3A559F),
                                   fontSize:
@@ -215,6 +216,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                           child: Container(
                             margin: EdgeInsets.only(
                                 right: SizeConfig.blockSizeHorizontal * 2,
+                                left: SizeConfig.blockSizeHorizontal * 2,
                                 top: SizeConfig.blockSizeVertical * 1,
                                 bottom: SizeConfig.blockSizeVertical * 3),
                             width: SizeConfig.blockSizeHorizontal * 16,
@@ -224,7 +226,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                 borderRadius: BorderRadius.circular(20.0)),
                             child: Center(
                               child: Text(
-                                "ADD",
+                                'add'.tr(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize:

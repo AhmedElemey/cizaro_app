@@ -2,6 +2,7 @@ import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -68,7 +69,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                           horizontal: SizeConfig.blockSizeHorizontal * 3),
                       child: Column(
                         children: [
-                          Text('Collections',
+                          Text('collection_title'.tr(),
                               style: TextStyle(
                                   color: Color(0xff294794),
                                   fontSize: SizeConfig.safeBlockVertical * 3,
@@ -97,7 +98,7 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                               separatorBuilder: (BuildContext context, int index) =>
                                   SizedBox(height: SizeConfig.blockSizeVertical * 1.5)),
                           SizedBox(height: SizeConfig.blockSizeVertical * 3),
-                          Text('Hot Deals',
+                          Text('hot_deals_title'.tr(),
                               style: TextStyle(
                                   color: Color(0xff294794),
                                   fontSize: SizeConfig.safeBlockVertical * 3,

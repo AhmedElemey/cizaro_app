@@ -16,6 +16,7 @@ import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -86,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         key: _scaffoldKey12,
         drawer: DrawerLayout(),
         appBar: PreferredSize(
-          child: GradientAppBar("Profile", _scaffoldKey12, false),
+          child: GradientAppBar('profile'.tr(), _scaffoldKey12, false),
           preferredSize: const Size(double.infinity, kToolbarHeight),
         ),
         body: _isLoading
@@ -118,7 +119,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Container(
                                   padding: EdgeInsets.only(
                                       top: SizeConfig.blockSizeVertical * 1,
-                                      left: SizeConfig.blockSizeHorizontal * 5),
+                                      left: SizeConfig.blockSizeHorizontal * 5,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                     userName ?? "",
                                     style: TextStyle(
@@ -130,7 +133,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Container(
                                   padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeVertical * 3),
+                                      left: SizeConfig.blockSizeVertical * 3,
+                                      right:
+                                          SizeConfig.blockSizeHorizontal * 5),
                                   child: Text(
                                     userEmail ?? "",
                                     style: TextStyle(
@@ -157,8 +162,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: Container(
                                   padding: EdgeInsets.only(
                                       top: SizeConfig.blockSizeVertical * 1,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 4),
+                                      right: SizeConfig.blockSizeHorizontal * 4,
+                                      left: SizeConfig.blockSizeHorizontal * 5),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius:
@@ -166,10 +171,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       color: Color(0xff3A559F),
                                     ),
                                     height: SizeConfig.blockSizeVertical * 5,
-                                    width: SizeConfig.blockSizeHorizontal * 30,
+                                    width: SizeConfig.blockSizeHorizontal * 35,
                                     child: Center(
                                       child: Text(
-                                        "Edit Profile",
+                                        'edit_profile'.tr(),
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize:
@@ -240,9 +245,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: EdgeInsets.only(
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
+                                                  5,
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
                                                   5),
                                           child: Text(
-                                            "All My Orders",
+                                            'all_orders'.tr(),
                                             style: GoogleFonts.poppins(
                                               fontWeight: FontWeight.w400,
                                               fontSize: SizeConfig
@@ -308,11 +316,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   5),
                                           child: Text(
-                                            "Pending Shipments",
+                                            'pending_shipment'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -376,11 +387,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                             padding: EdgeInsets.only(
+                                                right: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    5,
                                                 left: SizeConfig
                                                         .blockSizeHorizontal *
                                                     5),
                                             child: Text(
-                                              "Address Book ",
+                                              'address_book'.tr(),
                                               style: TextStyle(
                                                 fontSize: SizeConfig
                                                         .safeBlockHorizontal *
@@ -463,11 +477,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   5),
                                           child: Text(
-                                            "Wish list",
+                                            'wish_list'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -531,11 +548,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   5),
                                           child: Text(
-                                            "Polices and terms",
+                                            'polices_terms'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -599,11 +619,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   5),
                                           child: Text(
-                                            "About us",
+                                            'about_us'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -667,11 +690,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   5),
                                           child: Text(
-                                            "Contact us",
+                                            'contact_us'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -731,11 +757,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3,
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   4),
                                           child: Text(
-                                            "Change Language",
+                                            'change_language'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -803,11 +832,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3,
                                               left: SizeConfig
                                                       .blockSizeHorizontal *
                                                   4),
                                           child: Text(
-                                            "SignOut",
+                                            'sign_out'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -834,6 +866,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 2,
                       )
                     ],
                   ),

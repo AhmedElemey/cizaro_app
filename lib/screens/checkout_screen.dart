@@ -8,6 +8,7 @@ import 'package:cizaro_app/model/checkout.dart';
 import 'package:cizaro_app/model/checkout_results.dart';
 import 'package:cizaro_app/model/otp_verification.dart';
 import 'package:cizaro_app/model/promo.dart';
+import 'package:cizaro_app/model/promoModel.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/model/verification_result.dart';
@@ -55,7 +56,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       regionName,
       productSpec,
       paymentUrl;
-  double totalOrder, shippingFees, totalCost, arrivalDate;
+  double totalOrder,
+      shippingFees,
+      totalCost,
+      arrivalDate,
+      totalAfterPromo,
+      shippingFeesAfterPromo;
   bool _isLoading = false,
       isVerified = false,
       _selectedPromoCode = false,
@@ -73,6 +79,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   TextEditingController _promoCodeController = TextEditingController();
   TextEditingController _verificationCodeController = TextEditingController();
   FToast fToast;
+  PromoModel promoModel;
 
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -114,6 +121,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     String token = await getToken();
     await getAddress.fetchAvailablePaymentsList(token).then((response) {
       payments = response;
+
       _paymentList = payments.data.availablePayments;
     });
     fetchTotalOrder();
@@ -214,7 +222,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         Promo(addressId: addressId, promoCode: _promoCodeController.text);
     String token = await getToken();
     await getPromo.fetchPromo(promo, token).then((response) {
-      checkoutResult = response;
+      promoModel = response;
+      totalAfterPromo = promoModel.data.totalCost;
+      shippingFeesAfterPromo = promoModel.data.shippingFees;
     }).catchError(
         (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
     if (this.mounted) setState(() => _isLoading = false);
@@ -979,20 +989,37 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             height:
                                                 SizeConfig.blockSizeVertical *
                                                     5),
-                                        Container(
-                                          child: Text(
-                                            shippingFees == null
-                                                ? '0.0'
-                                                : shippingFees.toString() +
-                                                        ' LE' ??
-                                                    '00.00',
-                                            style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    5,
-                                                color: Color(0xff3A559F)),
-                                          ),
-                                        )
+                                        promoModel?.data?.priceDiscount == 0.0
+                                            ? Container(
+                                                child: Text(
+                                                  shippingFees == null
+                                                      ? '0.0'
+                                                      : shippingFees
+                                                                  .toString() +
+                                                              ' LE' ??
+                                                          '00.00',
+                                                  style: TextStyle(
+                                                      fontSize: SizeConfig
+                                                              .safeBlockHorizontal *
+                                                          5,
+                                                      color: Color(0xff3A559F)),
+                                                ),
+                                              )
+                                            : Container(
+                                                child: Text(
+                                                  shippingFeesAfterPromo == null
+                                                      ? '0.0'
+                                                      : shippingFeesAfterPromo
+                                                                  .toString() +
+                                                              ' LE' ??
+                                                          '00.00',
+                                                  style: TextStyle(
+                                                      fontSize: SizeConfig
+                                                              .safeBlockHorizontal *
+                                                          5,
+                                                      color: Color(0xff3A559F)),
+                                                ),
+                                              )
                                       ],
                                     ),
                                     Row(
@@ -1009,20 +1036,36 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             height:
                                                 SizeConfig.blockSizeVertical *
                                                     1),
-                                        Container(
-                                          child: Text(
-                                            totalCost == null
-                                                ? "0.0"
-                                                : totalCost.toString() +
-                                                        ' LE' ??
-                                                    '00.00',
-                                            style: TextStyle(
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    5,
-                                                color: Color(0xff3A559F)),
-                                          ),
-                                        )
+                                        promoModel?.data?.priceDiscount == 0.0
+                                            ? Container(
+                                                child: Text(
+                                                  totalCost == null
+                                                      ? "0.0"
+                                                      : totalCost.toString() +
+                                                              ' LE' ??
+                                                          '00.00',
+                                                  style: TextStyle(
+                                                      fontSize: SizeConfig
+                                                              .safeBlockHorizontal *
+                                                          5,
+                                                      color: Color(0xff3A559F)),
+                                                ),
+                                              )
+                                            : Container(
+                                                child: Text(
+                                                  totalAfterPromo == null
+                                                      ? "0.0"
+                                                      : totalAfterPromo
+                                                                  .toString() +
+                                                              ' LE' ??
+                                                          '00.00',
+                                                  style: TextStyle(
+                                                      fontSize: SizeConfig
+                                                              .safeBlockHorizontal *
+                                                          5,
+                                                      color: Color(0xff3A559F)),
+                                                ),
+                                              )
                                       ],
                                     )
                                   ],

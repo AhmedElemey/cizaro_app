@@ -26,11 +26,11 @@ class PromoModel {
 }
 
 class Data {
-  int totalOrder;
-  int shippingFees;
-  int totalCostBefore;
-  int priceDiscount;
-  int totalCost;
+  double totalOrder;
+  double shippingFees;
+  double totalCostBefore;
+  double priceDiscount;
+  double totalCost;
 
   Data(
       {this.totalOrder,

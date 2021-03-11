@@ -326,7 +326,7 @@ class ListServices {
     );
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      //   print(response.body);
+      print(response.body);
       return PromoModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");

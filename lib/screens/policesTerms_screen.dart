@@ -52,7 +52,7 @@ class _PolicesTermsScreenState extends State<PolicesTermsScreen> {
       key: _scaffoldKey11,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Policy And Privacy", _scaffoldKey11),
+        child: GradientAppBar("Policy And Privacy", _scaffoldKey11, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

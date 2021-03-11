@@ -90,7 +90,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Edit Your Address", _scaffoldKey4),
+            GradientAppBar("Edit Your Address", _scaffoldKey4, true),
             Padding(
               padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 5),
               child: FutureBuilder(

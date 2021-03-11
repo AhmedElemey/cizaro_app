@@ -16,6 +16,7 @@ import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/hotDeals_item.dart';
 import 'package:cizaro_app/widgets/product_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -45,10 +46,16 @@ class _HomeScreenState extends State<HomeScreen> {
   int initPosition2 = 0;
   bool _isLoading = false;
 
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   Future getHomeData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
-    await getHome.fetchHomeList().then((response) {
+    bool lang = await getLang();
+    await getHome.fetchHomeList(lang == false ? 'en' : 'ar').then((response) {
       home = response;
       hotDealsList = home.data.hotDeals;
       collectionsList = home.data.collections;
@@ -56,11 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
       topSellingList = home.data.topSelling;
     });
     if (this.mounted) setState(() => _isLoading = false);
-  }
-
-  getLang() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('lang');
   }
 
   @override
@@ -103,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .id
                             }),
                         screen: ProductDetails(),
-                        withNavBar: true,
+                        // withNavBar: true,
                         pageTransitionAnimation:
                             tab.PageTransitionAnimation.fade),
                     child: ProductItem(
@@ -364,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
       key: _scaffoldKey,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("", _scaffoldKey),
+        child: GradientAppBar("", _scaffoldKey, false),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
@@ -390,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       top: SizeConfig.blockSizeVertical * 1.5,
                                     ),
                                     child: Text(
-                                      "Hot Deals",
+                                      'hot_deals_title'.tr(),
                                       style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w700,
                                         fontSize:
@@ -420,9 +422,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemCount: hotDealsList.length,
                                     itemBuilder: (ctx, index) {
                                       return GestureDetector(
-                                        // onTap: () => Navigator.of(context)
-                                        //     .pushNamed(
-                                        //         ProductDetails.routeName),
                                         onTap: () =>
                                             tab.pushNewScreenWithRouteSettings(
                                                 context,
@@ -475,7 +474,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * 1),
                                     child: Text(
-                                      "Collections",
+                                      'collection_title'.tr(),
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
                                           fontSize:
@@ -539,7 +538,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     margin: EdgeInsets.only(
                                         top: SizeConfig.blockSizeVertical * .1),
                                     child: Text(
-                                      " New Arrivals",
+                                      'new_arrival_title'.tr(),
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
                                           fontSize:
@@ -565,7 +564,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       top: SizeConfig.blockSizeVertical * 3),
                                   child: Center(
                                     child: Text(
-                                      "Top Selling ",
+                                      'top_selling_title'.tr(),
                                       style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w700,
                                           fontSize:

@@ -85,7 +85,7 @@ class _ShopScreenState extends State<ShopScreen> {
       key: _scaffoldKey,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("", _scaffoldKey),
+        child: GradientAppBar("", _scaffoldKey, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
@@ -94,14 +94,17 @@ class _ShopScreenState extends State<ShopScreen> {
                   ? CupertinoActivityIndicator()
                   : CircularProgressIndicator())
           : SingleChildScrollView(
+              physics: ScrollPhysics(),
               child: productDealsList.length == 0
                   ? Column(
                       children: [
                         Container(
                           padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 1),
-                          height: SizeConfig.blockSizeVertical * 100,
+                              top: SizeConfig.blockSizeVertical * 1,
+                              bottom: SizeConfig.blockSizeVertical * 2),
                           child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
                             itemCount: productList.length,
                             itemBuilder: (ctx, index) => GestureDetector(
                               onTap: () => pushNewScreenWithRouteSettings(
@@ -183,9 +186,11 @@ class _ShopScreenState extends State<ShopScreen> {
                       children: [
                         Container(
                           padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 1),
-                          height: SizeConfig.blockSizeVertical * 100,
+                              top: SizeConfig.blockSizeVertical * 1,
+                              bottom: SizeConfig.blockSizeVertical * 2),
                           child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
                             itemCount: productDealsList.length,
                             itemBuilder: (ctx, index) => GestureDetector(
                               onTap: () => pushNewScreenWithRouteSettings(

@@ -27,8 +27,8 @@ import 'package:cizaro_app/services/list_service.dart';
 import 'package:flutter/cupertino.dart';
 
 class ListViewModel extends ChangeNotifier {
-  Future<Home> fetchHomeList() async {
-    final result = await ListServices().fetchHome();
+  Future<Home> fetchHomeList(String lang) async {
+    final result = await ListServices().fetchHome(lang);
     notifyListeners();
     return result;
   }

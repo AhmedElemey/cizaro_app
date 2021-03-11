@@ -6,24 +6,29 @@ import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/available_payments.dart';
 import 'package:cizaro_app/model/checkout.dart';
 import 'package:cizaro_app/model/checkout_results.dart';
+import 'package:cizaro_app/model/otp_verification.dart';
 import 'package:cizaro_app/model/promo.dart';
 import 'package:cizaro_app/model/result_ckeck_shopping_cart.dart';
 import 'package:cizaro_app/model/shopping_cart.dart';
+import 'package:cizaro_app/model/verification_result.dart';
 import 'package:cizaro_app/screens/add_address_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/finished_order_screen.dart';
 import 'package:cizaro_app/screens/payments_screen.dart';
 import 'package:cizaro_app/size_config.dart';
+import 'package:cizaro_app/view_model/auth_view_model.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/checkout_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:cizaro_app/widgets/textfield_build.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,15 +60,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       isVerified = false,
       _selectedPromoCode = false,
       fromCheckout = true,
-      _checkOutDone = false;
+      _checkOutDone = false,
+      _checkMobileVerificationSend = false;
   AddressModel addressModel;
   CheckoutResult checkoutResult;
+  VerificationResult verificationResult;
   Payments payments;
   List<AvailablePayments> _paymentList = [];
   ResultShoppingCartModel resultShoppingCartModel;
   AddressBookModel addressBookModel;
   List<address.Data> addressesList = [];
   TextEditingController _promoCodeController = TextEditingController();
+  TextEditingController _verificationCodeController = TextEditingController();
+  FToast fToast;
 
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -211,9 +220,153 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (this.mounted) setState(() => _isLoading = false);
   }
 
+  _showAndroidVerifiedDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Verification',
+              style: TextStyle(color: Theme.of(context).primaryColor)),
+          content: Container(
+            height: SizeConfig.blockSizeVertical * 25,
+            child: Column(
+              children: [
+                Text('Plz, Enter Your Verification Code.',
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                SizedBox(height: SizeConfig.blockSizeVertical * 4),
+                TextFieldBuild(
+                    obscureText: false,
+                    readOnly: false,
+                    hintText: 'Ex : 123456',
+                    textStyle:
+                        TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.3),
+                    textInputType: TextInputType.number,
+                    lineCount: 1,
+                    textEditingController: _verificationCodeController),
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * 50,
+                  height: SizeConfig.blockSizeVertical * 7,
+                  margin:
+                      EdgeInsets.only(top: SizeConfig.blockSizeVertical * 3),
+                  child: CupertinoButton(
+                      child: Center(
+                          child: Text('Send',
+                              style: TextStyle(
+                                  fontSize:
+                                      SizeConfig.safeBlockHorizontal * 4.1))),
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () => sendOtpVerification(false)),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Resend',
+                  style: TextStyle(color: Theme.of(context).primaryColor)),
+              onPressed: () {
+                sendOtpVerification(true);
+                _isLoading = false;
+              },
+            ),
+            FlatButton(
+              child: Text('Close',
+                  style: TextStyle(color: Theme.of(context).primaryColor)),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _isLoading = false;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _showIosVerifiedDialog() {
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text('Verification',
+                style: TextStyle(color: Theme.of(context).primaryColor)),
+            content: Padding(
+              padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Plz, Enter Your Verification Code.',
+                      style: const TextStyle(fontWeight: FontWeight.w500)),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 1.7),
+                  CupertinoTextField(
+                      placeholder: 'Ex : 123456',
+                      controller: _verificationCodeController,
+                      keyboardType: TextInputType.number),
+                  Container(
+                      width: SizeConfig.blockSizeHorizontal * 50,
+                      height: SizeConfig.blockSizeVertical * 5,
+                      margin: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 2),
+                      child: CupertinoButton(
+                          child: Center(
+                              child: Text('Send',
+                                  style: TextStyle(
+                                      fontSize: SizeConfig.safeBlockHorizontal *
+                                          4.1))),
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () => sendOtpVerification(false)))
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Resend'),
+                onPressed: () {
+                  sendOtpVerification(true);
+                  _isLoading = false;
+                },
+              ),
+              FlatButton(
+                child: Text('Close'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _isLoading = false;
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  sendOtpVerification(bool _resendCode) async {
+    final verification = Provider.of<AuthViewModel>(context, listen: false);
+    String token = await getToken();
+    final otpVerification = OtpVerification(
+        code: int.parse(_verificationCodeController.text),
+        resend: _resendCode,
+        addressBookId: addressId);
+    await verification.otpVerification(otpVerification, token).then((response) {
+      verificationResult = response;
+      _checkMobileVerificationSend = verificationResult.data.done;
+      _checkMobileVerificationSend == false
+          ? showToast(
+              title: "Wrong Code! Plz Try Again.",
+              icon: CupertinoIcons.arrow_counterclockwise,
+              background: Colors.red)
+          : showToast(
+              title: "Your Code Successfully Send.",
+              icon: CupertinoIcons.checkmark_alt_circle,
+              background: Color(0xff3A559F));
+    }).catchError((error) => print(error));
+  }
+
   sendCheckOut() async {
     if (selectedRadio == 0 || selectedRadio == null)
       return Platform.isIOS ? _showIosErrorDialog() : _showAndroidErrorDialog();
+    if (isVerified == false)
+      return Platform.isIOS
+          ? _showIosVerifiedDialog()
+          : _showAndroidVerifiedDialog();
     if (this.mounted) setState(() => _isLoading = true);
     final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
     String token = await getToken();
@@ -315,6 +468,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ? fetchLastShippingAddress()
         : fetchSelectedShippingAddress());
     Future.microtask(() => fetchPaymentsList());
+    fToast = FToast();
+    fToast.init(context);
+  }
+
+  showToast({IconData icon, String title, Color background}) {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25.0), color: background),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text(title, style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+        child: toast,
+        toastDuration: Duration(seconds: 2),
+        gravity: ToastGravity.BOTTOM);
   }
 
   @override
@@ -326,7 +501,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       key: _scaffoldKey6,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Complete Order", _scaffoldKey6),
+        child: GradientAppBar("Complete Order", _scaffoldKey6, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

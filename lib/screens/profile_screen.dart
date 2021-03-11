@@ -5,6 +5,7 @@ import 'package:cizaro_app/screens/aboutUs_screen.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/screens/contactUs_screen.dart';
 import 'package:cizaro_app/screens/favorite_screen.dart';
+import 'package:cizaro_app/screens/languages_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/orders_screen.dart';
 import 'package:cizaro_app/screens/pending_shipment_screen.dart';
@@ -85,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         key: _scaffoldKey12,
         drawer: DrawerLayout(),
         appBar: PreferredSize(
-          child: GradientAppBar("Profile", _scaffoldKey12),
+          child: GradientAppBar("Profile", _scaffoldKey12, false),
           preferredSize: const Size(double.infinity, kToolbarHeight),
         ),
         body: _isLoading
@@ -706,8 +707,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   onTap: () => pushNewScreenWithRouteSettings(
                                       context,
                                       settings: RouteSettings(
-                                          name: ContactUsScreen.routeName),
-                                      screen: ContactUsScreen(),
+                                          name:
+                                              ChangeLanguagesScreen.routeName),
+                                      screen: ChangeLanguagesScreen(),
                                       withNavBar: true,
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),

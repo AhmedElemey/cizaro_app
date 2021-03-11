@@ -164,7 +164,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         key: _scaffoldKey9,
         drawer: DrawerLayout(),
         appBar: PreferredSize(
-          child: GradientAppBar("My Cart", _scaffoldKey9),
+          child: GradientAppBar("My Cart", _scaffoldKey9, false),
           preferredSize: const Size(double.infinity, kToolbarHeight),
         ),
         body: SingleChildScrollView(

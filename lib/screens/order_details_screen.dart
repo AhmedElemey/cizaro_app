@@ -56,7 +56,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       key: _scaffoldKey57,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Order Details", _scaffoldKey57),
+        child: GradientAppBar("Order Details", _scaffoldKey57, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

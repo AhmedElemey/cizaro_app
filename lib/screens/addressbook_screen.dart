@@ -86,7 +86,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
       key: _scaffoldKey5,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Select Address", _scaffoldKey5),
+        child: GradientAppBar("Select Address", _scaffoldKey5, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: SingleChildScrollView(

@@ -217,7 +217,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        child: GradientAppBar("Profile Editing", _scaffoldKey),
+        child: GradientAppBar("Profile Editing", _scaffoldKey, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

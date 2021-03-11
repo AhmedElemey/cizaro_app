@@ -109,7 +109,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       key: _scaffoldKey8,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("My Favorite", _scaffoldKey8),
+        child: GradientAppBar("My Favorite", _scaffoldKey8, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: SingleChildScrollView(

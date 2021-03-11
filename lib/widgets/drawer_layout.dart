@@ -1,11 +1,11 @@
-import 'dart:io';
-
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/screens/shop_screen.dart';
+import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerLayout extends StatefulWidget {
   @override
@@ -18,10 +18,16 @@ class _DrawerLayoutState extends State<DrawerLayout> {
   List<Collections> collectionsList = [];
   List<HotDeals> hotDeals = [];
 
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   Future getHomeData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
-    await getHome.fetchHomeList().then((response) {
+    bool lang = await getLang();
+    await getHome.fetchHomeList(lang == false ? 'en' : 'ar').then((response) {
       home = response;
       collectionsList = home.data.collections;
       hotDeals = home.data.hotDeals;
@@ -43,11 +49,9 @@ class _DrawerLayoutState extends State<DrawerLayout> {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           alignment: Alignment.topLeft,
-          margin: Platform.isAndroid
-              ? const EdgeInsets.only(top: 75)
-              : const EdgeInsets.only(top: 95),
-          height: MediaQuery.of(context).size.height * 0.35,
-          width: MediaQuery.of(context).size.width * 0.5,
+          margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 10.6),
+          width: SizeConfig.blockSizeHorizontal * 50,
+          height: SizeConfig.blockSizeVertical * 36,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
           child: Drawer(
             child: _isLoading
@@ -59,14 +63,15 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                 : SingleChildScrollView(
                     physics: ScrollPhysics(),
                     child: Padding(
-                      padding: const EdgeInsets.all(13),
+                      padding: EdgeInsets.symmetric(
+                          vertical: SizeConfig.blockSizeVertical * 3,
+                          horizontal: SizeConfig.blockSizeHorizontal * 3),
                       child: Column(
                         children: [
                           Text('Collections',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.4,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Color(0xff294794),
+                                  fontSize: SizeConfig.safeBlockVertical * 3,
                                   fontWeight: FontWeight.bold)),
                           ListView.separated(
                               physics: NeverScrollableScrollPhysics(),
@@ -86,18 +91,16 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),
                                   child: Text(' - ' + collectionsList[index].name,
-                                      textScaleFactor: MediaQuery.of(context)
-                                              .textScaleFactor *
-                                          1.25)),
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      SizedBox(height: 10)),
-                          const SizedBox(height: 13),
+                                      style: TextStyle(
+                                          fontSize: SizeConfig.safeBlockVertical *
+                                              2.5))),
+                              separatorBuilder: (BuildContext context, int index) =>
+                                  SizedBox(height: SizeConfig.blockSizeVertical * 1.5)),
+                          SizedBox(height: SizeConfig.blockSizeVertical * 3),
                           Text('Hot Deals',
-                              textScaleFactor:
-                                  MediaQuery.of(context).textScaleFactor * 1.4,
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Color(0xff294794),
+                                  fontSize: SizeConfig.safeBlockVertical * 3,
                                   fontWeight: FontWeight.bold)),
                           ListView.separated(
                               physics: NeverScrollableScrollPhysics(),
@@ -116,13 +119,15 @@ class _DrawerLayoutState extends State<DrawerLayout> {
                                         pageTransitionAnimation:
                                             PageTransitionAnimation.fade),
                                     child: Text(' - ' + hotDeals[index].name,
-                                        textScaleFactor: MediaQuery.of(context)
-                                                .textScaleFactor *
-                                            1.25),
+                                        style: TextStyle(
+                                            fontSize:
+                                                SizeConfig.safeBlockVertical *
+                                                    2.5)),
                                   ),
                               separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      SizedBox(height: 10))
+                                  (BuildContext context, int index) => SizedBox(
+                                      height:
+                                          SizeConfig.blockSizeVertical * 1.5))
                         ],
                       ),
                     ),

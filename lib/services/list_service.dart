@@ -27,15 +27,20 @@ import 'package:cizaro_app/model/searchModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
 import 'package:cizaro_app/model/shopping_cart.dart';
 import 'package:cizaro_app/model/specMdel.dart';
+import 'package:cizaro_app/widgets/json_util.dart';
 import 'package:http/http.dart' as http;
 
 class ListServices {
   static const API = 'http://cizaro.tree-code.com/api/v1';
 
-  Future<Home> fetchHome() async {
-    final response = await http.get(API + '/home/');
+  Future<Home> fetchHome(String lang) async {
+    final response = await http.get(API + '/home/', headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept-Language': '$lang'
+    });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
+      print(response.body);
       return Home.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");

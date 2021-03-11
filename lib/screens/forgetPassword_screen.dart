@@ -121,7 +121,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             key: _scaffoldKey50,
             drawer: DrawerLayout(),
             appBar: PreferredSize(
-              child: GradientAppBar("Forget Password", _scaffoldKey50),
+              child: GradientAppBar("Forget Password", _scaffoldKey50, true),
               preferredSize: const Size(double.infinity, kToolbarHeight),
             ),
             body: SingleChildScrollView(

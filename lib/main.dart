@@ -32,10 +32,13 @@ import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/languages_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -63,55 +66,72 @@ void main() async {
   await Firebase.initializeApp();
   final appleSignInAvailable = await AppleSignInAvailable.check();
   runApp(
-    MultiProvider(
-      providers: [
-        Provider<AppleSignInAvailable>.value(value: appleSignInAvailable),
-        ChangeNotifierProvider.value(value: AuthViewModel()),
-        ChangeNotifierProvider.value(value: ListViewModel()),
-        ChangeNotifierProvider.value(value: CartViewModel()),
-        ChangeNotifierProvider.value(value: FavViewModel()),
-        ChangeNotifierProvider.value(value: OrdersViewModel())
-      ],
-      child: DevicePreview(
-        enabled: false,
-        builder: (context) => Provider<AuthServices>(
-          create: (_) => AuthServices(),
-          child: MaterialApp(
-            navigatorKey: mainNavigatorKey,
-            builder: DevicePreview.appBuilder,
-            theme: ThemeData(
-                primaryColor: Color(0xff294794),
-                splashColor: Colors.transparent),
-            debugShowCheckedModeBanner: false,
-            home: SplashScreen(),
-            routes: {
-              TabsScreen.routeName: (ctx) => TabsScreen(),
-              LoginScreen.routeName: (ctx) => LoginScreen(),
-              HomeScreen.routeName: (ctx) => HomeScreen(),
-              ProfileScreen.routeName: (ctx) => ProfileScreen(),
-              AddressBookScreen.routeName: (ctx) => AddressBookScreen(),
-              ProductDetails.routeName: (ctx) => ProductDetails(),
-              FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
-              MyCartScreen.routeName: (ctx) => MyCartScreen(),
-              ShopScreen.routeName: (ctx) => ShopScreen(),
-              CheckoutScreen.routeName: (ctx) => CheckoutScreen(),
-              SearchScreen.routeName: (ctx) => SearchScreen(),
-              ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
-              SearchBarScreen.routeName: (ctx) => SearchBarScreen(),
-              AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
-              PolicesTermsScreen.routeName: (ctx) => PolicesTermsScreen(),
-              AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
-              ProfileEditScreen.routeName: (ctx) => ProfileEditScreen(),
-              OrderScreen.routeName: (ctx) => OrderScreen(),
-              PendingShipmentScreen.routeName: (ctx) => PendingShipmentScreen(),
-              FinishedOrder.routeName: (ctx) => FinishedOrder(),
-              EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
-              PaymentsScreen.routeName: (ctx) => PaymentsScreen(),
-              ForgetPasswordScreen.routeName: (ctx) => ForgetPasswordScreen()
-            },
+    EasyLocalization(
+      saveLocale: true,
+      supportedLocales: [Locale('ar', 'EG'), Locale('en', 'US')],
+      path: 'assets/languages',
+      fallbackLocale: Locale('en', 'US'),
+      child: MultiProvider(
+        providers: [
+          Provider<AppleSignInAvailable>.value(value: appleSignInAvailable),
+          ChangeNotifierProvider.value(value: AuthViewModel()),
+          ChangeNotifierProvider.value(value: ListViewModel()),
+          ChangeNotifierProvider.value(value: CartViewModel()),
+          ChangeNotifierProvider.value(value: FavViewModel()),
+          ChangeNotifierProvider.value(value: OrdersViewModel())
+        ],
+        child: DevicePreview(
+          enabled: false,
+          builder: (context) => Provider<AuthServices>(
+            create: (_) => AuthServices(),
+            child: MaterialApp(
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              navigatorKey: mainNavigatorKey,
+              builder: DevicePreview.appBuilder,
+              theme: ThemeData(
+                  primaryColor: Color(0xff294794),
+                  splashColor: Colors.transparent),
+              debugShowCheckedModeBanner: false,
+              home: SplashScreen(),
+              routes: {
+                TabsScreen.routeName: (ctx) => TabsScreen(),
+                LoginScreen.routeName: (ctx) => LoginScreen(),
+                HomeScreen.routeName: (ctx) => HomeScreen(),
+                ProfileScreen.routeName: (ctx) => ProfileScreen(),
+                AddressBookScreen.routeName: (ctx) => AddressBookScreen(),
+                ProductDetails.routeName: (ctx) => ProductDetails(),
+                FavoriteScreen.routeName: (ctx) => FavoriteScreen(),
+                MyCartScreen.routeName: (ctx) => MyCartScreen(),
+                ShopScreen.routeName: (ctx) => ShopScreen(),
+                CheckoutScreen.routeName: (ctx) => CheckoutScreen(),
+                SearchScreen.routeName: (ctx) => SearchScreen(),
+                ContactUsScreen.routeName: (ctx) => ContactUsScreen(),
+                SearchBarScreen.routeName: (ctx) => SearchBarScreen(),
+                AboutUsScreen.routeName: (ctx) => AboutUsScreen(),
+                PolicesTermsScreen.routeName: (ctx) => PolicesTermsScreen(),
+                AddAddressScreen.routeName: (ctx) => AddAddressScreen(),
+                ProfileEditScreen.routeName: (ctx) => ProfileEditScreen(),
+                OrderScreen.routeName: (ctx) => OrderScreen(),
+                PendingShipmentScreen.routeName: (ctx) =>
+                    PendingShipmentScreen(),
+                FinishedOrder.routeName: (ctx) => FinishedOrder(),
+                EditAddressScreen.routeName: (ctx) => EditAddressScreen(),
+                PaymentsScreen.routeName: (ctx) => PaymentsScreen(),
+                ForgetPasswordScreen.routeName: (ctx) => ForgetPasswordScreen(),
+                ChangeLanguagesScreen.routeName: (ctx) =>
+                    ChangeLanguagesScreen()
+              },
+            ),
           ),
         ),
       ),
     ),
   );
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {}
 }

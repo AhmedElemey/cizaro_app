@@ -81,7 +81,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       key: _scaffoldKey4,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Add New Address", _scaffoldKey4),
+        child: GradientAppBar("Add New Address", _scaffoldKey4, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: Form(

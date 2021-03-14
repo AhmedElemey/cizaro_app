@@ -25,6 +25,7 @@ import 'package:cizaro_app/widgets/checkout_item.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -64,6 +65,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       shippingFeesAfterPromo;
   bool _isLoading = false,
       isVerified = false,
+      usesPromo = false,
       _selectedPromoCode = false,
       fromCheckout = true,
       _checkOutDone = false,
@@ -225,6 +227,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       promoModel = response;
       totalAfterPromo = promoModel.data.totalCost;
       shippingFeesAfterPromo = promoModel.data.shippingFees;
+      usesPromo = true;
     }).catchError(
         (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
     if (this.mounted) setState(() => _isLoading = false);
@@ -427,11 +430,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       cityName = addressBookModel.data.city.name;
       regionName = addressBookModel.data.region;
     }).catchError((error) => print(error));
-    // pushNewScreenWithRouteSettings(context,
-    // settings: RouteSettings(name: LoginScreen.routeName),
-    // screen: LoginScreen(),
-    // withNavBar: true,
-    // pageTransitionAnimation: PageTransitionAnimation.fade));
     fetchTotalOrder();
     if (this.mounted) setState(() => _isLoading = false);
   }
@@ -456,7 +454,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           quantity: productQuantity,
           specs: productSpec ?? ''));
     });
-    final shoppingCart = ShoppingCartModel(addressBookId: 35, items: itemsList);
+    final shoppingCart =
+        ShoppingCartModel(addressBookId: addressId, items: itemsList);
     print(itemsList);
     await getTotalOrder
         .fetchResultOfShippingCart(shoppingCart, token)
@@ -511,7 +510,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       key: _scaffoldKey6,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Complete Order", _scaffoldKey6, true),
+        child: GradientAppBar("complete_order".tr(), _scaffoldKey6, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
@@ -531,12 +530,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     child: Row(
                       children: [
                         Text(
-                          "SHIPPING ADDRESS",
-                          // textScaleFactor:
-                          //     MediaQuery.of(context).textScaleFactor * 1,
+                          "shipping_address".tr(),
                           style: TextStyle(
-                              //   fontWeight: FontWeight.bold,
-                              // fontSize: 15,
                               fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
@@ -591,7 +586,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   arguments == null
                       ? Container(
                           padding: EdgeInsets.only(
-                              left: SizeConfig.blockSizeHorizontal * 3),
+                              left: SizeConfig.blockSizeHorizontal * 3,
+                              right: SizeConfig.blockSizeHorizontal * 3),
                           child: ListView.builder(
                             itemCount: addressesList.length,
                             physics: NeverScrollableScrollPhysics(),
@@ -604,10 +600,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Text(
                                           addressesList[index].streetAddress ??
                                               "John Doe",
-                                          // textScaleFactor:
-                                          //     MediaQuery.of(context)
-                                          //             .textScaleFactor *
-                                          //         1.5,
                                           style: TextStyle(
                                               // fontWeight: FontWeight.bold,
                                               fontFamily: 'Poppins',
@@ -619,10 +611,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Text(
                                           addressesList[index].region ??
                                               "Main Street\,",
-                                          // textScaleFactor:
-                                          //     MediaQuery.of(context)
-                                          //             .textScaleFactor *
-                                          //         1.2,
                                           style: TextStyle(
                                             // fontWeight: FontWeight.bold,
                                             fontSize:
@@ -634,10 +622,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Text(
                                           addressesList[index].city.name ??
                                               "City Name, Province\,",
-                                          // textScaleFactor:
-                                          //     MediaQuery.of(context)
-                                          //             .textScaleFactor *
-                                          //         1,
                                           style: TextStyle(
                                             // fontWeight: FontWeight.bold,
                                             fontSize:
@@ -649,10 +633,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       Text(
                                           addressesList[index].country.name ??
                                               "Country",
-                                          // textScaleFactor:
-                                          //     MediaQuery.of(context)
-                                          //             .textScaleFactor *
-                                          //         1,
                                           style: TextStyle(
                                             // fontWeight: FontWeight.bold,
                                             fontSize:
@@ -668,14 +648,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         )
                       : Container(
                           padding: EdgeInsets.only(
-                              left: SizeConfig.blockSizeHorizontal * 2),
+                              left: SizeConfig.blockSizeHorizontal * 2,
+                              right: SizeConfig.blockSizeHorizontal * 2),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(arguments['street_name'] ?? "John Doe",
-                                  // textScaleFactor:
-                                  //     MediaQuery.of(context).textScaleFactor *
-                                  //         1.5,
                                   style: TextStyle(
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 5,
@@ -715,11 +693,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 3),
+                        left: SizeConfig.blockSizeHorizontal * 3,
+                        right: SizeConfig.blockSizeHorizontal * 3),
                     child: Text(
-                      "PAYMENT METHOD",
-                      // textScaleFactor:
-                      //     MediaQuery.of(context).textScaleFactor * 1,
+                      "payment_method".tr(),
                       style: TextStyle(
                           fontSize: SizeConfig.safeBlockHorizontal * 4.1),
                     ),
@@ -738,9 +715,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             setSelectedRadio(val);
                           },
                         ),
-                        Text("Credit Card  ",
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor * 1.5,
+                        Text("credit_card".tr(),
                             style: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 5.5,
                                 fontWeight: FontWeight.bold,
@@ -753,9 +728,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             setSelectedRadio(val);
                           },
                         ),
-                        Text("Cash",
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor * 1.5,
+                        Text("cash".tr(),
                             style: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 5.5,
                                 fontWeight: FontWeight.bold,
@@ -771,9 +744,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   style: TextStyle(
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 5),
-                                  // textScaleFactor:
-                                  //     MediaQuery.of(context).textScaleFactor *
-                                  //         1
                                 )
                               : ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
@@ -806,13 +776,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Container(
                     padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 3,
+                        right: SizeConfig.blockSizeHorizontal * 3,
                         bottom: SizeConfig.blockSizeVertical * 1),
                     child: Text(
-                      "ITEMS",
+                      "items".tr(),
                       style: TextStyle(
                           fontSize: SizeConfig.safeBlockHorizontal * 4.1),
-                      // textScaleFactor:
-                      //     MediaQuery.of(context).textScaleFactor * .9,
                     ),
                   ),
                   ListView.builder(
@@ -884,7 +853,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                   1,
                                           left: SizeConfig.blockSizeHorizontal *
                                               4),
-                                      hintText: 'Promo Code',
+                                      hintText: 'promo_code'.tr(),
                                       hintStyle: TextStyle(
                                         fontSize:
                                             SizeConfig.safeBlockHorizontal * 4,
@@ -903,7 +872,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 child: GestureDetector(
                                   onTap: () => sendPromoRequest(),
                                   child: Text(
-                                    "Add",
+                                    "add".tr(),
                                     style: TextStyle(
                                       color: Color(0xff3A559F),
                                       fontSize:
@@ -919,7 +888,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 setState(() => _selectedPromoCode = true),
                             child: Padding(
                               padding: EdgeInsets.only(
-                                  left: SizeConfig.blockSizeHorizontal * 3),
+                                  left: SizeConfig.blockSizeHorizontal * 3,
+                                  right: SizeConfig.blockSizeHorizontal * 3),
                               child: Row(
                                 children: [
                                   Icon(Icons.local_offer_rounded,
@@ -928,7 +898,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       width:
                                           SizeConfig.blockSizeHorizontal * 10),
                                   Text(
-                                    'Add Promo Code',
+                                    'add_promo'.tr(),
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontSize:
@@ -978,7 +948,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Shipping Fess : ".toUpperCase(),
+                                          "shipping_fees".tr().toUpperCase() +
+                                              " : ",
                                           style: TextStyle(
                                             fontSize:
                                                 SizeConfig.safeBlockHorizontal *
@@ -989,7 +960,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             height:
                                                 SizeConfig.blockSizeVertical *
                                                     5),
-                                        promoModel?.data?.priceDiscount == 0.0
+                                        usesPromo == false
                                             ? Container(
                                                 child: Text(
                                                   shippingFees == null
@@ -1025,7 +996,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          "TOTAL : ",
+                                          "total".tr() + " : ",
                                           style: TextStyle(
                                             fontSize:
                                                 SizeConfig.safeBlockHorizontal *
@@ -1036,7 +1007,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             height:
                                                 SizeConfig.blockSizeVertical *
                                                     1),
-                                        promoModel?.data?.priceDiscount == 0.0
+                                        usesPromo == false
                                             ? Container(
                                                 child: Text(
                                                   totalCost == null
@@ -1079,7 +1050,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 child: Container(
                                   padding: EdgeInsets.only(
                                       right:
-                                          SizeConfig.blockSizeHorizontal * 3),
+                                          SizeConfig.blockSizeHorizontal * 2),
                                   width: SizeConfig.blockSizeHorizontal * 40,
                                   height: SizeConfig.blockSizeVertical * 6,
                                   decoration: BoxDecoration(
@@ -1094,11 +1065,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                 SizeConfig.blockSizeHorizontal *
                                                     4.5),
                                         child: Text(
-                                          "PLACE ORDER",
-                                          // textScaleFactor:
-                                          //     MediaQuery.of(context)
-                                          //             .textScaleFactor *
-                                          //         1,
+                                          "place_order".tr(),
                                           style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
@@ -1108,15 +1075,23 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         ),
                                       ),
                                       Spacer(),
-                                      CircleAvatar(
-                                        radius: SizeConfig.blockSizeHorizontal *
-                                            3.3,
-                                        backgroundColor: Colors.white,
-                                        child: Icon(
-                                          Icons.arrow_forward_ios_rounded,
-                                          size: SizeConfig.blockSizeHorizontal *
-                                              5,
-                                          color: Color(0xff3A559F),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    2),
+                                        child: CircleAvatar(
+                                          radius:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  3.3,
+                                          backgroundColor: Colors.white,
+                                          child: Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            size:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    5,
+                                            color: Color(0xff3A559F),
+                                          ),
                                         ),
                                       )
                                     ],

@@ -51,7 +51,7 @@ class HotDealsItem extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(right: 8),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                       margin: new EdgeInsets.all(10),

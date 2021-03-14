@@ -5,6 +5,7 @@ import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -105,36 +106,15 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Text(
-                        //   "username of logged in user",
-                        //   // textScaleFactor:
-                        //   //     MediaQuery.textScaleFactorOf(context) * 1.5,
-                        //   style: TextStyle(
-                        //     fontWeight: FontWeight.bold,
-                        //     fontSize: SizeConfig.safeBlockHorizontal * 5,
-                        //   ),
-                        // ),
-                        // Padding(
-                        //   padding: EdgeInsets.only(
-                        //     top: SizeConfig.blockSizeVertical * 2,
-                        //   ),
-                        //   child: Text(
-                        //     "Email of logged in user",
-                        //     style: TextStyle(
-                        //       // fontWeight: FontWeight.bold,
-                        //       fontSize: SizeConfig.safeBlockHorizontal * 5,
-                        //     ),
-                        //     // textScaleFactor:
-                        //     //     MediaQuery.textScaleFactorOf(context) * 1.5,
-                        //   ),
-                        // ),
                         Padding(
                           padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 2,
-                              left: SizeConfig.blockSizeHorizontal * 2),
+                            top: SizeConfig.blockSizeVertical * 2,
+                            left: SizeConfig.blockSizeHorizontal * 2,
+                            right: SizeConfig.blockSizeHorizontal * 2,
+                          ),
                           child: RichText(
                             text: TextSpan(
-                              text: "Address:   ",
+                              text: "address".tr(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   // fontSize: 20
@@ -156,11 +136,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         Padding(
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 2,
+                              right: SizeConfig.blockSizeHorizontal * 2,
                               left: SizeConfig.blockSizeHorizontal * 2),
                           child: Row(
                             children: [
                               Text(
-                                "Phone:   ",
+                                "phone".tr(),
                                 // textScaleFactor:
                                 //     MediaQuery.textScaleFactorOf(context) * 1.5,
                                 style: TextStyle(
@@ -182,11 +163,12 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         Padding(
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 2,
+                              right: SizeConfig.blockSizeHorizontal * 2,
                               left: SizeConfig.blockSizeHorizontal * 2),
                           child: Row(
                             children: [
                               Text(
-                                "Email:   ",
+                                "email".tr(),
                                 // textScaleFactor:
                                 //     MediaQuery.textScaleFactorOf(context) * 1.5,
                                 style: TextStyle(
@@ -208,9 +190,10 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         Padding(
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 4,
+                              right: SizeConfig.blockSizeHorizontal * 2,
                               left: SizeConfig.blockSizeHorizontal * 2),
                           child: Text(
-                            "Leave A Comment : ",
+                            "leave_comment".tr(),
                             // textScaleFactor:
                             //     MediaQuery.textScaleFactorOf(context) * 1.5,
                             style: TextStyle(
@@ -228,7 +211,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             controller: nameController,
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
-                              hintText: "Your Name",
+                              hintText: "your_name".tr(),
                               hintStyle: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 4,
                               ),
@@ -251,7 +234,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             controller: emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              hintText: "Your Email",
+                              hintText: "your_email".tr(),
                               hintStyle: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 4,
                               ),
@@ -267,7 +250,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                             controller: emailController,
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
-                              hintText: "Your Message",
+                              hintText: "your_message".tr(),
                               hintStyle: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 4,
                               ),
@@ -288,7 +271,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           ),
                           child: Center(
                             child: Text(
-                              "Social Links ",
+                              "social_links".tr(),
                               // textScaleFactor:
                               //     MediaQuery.textScaleFactorOf(context) * 1.8,
                               style: TextStyle(
@@ -373,7 +356,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                                   borderRadius: BorderRadius.circular(15.0)),
                               child: Center(
                                 child: Text(
-                                  "Send Comment",
+                                  "send_comment".tr(),
                                   style: TextStyle(
                                       color: Colors.white,
                                       // fontSize: 15,

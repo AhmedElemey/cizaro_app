@@ -99,7 +99,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 horizontal: SizeConfig.blockSizeHorizontal * 3),
             child: Center(
                 child: Text(
-              'Cart is Empty, please Search and Add your Product.',
+              'no_cart'.tr(),
               style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
             )))
         : Container(
@@ -185,7 +185,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "TOTAL",
+                            'total'.tr(),
                             style: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                           ),
@@ -202,11 +202,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         String token = await getToken();
                         total.cartProductModel.length == 0
                             ? showToast()
-                            // ToastBuild(
-                            //         toastMessage:
-                            //             'Please Add Products in Cart First!',
-                            //         toastIcon: Icons.add,
-                            //         bgColor: Color(0xff3A559F))
                             : token == null || token.isEmpty
                                 ? pushNewScreenWithRouteSettings(context,
                                     settings: RouteSettings(
@@ -238,7 +233,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              "CHECKOUT",
+                              'checkout'.tr(),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: SizeConfig.safeBlockHorizontal * 4,

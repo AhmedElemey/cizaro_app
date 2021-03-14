@@ -140,32 +140,35 @@ class _SearchScreenState extends State<SearchScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(left: 20, top: 10),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 5,
+                              right: SizeConfig.blockSizeHorizontal * 5,
+                              top: SizeConfig.blockSizeVertical * 5),
                           child: Text(
-                            "Filter By :",
-                            textScaleFactor:
-                                MediaQuery.of(context).textScaleFactor * 2,
+                            "filter_by".tr(),
                             style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                              fontSize: SizeConfig.safeBlockHorizontal * 5,
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 10, left: 20),
+                          padding: EdgeInsets.only(
+                            top: SizeConfig.blockSizeVertical * 3,
+                            left: SizeConfig.blockSizeHorizontal * 5,
+                            right: SizeConfig.blockSizeHorizontal * 5,
+                          ),
                           child: Row(
                             children: [
                               Text(
-                                "Filter By Brand :",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.3,
+                                "filter_by_brand".tr(),
                                 style: TextStyle(
-                                  fontSize:
-                                      SizeConfig.safeBlockHorizontal * 3.5,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 10),
+                                padding: EdgeInsets.only(
+                                    left: SizeConfig.blockSizeHorizontal * 2,
+                                    right: SizeConfig.blockSizeHorizontal * 2),
                                 child: FutureBuilder(
                                     future: Provider.of<ListViewModel>(context,
                                             listen: false)
@@ -188,7 +191,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             padding: EdgeInsets.only(
                                                 top: 10, left: 20),
                                             child: DropdownButton(
-                                              hint: Text("Select Brand "),
+                                              hint: Text("select_brand".tr()),
                                               value: valueBrand,
                                               // dropdownColor: Colors.grey.shade400,
                                               items: snapshot.data
@@ -212,26 +215,27 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, right: 50, bottom: 5),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 7,
+                              right: SizeConfig.blockSizeHorizontal * 7,
+                              bottom: SizeConfig.blockSizeVertical * 2),
                           child: Divider(
-                              height:
-                                  MediaQuery.of(context).size.height * .0001,
+                              height: SizeConfig.blockSizeVertical * .1,
                               color: Color(0xff727C8E)),
                         ),
                         Container(
                           height: MediaQuery.of(context).size.height * 0.07,
-                          padding: EdgeInsets.only(top: 5, left: 20),
+                          padding: EdgeInsets.only(
+                            top: SizeConfig.blockSizeVertical * 2,
+                            left: SizeConfig.blockSizeHorizontal * 5,
+                            right: SizeConfig.blockSizeHorizontal * 5,
+                          ),
                           child: Row(
                             children: [
                               Text(
-                                "Minimum Price : ",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.2,
+                                "minimum_price".tr(),
                                 style: TextStyle(
-                                  fontSize:
-                                      SizeConfig.safeBlockHorizontal * 3.5,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
                                 ),
                               ),
                               Container(
@@ -250,25 +254,27 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, left: 30, right: 50, bottom: 5),
+                          padding: EdgeInsets.only(
+                              left: SizeConfig.blockSizeHorizontal * 7,
+                              right: SizeConfig.blockSizeHorizontal * 7,
+                              top: SizeConfig.blockSizeVertical * 2,
+                              bottom: SizeConfig.blockSizeVertical * 2),
                           child: Divider(
-                              height:
-                                  MediaQuery.of(context).size.height * .0001,
+                              height: SizeConfig.blockSizeVertical * .1,
                               color: Color(0xff727C8E)),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 10, left: 20),
+                          padding: EdgeInsets.only(
+                            top: SizeConfig.blockSizeVertical * 2,
+                            left: SizeConfig.blockSizeHorizontal * 5,
+                            right: SizeConfig.blockSizeHorizontal * 5,
+                          ),
                           child: Row(
                             children: [
                               Text(
-                                "Maximum Price :",
-                                textScaleFactor:
-                                    MediaQuery.of(context).textScaleFactor *
-                                        1.2,
+                                "max_price".tr(),
                                 style: TextStyle(
-                                  fontSize:
-                                      SizeConfig.safeBlockHorizontal * 3.5,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
                                 ),
                               ),
                               Container(
@@ -286,9 +292,15 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                         ),
-                        Spacer(),
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 5,
+                        ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 30, left: 150),
+                          padding: EdgeInsets.only(
+                            bottom: SizeConfig.blockSizeVertical * 5,
+                            left: SizeConfig.blockSizeHorizontal * 15,
+                            right: SizeConfig.blockSizeHorizontal * 5,
+                          ),
                           child: GestureDetector(
                             onTap: () => {
                               getFilterData(),
@@ -303,7 +315,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   borderRadius: BorderRadius.circular(25.0)),
                               child: Center(
                                 child: Text(
-                                  "Filter",
+                                  'filter'.tr(),
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,

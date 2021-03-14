@@ -6,6 +6,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -121,7 +122,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             key: _scaffoldKey50,
             drawer: DrawerLayout(),
             appBar: PreferredSize(
-              child: GradientAppBar("Forget Password", _scaffoldKey50, true),
+              child:
+                  GradientAppBar("forget_password".tr(), _scaffoldKey50, true),
               preferredSize: const Size(double.infinity, kToolbarHeight),
             ),
             body: SingleChildScrollView(
@@ -134,7 +136,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Forgot Your Password?",
+                        "forget_password".tr() + "؟",
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: SizeConfig.safeBlockHorizontal * 6,
@@ -147,7 +149,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             right: SizeConfig.blockSizeHorizontal * 2,
                             left: SizeConfig.blockSizeHorizontal * 2),
                         child: Text(
-                          "Confirm your email and we will send the instructions ",
+                          "mail_confirm".tr(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 3.5,
@@ -169,7 +171,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             readOnly: false,
                             textInputType: TextInputType.text,
                             lineCount: 1,
-                            hintText: "Enter Your mail ..",
+                            hintText: "enter_mail".tr(),
                             textStyle: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 4,
                                 color: Color(0xff515C6F)),
@@ -177,14 +179,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       ),
                       GestureDetector(
                         onTap: () => resetPassword(),
-                        // onTap: () => pushNewScreenWithRouteSettings(
-                        //     context,
-                        //     settings: RouteSettings(
-                        //         name: ProfileEditScreen.routeName),
-                        //     screen: ProfileEditScreen(),
-                        //     withNavBar: true,
-                        //     pageTransitionAnimation:
-                        //     PageTransitionAnimation.fade),
                         child: Container(
                           width: SizeConfig.blockSizeHorizontal * 60,
                           height: SizeConfig.blockSizeVertical * 9,
@@ -201,7 +195,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             width: SizeConfig.blockSizeHorizontal * 30,
                             child: Center(
                               child: Text(
-                                "Send Email",
+                                "send_mail".tr(),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize:

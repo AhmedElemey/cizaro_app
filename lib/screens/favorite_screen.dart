@@ -4,6 +4,7 @@ import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/favorite_item.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
@@ -61,8 +62,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 vertical: SizeConfig.blockSizeVertical * 3,
                 horizontal: SizeConfig.blockSizeHorizontal * 3),
             child: Center(
-                child: Text(
-                    'Your Favorites is Empty, please Add your Favorites.',
+                child: Text('no_fav'.tr(),
                     style: TextStyle(
                       fontSize: SizeConfig.safeBlockHorizontal * 4,
                     ),
@@ -109,7 +109,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       key: _scaffoldKey8,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("My Favorite", _scaffoldKey8, true),
+        child: GradientAppBar('wish_list'.tr(), _scaffoldKey8, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: SingleChildScrollView(

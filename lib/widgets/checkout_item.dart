@@ -27,14 +27,14 @@ class CheckoutItem extends StatelessWidget {
           height: SizeConfig.blockSizeVertical * 15,
           padding: EdgeInsets.only(
               left: SizeConfig.blockSizeHorizontal * 2,
-              right: SizeConfig.blockSizeHorizontal * 3,
               top: SizeConfig.blockSizeVertical * .2),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                    right: SizeConfig.blockSizeHorizontal * 5,
+                    right: SizeConfig.blockSizeHorizontal * 1,
+                    left: SizeConfig.blockSizeHorizontal * 3,
                     top: SizeConfig.blockSizeVertical * .2,
                     bottom: SizeConfig.blockSizeVertical * .2),
                 child: ClipRRect(
@@ -55,9 +55,6 @@ class CheckoutItem extends StatelessWidget {
                             style: TextStyle(
                               fontSize: SizeConfig.safeBlockHorizontal * 4,
                             ),
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor *
-                            //         1.25
                           ),
                         ),
                         Container(

@@ -2,6 +2,7 @@ import 'package:cizaro_app/screens/orders_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
@@ -69,7 +70,7 @@ class _FinishedOrderState extends State<FinishedOrder> {
                     color: Theme.of(context).primaryColor,
                     size: SizeConfig.blockSizeVertical * 7),
               ),
-              Text('Order Placed!',
+              Text('order_placed'.tr() + " !",
                   // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.5,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -79,8 +80,7 @@ class _FinishedOrderState extends State<FinishedOrder> {
                 padding: EdgeInsets.symmetric(
                     horizontal: SizeConfig.blockSizeHorizontal * 6,
                     vertical: SizeConfig.blockSizeVertical * 2),
-                child: Text(
-                    'Your order was placed successfully. For more details, check All My Orders page under Profile tab.',
+                child: Text('order_placed_message'.tr(),
                     // textScaleFactor: MediaQuery.of(context).textScaleFactor * 1.3,
                     style: TextStyle(
                       fontSize: SizeConfig.safeBlockHorizontal * 5,
@@ -104,9 +104,11 @@ class _FinishedOrderState extends State<FinishedOrder> {
                     children: [
                       Container(
                         padding: EdgeInsets.only(
-                            left: SizeConfig.blockSizeHorizontal * 3),
+                          left: SizeConfig.blockSizeHorizontal * 1,
+                          right: SizeConfig.blockSizeHorizontal * 1,
+                        ),
                         child: Text(
-                          "MY ORDERS",
+                          "my_orders".tr(),
                           // textScaleFactor:
                           //     MediaQuery.of(context).textScaleFactor * 1,
                           style: TextStyle(
@@ -115,14 +117,18 @@ class _FinishedOrderState extends State<FinishedOrder> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Spacer(),
-                      CircleAvatar(
-                        radius: SizeConfig.blockSizeHorizontal * 3,
-                        backgroundColor: Colors.white,
-                        child: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          size: SizeConfig.blockSizeHorizontal * 5,
-                          color: Color(0xff3A559F),
+                      SizedBox(width: SizeConfig.blockSizeHorizontal * 6),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right: SizeConfig.blockSizeHorizontal * 3),
+                        child: CircleAvatar(
+                          radius: SizeConfig.blockSizeHorizontal * 3,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: SizeConfig.blockSizeHorizontal * 5,
+                            color: Color(0xff3A559F),
+                          ),
                         ),
                       )
                     ],

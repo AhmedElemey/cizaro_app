@@ -5,6 +5,7 @@ import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class _PolicesTermsScreenState extends State<PolicesTermsScreen> {
       key: _scaffoldKey11,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Policy And Privacy", _scaffoldKey11, true),
+        child: GradientAppBar('polices_terms'.tr(), _scaffoldKey11, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

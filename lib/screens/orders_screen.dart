@@ -7,6 +7,7 @@ import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -55,7 +56,7 @@ class _OrderScreenState extends State<OrderScreen> {
       key: _scaffoldKey,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("My Orders", _scaffoldKey, true),
+        child: GradientAppBar('my_orders'.tr(), _scaffoldKey, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

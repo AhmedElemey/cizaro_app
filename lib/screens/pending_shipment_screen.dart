@@ -1,10 +1,12 @@
 import 'dart:io';
+
 import 'package:cizaro_app/model/pendingShipment.dart';
 import 'package:cizaro_app/screens/order_details_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -51,7 +53,7 @@ class _PendingShipmentScreenState extends State<PendingShipmentScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: PreferredSize(
-        child: GradientAppBar("My Pending Shipment", _scaffoldKey, true),
+        child: GradientAppBar('pending_shipment'.tr(), _scaffoldKey, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading

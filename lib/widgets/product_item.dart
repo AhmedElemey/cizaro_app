@@ -2,11 +2,9 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:cizaro_app/main.dart';
-import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
-import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -320,62 +318,63 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Consumer<FavViewModel>(
-                                      builder: (_, favProvider, child) {
-                                    bool isAdded = favProvider
-                                        .checkFavItems(widget.productId);
-                                    return IconButton(
-                                        onPressed: () {
-                                          if (isAdded) {
-                                            // favProvider.deleteFavProduct(index, productId)
-                                          } else {
-                                            final productFav = ProductFav(
-                                                id: widget.productId,
-                                                name: widget.productName,
-                                                mainImg: widget.imgUrl,
-                                                price: widget.productPrice,
-                                                categoryName:
-                                                    widget.categoryName,
-                                                isFav: 1);
-                                            favProvider
-                                                .addProductToFav(productFav);
-                                            showFavToast(globalScaffoldKey
-                                                .currentContext);
-                                            showFavToast(globalScaffoldKey
-                                                .currentContext);
-                                          }
-                                        },
-                                        icon: Icon(
-                                          isAdded == false
-                                              ? Icons.favorite_border
-                                              : Icons.favorite,
-                                          color: isAdded == true
-                                              ? Colors.red
-                                              : Colors.grey,
-                                        ));
-                                  }),
-                                  // GestureDetector(
-                                  //   onTap: () async {
-                                  //     if (widget.isFav == 1) {
-                                  //       setState(() {
-                                  //         showFavAlreadyToast();
-                                  //         // widget.isFav = 0;
-                                  //         //print("already here");
-                                  //       });
-                                  //     } else {
-                                  //       setState(() {
-                                  //         widget.isFav = 1;
-                                  //         widget.onAddToFavorite();
-                                  //         //  print(" here");
-                                  //         showFavToast();
-                                  //       });
-                                  //     }
-                                  //   },
-                                  //   child: widget.isFav ==
-                                  //       ? Icon(Icons.favorite,
-                                  //           color: Color(0xffFF6969))
-                                  //       : Icon(Icons.favorite_border_outlined),
-                                  // ),
+                                  //hager's work
+                                  // Consumer<FavViewModel>(
+                                  //     builder: (_, favProvider, child) {
+                                  //   bool isAdded = favProvider
+                                  //       .checkFavItems(widget.productId);
+                                  //   return IconButton(
+                                  //       onPressed: () {
+                                  //         if (isAdded) {
+                                  //           // favProvider.deleteFavProduct(index, productId)
+                                  //         } else {
+                                  //           final productFav = ProductFav(
+                                  //               id: widget.productId,
+                                  //               name: widget.productName,
+                                  //               mainImg: widget.imgUrl,
+                                  //               price: widget.productPrice,
+                                  //               categoryName:
+                                  //                   widget.categoryName,
+                                  //               isFav: 1);
+                                  //           favProvider
+                                  //               .addProductToFav(productFav);
+                                  //           showFavToast(globalScaffoldKey
+                                  //               .currentContext);
+                                  //           showFavToast(globalScaffoldKey
+                                  //               .currentContext);
+                                  //         }
+                                  //       },
+                                  //       icon: Icon(
+                                  //         isAdded == false
+                                  //             ? Icons.favorite_border
+                                  //             : Icons.favorite,
+                                  //         color: isAdded == true
+                                  //             ? Colors.red
+                                  //             : Colors.grey,
+                                  //       ));
+                                  // }),
+                                  GestureDetector(
+                                    onTap: () async {
+                                      if (widget.isFav == 1) {
+                                        setState(() {
+                                          showFavAlreadyToast(context);
+                                          // widget.isFav = 0;
+                                          //print("already here");
+                                        });
+                                      } else {
+                                        setState(() {
+                                          widget.isFav = 1;
+                                          widget.onAddToFavorite();
+                                          //  print(" here");
+                                          showFavToast(context);
+                                        });
+                                      }
+                                    },
+                                    child: widget.isFav == 1
+                                        ? Icon(Icons.favorite,
+                                            color: Color(0xffFF6969))
+                                        : Icon(Icons.favorite_border_outlined),
+                                  ),
                                   GestureDetector(
                                     onTap: () {
                                       widget.onAddToCart();
@@ -529,58 +528,58 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Consumer<FavViewModel>(
-                                          builder: (_, favProvider, child) {
-                                        bool isAdded = favProvider
-                                            .checkFavItems(widget.productId);
-                                        return IconButton(
-                                            onPressed: () {
-                                              if (isAdded) {
-                                                // favProvider.deleteFavProduct(index, productId)
-                                              } else {
-                                                final productFav = ProductFav(
-                                                    id: widget.productId,
-                                                    name: widget.productName,
-                                                    mainImg: widget.imgUrl,
-                                                    price: widget.productPrice,
-                                                    categoryName:
-                                                        widget.categoryName,
-                                                    isFav: 1);
-                                                favProvider.addProductToFav(
-                                                    productFav);
-                                                showFavToast(globalScaffoldKey
-                                                    .currentContext);
-                                              }
-                                            },
-                                            icon: Icon(
-                                              isAdded == false
-                                                  ? Icons.favorite_border
-                                                  : Icons.favorite,
-                                              color: isAdded == true
-                                                  ? Colors.red
-                                                  : Colors.grey,
-                                            ));
-                                      }),
-                                      // GestureDetector(
-                                      //   onTap: () async {
-                                      //     if (widget.isFav == 1) {
-                                      //       setState(() {
-                                      //         showFavAlreadyToast();
-                                      //       });
-                                      //     } else {
-                                      //       setState(() {
-                                      //         widget.isFav = 1;
-                                      //         widget.onAddToFavorite();
-                                      //         showFavToast();
-                                      //       });
-                                      //     }
-                                      //   },
-                                      //   child: widget.isFav == 1
-                                      //       ? Icon(Icons.favorite,
-                                      //           color: Color(0xffFF6969))
-                                      //       : Icon(
-                                      //           Icons.favorite_border_outlined),
-                                      // ),
+                                      // Consumer<FavViewModel>(
+                                      //     builder: (_, favProvider, child) {
+                                      //   bool isAdded = favProvider
+                                      //       .checkFavItems(widget.productId);
+                                      //   return IconButton(
+                                      //       onPressed: () {
+                                      //         if (isAdded) {
+                                      //           // favProvider.deleteFavProduct(index, productId)
+                                      //         } else {
+                                      //           final productFav = ProductFav(
+                                      //               id: widget.productId,
+                                      //               name: widget.productName,
+                                      //               mainImg: widget.imgUrl,
+                                      //               price: widget.productPrice,
+                                      //               categoryName:
+                                      //                   widget.categoryName,
+                                      //               isFav: 1);
+                                      //           favProvider.addProductToFav(
+                                      //               productFav);
+                                      //           showFavToast(globalScaffoldKey
+                                      //               .currentContext);
+                                      //         }
+                                      //       },
+                                      //       icon: Icon(
+                                      //         isAdded == false
+                                      //             ? Icons.favorite_border
+                                      //             : Icons.favorite,
+                                      //         color: isAdded == true
+                                      //             ? Colors.red
+                                      //             : Colors.grey,
+                                      //       ));
+                                      // }),
+                                      GestureDetector(
+                                        onTap: () async {
+                                          if (widget.isFav == 1) {
+                                            setState(() {
+                                              showFavAlreadyToast(context);
+                                            });
+                                          } else {
+                                            setState(() {
+                                              widget.isFav = 1;
+                                              widget.onAddToFavorite();
+                                              showFavToast(context);
+                                            });
+                                          }
+                                        },
+                                        child: widget.isFav == 1
+                                            ? Icon(Icons.favorite,
+                                                color: Color(0xffFF6969))
+                                            : Icon(
+                                                Icons.favorite_border_outlined),
+                                      ),
                                       GestureDetector(
                                         onTap: () async {
                                           if (widget.inCart == 1) {

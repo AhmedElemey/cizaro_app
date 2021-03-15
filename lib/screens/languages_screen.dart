@@ -38,6 +38,9 @@ class _ChangeLanguagesScreenState extends State<ChangeLanguagesScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Image.asset('assets/images/languages-bg.png',
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  width: MediaQuery.of(context).size.width),
               Text(
                 'Choose your language',
                 textScaleFactor: MediaQuery.of(context).size.width * 0.0036,

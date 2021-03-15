@@ -23,7 +23,7 @@ class MyCartScreen extends StatefulWidget {
 class _MyCartScreenState extends State<MyCartScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey9 = GlobalKey<ScaffoldState>();
   FToast fToast;
-
+  bool isAvailable = true;
   getProductsOffer() async {
     await Provider.of<CartViewModel>(context, listen: false)
         .getCartItemsAfterOffer();
@@ -65,17 +65,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
     );
   }
 
-  showAvailabilityToast() {
+  showAvailabilityToast(BuildContext context) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Colors.red,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check, color: Colors.white),
+          Icon(Icons.close, color: Colors.white),
           SizedBox(width: 12.0),
           Text("There is a Product out of Stock..",
               style: const TextStyle(color: Colors.white))
@@ -211,16 +211,21 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade)
                                 : cart.cartProductModel.forEach((element) {
-                                    element.availability > 0
-                                        ? pushNewScreenWithRouteSettings(
-                                            context,
-                                            settings: RouteSettings(
-                                                name: CheckoutScreen.routeName),
-                                            screen: CheckoutScreen(),
-                                            withNavBar: true,
-                                            pageTransitionAnimation:
-                                                PageTransitionAnimation.fade)
-                                        : showAvailabilityToast();
+                                    if (element.availability == 0 ||
+                                        element.availability <
+                                            element.quantity) {
+                                      isAvailable = false;
+                                      showAvailabilityToast(context);
+                                      return;
+                                    } else {
+                                      pushNewScreenWithRouteSettings(context,
+                                          settings: RouteSettings(
+                                              name: CheckoutScreen.routeName),
+                                          screen: CheckoutScreen(),
+                                          withNavBar: true,
+                                          pageTransitionAnimation:
+                                              PageTransitionAnimation.fade);
+                                    }
                                   });
                       },
                       child: Container(

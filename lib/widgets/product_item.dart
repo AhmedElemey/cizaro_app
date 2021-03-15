@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -24,7 +25,8 @@ class ProductItem extends StatefulWidget {
   Offer offer;
 
   ProductItem(
-      {this.productId,
+      {Key key,
+      this.productId,
       this.productName,
       this.categoryName,
       this.imgUrl,
@@ -37,7 +39,8 @@ class ProductItem extends StatefulWidget {
       this.inCart,
       this.offer,
       this.onAddToCart,
-      this.onAddToFavorite});
+      this.onAddToFavorite})
+      : super(key: key);
 
   @override
   _ProductItemState createState() => _ProductItemState();
@@ -82,21 +85,6 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
       toastDuration: Duration(seconds: 2),
       gravity: ToastGravity.BOTTOM,
     );
-  }
-
-  checkFavItems(BuildContext context) async {
-    final fav = Provider.of<FavViewModel>(context, listen: false);
-    fav.favProductModel.forEach((element) {
-      if (widget.productId == element.id) {
-        setState(() {
-          widget.isFav = 1;
-        });
-      } else {
-        setState(() {
-          widget.isFav = 0;
-        });
-      }
-    });
   }
 
   checkCartItems(BuildContext context) async {
@@ -330,28 +318,59 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      if (widget.isFav == 1) {
-                                        setState(() {
-                                          showFavAlreadyToast();
-                                          // widget.isFav = 0;
-                                          //print("already here");
-                                        });
-                                      } else {
-                                        setState(() {
-                                          widget.isFav = 1;
-                                          widget.onAddToFavorite();
-                                          //  print(" here");
-                                          showFavToast();
-                                        });
-                                      }
-                                    },
-                                    child: widget.isFav == 1
-                                        ? Icon(Icons.favorite,
-                                            color: Color(0xffFF6969))
-                                        : Icon(Icons.favorite_border_outlined),
-                                  ),
+                                  Consumer<FavViewModel>(
+                                      builder: (_, favProvider, child) {
+                                    bool isAdded = favProvider
+                                        .checkFavItems(widget.productId);
+                                    return IconButton(
+                                        onPressed: () {
+                                          if (isAdded) {
+                                            // favProvider.deleteFavProduct(index, productId)
+                                          } else {
+                                            final productFav = ProductFav(
+                                                id: widget.productId,
+                                                name: widget.productName,
+                                                mainImg: widget.imgUrl,
+                                                price: widget.productPrice,
+                                                categoryName:
+                                                    widget.categoryName,
+                                                isFav: 1);
+                                            favProvider
+                                                .addProductToFav(productFav);
+                                            showFavToast();
+                                          }
+                                        },
+                                        icon: Icon(
+                                          isAdded == false
+                                              ? Icons.favorite_border
+                                              : Icons.favorite,
+                                          color: isAdded == true
+                                              ? Colors.red
+                                              : Colors.grey,
+                                        ));
+                                  }),
+                                  // GestureDetector(
+                                  //   onTap: () async {
+                                  //     if (widget.isFav == 1) {
+                                  //       setState(() {
+                                  //         showFavAlreadyToast();
+                                  //         // widget.isFav = 0;
+                                  //         //print("already here");
+                                  //       });
+                                  //     } else {
+                                  //       setState(() {
+                                  //         widget.isFav = 1;
+                                  //         widget.onAddToFavorite();
+                                  //         //  print(" here");
+                                  //         showFavToast();
+                                  //       });
+                                  //     }
+                                  //   },
+                                  //   child: widget.isFav ==
+                                  //       ? Icon(Icons.favorite,
+                                  //           color: Color(0xffFF6969))
+                                  //       : Icon(Icons.favorite_border_outlined),
+                                  // ),
                                   GestureDetector(
                                     onTap: () {
                                       widget.onAddToCart();
@@ -503,26 +522,56 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      GestureDetector(
-                                        onTap: () async {
-                                          if (widget.isFav == 1) {
-                                            setState(() {
-                                              showFavAlreadyToast();
-                                            });
-                                          } else {
-                                            setState(() {
-                                              widget.isFav = 1;
-                                              widget.onAddToFavorite();
-                                              showFavToast();
-                                            });
-                                          }
-                                        },
-                                        child: widget.isFav == 1
-                                            ? Icon(Icons.favorite,
-                                                color: Color(0xffFF6969))
-                                            : Icon(
-                                                Icons.favorite_border_outlined),
-                                      ),
+                                      Consumer<FavViewModel>(
+                                          builder: (_, favProvider, child) {
+                                        bool isAdded = favProvider
+                                            .checkFavItems(widget.productId);
+                                        return IconButton(
+                                            onPressed: () {
+                                              if (isAdded) {
+                                                // favProvider.deleteFavProduct(index, productId)
+                                              } else {
+                                                final productFav = ProductFav(
+                                                    id: widget.productId,
+                                                    name: widget.productName,
+                                                    mainImg: widget.imgUrl,
+                                                    price: widget.productPrice,
+                                                    categoryName:
+                                                        widget.categoryName,
+                                                    isFav: 1);
+                                                favProvider.addProductToFav(
+                                                    productFav);
+                                              }
+                                            },
+                                            icon: Icon(
+                                              isAdded == false
+                                                  ? Icons.favorite_border
+                                                  : Icons.favorite,
+                                              color: isAdded == true
+                                                  ? Colors.red
+                                                  : Colors.grey,
+                                            ));
+                                      }),
+                                      // GestureDetector(
+                                      //   onTap: () async {
+                                      //     if (widget.isFav == 1) {
+                                      //       setState(() {
+                                      //         showFavAlreadyToast();
+                                      //       });
+                                      //     } else {
+                                      //       setState(() {
+                                      //         widget.isFav = 1;
+                                      //         widget.onAddToFavorite();
+                                      //         showFavToast();
+                                      //       });
+                                      //     }
+                                      //   },
+                                      //   child: widget.isFav == 1
+                                      //       ? Icon(Icons.favorite,
+                                      //           color: Color(0xffFF6969))
+                                      //       : Icon(
+                                      //           Icons.favorite_border_outlined),
+                                      // ),
                                       GestureDetector(
                                         onTap: () async {
                                           if (widget.inCart == 1) {

@@ -34,4 +34,16 @@ class FavViewModel extends ChangeNotifier {
     await dbHelper.updateProduct(_favItemsList[index]);
     notifyListeners();
   }
+
+  bool checkFavItems(int id) {
+    bool isFound = false;
+    favProductModel.forEach((element) {
+      if (id == element.id) {
+        isFound = true;
+      } else {
+        isFound = false;
+      }
+    });
+    return isFound;
+  }
 }

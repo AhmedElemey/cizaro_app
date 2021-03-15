@@ -731,15 +731,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () => {
-                                    // pushNewScreenWithRouteSettings(
-                                    //     context,
-                                    //     settings: RouteSettings(
-                                    //         name:
-                                    //         ChangeLanguagesScreen.routeName),
-                                    //     screen: ChangeLanguagesScreen(),
-                                    //     withNavBar: true,
-                                    //     pageTransitionAnimation:
-                                    //     PageTransitionAnimation.fade)
+                                    pushNewScreenWithRouteSettings(context,
+                                        settings: RouteSettings(
+                                            name: ChangeLanguagesScreen
+                                                .routeName),
+                                        screen: ChangeLanguagesScreen(),
+                                        withNavBar: true,
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.fade)
                                   },
                                   child: Container(
                                     color: Colors.white,

@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         pageTransitionAnimation:
                             tab.PageTransitionAnimation.fade),
                     child: ProductItem(
+                      key: ObjectKey(newArrivalsList[initPosition > 0 ? 1 : 0]),
                       productId: newArrivalsList[initPosition > 0 ? 1 : 0]
                               ?.products[index]
                               ?.id ??
@@ -180,28 +181,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             sizeSpecValue: '');
                         cart.addProductToCart(productCart);
                       },
-                      onAddToFavorite: () {
-                        final productFav = ProductFav(
-                            id: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .id,
-                            name: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .name,
-                            mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .mainImg,
-                            price: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .price,
-                            categoryName:
-                                newArrivalsList[initPosition > 0 ? 1 : 0]
-                                    ?.products[index]
-                                    .category
-                                    .name,
-                            isFav: 1);
-                        fav.addProductToFav(productFav);
-                      },
+                      // onAddToFavorite: () {
+                      //   final productFav = ProductFav(
+                      //       id: newArrivalsList[initPosition > 0 ? 1 : 0]
+                      //           ?.products[index]
+                      //           .id,
+                      //       name: newArrivalsList[initPosition > 0 ? 1 : 0]
+                      //           ?.products[index]
+                      //           .name,
+                      //       mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
+                      //           ?.products[index]
+                      //           .mainImg,
+                      //       price: newArrivalsList[initPosition > 0 ? 1 : 0]
+                      //           ?.products[index]
+                      //           .price,
+                      //       categoryName:
+                      //           newArrivalsList[initPosition > 0 ? 1 : 0]
+                      //               ?.products[index]
+                      //               .category
+                      //               .name,
+                      //       isFav: 1);
+                      //   fav.addProductToFav(productFav);
+                      // },
                     ),
                   )),
         ),

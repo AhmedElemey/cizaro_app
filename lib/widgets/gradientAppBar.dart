@@ -25,6 +25,7 @@ class _GradientAppBarState extends State<GradientAppBar> {
   final double barHeight = 50.0;
   var valueCollection, valueCategory, currentSelectedValue;
   Home home;
+  bool languageValue = false;
   List<Collections> collectionsList = [];
   List<NewArrivals> newArrivalsList = [];
   List<HotDeals> hotDeals = [];
@@ -36,8 +37,10 @@ class _GradientAppBarState extends State<GradientAppBar> {
 
   Future getHomeData() async {
     final getHome = Provider.of<ListViewModel>(context, listen: false);
-    bool lang = await getLang();
-    await getHome.fetchHomeList(lang == false ? 'en' : 'ar').then((response) {
+    languageValue = await getLang();
+    await getHome
+        .fetchHomeList(languageValue == false ? 'en' : 'ar')
+        .then((response) {
       home = response;
       collectionsList = home.data.collections;
       newArrivalsList = home.data.newArrivals;

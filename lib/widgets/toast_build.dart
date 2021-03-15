@@ -26,22 +26,20 @@ class _ToastBuildState extends State<ToastBuild> {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25.0),
-          color: widget.bgColor ?? Color(0xff3A559F)),
+          borderRadius: BorderRadius.circular(25.0), color: widget.bgColor),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(widget.toastIcon ?? Icons.check, color: Colors.white),
+          Icon(widget.toastIcon, color: Colors.white),
           SizedBox(width: 12.0),
           Text(widget.toastMessage, style: const TextStyle(color: Colors.white))
         ],
       ),
     );
     fToast.showToast(
-      child: toast,
-      toastDuration: Duration(seconds: 2),
-      gravity: ToastGravity.BOTTOM,
-    );
+        child: toast,
+        toastDuration: Duration(seconds: 2),
+        gravity: ToastGravity.BOTTOM);
   }
 
   @override

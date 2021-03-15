@@ -179,7 +179,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Error'),
-          content: Text('Plz! Select Payment Method before Submit your Order',
+          content: Text(
+              'Please! Select Payment Method before Submit your Order',
               style: const TextStyle(fontWeight: FontWeight.bold)),
           actions: <Widget>[
             FlatButton(
@@ -203,7 +204,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           return CupertinoAlertDialog(
             title: Text('Error'),
             content:
-                Text('Plz! Select Payment Method before Submit your Order'),
+                Text('Please! Select Payment Method before Submit your Order'),
             actions: <Widget>[
               FlatButton(
                 child: Text('Close'),
@@ -244,13 +245,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             height: SizeConfig.blockSizeVertical * 25,
             child: Column(
               children: [
-                Text('Plz, Enter Your Verification Code.',
+                Text('Please, Enter Your Verification Code.',
                     style: const TextStyle(fontWeight: FontWeight.bold)),
                 SizedBox(height: SizeConfig.blockSizeVertical * 4),
                 TextFieldBuild(
                     obscureText: false,
                     readOnly: false,
-                    hintText: 'Ex : 123456',
+                    hintText: 'Ex : 1234',
                     textStyle:
                         TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.3),
                     textInputType: TextInputType.number,
@@ -268,7 +269,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   fontSize:
                                       SizeConfig.safeBlockHorizontal * 4.1))),
                       color: Theme.of(context).primaryColor,
-                      onPressed: () => sendOtpVerification(false)),
+                      onPressed: () {
+                        _verificationCodeController.text == ''
+                            ? showToast(
+                                icon: Icons.error_outline,
+                                title: 'Please! Enter Your Code Verification')
+                            : sendOtpVerification(false);
+                        Navigator.pop(context);
+                      }),
                 )
               ],
             ),
@@ -308,11 +316,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Plz, Enter Your Verification Code.',
+                  Text('Please, Enter Your Verification Code.',
                       style: const TextStyle(fontWeight: FontWeight.w500)),
                   SizedBox(height: SizeConfig.blockSizeVertical * 1.7),
                   CupertinoTextField(
-                      placeholder: 'Ex : 123456',
+                      placeholder: 'Ex : 1234',
                       controller: _verificationCodeController,
                       keyboardType: TextInputType.number),
                   Container(
@@ -327,7 +335,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       fontSize: SizeConfig.safeBlockHorizontal *
                                           4.1))),
                           color: Theme.of(context).primaryColor,
-                          onPressed: () => sendOtpVerification(false)))
+                          onPressed: () {
+                            _verificationCodeController.text == ''
+                                ? showToast(
+                                    icon: Icons.error_outline,
+                                    title:
+                                        'Please! Enter Your Code Verification')
+                                : sendOtpVerification(false);
+                            Navigator.pop(context);
+                          }))
                 ],
               ),
             ),
@@ -363,7 +379,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       _checkMobileVerificationSend = verificationResult.data.done;
       _checkMobileVerificationSend == false
           ? showToast(
-              title: "Wrong Code! Plz Try Again.",
+              title: "Wrong Code! Please Try Again.",
               icon: CupertinoIcons.arrow_counterclockwise,
               background: Colors.red)
           : showToast(
@@ -381,21 +397,27 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ? _showIosVerifiedDialog()
           : _showAndroidVerifiedDialog();
     if (this.mounted) setState(() => _isLoading = true);
-    final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
-    String token = await getToken();
-    final checkout = CheckOut(
-        addressBookId: addressId,
-        isCash: selectedRadio == 1 ? false : true,
-        paymentApiId: selectedPaymentId);
-    await getCheckout.checkOutMethod(token, checkout).then((response) {
-      checkoutResult = response;
-      paymentUrl = checkoutResult.data.paymentUrl;
-      orderId = checkoutResult.data.orderId;
-      _checkOutDone = checkoutResult.data.done;
-      checkPaymentsOptions();
-    }).catchError(
-        (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
-    if (this.mounted) setState(() => _isLoading = false);
+    if (_checkMobileVerificationSend == true) {
+      final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
+      String token = await getToken();
+      final checkout = CheckOut(
+          addressBookId: addressId,
+          isCash: selectedRadio == 1 ? false : true,
+          paymentApiId: selectedPaymentId);
+      await getCheckout.checkOutMethod(token, checkout).then((response) {
+        checkoutResult = response;
+        paymentUrl = checkoutResult.data.paymentUrl;
+        orderId = checkoutResult.data.orderId;
+        _checkOutDone = checkoutResult.data.done;
+        checkPaymentsOptions();
+      }).catchError(
+          (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
+      if (this.mounted) setState(() => _isLoading = false);
+    } else
+      return showToast(
+          title: "Wrong Code! Please Try Again.",
+          icon: CupertinoIcons.arrow_counterclockwise,
+          background: Colors.red);
   }
 
   checkPaymentsOptions() {

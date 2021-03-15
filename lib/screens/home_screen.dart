@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
     bool lang = await getLang();
-    await getHome.fetchHomeList(lang == false ? 'en' : 'ar').then((response) {
+    await getHome.fetchHomeList(lang == false ? 'en' : 'en').then((response) {
       home = response;
       hotDealsList = home.data.hotDeals;
       collectionsList = home.data.collections;

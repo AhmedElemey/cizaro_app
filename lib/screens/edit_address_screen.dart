@@ -7,6 +7,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/textfield_build.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -33,6 +34,12 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   String token;
   AddressBookModel addressBookModel;
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
+  bool languageValue = false;
+
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
 
   @override
   void dispose() {
@@ -77,6 +84,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
   void initState() {
     super.initState();
     // Future.microtask(() => fetchSelectedShippingAddress());
+    //Future.microtask(() => getLang());
     fToast = FToast();
     fToast.init(context);
   }
@@ -90,13 +98,14 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GradientAppBar("Edit Your Address", _scaffoldKey4, true),
+            GradientAppBar("edit_your_address".tr(), _scaffoldKey4, true),
             Padding(
               padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 5),
               child: FutureBuilder(
                   future: Provider.of<ListViewModel>(context, listen: false)
                       .fetchCountries(
-                          token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f'),
+                          token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
+                          languageValue == false ? 'en' : 'ar'),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<country.Data>> snapshot) {
                     if (snapshot.hasError)
@@ -173,7 +182,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
             FutureBuilder(
                 future: Provider.of<ListViewModel>(context, listen: false)
                     .fetchCountries(
-                        token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f'),
+                        token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
+                        languageValue == false ? 'en' : 'ar'),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<country.Data>> snapshot) {
                   if (snapshot.hasError)
@@ -330,7 +340,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 Container(
                   margin: EdgeInsets.only(
                       top: SizeConfig.blockSizeVertical * 2,
-                      right: SizeConfig.blockSizeHorizontal * 2),
+                      right: SizeConfig.blockSizeHorizontal * 2,
+                      left: SizeConfig.blockSizeHorizontal * 2),
                   width: SizeConfig.blockSizeHorizontal * 20,
                   height: SizeConfig.blockSizeVertical * 6,
                   decoration: BoxDecoration(
@@ -373,7 +384,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                               PageTransitionAnimation.fade);
                     },
                     child: Center(
-                        child: Text("Update",
+                        child: Text("update".tr(),
                             style: TextStyle(
                                 color: Colors.white,
                                 // fontSize: 15,

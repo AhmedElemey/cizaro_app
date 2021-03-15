@@ -6,6 +6,7 @@ import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/order_details_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,9 +42,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     final getOrders = Provider.of<OrdersViewModel>(context, listen: false);
     String token = await getToken();
     // print(token);
-
     languageValue = await getLang();
-
     await getOrders
         .fetchOrderDetails(
             token, arguments['order_id'], languageValue == false ? 'en' : 'ar')
@@ -66,7 +65,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       key: _scaffoldKey57,
       drawer: DrawerLayout(),
       appBar: PreferredSize(
-        child: GradientAppBar("Order Details", _scaffoldKey57, true),
+        child: GradientAppBar("order_details".tr(), _scaffoldKey57, true),
         preferredSize: const Size(double.infinity, kToolbarHeight),
       ),
       body: _isLoading
@@ -79,7 +78,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               child: _ordersList == null || _ordersList.length == 0
                   ? Center(
                       child: Text(
-                      'There is No Orders Yet!',
+                      'no_order'.tr(),
                       style: TextStyle(
                         fontSize: SizeConfig.safeBlockHorizontal * 5,
                       ),

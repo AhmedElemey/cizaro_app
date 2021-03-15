@@ -269,15 +269,18 @@ class ListServices {
     }
   }
 
-  Future<List<country.Data>> fetchCountries(String token) async {
+  Future<List<country.Data>> fetchCountries(String token, String lang) async {
     final response = await http.get(API + '/countries/', headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': '${'Token'} $token'
+      'Authorization': '${'Token'} $token',
+      'Accept-Language': '$lang'
     });
 
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
+      print(response.body);
       final Iterable json = body['data'];
       return json
           .map<country.Data>((countries) => country.Data.fromJson(countries))

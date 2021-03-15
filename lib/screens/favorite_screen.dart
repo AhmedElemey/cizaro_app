@@ -87,8 +87,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     imgUrl: fav.favProductModel[index].mainImg,
                     productName: fav.favProductModel[index].name,
                     productCategory: fav.favProductModel[index].categoryName,
-                    productStar:
-                        fav.favProductModel[index]?.stars.toString() ?? '0.0',
+                    productStar: fav.favProductModel[index]?.stars ?? '0.0',
                     productPrice: fav.favProductModel[index].price.toString(),
                     unFavorite: () {
                       fav.deleteFavProduct(

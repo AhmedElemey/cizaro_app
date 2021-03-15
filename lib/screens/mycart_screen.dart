@@ -54,7 +54,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("There is no items in cart !",
+              style: const TextStyle(color: Colors.white))
         ],
       ),
     );

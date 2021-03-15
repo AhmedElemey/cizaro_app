@@ -30,6 +30,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   String token;
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool languageValue = false;
+
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
 
   @override
   void dispose() {
@@ -94,8 +100,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               children: [
                 FutureBuilder(
                     future: Provider.of<ListViewModel>(context, listen: false)
-                        .fetchCountries(token ??
-                            'c4ce7da269c80455720be2c26c984d8828b88c5f'),
+                        .fetchCountries(
+                            token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
+                            languageValue == false ? 'ar' : 'en'),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<country.Data>> snapshot) {
                       if (snapshot.hasError)
@@ -176,8 +183,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     }),
                 FutureBuilder(
                     future: Provider.of<ListViewModel>(context, listen: false)
-                        .fetchCountries(token ??
-                            'c4ce7da269c80455720be2c26c984d8828b88c5f'),
+                        .fetchCountries(
+                            token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
+                            languageValue == false ? 'en' : 'ar'),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<country.Data>> snapshot) {
                       if (snapshot.hasError)

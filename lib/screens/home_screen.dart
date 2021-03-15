@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future getHomeData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
-    bool languageValue = await getLang();
+    languageValue = await getLang();
     await getHome
         .fetchHomeList(languageValue == false ? 'en' : 'ar')
         .then((response) {

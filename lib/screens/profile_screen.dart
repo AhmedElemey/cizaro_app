@@ -695,7 +695,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               height:
                                                   SizeConfig.blockSizeVertical *
                                                       3.6,
-                                              color: Colors.grey[900]),
+                                              color: Colors.black),
                                         ),
                                         Container(
                                           padding: EdgeInsets.only(

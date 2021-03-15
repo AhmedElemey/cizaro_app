@@ -45,7 +45,7 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeHorizontal * 28,
+          height: SizeConfig.blockSizeHorizontal * 37,
           width: SizeConfig.blockSizeHorizontal * 100,
           margin: EdgeInsets.only(
               top: SizeConfig.blockSizeHorizontal * 1,
@@ -55,9 +55,12 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.blockSizeHorizontal * .2,
-                      horizontal: SizeConfig.blockSizeHorizontal * .1),
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 1,
+                      right: SizeConfig.blockSizeHorizontal * 1),
+                  // padding: EdgeInsets.symmetric(
+                  //     vertical: SizeConfig.blockSizeHorizontal * .2,
+                  //     horizontal: SizeConfig.blockSizeHorizontal * .1),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
@@ -67,8 +70,9 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                               fit: BoxFit.fitHeight)))),
               Flexible(
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(left: SizeConfig.blockSizeHorizontal * 2),
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 2,
+                      right: SizeConfig.blockSizeHorizontal * 2),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -127,7 +131,7 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Qty :',
+                            'qty'.tr(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 4,
@@ -144,7 +148,7 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                           ),
                           SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
                           Text(
-                            "Total : ",
+                            "total".tr() + " :",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 4,
@@ -161,8 +165,11 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                       widget.totalAvailability < widget.productQuantity
                           ? Center(
                               child: Text(
-                                  '${widget.totalAvailability}  items Available in Stock' ??
+                                  "${widget.totalAvailability}" +
+                                          "available".tr() ??
                                       '',
+                                  // '${widget.totalAvailability}  items Available in Stock' ??
+                                  //     '',
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontSize:

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:cizaro_app/main.dart';
 import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
@@ -64,7 +65,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
     // WidgetsBinding.instance.removeObserver(this);
   }
 
-  showFavAlreadyToast() {
+  showFavAlreadyToast(BuildContext context) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
@@ -74,7 +75,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check, color: Colors.white),
+          Icon(Icons.error_outline, color: Colors.white),
           SizedBox(width: 12.0),
           Text("Already in Favorites",
               style: const TextStyle(color: Colors.white))
@@ -103,7 +104,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
     });
   }
 
-  showFavToast() {
+  showFavToast(BuildContext context) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
@@ -126,7 +127,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
     );
   }
 
-  showInCartAlreadyToast() {
+  showInCartAlreadyToast(BuildContext context) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
@@ -149,7 +150,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
     );
   }
 
-  showCartToast() {
+  showCartToast(BuildContext context) {
     Widget toast = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
@@ -338,7 +339,10 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                 isFav: 1);
                                             favProvider
                                                 .addProductToFav(productFav);
-                                            showFavToast();
+                                            showFavToast(globalScaffoldKey
+                                                .currentContext);
+                                            showFavToast(globalScaffoldKey
+                                                .currentContext);
                                           }
                                         },
                                         icon: Icon(
@@ -375,7 +379,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                   GestureDetector(
                                     onTap: () {
                                       widget.onAddToCart();
-                                      showCartToast();
+                                      showCartToast(
+                                          globalScaffoldKey.currentContext);
                                     },
                                     child: Container(
                                       child: SvgPicture.asset(
@@ -543,6 +548,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                     isFav: 1);
                                                 favProvider.addProductToFav(
                                                     productFav);
+                                                showFavToast(globalScaffoldKey
+                                                    .currentContext);
                                               }
                                             },
                                             icon: Icon(
@@ -578,13 +585,16 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                         onTap: () async {
                                           if (widget.inCart == 1) {
                                             setState(() {
-                                              showInCartAlreadyToast();
+                                              showInCartAlreadyToast(
+                                                  globalScaffoldKey
+                                                      .currentContext);
                                             });
                                           } else {
                                             setState(() {
                                               widget.inCart = 1;
                                               widget.onAddToCart();
-                                              showCartToast();
+                                              showCartToast(globalScaffoldKey
+                                                  .currentContext);
                                             });
                                           }
                                         },

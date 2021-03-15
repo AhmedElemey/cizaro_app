@@ -50,6 +50,7 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
+final globalScaffoldKey = GlobalKey<ScaffoldState>();
 
 class AppleSignInAvailable {
   AppleSignInAvailable(this.isAvailable);
@@ -89,7 +90,13 @@ void main() async {
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               navigatorKey: mainNavigatorKey,
-              builder: DevicePreview.appBuilder,
+              builder: (context, child) {
+                return Scaffold(
+                  key: globalScaffoldKey,
+                  body: child,
+                );
+              },
+              // builder: DevicePreview.appBuilder,
               theme: ThemeData(
                   primaryColor: Color(0xff294794),
                   splashColor: Colors.transparent),

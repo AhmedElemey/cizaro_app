@@ -38,6 +38,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ProfileModel profile;
   String userName, userEmail, userBirthDate;
   Gender userGender;
+  bool languageValue = false;
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
@@ -65,7 +71,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           pageTransitionAnimation: PageTransitionAnimation.fade);
     }
     final getProfile = Provider.of<ListViewModel>(context, listen: false);
-    await getProfile.fetchProfile(userId, token).then((response) {
+    languageValue = await getLang();
+    await getProfile
+        .fetchProfile(userId, token, languageValue == false ? 'en' : 'ar')
+        .then((response) {
       profile = response;
       userName = profile.data.fullName;
       userEmail = profile.data.email;
@@ -731,15 +740,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 GestureDetector(
                                   onTap: () => {
-                                    // pushNewScreenWithRouteSettings(
-                                    //     context,
-                                    //     settings: RouteSettings(
-                                    //         name:
-                                    //         ChangeLanguagesScreen.routeName),
-                                    //     screen: ChangeLanguagesScreen(),
-                                    //     withNavBar: true,
-                                    //     pageTransitionAnimation:
-                                    //     PageTransitionAnimation.fade)
+                                    pushNewScreenWithRouteSettings(context,
+                                        settings: RouteSettings(
+                                            name: ChangeLanguagesScreen
+                                                .routeName),
+                                        screen: ChangeLanguagesScreen(),
+                                        withNavBar: true,
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.fade)
                                   },
                                   child: Container(
                                     color: Colors.white,

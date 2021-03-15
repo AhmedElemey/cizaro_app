@@ -173,7 +173,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
             children: [
               cartProductsList(),
               Container(
-                height: SizeConfig.blockSizeVertical * 8,
+                height: SizeConfig.blockSizeVertical * 9,
                 padding: EdgeInsets.only(
                     right: SizeConfig.blockSizeHorizontal * 5,
                     left: SizeConfig.blockSizeHorizontal * 5,
@@ -190,7 +190,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                           ),
                           Text(
-                            total.totalPrice.toStringAsFixed(2) + ' LE' ??
+                            total.totalPrice.toStringAsFixed(2) + ' le'.tr() ??
                                 '00.00',
                             style: TextStyle(
                                 color: Color(0xff3A559F),

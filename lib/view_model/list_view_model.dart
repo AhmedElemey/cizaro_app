@@ -69,26 +69,27 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<ProductDetailsModel> fetchProductDetailsList(int productId) async {
-    final result = await ListServices().fetchProductDetails(productId);
+  Future<ProductDetailsModel> fetchProductDetailsList(
+      int productId, String lang) async {
+    final result = await ListServices().fetchProductDetails(productId, lang);
     notifyListeners();
     return result;
   }
 
-  Future<ShopModel> fetchShop(int collectionId) async {
-    final result = await ListServices().fetchShop(collectionId);
+  Future<ShopModel> fetchShop(int collectionId, String lang) async {
+    final result = await ListServices().fetchShop(collectionId, lang);
     notifyListeners();
     return result;
   }
 
-  Future<ShopModel> fetchDeals(int categoryId) async {
-    final result = await ListServices().fetchDeals(categoryId);
+  Future<ShopModel> fetchDeals(int categoryId, String lang) async {
+    final result = await ListServices().fetchDeals(categoryId, lang);
     notifyListeners();
     return result;
   }
 
-  Future<SearchModel> fetchSearch() async {
-    final result = await ListServices().fetchSearch();
+  Future<SearchModel> fetchSearch(String lang) async {
+    final result = await ListServices().fetchSearch(lang);
     notifyListeners();
     return result;
   }
@@ -99,14 +100,14 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<ContactUsModel> fetchContacts() async {
-    final result = await ListServices().fetchContacts();
+  Future<ContactUsModel> fetchContacts(String lang) async {
+    final result = await ListServices().fetchContacts(lang);
     notifyListeners();
     return result;
   }
 
-  Future<AboutUsModel> fetchAboutUs() async {
-    final result = await ListServices().fetchAboutUs();
+  Future<AboutUsModel> fetchAboutUs(String lang) async {
+    final result = await ListServices().fetchAboutUs(lang);
     notifyListeners();
     return result;
   }
@@ -125,8 +126,8 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<PolicesTermsModel> fetchPolicy() async {
-    final result = await ListServices().fetchPolicy();
+  Future<PolicesTermsModel> fetchPolicy(String lang) async {
+    final result = await ListServices().fetchPolicy(lang);
     notifyListeners();
     return result;
   }
@@ -143,14 +144,14 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<ProfileModel> fetchProfile(int id, String token) async {
-    final results = await ListServices().fetchProfile(id, token);
+  Future<ProfileModel> fetchProfile(int id, String token, String lang) async {
+    final results = await ListServices().fetchProfile(id, token, lang);
     notifyListeners();
     return results;
   }
 
-  Future<address.AddressModel> fetchAddresses(String token) async {
-    final results = await ListServices().fetchAddresses(token);
+  Future<address.AddressModel> fetchAddresses(String token, String lang) async {
+    final results = await ListServices().fetchAddresses(token, lang);
     notifyListeners();
     return results;
   }

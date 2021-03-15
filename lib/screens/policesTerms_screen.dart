@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PolicesTermsScreen extends StatefulWidget {
   static final routeName = '/policesTerms-screen';
@@ -22,15 +23,23 @@ class _PolicesTermsScreenState extends State<PolicesTermsScreen> {
   bool _isLoading = false;
   PolicesTermsModel policesTermsModel;
   String _details;
-
+  bool languageValue = false;
   Future getPolicyData() async {
     if (this.mounted)
       setState(() {
         _isLoading = true;
       });
+    Future<bool> getLang() async {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getBool('isArabic');
+    }
+
+    bool languageValue = await getLang();
 
     final getData = Provider.of<ListViewModel>(context, listen: false);
-    await getData.fetchPolicy().then((response) {
+    await getData
+        .fetchPolicy(languageValue == false ? 'en' : 'ar')
+        .then((response) {
       policesTermsModel = response;
       _details = policesTermsModel.data.details;
       //

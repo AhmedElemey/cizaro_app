@@ -1,4 +1,5 @@
 import 'package:cizaro_app/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -75,7 +76,7 @@ class _CartItemState extends State<CartItem> {
       child: Card(
         elevation: 5,
         child: Container(
-          height: SizeConfig.blockSizeVertical * 25,
+          height: SizeConfig.blockSizeVertical * 27,
           width: SizeConfig.blockSizeHorizontal * 100,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,14 +122,16 @@ class _CartItemState extends State<CartItem> {
                               child: Text(
                                 widget.productPriceAfterDiscount ==
                                         widget.productPrice
-                                    ? widget.productPrice.toString() + ' LE'
+                                    ? widget.productPrice.toString() +
+                                        ' le'.tr()
                                     : widget.productPriceAfterDiscount == null
-                                        ? widget.productPrice.toString() + ' LE'
+                                        ? widget.productPrice.toString() +
+                                            ' le'.tr()
                                         : widget.productPriceAfterDiscount == 0
                                             ? widget.productPrice
                                             : widget.productPriceAfterDiscount
                                                     .toString() +
-                                                ' LE',
+                                                ' le'.tr(),
                                 // style: const TextStyle(
                                 //     fontWeight: FontWeight.bold),
                                 style: GoogleFonts.poppins(
@@ -289,7 +292,8 @@ class _CartItemState extends State<CartItem> {
                                           SizeConfig.safeBlockHorizontal * 3.5),
                                 ),
                                 Text(
-                                  widget.totalPrice.toStringAsFixed(2) + ' LE',
+                                  widget.totalPrice.toStringAsFixed(2) +
+                                      ' le'.tr(),
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
                                       fontSize:
@@ -307,7 +311,8 @@ class _CartItemState extends State<CartItem> {
                       widget.totalAvailability < widget.productQuantity
                           ? Center(
                               child: Text(
-                                  '${widget.totalAvailability}  items Available in Stock' ??
+                                  "${widget.totalAvailability}" +
+                                          "available".tr() ??
                                       '',
                                   style: TextStyle(
                                       color: Colors.red,

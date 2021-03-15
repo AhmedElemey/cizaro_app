@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShopScreen extends StatefulWidget {
   static final routeName = '/product-screen';
@@ -32,6 +33,12 @@ class _ShopScreenState extends State<ShopScreen> {
   List<Products> productList = [];
   List<Products> productDealsList = [];
 
+  bool languageValue = false;
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   Future getShopData() async {
     if (this.mounted)
       setState(() {
@@ -40,7 +47,11 @@ class _ShopScreenState extends State<ShopScreen> {
 
     final getProducts = Provider.of<ListViewModel>(context, listen: false);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-    await getProducts.fetchShop(arguments['collection_id']).then((response) {
+    languageValue = await getLang();
+    await getProducts
+        .fetchShop(
+            arguments['collection_id'], languageValue == false ? 'en' : 'en')
+        .then((response) {
       shopModel = response;
       productList = shopModel.data.products;
       print(productList.length);
@@ -60,7 +71,11 @@ class _ShopScreenState extends State<ShopScreen> {
 
     final getDeals = Provider.of<ListViewModel>(context, listen: false);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-    await getDeals.fetchDeals(arguments['category_id']).then((response) {
+    languageValue = await getLang();
+    await getDeals
+        .fetchDeals(
+            arguments['category_id'], languageValue == false ? 'en' : 'ar')
+        .then((response) {
       shopModel = response;
       productDealsList = shopModel.data.products;
       print(productDealsList.length);

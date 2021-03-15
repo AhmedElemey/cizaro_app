@@ -1,4 +1,5 @@
 import 'package:cizaro_app/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,7 @@ class CheckoutItem extends StatelessWidget {
       child: Card(
         elevation: 2,
         child: Container(
-          height: SizeConfig.blockSizeVertical * 15,
+          height: SizeConfig.blockSizeVertical * 17,
           padding: EdgeInsets.only(
               left: SizeConfig.blockSizeHorizontal * 2,
               top: SizeConfig.blockSizeVertical * .2),
@@ -78,7 +79,7 @@ class CheckoutItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text(
-                          productPrice.toString() + ' LE',
+                          productPrice.toString() + ' le'.tr(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 4),

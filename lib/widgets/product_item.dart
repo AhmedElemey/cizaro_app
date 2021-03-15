@@ -5,6 +5,7 @@ import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -260,7 +261,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                       right: SizeConfig.blockSizeHorizontal * 2,
                                       left: SizeConfig.blockSizeHorizontal * 1),
                                   child: Text(
-                                    widget.productPrice.toString() + ' LE',
+                                    widget.productPrice.toString() + ' le'.tr(),
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w500,
                                         fontSize:
@@ -283,7 +284,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                     1),
                                         child: Text(
                                           widget.productPrice.toString() +
-                                              ' LE',
+                                              ' le'.tr(),
                                           style: TextStyle(
                                               fontFamily: 'NeusaNextStd',
                                               fontWeight: FontWeight.w700,
@@ -307,7 +308,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                     1),
                                         child: Text(
                                           widget.productPriceAfter.toString() +
-                                              ' LE',
+                                              ' le'.tr(),
                                           style: TextStyle(
                                             fontFamily: 'NeusaNextStd',
                                             fontSize:
@@ -435,7 +436,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                           left: SizeConfig.blockSizeHorizontal *
                                               2),
                                       child: Text(
-                                        widget.productPrice.toString() + ' LE',
+                                        widget.productPrice.toString() +
+                                            ' le'.tr(),
                                         style: GoogleFonts.poppins(
                                           fontWeight: FontWeight.w600,
                                           fontSize:
@@ -459,7 +461,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                     2),
                                             child: Text(
                                               widget.productPrice.toString() +
-                                                  ' LE',
+                                                  ' le'.tr(),
                                               style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.red,
@@ -481,7 +483,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                             child: Text(
                                               widget.productPriceAfter
                                                       .toString() +
-                                                  ' LE',
+                                                  ' le'.tr(),
                                               style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: SizeConfig

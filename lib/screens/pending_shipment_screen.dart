@@ -24,6 +24,12 @@ class _PendingShipmentScreenState extends State<PendingShipmentScreen> {
   bool _isLoading = false;
   PendingShipments pendingShipments;
   List<Data> _ordersList = [];
+  bool languageValue = false;
+
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
 
   getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -35,7 +41,11 @@ class _PendingShipmentScreenState extends State<PendingShipmentScreen> {
     final getOrders = Provider.of<OrdersViewModel>(context, listen: false);
     String token = await getToken();
     print(token);
-    await getOrders.fetchPendingShipmentsOrders(token).then((response) {
+    languageValue = await getLang();
+    await getOrders
+        .fetchPendingShipmentsOrders(
+            token, languageValue == false ? 'en' : 'ar')
+        .then((response) {
       pendingShipments = response;
       _ordersList = pendingShipments.data;
     });

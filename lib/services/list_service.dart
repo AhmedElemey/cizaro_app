@@ -40,7 +40,7 @@ class ListServices {
     });
     if (response.statusCode == 200) {
       final body = jsonDecodeUtf8(response.bodyBytes);
-      print(response.body);
+      // print(response.body);
       return Home.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -60,44 +60,62 @@ class ListServices {
     }
   }
 
-  Future<ProductDetailsModel> fetchProductDetails(int productId) async {
-    final response = await http.get(API + '/products/$productId');
+  Future<ProductDetailsModel> fetchProductDetails(
+      int productId, String lang) async {
+    final response = await http.get(API + '/products/$productId', headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept-Language': '$lang'
+    });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
       //  print(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return ProductDetailsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }
   }
 
-  Future<ShopModel> fetchShop(int collectionId) async {
-    final response =
-        await http.get(API + '/products/?collection=$collectionId');
+  Future<ShopModel> fetchShop(int collectionId, String lang) async {
+    final response = await http.get(API + '/products/?collection=$collectionId',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept-Language': '$lang'
+        });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
       //  print(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }
   }
 
-  Future<ShopModel> fetchDeals(int categoryId) async {
-    final response = await http.get(API + '/products/?category=$categoryId');
+  Future<ShopModel> fetchDeals(int categoryId, String lang) async {
+    final response = await http.get(API + '/products/?category=$categoryId',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept-Language': '$lang'
+        });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
       //  print(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return ShopModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }
   }
 
-  Future<SearchModel> fetchSearch() async {
-    final response = await http.get(API + '/products/?search');
+  Future<SearchModel> fetchSearch(String lang) async {
+    final response = await http.get(API + '/products/?search', headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept-Language': '$lang'
+    });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -115,7 +133,7 @@ class ListServices {
     }
   }
 
-  Future<ContactUsModel> fetchContacts() async {
+  Future<ContactUsModel> fetchContacts(String lang) async {
     final response = await http.get(API + '/contact-us/');
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
@@ -126,22 +144,31 @@ class ListServices {
     }
   }
 
-  Future<AboutUsModel> fetchAboutUs() async {
-    final response = await http.get(API + '/more/?model=AboutUs');
+  Future<AboutUsModel> fetchAboutUs(String lang) async {
+    final response = await http.get(API + '/more/?model=AboutUs', headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Accept-Language': '$lang'
+    });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
       //print(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return AboutUsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
     }
   }
 
-  Future<PolicesTermsModel> fetchPolicy() async {
-    final response = await http.get(API + '/more/?model=PrivacyPolicy');
+  Future<PolicesTermsModel> fetchPolicy(String lang) async {
+    final response = await http.get(API + '/more/?model=PrivacyPolicy',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept-Language': '$lang'
+        });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
       //print(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return PolicesTermsModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -225,15 +252,17 @@ class ListServices {
     }
   }
 
-  Future<ProfileModel> fetchProfile(int id, String token) async {
+  Future<ProfileModel> fetchProfile(int id, String token, String lang) async {
     final response = await http.get(API + '/users/$id/', headers: {
       'accept': 'application/json',
       'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': '${'Token'} $token'
+      'Authorization': '${'Token'} $token',
+      'Accept-Language': '$lang'
     });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
       // print(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return ProfileModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -375,13 +404,14 @@ class ListServices {
     }
   }
 
-  Future<address.AddressModel> fetchAddresses(String token) async {
+  Future<address.AddressModel> fetchAddresses(String token, String lang) async {
     final response = await http.get(
       API + '/address-book/',
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': '${'Token'} $token'
+        'Authorization': '${'Token'} $token',
+        'Accept-Language': '$lang'
       },
     );
     var data = json.decode(response.body);

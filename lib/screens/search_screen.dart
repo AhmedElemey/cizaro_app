@@ -23,6 +23,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchScreen extends StatefulWidget {
   static final routeName = '/search-screen';
@@ -55,6 +56,12 @@ class _SearchScreenState extends State<SearchScreen> {
   bool _isLoading = false;
   List<SearchProducts> productList;
 
+  bool languageValue = false;
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   Future getShopData() async {
     if (this.mounted)
       setState(() {
@@ -63,7 +70,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
     final getProducts = Provider.of<ListViewModel>(context, listen: false);
     // final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-    await getProducts.fetchSearch().then((response) {
+    languageValue = await getLang();
+    await getProducts
+        .fetchSearch(languageValue == false ? 'en' : 'ar')
+        .then((response) {
       searchModel = response;
       productList = searchModel.data.products;
       print(productList.length);

@@ -8,8 +8,8 @@ import 'package:cizaro_app/services/orders_service.dart';
 import 'package:flutter/material.dart';
 
 class OrdersViewModel extends ChangeNotifier {
-  Future<Order> fetchOrdersList(String token) async {
-    final result = await OrderServices().fetchAllOrders(token);
+  Future<Order> fetchOrdersList(String token, String lang) async {
+    final result = await OrderServices().fetchAllOrders(token, lang);
     notifyListeners();
     return result;
   }
@@ -26,14 +26,17 @@ class OrdersViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<OrderDetails> fetchOrderDetails(String token, int orderId) async {
-    final result = await OrderServices().fetchOrderDetails(token, orderId);
+  Future<OrderDetails> fetchOrderDetails(
+      String token, int orderId, String lang) async {
+    final result =
+        await OrderServices().fetchOrderDetails(token, orderId, lang);
     notifyListeners();
     return result;
   }
 
-  Future<PendingShipments> fetchPendingShipmentsOrders(String token) async {
-    final result = await OrderServices().fetchPendingShipment(token);
+  Future<PendingShipments> fetchPendingShipmentsOrders(
+      String token, String lang) async {
+    final result = await OrderServices().fetchPendingShipment(token, lang);
     notifyListeners();
     return result;
   }

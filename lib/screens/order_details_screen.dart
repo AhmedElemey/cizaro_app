@@ -23,6 +23,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   bool _isLoading = false;
   OrderDetails order;
   List<Items> _ordersList = [];
+  bool languageValue = false;
+
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
 
   getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -34,9 +40,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     final getOrders = Provider.of<OrdersViewModel>(context, listen: false);
     String token = await getToken();
-    print(token);
+    // print(token);
+
+    languageValue = await getLang();
+
     await getOrders
-        .fetchOrderDetails(token, arguments['order_id'])
+        .fetchOrderDetails(
+            token, arguments['order_id'], languageValue == false ? 'en' : 'ar')
         .then((response) {
       order = response;
       _ordersList = order.data.items;

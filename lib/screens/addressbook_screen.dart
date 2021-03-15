@@ -33,17 +33,26 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
   List<address.Data> addressesList = [];
   int indexOfSelectedItemAddress = -1;
   bool fromCheckout = false;
+  bool languageValue = false;
 
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
 
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   Future getAddressesData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getAddress = Provider.of<ListViewModel>(context, listen: false);
     String token = await getToken();
-    await getAddress.fetchAddresses(token).then((response) {
+    languageValue = await getLang();
+    await getAddress
+        .fetchAddresses(token, languageValue == false ? 'en' : 'ar')
+        .then((response) {
       addressModel = response;
       addressesList = addressModel.data;
     });

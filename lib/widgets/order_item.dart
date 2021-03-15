@@ -1,4 +1,5 @@
 import 'package:cizaro_app/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class OrderItem extends StatelessWidget {
@@ -36,9 +37,7 @@ class OrderItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Order ID',
-                    // textScaleFactor:
-                    //     MediaQuery.of(context).textScaleFactor * 1.1,
+                Text('order_id'.tr(),
                     style: TextStyle(
                         fontSize: SizeConfig.safeBlockHorizontal * 3.7,
                         color: Color(0xff707070),
@@ -64,7 +63,7 @@ class OrderItem extends StatelessWidget {
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Order Date',
+                      Text('order_date'.tr(),
                           // textScaleFactor:
                           //     MediaQuery.of(context).textScaleFactor * 1.1,
                           style: TextStyle(
@@ -90,7 +89,7 @@ class OrderItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Shipped Address',
+                Text('shipping_address'.tr(),
                     // textScaleFactor:
                     //     MediaQuery.of(context).textScaleFactor * 1.1,
                     style: TextStyle(
@@ -127,7 +126,7 @@ class OrderItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Payment Method',
+                Text('payment_method'.tr(),
                     // textScaleFactor:
                     //     MediaQuery.of(context).textScaleFactor * 1.1,
                     style: TextStyle(
@@ -149,7 +148,7 @@ class OrderItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Total',
+                Text('total'.tr(),
                     // textScaleFactor:
                     //     MediaQuery.of(context).textScaleFactor * 1.1,
 
@@ -162,7 +161,7 @@ class OrderItem extends StatelessWidget {
                       ' --------------------------------------------------------------'),
                 ),
                 Text(
-                  orderTotal.toString() + ' L.E' ?? '162184',
+                  orderTotal.toString() + ' le'.tr() ?? '162184',
                   style: TextStyle(
                     fontSize: SizeConfig.safeBlockHorizontal * 3.2,
                   ),
@@ -175,7 +174,7 @@ class OrderItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Status',
+                Text('status'.tr(),
                     // textScaleFactor:
                     //     MediaQuery.of(context).textScaleFactor * 1.1,
                     style: TextStyle(

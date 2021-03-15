@@ -21,6 +21,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetails extends StatefulWidget {
   static final routeName = '/productDetails-screen';
@@ -54,13 +55,20 @@ class _ProductDetailsState extends State<ProductDetails> {
   List<Values> productSpecs = [];
   List<rs.Data> relatedSpecList = [];
   rs.RelatedSpec relatedSpec;
+  bool languageValue = false;
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
 
   Future getHomeData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getProduct = Provider.of<ListViewModel>(context, listen: false);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    languageValue = await getLang();
     await getProduct
-        .fetchProductDetailsList(arguments['product_id'])
+        .fetchProductDetailsList(
+            arguments['product_id'], languageValue == false ? 'en' : 'ar')
         .then((response) {
       productDetails = response;
       productId = productDetails.data.id;
@@ -276,7 +284,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 productPriceAfter == 0
                             ? Container(
                                 child: Text(
-                                  productPrice.toString() + ' LE',
+                                  productPrice.toString() + ' le'.tr(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize:
@@ -292,7 +300,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
-                                    Text(productPrice.toString() + ' LE',
+                                    Text(productPrice.toString() + ' le'.tr(),
                                         style: TextStyle(
                                             color: Colors.red,
                                             fontSize:
@@ -304,7 +312,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         width:
                                             SizeConfig.blockSizeHorizontal * 5),
                                     Text(
-                                      productPriceAfter.toString() + ' LE',
+                                      productPriceAfter.toString() + ' le'.tr(),
                                       style: TextStyle(
                                         fontSize:
                                             SizeConfig.safeBlockHorizontal * 5,

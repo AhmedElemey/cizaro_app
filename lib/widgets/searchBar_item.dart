@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -201,7 +202,7 @@ class _SearchItemState extends State<SearchBarItem> {
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 1),
                           child: Text(
-                            widget.productPrice.toString() + ' LE',
+                            widget.productPrice.toString() + ' le'.tr(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 3.5,

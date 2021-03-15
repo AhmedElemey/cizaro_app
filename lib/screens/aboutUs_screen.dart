@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AboutUsScreen extends StatefulWidget {
   static final routeName = '/aboutUs-screen';
@@ -21,6 +22,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   bool _isLoading = false;
   AboutUsModel aboutUsModel;
   String _details;
+  bool languageValue = false;
   final GlobalKey<ScaffoldState> _scaffoldKey2 = GlobalKey<ScaffoldState>();
 
   Future getAboutUsData() async {
@@ -29,8 +31,16 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
         _isLoading = true;
       });
 
+    Future<bool> getLang() async {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getBool('isArabic');
+    }
+
     final getData = Provider.of<ListViewModel>(context, listen: false);
-    await getData.fetchAboutUs().then((response) {
+    bool languageValue = await getLang();
+    await getData
+        .fetchAboutUs(languageValue == false ? 'en' : 'ar')
+        .then((response) {
       aboutUsModel = response;
       _details = aboutUsModel.data.details;
       //

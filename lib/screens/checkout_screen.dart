@@ -82,6 +82,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   TextEditingController _verificationCodeController = TextEditingController();
   FToast fToast;
   PromoModel promoModel;
+  bool languageValue = false;
 
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -96,12 +97,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     setState(() => selectedPaymentRadio = val);
   }
 
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   fetchLastShippingAddress() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getAddress = Provider.of<ListViewModel>(context, listen: false);
     String token = await getToken();
     print(token);
-    await getAddress.fetchAddresses(token).then((response) {
+    languageValue = await getLang();
+    await getAddress
+        .fetchAddresses(token, languageValue == false ? 'en' : 'ar')
+        .then((response) {
       addressModel = response;
       addressesList = addressModel.data;
       addressId = addressModel.data[0].id;
@@ -989,7 +998,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       ? '0.0'
                                                       : shippingFees
                                                                   .toString() +
-                                                              ' LE' ??
+                                                              ' le'.tr() ??
                                                           '00.00',
                                                   style: TextStyle(
                                                       fontSize: SizeConfig
@@ -1004,7 +1013,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       ? '0.0'
                                                       : shippingFeesAfterPromo
                                                                   .toString() +
-                                                              ' LE' ??
+                                                              ' le'.tr() ??
                                                           '00.00',
                                                   style: TextStyle(
                                                       fontSize: SizeConfig
@@ -1035,7 +1044,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                   totalCost == null
                                                       ? "0.0"
                                                       : totalCost.toString() +
-                                                              ' LE' ??
+                                                              ' le'.tr() ??
                                                           '00.00',
                                                   style: TextStyle(
                                                       fontSize: SizeConfig
@@ -1050,7 +1059,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       ? "0.0"
                                                       : totalAfterPromo
                                                                   .toString() +
-                                                              ' LE' ??
+                                                              ' le'.tr() ??
                                                           '00.00',
                                                   style: TextStyle(
                                                       fontSize: SizeConfig

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -219,7 +220,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                 left: SizeConfig.blockSizeHorizontal * 2,
                                 top: SizeConfig.blockSizeVertical * 1),
                             child: Text(
-                              widget.productPrice.toString() + ' LE',
+                              widget.productPrice.toString() + ' le'.tr(),
                               style: TextStyle(
                                 fontSize: SizeConfig.safeBlockHorizontal * 4,
                               ),
@@ -233,7 +234,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                     top: 5,
                                   ),
                                   child: Text(
-                                    widget.productPrice.toString() + ' LE',
+                                    widget.productPrice.toString() + ' le'.tr(),
                                     style: TextStyle(
                                         color: Colors.red,
                                         fontSize:
@@ -250,7 +251,8 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                       right:
                                           SizeConfig.blockSizeHorizontal * 1),
                                   child: Text(
-                                    widget.productPriceAfter.toString() + ' LE',
+                                    widget.productPriceAfter.toString() +
+                                        ' le'.tr(),
                                     style: TextStyle(
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 3,
@@ -417,7 +419,8 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                           top:
                                               SizeConfig.blockSizeVertical * 3),
                                       child: Text(
-                                        widget.productPrice.toString() + ' LE',
+                                        widget.productPrice.toString() +
+                                            ' le'.tr(),
                                         style: TextStyle(
                                           fontSize:
                                               SizeConfig.safeBlockHorizontal *
@@ -437,7 +440,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                         children: <Widget>[
                                           Text(
                                             widget.productPrice.toString() +
-                                                ' LE',
+                                                ' le'.tr(),
                                             style: TextStyle(
                                                 color: Colors.red,
                                                 fontSize: SizeConfig
@@ -453,7 +456,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                                           Text(
                                             widget.productPriceAfter
                                                     .toString() +
-                                                ' LE',
+                                                ' le'.tr(),
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *

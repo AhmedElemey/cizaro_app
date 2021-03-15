@@ -100,6 +100,10 @@
   "shipping_fees": "Shipping Fess",
   "place_order": "PLACE ORDER",
   "order_placed": "Order Placed",
-  "order_placed_message": "Your order was placed successfully. For more details, check All My Orders page under Profile tab."
-
+  "order_placed_message": "Your order was placed successfully. For more details, check All My Orders page under Profile tab.",
+  "order_id": "Oder ID",
+  "order_date": "Order Date",
+  "status": "Status",
+  " le": " LE",
+  "available":"items Available in Stock"
 }

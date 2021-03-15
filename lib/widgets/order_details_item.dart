@@ -1,4 +1,5 @@
 import 'package:cizaro_app/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -93,14 +94,16 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                               child: Text(
                                 widget.productPriceAfterDiscount ==
                                         widget.productPrice
-                                    ? widget.productPrice.toString() + ' LE'
+                                    ? widget.productPrice.toString() +
+                                        ' le'.tr()
                                     : widget.productPriceAfterDiscount == null
-                                        ? widget.productPrice.toString() + ' LE'
+                                        ? widget.productPrice.toString() +
+                                            ' le'.tr()
                                         : widget.productPriceAfterDiscount == 0
                                             ? widget.productPrice
                                             : widget.productPriceAfterDiscount
                                                     .toString() +
-                                                ' LE',
+                                                ' le'.tr(),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize:
@@ -148,7 +151,7 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                             ),
                           ),
                           Text(
-                            widget.productPrice.toString() + ' LE',
+                            widget.productPrice.toString() + ' le'.tr(),
                             style: TextStyle(
                               fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                             ),

@@ -43,6 +43,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       valuePassword;
 
   TextEditingController valueBirthDate = TextEditingController();
+  bool languageValue = false;
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
 
   getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -64,7 +69,10 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     int userId = await getId();
 
     final getProfile = Provider.of<ListViewModel>(context, listen: false);
-    await getProfile.fetchProfile(userId, token).then((response) {
+    languageValue = await getLang();
+    await getProfile
+        .fetchProfile(userId, token, languageValue == false ? 'en' : 'ar')
+        .then((response) {
       profile = response;
       userName = profile.data.fullName;
       userEmail = profile.data.email;

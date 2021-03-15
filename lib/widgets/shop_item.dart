@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -215,7 +216,7 @@ class _ShopItemState extends State<ShopItem> {
                                   top: SizeConfig.blockSizeVertical * .5,
                                   left: SizeConfig.blockSizeHorizontal * 2),
                               child: Text(
-                                widget.productPrice.toString() + ' LE',
+                                widget.productPrice.toString() + ' le'.tr(),
                                 // textScaleFactor:
                                 //     MediaQuery.of(context).textScaleFactor *
                                 //         1.15,
@@ -233,7 +234,8 @@ class _ShopItemState extends State<ShopItem> {
                                         left:
                                             SizeConfig.blockSizeHorizontal * 2),
                                     child: Text(
-                                      widget.productPrice.toString() + ' LE',
+                                      widget.productPrice.toString() +
+                                          ' le'.tr(),
                                       // textScaleFactor: MediaQuery.of(context)
                                       //         .textScaleFactor *
                                       //     1.15,
@@ -253,7 +255,7 @@ class _ShopItemState extends State<ShopItem> {
                                             SizeConfig.blockSizeHorizontal * 2),
                                     child: Text(
                                       widget.productPriceAfter.toString() +
-                                          ' LE',
+                                          ' le'.tr(),
                                       style: TextStyle(
                                         fontSize:
                                             SizeConfig.safeBlockHorizontal * 4,

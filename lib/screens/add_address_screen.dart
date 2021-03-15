@@ -366,6 +366,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                             final getData = Provider.of<ListViewModel>(context,
                                 listen: false);
                             String token = await getToken();
+
                             await getData.fetchAddress(data, token);
                             final Map arguments = ModalRoute.of(context)
                                 .settings

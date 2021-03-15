@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactUsScreen extends StatefulWidget {
@@ -25,6 +26,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey7 = GlobalKey<ScaffoldState>();
 
   bool _isLoading = false;
+  bool languageValue = false;
   ContactUsModel contactUsModel;
   String contactAddress,
       contactEmail,
@@ -42,9 +44,16 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
       setState(() {
         _isLoading = true;
       });
+    Future<bool> getLang() async {
+      final prefs = await SharedPreferences.getInstance();
+      return prefs.getBool('isArabic');
+    }
 
+    languageValue = await getLang();
     final getData = Provider.of<ListViewModel>(context, listen: false);
-    await getData.fetchContacts().then((response) {
+    await getData
+        .fetchContacts(languageValue == false ? 'en' : 'ar')
+        .then((response) {
       contactUsModel = response;
       contactList = contactUsModel.data;
 

@@ -26,6 +26,12 @@ class _OrderScreenState extends State<OrderScreen> {
   bool _isLoading = false;
   Order order;
   List<Data> _ordersList = [];
+  bool languageValue = false;
+
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
 
   getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -37,7 +43,10 @@ class _OrderScreenState extends State<OrderScreen> {
     final getOrders = Provider.of<OrdersViewModel>(context, listen: false);
     String token = await getToken();
     print(token);
-    await getOrders.fetchOrdersList(token).then((response) {
+    languageValue = await getLang();
+    await getOrders
+        .fetchOrdersList(token, languageValue == false ? 'en' : 'ar')
+        .then((response) {
       order = response;
       _ordersList = order.data;
     });

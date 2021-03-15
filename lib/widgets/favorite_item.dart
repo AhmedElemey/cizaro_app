@@ -1,4 +1,5 @@
 import 'package:cizaro_app/size_config.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteItem extends StatelessWidget {
@@ -79,7 +80,7 @@ class FavoriteItem extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              productPrice + " LE",
+                              productPrice + ' le'.tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: SizeConfig.safeBlockHorizontal * 3,

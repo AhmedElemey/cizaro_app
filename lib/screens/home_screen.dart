@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int initPosition = 0;
   int initPosition2 = 0;
   bool _isLoading = false;
+  bool languageValue = false;
 
   Future<bool> getLang() async {
     final prefs = await SharedPreferences.getInstance();
@@ -54,8 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future getHomeData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
-    bool lang = await getLang();
-    await getHome.fetchHomeList(lang == false ? 'en' : 'en').then((response) {
+    bool languageValue = await getLang();
+    await getHome
+        .fetchHomeList(languageValue == false ? 'en' : 'ar')
+        .then((response) {
       home = response;
       hotDealsList = home.data.hotDeals;
       collectionsList = home.data.collections;

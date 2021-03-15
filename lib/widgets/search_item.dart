@@ -201,7 +201,6 @@ class _SearchItemState extends State<SearchItem> {
                         }, fit: BoxFit.fitHeight)))),
             Container(
               padding: EdgeInsets.only(
-                  left: SizeConfig.blockSizeHorizontal * 3,
                   right: SizeConfig.blockSizeHorizontal * 3,
                   top: SizeConfig.blockSizeVertical * 1),
               width: SizeConfig.blockSizeHorizontal * 60,
@@ -224,24 +223,16 @@ class _SearchItemState extends State<SearchItem> {
                   SizedBox(height: SizeConfig.blockSizeVertical * .5),
                   widget.productPriceAfter == widget.productPrice ||
                           widget.productPriceAfter == 0
-                      ? Container(
-                          padding: EdgeInsets.only(
-                              right: SizeConfig.blockSizeHorizontal * .10,
-                              top: SizeConfig.blockSizeVertical * .10),
-                          child: Text(
-                            widget.productPrice.toString() + ' le'.tr(),
-                            // style: TextStyle(
-                            //   fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-                            // ),
-                          ),
+                      ? Text(
+                          widget.productPrice.toString() + ' le'.tr(),
+                          // style: TextStyle(
+                          //   fontSize: SizeConfig.safeBlockHorizontal * 3.5,
+                          // ),
                         )
                       : Container(
                           child: Row(
                             children: <Widget>[
                               Container(
-                                padding: EdgeInsets.only(
-                                    top: SizeConfig.blockSizeVertical * .05,
-                                    right: SizeConfig.blockSizeHorizontal * 5),
                                 child: Text(
                                     widget.productPrice.toString() + ' le'.tr(),
                                     style: TextStyle(
@@ -267,7 +258,7 @@ class _SearchItemState extends State<SearchItem> {
                             ],
                           ),
                         ),
-                  SizedBox(height: SizeConfig.blockSizeVertical * .5),
+                  SizedBox(height: SizeConfig.blockSizeVertical * .1),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -295,7 +286,7 @@ class _SearchItemState extends State<SearchItem> {
                             : Icon(Icons.favorite_border_outlined,
                                 size: SizeConfig.blockSizeHorizontal * 5),
                       ),
-                      SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
+                      SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
                       GestureDetector(
                         onTap: () async {
                           if (widget.inCart == 1) {

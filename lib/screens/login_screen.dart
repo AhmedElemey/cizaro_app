@@ -717,7 +717,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               5,
                                           right:
                                               SizeConfig.blockSizeHorizontal *
-                                                  2,
+                                                  5,
                                           top: SizeConfig.blockSizeVertical *
                                               1.5),
                                       child: TextFieldBuild(
@@ -743,7 +743,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               SizeConfig.blockSizeHorizontal *
                                                   5,
                                           left: SizeConfig.blockSizeHorizontal *
-                                              2,
+                                              5,
                                           top: SizeConfig.blockSizeVertical *
                                               1.5),
                                       child: TextFieldBuild(
@@ -809,7 +809,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       padding: EdgeInsets.only(
                                           right:
                                               SizeConfig.blockSizeHorizontal *
-                                                  2,
+                                                  5,
                                           left: SizeConfig.blockSizeHorizontal *
                                               5),
                                       child: TextFieldBuild(
@@ -880,7 +880,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               SizeConfig.blockSizeHorizontal *
                                                   5,
                                           left: SizeConfig.blockSizeHorizontal *
-                                              2),
+                                              5),
                                       child: TextFieldBuild(
                                         obscureText: false,
                                         readOnly: true,

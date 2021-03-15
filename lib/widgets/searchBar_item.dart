@@ -144,7 +144,7 @@ class _SearchItemState extends State<SearchBarItem> {
         borderRadius: BorderRadius.circular(15.0),
         child: Card(
           child: Container(
-            height: SizeConfig.blockSizeVertical * 20,
+            height: SizeConfig.blockSizeVertical * 21,
             padding: EdgeInsets.only(
                 left: SizeConfig.blockSizeHorizontal * 2,
                 right: SizeConfig.blockSizeHorizontal * 2),
@@ -171,15 +171,18 @@ class _SearchItemState extends State<SearchBarItem> {
                   },
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 15),
-                  width: MediaQuery.of(context).size.width * .6,
+                  padding: EdgeInsets.only(
+                      left: SizeConfig.blockSizeHorizontal * 2,
+                      right: SizeConfig.blockSizeVertical * 2),
+                  width: SizeConfig.blockSizeHorizontal * 60,
                   child: Center(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           width: SizeConfig.blockSizeHorizontal * 60,
-                          padding: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(
+                              top: SizeConfig.blockSizeVertical * 2),
                           child: Text(
                             widget.productName,
                             style: TextStyle(
@@ -219,11 +222,6 @@ class _SearchItemState extends State<SearchBarItem> {
                                 if (widget.isFav == 1) {
                                   setState(() {
                                     showFavAlreadyToast();
-                                    //  widget.isFav = 0;
-                                    // final fav = Provider.of<FavViewModel>(context, listen: true);
-                                    // fav.deleteFavProduct(
-                                    //     index, fav.favProductModel[index].id);
-                                    //print("already here");
                                   });
                                 } else {
                                   setState(() {
@@ -239,13 +237,6 @@ class _SearchItemState extends State<SearchBarItem> {
                                       color: Color(0xffFF6969))
                                   : Icon(Icons.favorite_border_outlined),
                             ),
-                            // GestureDetector(
-                            //     onTap: () {
-                            //       widget.onAddToFavorite();
-                            //       showFavToast();
-                            //     },
-                            //     child: Icon(Icons.favorite_border,
-                            //         size: 25, color: Color(0xff707070))),
                             SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
                             GestureDetector(
                                 onTap: () {

@@ -105,5 +105,12 @@
   "order_date": "Order Date",
   "status": "Status",
   " le": " LE",
-  "available":"items Available in Stock"
+  "available":" items Available in Stock",
+  "order_details": "Order Details",
+  "no_order": "There is No Orders Yet!",
+  "start_search": "Start Searching",
+  "search_find": "Search and find out...",
+  "the_search": "The Search ",
+  "qty": "Qty :",
+  "edit_your_address": "Edit Your Address"
 }

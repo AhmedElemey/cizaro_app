@@ -132,8 +132,8 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<List<country.Data>> fetchCountries(String token) async {
-    final results = await ListServices().fetchCountries(token);
+  Future<List<country.Data>> fetchCountries(String token, String lang) async {
+    final results = await ListServices().fetchCountries(token, lang);
     notifyListeners();
     return results;
   }

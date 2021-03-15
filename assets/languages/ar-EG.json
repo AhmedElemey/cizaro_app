@@ -105,5 +105,13 @@
   "order_date": "تاريخ الطلب",
   "status": "الحاله",
   " le": "ج ",
-  "available":"عناصر متاحه"
+  "available":"عناصر متاحه",
+  "order_details":"تفاصيل الطلب",
+  "no_order": "لا يوجد طلبات",
+  "start_search": "بدايه البحث",
+  "search_find": "ابحث و اكتشف",
+  "the_search": "البحث",
+  "qty": "الكميله :",
+  "edit_your_address": "تعديل عنوانك"
+
 }

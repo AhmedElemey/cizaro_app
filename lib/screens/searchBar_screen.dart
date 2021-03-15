@@ -7,6 +7,7 @@ import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/searchBar_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -113,11 +114,11 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         physics: BouncingScrollPhysics(),
 // Title is displayed on an unopened (inactive) search bar
         title: Text(
-          selectedTerm ?? 'The Search ',
+          selectedTerm ?? 'the_search'.tr(),
           style: Theme.of(context).textTheme.headline6,
         ),
 // Hint gets displayed once the search bar is tapped and opened
-        hint: 'Search and find out...',
+        hint: 'search_find'.tr(),
         controller: controller,
         actions: [
           FloatingSearchBarAction.searchToClear(),
@@ -129,13 +130,6 @@ class _SearchBarItemState extends State<SearchBarScreen> {
         },
         onSubmitted: (query) {
           getSearchData(query);
-
-          // setState(() {
-          //         addSearchTerm(query);
-          //         selectedTerm = query;
-          //
-          //
-          //       });
           controller.close();
         },
 
@@ -154,7 +148,7 @@ class _SearchBarItemState extends State<SearchBarScreen> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       child: Text(
-                        'Start searching',
+                        'start_search'.tr(),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.caption,
@@ -240,7 +234,7 @@ class SearchResultsListView extends StatelessWidget {
               size: 64,
             ),
             Text(
-              'Start Searching',
+              'start_search'.tr(),
               style: Theme.of(context).textTheme.headline5,
             )
           ],

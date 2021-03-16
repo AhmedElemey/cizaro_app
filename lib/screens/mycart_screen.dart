@@ -218,16 +218,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                       isAvailable = false;
                                       showAvailabilityToast(context);
                                       return;
-                                    } else {
-                                      pushNewScreenWithRouteSettings(context,
-                                          settings: RouteSettings(
-                                              name: CheckoutScreen.routeName),
-                                          screen: CheckoutScreen(),
-                                          withNavBar: true,
-                                          pageTransitionAnimation:
-                                              PageTransitionAnimation.fade);
                                     }
                                   });
+                        if (isAvailable) {
+                          pushNewScreenWithRouteSettings(context,
+                              settings:
+                                  RouteSettings(name: CheckoutScreen.routeName),
+                              screen: CheckoutScreen(),
+                              withNavBar: true,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade);
+                        }
                       },
                       child: Container(
                         width: SizeConfig.blockSizeHorizontal * 40,

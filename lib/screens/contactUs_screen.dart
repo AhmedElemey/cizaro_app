@@ -52,7 +52,11 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     languageValue = await getLang();
     final getData = Provider.of<ListViewModel>(context, listen: false);
     await getData
-        .fetchContacts(languageValue == false ? 'en' : 'ar')
+        .fetchContacts(languageValue == null
+            ? 'en'
+            : languageValue == false
+                ? 'en'
+                : 'ar')
         .then((response) {
       contactUsModel = response;
       contactList = contactUsModel.data;

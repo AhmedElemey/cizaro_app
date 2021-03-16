@@ -44,7 +44,12 @@ class _PendingShipmentScreenState extends State<PendingShipmentScreen> {
     languageValue = await getLang();
     await getOrders
         .fetchPendingShipmentsOrders(
-            token, languageValue == false ? 'en' : 'ar')
+            token,
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       pendingShipments = response;
       _ordersList = pendingShipments.data;

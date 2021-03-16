@@ -74,7 +74,12 @@ class _ShopScreenState extends State<ShopScreen> {
     languageValue = await getLang();
     await getDeals
         .fetchDeals(
-            arguments['category_id'], languageValue == false ? 'en' : 'ar')
+            arguments['category_id'],
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       shopModel = response;
       productDealsList = shopModel.data.products;

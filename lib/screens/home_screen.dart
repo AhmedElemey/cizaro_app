@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> getLang() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isAr-abic');
+    return prefs.getBool('isArabic');
   }
 
   Future getHomeData() async {

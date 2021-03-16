@@ -72,7 +72,11 @@ class _SearchScreenState extends State<SearchScreen> {
     // final Map arguments = ModalRoute.of(context).settings.arguments as Map;
     languageValue = await getLang();
     await getProducts
-        .fetchSearch(languageValue == false ? 'en' : 'ar')
+        .fetchSearch(languageValue == null
+            ? 'en'
+            : languageValue == false
+                ? 'en'
+                : 'ar')
         .then((response) {
       searchModel = response;
       productList = searchModel.data.products;

@@ -84,6 +84,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   PromoModel promoModel;
   bool languageValue = false;
 
+  bool fromAdded;
+
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
@@ -109,17 +111,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     print(token);
     languageValue = await getLang();
     await getAddress
-        .fetchAddresses(token, languageValue == false ? 'en' : 'ar')
+        .fetchAddresses(
+            token,
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       addressModel = response;
       addressesList = addressModel.data;
       addressId = addressModel.data[0].id;
     }).catchError((error) => print(error));
-    // pushNewScreenWithRouteSettings(context,
-    // settings: RouteSettings(name: LoginScreen.routeName),
-    // screen: LoginScreen(),
-    // withNavBar: true,
-    // pageTransitionAnimation: PageTransitionAnimation.fade));
     fetchTotalOrder();
     if (this.mounted) {
       setState(() => _isLoading = false);
@@ -458,6 +461,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       countryName = addressBookModel.data.country.name;
       cityName = addressBookModel.data.city.name;
       regionName = addressBookModel.data.region;
+      countryName = addressBookModel.data.country.name;
     }).catchError((error) => print(error));
     fetchTotalOrder();
     if (this.mounted) setState(() => _isLoading = false);
@@ -503,7 +507,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     super.initState();
     selectedRadio = 0;
     Future.microtask(() => getAddress());
-    Future.microtask(() => addressId == null
+    Future.microtask(() => getAddress() == null
         ? fetchLastShippingAddress()
         : fetchSelectedShippingAddress());
     Future.microtask(() => fetchPaymentsList());
@@ -513,7 +517,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   int getAddress() {
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-    addressId = arguments['address_id'];
+    if (arguments != null) {
+      addressId = arguments['address_id'];
+    } else {
+      fetchLastShippingAddress();
+    }
+
     return addressId;
   }
 
@@ -541,7 +550,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Widget build(BuildContext context) {
     final cart = Provider.of<CartViewModel>(context, listen: true);
     final Map arguments = ModalRoute.of(context).settings.arguments as Map;
-
+    if (arguments != null) {
+      fromAdded = arguments['from_added'];
+    }
     return Scaffold(
       key: _scaffoldKey6,
       drawer: DrawerLayout(),
@@ -682,43 +693,87 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 : Container(),
                           ),
                         )
-                      : Container(
-                          padding: EdgeInsets.only(
-                              left: SizeConfig.blockSizeHorizontal * 2,
-                              right: SizeConfig.blockSizeHorizontal * 2),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(arguments['street_name'] ?? "John Doe",
-                                  style: TextStyle(
-                                      fontSize:
-                                          SizeConfig.safeBlockHorizontal * 5,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff515C6F))),
-                              Text(
-                                arguments['region_name'] ?? "Main Street\,",
-                                style: TextStyle(
-                                    fontSize:
-                                        SizeConfig.safeBlockHorizontal * 4),
-                                // textScaleFactor:
-                                //     MediaQuery.of(context).textScaleFactor * 1,
+                      : fromAdded
+                          ? Container(
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.blockSizeHorizontal * 3,
+                                  right: SizeConfig.blockSizeHorizontal * 3),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(addressName ?? "John Doe",
+                                      style: TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontFamily: 'Poppins',
+                                          fontWeight: FontWeight.w700,
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  5,
+                                          color: Color(0xff515C6F))),
+                                  Text(regionName ?? "Main Street\,",
+                                      style: TextStyle(
+                                        // fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                                  Text(cityName ?? "City Name, Province\,",
+                                      style: TextStyle(
+                                        // fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                                  Text(countryName ?? "Country",
+                                      style: TextStyle(
+                                        // fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                                ],
+                              ))
+                          : Container(
+                              padding: EdgeInsets.only(
+                                  left: SizeConfig.blockSizeHorizontal * 2,
+                                  right: SizeConfig.blockSizeHorizontal * 2),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(arguments['street_name'] ?? "John Doe",
+                                      style: TextStyle(
+                                          fontSize:
+                                              SizeConfig.safeBlockHorizontal *
+                                                  5,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xff515C6F))),
+                                  Text(
+                                    arguments['region_name'] ?? "Main Street\,",
+                                    style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4),
+                                    // textScaleFactor:
+                                    //     MediaQuery.of(context).textScaleFactor * 1,
+                                  ),
+                                  Text(
+                                    arguments['city_name'] ??
+                                        "City Name, Province\,",
+                                    style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4),
+                                  ),
+                                  Text(
+                                    arguments['country_name'] ?? "Country",
+                                    style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                arguments['city_name'] ??
-                                    "City Name, Province\,",
-                                style: TextStyle(
-                                    fontSize:
-                                        SizeConfig.safeBlockHorizontal * 4),
-                              ),
-                              Text(
-                                arguments['country_name'] ?? "Country",
-                                style: TextStyle(
-                                    fontSize:
-                                        SizeConfig.safeBlockHorizontal * 4),
-                              ),
-                            ],
-                          ),
-                        ),
+                            ),
                   Padding(
                     padding: EdgeInsets.only(
                         left: SizeConfig.blockSizeHorizontal * 3,

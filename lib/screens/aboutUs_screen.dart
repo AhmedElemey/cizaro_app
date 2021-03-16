@@ -39,7 +39,11 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     final getData = Provider.of<ListViewModel>(context, listen: false);
     bool languageValue = await getLang();
     await getData
-        .fetchAboutUs(languageValue == false ? 'en' : 'ar')
+        .fetchAboutUs(languageValue == null
+            ? 'en'
+            : languageValue == false
+                ? 'en'
+                : 'ar')
         .then((response) {
       aboutUsModel = response;
       _details = aboutUsModel.data.details;

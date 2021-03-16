@@ -1,5 +1,6 @@
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
+import 'package:cizaro_app/model/getAddressModel.dart';
 import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
@@ -31,7 +32,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey4 = GlobalKey<ScaffoldState>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool languageValue = false;
-
+  int addressId;
+  String streetName;
+  GetCreateAddress address;
+  bool fromAdded = true;
   Future<bool> getLang() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isArabic');
@@ -102,7 +106,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     future: Provider.of<ListViewModel>(context, listen: false)
                         .fetchCountries(
                             token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
-                            languageValue == false ? 'ar' : 'en'),
+                            languageValue == null
+                                ? 'en'
+                                : languageValue == false
+                                    ? 'en'
+                                    : 'ar'),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<country.Data>> snapshot) {
                       if (snapshot.hasError)
@@ -185,7 +193,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     future: Provider.of<ListViewModel>(context, listen: false)
                         .fetchCountries(
                             token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
-                            languageValue == false ? 'en' : 'ar'),
+                            languageValue == null
+                                ? 'en'
+                                : languageValue == false
+                                    ? 'en'
+                                    : 'ar'),
                     builder: (BuildContext context,
                         AsyncSnapshot<List<country.Data>> snapshot) {
                       if (snapshot.hasError)
@@ -375,15 +387,25 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 listen: false);
                             String token = await getToken();
 
-                            await getData.fetchAddress(data, token);
+                            await getData
+                                .fetchAddress(data, token)
+                                .then((response) {
+                              address = response;
+                              addressId = address.data.id;
+                              streetName = address.data.streetAddress;
+                              // addressId = response;
+                            });
                             final Map arguments = ModalRoute.of(context)
                                 .settings
                                 .arguments as Map;
                             bool fromCheckout = arguments['from_checkout'];
+                            // int addressId = arguments['address_id'];
                             if (fromCheckout) {
                               pushNewScreenWithRouteSettings(context,
-                                  settings: RouteSettings(
-                                      name: CheckoutScreen.routeName),
+                                  settings: RouteSettings(arguments: {
+                                    'address_id': addressId,
+                                    'from_added': fromAdded
+                                  }, name: CheckoutScreen.routeName),
                                   screen: CheckoutScreen(),
                                   withNavBar: true,
                                   pageTransitionAnimation:

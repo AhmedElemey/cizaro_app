@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:cizaro_app/model/aboutUsModel.dart';
+import 'package:cizaro_app/model/addressBookModel.dart';
 import 'package:cizaro_app/model/addressModel.dart' as address;
 import 'package:cizaro_app/model/brandModel.dart' as BrandModel;
 import 'package:cizaro_app/model/changePasswordModel.dart';
@@ -10,6 +11,7 @@ import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/emailModel.dart';
+import 'package:cizaro_app/model/getAddressModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/order_id_model.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
@@ -170,13 +172,15 @@ class ListViewModel extends ChangeNotifier {
     return results;
   }
 
-  Future fetchAddress(CreateAddress address, String token) async {
+  Future<GetCreateAddress> fetchAddress(
+      CreateAddress address, String token) async {
     final results = await ListServices().createAddress(address, token);
     notifyListeners();
     return results;
   }
 
-  Future fetchShippingAddress(String token, int addressId) async {
+  Future<AddressBookModel> fetchShippingAddress(
+      String token, int addressId) async {
     final results = await ListServices().fetchShippingAddress(token, addressId);
     notifyListeners();
     return results;

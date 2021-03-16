@@ -73,7 +73,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final getProfile = Provider.of<ListViewModel>(context, listen: false);
     languageValue = await getLang();
     await getProfile
-        .fetchProfile(userId, token, languageValue == false ? 'en' : 'ar')
+        .fetchProfile(
+            userId,
+            token,
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       profile = response;
       userName = profile.data.fullName;

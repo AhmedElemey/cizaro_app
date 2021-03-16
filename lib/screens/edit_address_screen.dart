@@ -105,7 +105,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                   future: Provider.of<ListViewModel>(context, listen: false)
                       .fetchCountries(
                           token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
-                          languageValue == false ? 'en' : 'ar'),
+                          languageValue == null
+                              ? 'en'
+                              : languageValue == false
+                                  ? 'en'
+                                  : 'ar'),
                   builder: (BuildContext context,
                       AsyncSnapshot<List<country.Data>> snapshot) {
                     if (snapshot.hasError)
@@ -183,7 +187,11 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                 future: Provider.of<ListViewModel>(context, listen: false)
                     .fetchCountries(
                         token ?? 'c4ce7da269c80455720be2c26c984d8828b88c5f',
-                        languageValue == false ? 'en' : 'ar'),
+                        languageValue == null
+                            ? 'en'
+                            : languageValue == false
+                                ? 'en'
+                                : 'ar'),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<country.Data>> snapshot) {
                   if (snapshot.hasError)

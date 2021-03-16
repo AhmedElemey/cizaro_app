@@ -68,7 +68,12 @@ class _ProductDetailsState extends State<ProductDetails> {
     languageValue = await getLang();
     await getProduct
         .fetchProductDetailsList(
-            arguments['product_id'], languageValue == false ? 'en' : 'ar')
+            arguments['product_id'],
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       productDetails = response;
       productId = productDetails.data.id;

@@ -38,7 +38,11 @@ class _PolicesTermsScreenState extends State<PolicesTermsScreen> {
 
     final getData = Provider.of<ListViewModel>(context, listen: false);
     await getData
-        .fetchPolicy(languageValue == false ? 'en' : 'ar')
+        .fetchPolicy(languageValue == null
+            ? 'en'
+            : languageValue == false
+                ? 'en'
+                : 'ar')
         .then((response) {
       policesTermsModel = response;
       _details = policesTermsModel.data.details;

@@ -45,7 +45,13 @@ class _OrderScreenState extends State<OrderScreen> {
     print(token);
     languageValue = await getLang();
     await getOrders
-        .fetchOrdersList(token, languageValue == false ? 'en' : 'ar')
+        .fetchOrdersList(
+            token,
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       order = response;
       _ordersList = order.data;

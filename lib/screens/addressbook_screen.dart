@@ -34,6 +34,7 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
   int indexOfSelectedItemAddress = -1;
   bool fromCheckout = false;
   bool languageValue = false;
+  bool fromAdded = false;
 
   Future<String> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -150,7 +151,8 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                                   .city
                                                   .name,
                                               'region_name':
-                                                  addressesList[index].region
+                                                  addressesList[index].region,
+                                              'from_added': fromAdded
                                             }),
                                         screen: CheckoutScreen(),
                                         withNavBar: true,

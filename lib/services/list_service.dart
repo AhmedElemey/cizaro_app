@@ -12,6 +12,7 @@ import 'package:cizaro_app/model/contactUsModel.dart';
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/emailModel.dart';
+import 'package:cizaro_app/model/getAddressModel.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/model/order_id_model.dart';
 import 'package:cizaro_app/model/policesTermsModel.dart';
@@ -326,7 +327,8 @@ class ListServices {
   }
 
   // POST
-  Future createAddress(CreateAddress address, String token) async {
+  Future<GetCreateAddress> createAddress(
+      CreateAddress address, String token) async {
     final response = await http.post(
       API + '/address-book/',
       headers: {
@@ -337,13 +339,23 @@ class ListServices {
       body: jsonEncode(address.toJson()),
     );
     var data = json.decode(response.body);
-    //  print(response.body);
+    print(response.body);
     if (response.statusCode == 200 || data['message'] == '') {
-      jsonDecode(response.body);
+      final body = jsonDecode(response.body);
+      return GetCreateAddress.fromJson(body);
     } else {
-      //    print(response.body);
+      //  print(response.body);
       throw Exception("Unable to perform request .. Try again!");
     }
+    // var data = json.decode(response.body);
+    // print(response.body);
+    // if (response.statusCode == 200 || data['message'] == '') {
+    //   jsonDecode(response.body);
+    //   print(response.body);
+    // } else {
+    //   print(response.body);
+    //   throw Exception("Unable to perform request .. Try again!");
+    // }
   }
 
   Future<PromoModel> createPromo(promo.Promo promo, String token) async {
@@ -358,7 +370,7 @@ class ListServices {
     );
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body);
-      print(response.body);
+      // print(response.body);
       return PromoModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");
@@ -477,7 +489,7 @@ class ListServices {
       },
     );
     var data = json.decode(response.body);
-    // print(response.body);
+    print("fetchShippingAddress:" + response.body);
     if (response.statusCode == 200 || data['message'] == '') {
       final body = jsonDecode(response.body);
       return AddressBookModel.fromJson(body);

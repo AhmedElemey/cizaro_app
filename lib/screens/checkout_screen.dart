@@ -406,25 +406,29 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ? _showIosVerifiedDialog()
           : _showAndroidVerifiedDialog();
     if (this.mounted) setState(() => _isLoading = true);
-    final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
-    String token = await getToken();
-    final checkout = CheckOut(
-        addressBookId: addressId,
-        isCash: selectedRadio == 1 ? false : true,
-        paymentApiId: selectedPaymentId);
-    await getCheckout.checkOutMethod(token, checkout).then((response) {
-      checkoutResult = response;
-      paymentUrl = checkoutResult.data.paymentUrl;
-      orderId = checkoutResult.data.orderId;
-      _checkOutDone = checkoutResult.data.done;
-      checkPaymentsOptions();
-    }).catchError(
-        (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
-    if (this.mounted) setState(() => _isLoading = false);
-    // return showToast(
-    //     title: "Wrong Code! Please Try Again.",
-    //     icon: CupertinoIcons.arrow_counterclockwise,
-    //     background: Colors.red);
+    if (_checkMobileVerificationSend == true ||
+        _checkMobileVerificationSend == null) {
+      final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
+      String token = await getToken();
+      final checkout = CheckOut(
+          addressBookId: addressId,
+          isCash: selectedRadio == 1 ? false : true,
+          paymentApiId: selectedPaymentId);
+      await getCheckout.checkOutMethod(token, checkout).then((response) {
+        checkoutResult = response;
+        paymentUrl = checkoutResult.data.paymentUrl;
+        orderId = checkoutResult.data.orderId;
+        _checkOutDone = checkoutResult.data.done;
+        checkPaymentsOptions();
+      }).catchError(
+          (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
+      if (this.mounted) setState(() => _isLoading = false);
+    } else {
+      showToast(
+          title: "Wrong Code! Please Try Again.",
+          icon: CupertinoIcons.arrow_counterclockwise,
+          background: Colors.red);
+    }
   }
 
   checkPaymentsOptions() {

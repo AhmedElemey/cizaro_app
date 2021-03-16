@@ -504,12 +504,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void initState() {
     super.initState();
     selectedRadio = 0;
+    Future.microtask(() => getAddress());
     Future.microtask(() => addressId == null
         ? fetchLastShippingAddress()
         : fetchSelectedShippingAddress());
     Future.microtask(() => fetchPaymentsList());
     fToast = FToast();
     fToast.init(context);
+  }
+
+  int getAddress() {
+    final Map arguments = ModalRoute.of(context).settings.arguments as Map;
+    addressId = arguments['address_id'];
+    return addressId;
   }
 
   showToast({IconData icon, String title, Color background}) {

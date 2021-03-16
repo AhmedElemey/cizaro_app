@@ -202,6 +202,7 @@ class _SearchItemState extends State<SearchItem> {
             Container(
               padding: EdgeInsets.only(
                   right: SizeConfig.blockSizeHorizontal * 3,
+                  left: SizeConfig.blockSizeHorizontal * 3,
                   top: SizeConfig.blockSizeVertical * 1),
               width: SizeConfig.blockSizeHorizontal * 60,
               child: Column(
@@ -242,9 +243,11 @@ class _SearchItemState extends State<SearchItem> {
                                         decoration:
                                             TextDecoration.lineThrough)),
                               ),
+                              SizedBox(
+                                width: SizeConfig.blockSizeHorizontal * 3,
+                              ),
                               Container(
                                 padding: EdgeInsets.only(
-                                    top: SizeConfig.blockSizeVertical * 1,
                                     right: SizeConfig.blockSizeHorizontal * 5),
                                 child: Text(
                                   widget.productPriceAfter.toString() +

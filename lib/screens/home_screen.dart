@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<bool> getLang() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isArabic');
+    return prefs.getBool('isAr-abic');
   }
 
   Future getHomeData() async {
@@ -184,28 +184,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             sizeSpecValue: '');
                         cart.addProductToCart(productCart);
                       },
-                      // onAddToFavorite: () {
-                      //   final productFav = ProductFav(
-                      //       id: newArrivalsList[initPosition > 0 ? 1 : 0]
-                      //           ?.products[index]
-                      //           .id,
-                      //       name: newArrivalsList[initPosition > 0 ? 1 : 0]
-                      //           ?.products[index]
-                      //           .name,
-                      //       mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
-                      //           ?.products[index]
-                      //           .mainImg,
-                      //       price: newArrivalsList[initPosition > 0 ? 1 : 0]
-                      //           ?.products[index]
-                      //           .price,
-                      //       categoryName:
-                      //           newArrivalsList[initPosition > 0 ? 1 : 0]
-                      //               ?.products[index]
-                      //               .category
-                      //               .name,
-                      //       isFav: 1);
-                      //   fav.addProductToFav(productFav);
-                      // },
                     ),
                   )),
         ),

@@ -81,7 +81,6 @@ class _CartItemState extends State<CartItem> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-          top: SizeConfig.blockSizeVertical * 2,
           left: SizeConfig.blockSizeHorizontal * 5,
           right: SizeConfig.blockSizeHorizontal * 5),
       child: Card(

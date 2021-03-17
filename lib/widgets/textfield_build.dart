@@ -12,6 +12,7 @@ class TextFieldBuild extends StatelessWidget {
   final TextStyle textStyle;
   final Function onClick;
   final bool readOnly;
+  final Function onChange;
 
   TextFieldBuild(
       {this.textEditingController,
@@ -22,6 +23,7 @@ class TextFieldBuild extends StatelessWidget {
       this.validator,
       this.hintText,
       this.textStyle,
+      this.onChange,
       this.icon,
       this.lineCount});
 
@@ -36,6 +38,7 @@ class TextFieldBuild extends StatelessWidget {
         obscureText: obscureText,
         keyboardType: textInputType,
         cursorColor: Color(0xff294794),
+        onChanged: onChange,
         validator: validator,
         readOnly: readOnly,
         style: TextStyle(

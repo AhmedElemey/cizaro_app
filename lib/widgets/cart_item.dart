@@ -1,4 +1,5 @@
 import 'package:cizaro_app/size_config.dart';
+import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +12,14 @@ class CartItem extends StatefulWidget {
       colorSpecValue,
       sizeSpecValue,
       productCategory;
-  int productQuantity, totalAvailability, index;
+  int productQuantity, totalAvailability, index, id;
   final double totalPrice, productPrice, productPriceAfterDiscount;
   var myController = TextEditingController();
   final VoidCallback onDelete;
-  final VoidCallback onPlusQuantity;
-  final VoidCallback onMinusQuantity;
-  final Function onUpdateQuantity;
+  // final VoidCallback onPlusQuantity;
+  // final VoidCallback onMinusQuantity;
+  // final Function onUpdateQuantity;
+  final CartViewModel cartProvider;
 
   CartItem(
       {Key key,
@@ -31,12 +33,14 @@ class CartItem extends StatefulWidget {
       this.totalPrice,
       this.productQuantity,
       this.index,
+      this.id,
       this.onDelete,
-      this.onMinusQuantity,
+      // this.onMinusQuantity,
       this.colorSpecValue,
       this.sizeSpecValue,
-      this.onUpdateQuantity,
-      this.onPlusQuantity})
+      // this.onUpdateQuantity,
+      // this.onPlusQuantity,
+      this.cartProvider})
       : super(key: key);
 
   @override
@@ -45,18 +49,25 @@ class CartItem extends StatefulWidget {
 
 class _CartItemState extends State<CartItem> {
   // TextEditingController quantityController = TextEditingController();
-
+  var cartProvider;
   @override
   void initState() {
-    widget.myController.addListener(() {
-      print("value: ${widget.myController.text}");
-      // widget.productQuantity = int.parse(widget.myController.text);
-      widget.onUpdateQuantity();
-      setState(() {});
-    });
-    widget.productQuantity = int.parse(widget.myController.text);
-    //  quantityController.text = 1.toString();
     super.initState();
+
+    cartProvider = widget.cartProvider;
+    ///////listener of text input./////
+    // widget.myController.addListener(() {
+    //   print("value: ${widget.myController.text}");
+    //   // widget.productQuantity = int.parse(widget.myController.text)
+    //   // setState(() {});
+    //   widget.productQuantity = int.parse(widget.myController.text);
+    //
+    //   widget.cartProvider.updateQuantity(
+    //     index: widget.index,
+    //
+    //   );
+    // });
+    //  quantityController.text = 1.toString();
   }
 
   @override
@@ -207,7 +218,8 @@ class _CartItemState extends State<CartItem> {
                         children: [
                           Spacer(),
                           GestureDetector(
-                            onTap: widget.onMinusQuantity,
+                            onTap: () =>
+                                cartProvider.decreaseQuantity(widget.index),
                             child: CircleAvatar(
                               radius: SizeConfig.blockSizeHorizontal * 3,
                               backgroundColor: Colors.black12,
@@ -251,32 +263,48 @@ class _CartItemState extends State<CartItem> {
                                 //   setState(() {});
                                 // });
                                 // widget.onUpdateQuantity(widget.index,widget.productQuantity);
-                                setState(() {
-                                  widget.myController.text = value;
-                                  widget.productQuantity =
-                                      int.parse(widget.myController.text);
-                                  widget.onUpdateQuantity(
-                                      widget.index, widget.productQuantity);
-                                });
+                                // setState(() {
+                                widget.myController.text = value;
+                                widget.productQuantity =
+                                    int.parse(widget.myController.text);
+                                cartProvider.updateQuantity(
+                                    index: widget.index,
+                                    productId: widget.id,
+                                    quantity: widget.productQuantity);
+                                // });
 
                                 // widget.onUpdateQuantity();
                               },
                             ),
                           ),
-                          GestureDetector(
-                            onTap: widget.onPlusQuantity,
-                            child: CircleAvatar(
-                              radius: SizeConfig.blockSizeHorizontal * 3,
-                              backgroundColor: Colors.black12,
-                              child: Center(
-                                child: Icon(
-                                  Icons.add,
-                                  size: SizeConfig.safeBlockHorizontal * 5,
-                                  color: Color(0xff707070),
+                          widget.totalAvailability - 1 >= widget.productQuantity
+                              ? GestureDetector(
+                                  onTap: () => cartProvider
+                                      .increaseQuantity(widget.index),
+                                  child: CircleAvatar(
+                                    radius: SizeConfig.blockSizeHorizontal * 3,
+                                    backgroundColor: Colors.black12,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.add,
+                                        size:
+                                            SizeConfig.safeBlockHorizontal * 5,
+                                        color: Color(0xff707070),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  radius: SizeConfig.blockSizeHorizontal * 3,
+                                  backgroundColor: Colors.black12,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.add,
+                                      size: SizeConfig.safeBlockHorizontal * 5,
+                                      color: Color(0xff707070),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
                           Spacer(),
                           Padding(
                             padding: EdgeInsets.only(
@@ -307,7 +335,7 @@ class _CartItemState extends State<CartItem> {
                           ),
                         ],
                       ),
-                      widget.totalAvailability < widget.productQuantity
+                      widget.totalAvailability <= widget.productQuantity
                           ? Center(
                               child: Text(
                                   "${widget.totalAvailability}" +

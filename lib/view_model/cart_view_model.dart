@@ -96,6 +96,7 @@ class CartViewModel extends ChangeNotifier {
     _cartItemsList[index].quantity <= 1
         ? _cartItemsList[index].quantity = 1
         : _cartItemsList[index].quantity--;
+    ///////
     _cartItemsList[index].quantity <= 1
         ? _cartItemsList[index].price ==
                 _cartItemsList[index].priceAfterDiscount
@@ -131,10 +132,16 @@ class CartViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateQuantity(int index, int productId, int quantity) async {
+  updateQuantity({int index, int productId, int quantity}) async {
+    print("_cartItemsList[$index] - before: ${_cartItemsList[index].quantity}");
     _cartItemsList[index].quantity = quantity;
+    print("_cartItemsList[$index] - after: ${_cartItemsList[index].quantity}");
+
     await dbHelper.updateProduct(_cartItemsList[index]);
-    getTotalPrice();
+    print(
+        "dbHelper-_cartItemsList[$index] - after: ${_cartItemsList[index].quantity}");
+
+    // getTotalPrice();
     notifyListeners();
   }
 

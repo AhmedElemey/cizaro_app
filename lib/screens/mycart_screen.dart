@@ -112,6 +112,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 itemCount: cart.cartProductModel?.length ?? 0,
                 itemBuilder: (ctx, index) {
                   return CartItem(
+                      id: cart.cartProductModel[index].id,
                       imgUrl: cart.cartProductModel[index].mainImg,
                       productName: cart.cartProductModel[index].name,
                       productCategory:
@@ -149,12 +150,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         });
                       },
                       index: index,
-                      onUpdateQuantity: () => cart.updateQuantity(
-                          index,
-                          cart.cartProductModel[index].id,
-                          cart.cartProductModel[index].quantity),
-                      onPlusQuantity: () => cart.increaseQuantity(index),
-                      onMinusQuantity: () => cart.decreaseQuantity(index));
+                      cartProvider: cart
+                      // onUpdateQuantity: () => cart.updateQuantity(
+                      //     index: index,
+                      //     productId: cart.cartProductModel[index].id,
+                      //     quantity: cart.cartProductModel[index].quantity),
+                      // onPlusQuantity: () => cart.increaseQuantity(index),
+                      // onMinusQuantity: () => cart.decreaseQuantity(index)
+                      );
                 }));
   }
 

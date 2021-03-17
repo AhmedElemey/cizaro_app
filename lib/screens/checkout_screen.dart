@@ -264,6 +264,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     obscureText: false,
                     readOnly: false,
                     hintText: 'Ex : 1234',
+                    onChange: (String value) {
+                      if (value.length == 4) {
+                        sendOtpVerification(false);
+                        print("code verified");
+                      }
+                    },
                     textStyle:
                         TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.3),
                     textInputType: TextInputType.number,
@@ -354,7 +360,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     title:
                                         'Please! Enter Your Code Verification')
                                 : sendOtpVerification(false);
-                            Navigator.pop(context);
+                            // Navigator.pop(context);
                           }))
                 ],
               ),
@@ -389,15 +395,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     await verification.otpVerification(otpVerification, token).then((response) {
       verificationResult = response;
       _checkMobileVerificationSend = verificationResult.data.done;
-      _checkMobileVerificationSend == false
-          ? showToast(
-              title: "Wrong Code! Please Try Again.",
-              icon: CupertinoIcons.arrow_counterclockwise,
-              background: Colors.red)
-          : showToast(
-              title: "Your Code Successfully Send.",
-              icon: CupertinoIcons.checkmark_alt_circle,
-              background: Color(0xff3A559F));
+      if (_checkMobileVerificationSend == false) {
+        showToast(
+            title: "Wrong Code! Please Try Again.",
+            icon: CupertinoIcons.arrow_counterclockwise,
+            background: Colors.red);
+      } else {
+        showToast(
+            title: "Your Code Successfully Send.",
+            icon: CupertinoIcons.checkmark_alt_circle,
+            background: Color(0xff3A559F));
+        Navigator.pop(context);
+        sendCheckOut();
+      }
     }).catchError((error) => print(error));
   }
 
@@ -409,29 +419,22 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ? _showIosVerifiedDialog()
           : _showAndroidVerifiedDialog();
     if (this.mounted) setState(() => _isLoading = true);
-    if (_checkMobileVerificationSend == true ||
-        _checkMobileVerificationSend == null) {
-      final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
-      String token = await getToken();
-      final checkout = CheckOut(
-          addressBookId: addressId,
-          isCash: selectedRadio == 1 ? false : true,
-          paymentApiId: selectedPaymentId);
-      await getCheckout.checkOutMethod(token, checkout).then((response) {
-        checkoutResult = response;
-        paymentUrl = checkoutResult.data.paymentUrl;
-        orderId = checkoutResult.data.orderId;
-        _checkOutDone = checkoutResult.data.done;
-        checkPaymentsOptions();
-      }).catchError(
-          (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
-      if (this.mounted) setState(() => _isLoading = false);
-    } else {
-      showToast(
-          title: "Wrong Code! Please Try Again.",
-          icon: CupertinoIcons.arrow_counterclockwise,
-          background: Colors.red);
-    }
+
+    final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
+    String token = await getToken();
+    final checkout = CheckOut(
+        addressBookId: addressId,
+        isCash: selectedRadio == 1 ? false : true,
+        paymentApiId: selectedPaymentId);
+    await getCheckout.checkOutMethod(token, checkout).then((response) {
+      checkoutResult = response;
+      paymentUrl = checkoutResult.data.paymentUrl;
+      orderId = checkoutResult.data.orderId;
+      _checkOutDone = checkoutResult.data.done;
+      checkPaymentsOptions();
+    }).catchError(
+        (error) => Platform.isIOS ? _showIosDialog() : _showAndroidDialog());
+    if (this.mounted) setState(() => _isLoading = false);
   }
 
   checkPaymentsOptions() {

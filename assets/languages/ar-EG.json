@@ -111,7 +111,13 @@
   "start_search": "بدايه البحث",
   "search_find": "ابحث و اكتشف",
   "the_search": "البحث",
-  "qty": "الكميله :",
-  "edit_your_address": "تعديل عنوانك"
-
+  "qty": "الكميه :",
+  "edit_your_address": "تعديل عنوانك",
+  "enter_verification_code": "الرجاء إدخال رمز التحقق الخاص بك.",
+  "choose_payment_method":"رجاء! حدد طريقة الدفع قبل إرسال طلبك",
+  "close": "الغاء",
+  "resend": "اعاده الارسال",
+  "send": "ارسال",
+  "error": "خطا",
+  "verification": "التحقق"
 }

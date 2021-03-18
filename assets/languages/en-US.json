@@ -112,5 +112,12 @@
   "search_find": "Search and find out...",
   "the_search": "The Search ",
   "qty": "Qty :",
-  "edit_your_address": "Edit Your Address"
+  "edit_your_address": "Edit Your Address",
+  "enter_verification_code": "Please, Enter Your Verification Code.",
+  "choose_payment_method": "Please! Select Payment Method before Submit your Order",
+  "close": "Close",
+  "resend": "Resend",
+  "send":"Send",
+  "error": "Error",
+  "verification": "Verification"
 }

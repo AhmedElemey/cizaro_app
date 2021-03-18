@@ -190,13 +190,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
-          content: Text(
-              'Please! Select Payment Method before Submit your Order',
+          title: Text('error'.tr()),
+          content: Text('choose_payment_method'.tr(),
               style: const TextStyle(fontWeight: FontWeight.bold)),
           actions: <Widget>[
             FlatButton(
-              child: Text('Close',
+              child: Text('close'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -214,12 +213,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text('Error'),
-            content:
-                Text('Please! Select Payment Method before Submit your Order'),
+            title: Text('error'.tr()),
+            content: Text('choose_payment_method'.tr()),
             actions: <Widget>[
               FlatButton(
-                child: Text('Close'),
+                child: Text('close'.tr()),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _isLoading = false;
@@ -251,15 +249,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Verification',
+          title: Text('verification'.tr(),
               style: TextStyle(color: Theme.of(context).primaryColor)),
           content: Container(
             height: SizeConfig.blockSizeVertical * 25,
             child: Column(
               children: [
-                Text('Please, Enter Your Verification Code.',
+                Text('enter_verification_code'.tr(),
                     style: const TextStyle(fontWeight: FontWeight.bold)),
-                SizedBox(height: SizeConfig.blockSizeVertical * 4),
+                SizedBox(height: SizeConfig.blockSizeVertical * 2),
                 TextFieldBuild(
                     obscureText: false,
                     readOnly: false,
@@ -291,7 +289,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         _verificationCodeController.text == ''
                             ? showToast(
                                 icon: Icons.error_outline,
-                                title: 'Please! Enter Your Code Verification')
+                                title: 'enter_verification_code'.tr())
                             : sendOtpVerification(false);
                         Navigator.pop(context);
                       }),
@@ -301,7 +299,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Resend',
+              child: Text('resend'.tr(),
                   style: TextStyle(color: Theme.of(context).primaryColor)),
               onPressed: () {
                 sendOtpVerification(true);
@@ -309,7 +307,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               },
             ),
             FlatButton(
-              child: Text('Close',
+              child: Text('close'.tr(),
                   style: TextStyle(color: Theme.of(context).primaryColor)),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -327,14 +325,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text('Verification',
+            title: Text('verification'.tr(),
                 style: TextStyle(color: Theme.of(context).primaryColor)),
             content: Padding(
               padding: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 2),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Please, Enter Your Verification Code.',
+                  Text('enter_verification_code'.tr(),
                       style: const TextStyle(fontWeight: FontWeight.w500)),
                   SizedBox(height: SizeConfig.blockSizeVertical * 1.7),
                   CupertinoTextField(
@@ -348,7 +346,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           top: SizeConfig.blockSizeVertical * 2),
                       child: CupertinoButton(
                           child: Center(
-                              child: Text('Send',
+                              child: Text('send'.tr(),
                                   style: TextStyle(
                                       fontSize: SizeConfig.safeBlockHorizontal *
                                           4.1))),
@@ -357,8 +355,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             _verificationCodeController.text == ''
                                 ? showToast(
                                     icon: Icons.error_outline,
-                                    title:
-                                        'Please! Enter Your Code Verification')
+                                    title: 'enter_verification_code'.tr())
                                 : sendOtpVerification(false);
                             // Navigator.pop(context);
                           }))
@@ -367,14 +364,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('Resend'),
+                child: Text('resend'.tr()),
                 onPressed: () {
                   sendOtpVerification(true);
                   _isLoading = false;
                 },
               ),
               FlatButton(
-                child: Text('Close'),
+                child: Text('close'.tr()),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _isLoading = false;
@@ -891,6 +888,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       productName: cart.cartProductModel[index].name ?? "",
                       productCategory:
                           cart.cartProductModel[index].categoryName ?? "",
+                      productQuantity:
+                          cart.cartProductModel[index].quantity ?? 0,
                       productPrice: cart.cartProductModel[index].price ==
                               cart.cartProductModel[index].priceAfterDiscount
                           ? cart.cartProductModel[index].price

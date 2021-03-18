@@ -8,6 +8,7 @@ class CheckoutItem extends StatelessWidget {
   final double productPrice;
   final String productSizeSpecs;
   final Color productColorSpecs;
+  final int productQuantity;
 
   const CheckoutItem(
       {this.productName,
@@ -15,6 +16,7 @@ class CheckoutItem extends StatelessWidget {
       this.productPrice,
       this.productCategory,
       this.productColorSpecs,
+      this.productQuantity,
       this.productSizeSpecs});
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,33 @@ class CheckoutItem extends StatelessWidget {
                                       SizeConfig.safeBlockHorizontal * 3.5),
                               // textScaleFactor:
                               //     MediaQuery.of(context).textScaleFactor * 1
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: Container(
+                            width: SizeConfig.blockSizeHorizontal * 30,
+                            child: Row(
+                              children: [
+                                Text(
+                                  'qty'.tr(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:
+                                        SizeConfig.safeBlockHorizontal * 4,
+                                  ),
+                                ),
+                                SizedBox(
+                                    width: SizeConfig.blockSizeHorizontal * 1),
+                                Text(
+                                  productQuantity.toString() ?? 0,
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 3.5),
+                                  // textScaleFactor:
+                                  //     MediaQuery.of(context).textScaleFactor * 1
+                                ),
+                              ],
                             ),
                           ),
                         ),

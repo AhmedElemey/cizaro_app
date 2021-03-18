@@ -136,8 +136,6 @@ class _OrderDetailsItemState extends State<OrderDetailsItem> {
                               fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 4,
                             ),
-                            // textScaleFactor:
-                            //     MediaQuery.of(context).textScaleFactor * 1
                           ),
                           SizedBox(width: SizeConfig.blockSizeHorizontal * 1),
                           Text(

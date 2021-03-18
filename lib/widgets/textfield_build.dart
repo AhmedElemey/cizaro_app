@@ -13,6 +13,7 @@ class TextFieldBuild extends StatelessWidget {
   final Function onClick;
   final bool readOnly;
   final Function onChange;
+  final String initialValue;
 
   TextFieldBuild(
       {this.textEditingController,
@@ -22,6 +23,7 @@ class TextFieldBuild extends StatelessWidget {
       this.textInputType,
       this.validator,
       this.hintText,
+      this.initialValue,
       this.textStyle,
       this.onChange,
       this.icon,
@@ -33,6 +35,7 @@ class TextFieldBuild extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.89,
       height: MediaQuery.of(context).size.height * 0.07,
       child: TextFormField(
+        initialValue: initialValue,
         maxLines: lineCount,
         controller: textEditingController,
         obscureText: obscureText,

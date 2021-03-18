@@ -307,18 +307,28 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 ),
                                 width: SizeConfig.blockSizeHorizontal * 80,
                                 height: SizeConfig.blockSizeVertical * 05,
-                                child: TextField(
+                                child: TextFieldBuild(
                                   obscureText: false,
                                   readOnly: false,
-                                  decoration: InputDecoration(
-                                    hintText: userName,
-                                  ),
-                                  onChanged: (value) {
+                                  initialValue: userName.toString(),
+                                  onChange: (value) {
                                     setState(() {
                                       valueUserName = value;
                                     });
                                   },
                                 ),
+                                // TextField(
+                                //   obscureText: false,
+                                //   readOnly: false,
+                                //   decoration: InputDecoration(
+                                //     hintText: userName,
+                                //   ),
+                                //   onChanged: (value) {
+                                //     setState(() {
+                                //       valueUserName = value;
+                                //     });
+                                //   },
+                                // ),
                               )
                             ],
                           ),
@@ -354,19 +364,30 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     right: SizeConfig.blockSizeHorizontal * 2,
                                     top: SizeConfig.blockSizeVertical * 1),
                                 width: SizeConfig.blockSizeHorizontal * 80,
-                                height: SizeConfig.blockSizeHorizontal * 7,
-                                child: TextField(
+                                height: SizeConfig.blockSizeHorizontal * 10,
+                                child: TextFieldBuild(
                                   obscureText: false,
                                   readOnly: false,
-                                  decoration: InputDecoration(
-                                    hintText: userFullName,
-                                  ),
-                                  onChanged: (value) {
+                                  initialValue: userFullName.toString(),
+                                  onChange: (value) {
                                     setState(() {
                                       valueFullName = value;
                                     });
                                   },
                                 ),
+
+                                // TextField(
+                                //   obscureText: false,
+                                //   readOnly: false,
+                                //   decoration: InputDecoration(
+                                //     hintText: userFullName,
+                                //   ),
+                                //   onChanged: (value) {
+                                //     setState(() {
+                                //       valueFullName = value;
+                                //     });
+                                //   },
+                                // ),
                               )
                             ],
                           ),
@@ -403,14 +424,11 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     top: SizeConfig.blockSizeVertical * 1),
                                 width: SizeConfig.blockSizeHorizontal * 80,
                                 height: SizeConfig.blockSizeVertical * 7,
-                                child: TextField(
+                                child: TextFieldBuild(
                                   obscureText: false,
                                   readOnly: false,
-                                  keyboardType: TextInputType.emailAddress,
-                                  decoration: InputDecoration(
-                                    hintText: userEmail,
-                                  ),
-                                  onChanged: (value) {
+                                  initialValue: userEmail.toString(),
+                                  onChange: (value) {
                                     setState(() {
                                       valueEmail = value;
                                     });
@@ -458,6 +476,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     obscureText: false,
                                     readOnly: true,
                                     hintText: userBirthDate,
+                                    // initialValue: userBirthDate.toString(),
                                     textStyle: TextStyle(
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 3.2,

@@ -137,7 +137,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       payments = response;
 
       _paymentList = payments.data.availablePayments;
-    });
+    }).catchError((error) => print(error));
     fetchTotalOrder();
     if (this.mounted) setState(() => _isLoading = false);
   }

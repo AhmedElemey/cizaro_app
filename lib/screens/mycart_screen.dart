@@ -112,45 +112,46 @@ class _MyCartScreenState extends State<MyCartScreen> {
                 itemCount: cart.cartProductModel?.length ?? 0,
                 itemBuilder: (ctx, index) {
                   return CartItem(
-                      id: cart.cartProductModel[index].id,
-                      imgUrl: cart.cartProductModel[index].mainImg,
-                      productName: cart.cartProductModel[index].name,
-                      productCategory:
-                          cart.cartProductModel[index].categoryName,
-                      productPrice: cart.cartProductModel[index].price,
-                      productPriceAfterDiscount:
-                          cart.cartProductModel[index].priceAfterDiscount,
-                      totalAvailability:
-                          cart.cartProductModel[index].availability,
-                      totalPrice: cart.cartProductModel[index].price ==
-                              cart.cartProductModel[index]?.priceAfterDiscount
-                          ? cart.cartProductModel[index].price *
-                              cart.cartProductModel[index].quantity
-                          : cart.cartProductModel[index].priceAfterDiscount ==
-                                  null
-                              ? cart.cartProductModel[index].price *
-                                  cart.cartProductModel[index].quantity
-                              : cart.cartProductModel[index]
-                                      .priceAfterDiscount *
-                                  cart.cartProductModel[index].quantity,
-                      productQuantity:
-                          cart.cartProductModel[index].quantity ?? 1,
-                      sizeSpecValue:
-                          cart.cartProductModel[index]?.sizeSpecValue ?? '',
-                      colorSpecValue:
-                          cart.cartProductModel[index]?.colorSpecValue ?? '',
-                      myController: TextEditingController(
-                          text:
-                              cart.cartProductModel[index].quantity.toString()),
-                      onDelete: () {
-                        cart.deleteCartProduct(
-                            index, cart.cartProductModel[index].id);
-                        setState(() {
-                          cart.cartProductModel?.removeAt(index);
-                        });
-                      },
+                      item: cart.cartProductModel[index],
                       index: index,
                       cartProvider: cart
+
+                      // id: cart.cartProductModel[index].id,
+                      // imgUrl: cart.cartProductModel[index].mainImg,
+                      // productName: cart.cartProductModel[index].name,
+                      // productCategory:
+                      //     cart.cartProductModel[index].categoryName,
+                      // productPrice: cart.cartProductModel[index].price,
+                      // productPriceAfterDiscount:
+                      //     cart.cartProductModel[index].priceAfterDiscount,
+                      // totalAvailability:
+                      //     cart.cartProductModel[index].availability,
+                      // totalPrice: cart.cartProductModel[index].price ==
+                      //         cart.cartProductModel[index]?.priceAfterDiscount
+                      //     ? cart.cartProductModel[index].price *
+                      //         cart.cartProductModel[index].quantity
+                      //     : cart.cartProductModel[index].priceAfterDiscount ==
+                      //             null
+                      //         ? cart.cartProductModel[index].price *
+                      //             cart.cartProductModel[index].quantity
+                      //         : cart.cartProductModel[index]
+                      //                 .priceAfterDiscount *
+                      //             cart.cartProductModel[index].quantity,
+                      // productQuantity:
+                      //     cart.cartProductModel[index].quantity ?? 1,
+                      // sizeSpecValue:
+                      //     cart.cartProductModel[index]?.sizeSpecValue ?? '',
+                      // colorSpecValue:
+                      //     cart.cartProductModel[index]?.colorSpecValue ?? '',
+                      // myController: TextEditingController(text: cart.cartProductModel[index].quantity.toString()),
+                      // onDelete: () {
+                      //   cart.deleteCartProduct(
+                      //       index, cart.cartProductModel[index].id);
+                      //   setState(() {
+                      //     cart.cartProductModel?.removeAt(index);
+                      //   });
+                      // },
+
                       // onUpdateQuantity: () => cart.updateQuantity(
                       //     index: index,
                       //     productId: cart.cartProductModel[index].id,
@@ -163,7 +164,6 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final total = Provider.of<CartViewModel>(context, listen: true);
     final cart = Provider.of<CartViewModel>(context, listen: true);
     return Scaffold(
         key: _scaffoldKey9,
@@ -194,7 +194,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                 fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                           ),
                           Text(
-                            total.totalPrice.toStringAsFixed(2) + ' le'.tr() ??
+                            cart.totalPrice.toStringAsFixed(2) + ' le'.tr() ??
                                 '00.00',
                             style: TextStyle(
                                 color: Color(0xff3A559F),
@@ -204,7 +204,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                     GestureDetector(
                       onTap: () async {
                         String token = await getToken();
-                        total.cartProductModel.length == 0
+                        cart.cartProductModel.length == 0
                             ? showToast()
                             : token == null || token.isEmpty
                                 ? pushNewScreenWithRouteSettings(context,

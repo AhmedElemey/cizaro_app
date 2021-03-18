@@ -21,12 +21,12 @@ class ProductCart {
       this.priceAfterDiscount,
       this.price,
       this.categoryName,
-      this.quantity,
+      this.quantity = 1,
       this.totalPrice,
       this.inCart,
       this.availability,
-      this.colorSpecValue,
-      this.sizeSpecValue});
+      this.colorSpecValue = "",
+      this.sizeSpecValue = ""});
 
   ProductCart.fromJson(Map<String, dynamic> map) {
     id = map[columnId];

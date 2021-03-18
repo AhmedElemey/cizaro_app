@@ -45,18 +45,13 @@ class CartViewModel extends ChangeNotifier {
   getTotalPrice() {
     if (_cartItemsList.length == 0 || _cartItemsList == null) {
       _totalPrice = 0.0;
-    }
-    for (int i = 0; i < _cartItemsList.length; i++) {
-      if (_cartItemsList[i].price == _cartItemsList[i].priceAfterDiscount) {
-        _totalPrice += _cartItemsList[i].price * _cartItemsList[i].quantity;
-      } else {
-        _cartItemsList[i].priceAfterDiscount == null
-            ? _totalPrice +=
-                _cartItemsList[i].price * _cartItemsList[i].quantity
-            : _totalPrice += _cartItemsList[i].priceAfterDiscount *
-                _cartItemsList[i].quantity;
+    } else {
+      _totalPrice = 0.0;
+      for (int i = 0; i < _cartItemsList.length; i++) {
+        print("index: $i - $_totalPrice");
+        _totalPrice += getTotalPriceOfItem(_cartItemsList[i]);
+        print("index: $i - after- $_totalPrice");
       }
-      notifyListeners();
     }
   }
 
@@ -70,82 +65,56 @@ class CartViewModel extends ChangeNotifier {
     }
     await dbHelper.addProductToCart(productCart);
     _cartItemsList.add(productCart);
-    productCart.price == productCart.priceAfterDiscount
-        ? _totalPrice += productCart.price * productCart.quantity
-        : _totalPrice += productCart.priceAfterDiscount == null
-            ? productCart.price * productCart.quantity
-            : productCart.priceAfterDiscount * productCart.quantity;
+    getTotalPrice();
     notifyListeners();
   }
 
   increaseQuantity(int index) async {
     if (_cartItemsList[index].availability < _cartItemsList[index].quantity) {
       return;
+    } else {
+      _cartItemsList[index].quantity++;
+      print("quantity after: ${_cartItemsList[index].quantity}");
     }
-    _cartItemsList[index].quantity++;
-    _cartItemsList[index].price == _cartItemsList[index].priceAfterDiscount
-        ? _totalPrice += _cartItemsList[index].price
-        : _totalPrice += _cartItemsList[index].priceAfterDiscount == null
-            ? _cartItemsList[index].price
-            : _cartItemsList[index].priceAfterDiscount;
     await dbHelper.updateProduct(_cartItemsList[index]);
+    getTotalPrice();
     notifyListeners();
   }
 
   decreaseQuantity(int index) async {
-    _cartItemsList[index].quantity <= 1
-        ? _cartItemsList[index].quantity = 1
-        : _cartItemsList[index].quantity--;
-    ///////
-    _cartItemsList[index].quantity <= 1
-        ? _cartItemsList[index].price ==
-                _cartItemsList[index].priceAfterDiscount
-            ? _totalPrice = _cartItemsList[index].price
-            : _totalPrice = _cartItemsList[index].priceAfterDiscount == null
-                ? _cartItemsList[index].price
-                : _cartItemsList[index].priceAfterDiscount
-        : _cartItemsList[index].price ==
-                _cartItemsList[index].priceAfterDiscount
-            ? _totalPrice -= _cartItemsList[index].price
-            : _totalPrice -= _cartItemsList[index].priceAfterDiscount == null
-                ? _cartItemsList[index].price
-                : _cartItemsList[index].priceAfterDiscount;
+    if (_cartItemsList[index].quantity <= 1) {
+      _cartItemsList[index].quantity = 1;
+    } else {
+      _cartItemsList[index].quantity--;
+    }
     await dbHelper.updateProduct(_cartItemsList[index]);
+    getTotalPrice();
     notifyListeners();
   }
 
-  // onUpdateQuantity(int index, int quantity) async {
-  //   _cartItemsList[index].quantity = quantity;
-  //   await dbHelper.updateProduct(_cartItemsList[index]);
-  //   //  getTotalPrice();
-  //   notifyListeners();
-  // }
-
-  deleteCartProduct(int index, int productId) async {
+  deleteCartProduct({int index, int productId}) async {
     dbHelper.deleteCartItem(productId);
-    _cartItemsList[index].price == _cartItemsList[index].priceAfterDiscount
-        ? _totalPrice -= _cartItemsList[index].price
-        : _totalPrice -= _cartItemsList[index].priceAfterDiscount == null
-            ? _cartItemsList[index].price
-            : _cartItemsList[index].priceAfterDiscount;
     await dbHelper.updateProduct(_cartItemsList[index]);
+    _cartItemsList?.removeAt(index);
+    getTotalPrice();
     notifyListeners();
   }
 
   updateQuantity({int index, int productId, int quantity}) async {
-    print("_cartItemsList[$index] - before: ${_cartItemsList[index].quantity}");
     _cartItemsList[index].quantity = quantity;
-    print("_cartItemsList[$index] - after: ${_cartItemsList[index].quantity}");
-
     await dbHelper.updateProduct(_cartItemsList[index]);
-    print(
-        "dbHelper-_cartItemsList[$index] - after: ${_cartItemsList[index].quantity}");
-
-    // getTotalPrice();
+    getTotalPrice();
     notifyListeners();
   }
 
-  // deleteTable() {
-  //   return dbHelper.deleteTable;
-  // }
+  double getTotalPriceOfItem(ProductCart item) {
+    print("getTotalPriceOfItem: p:${item.price} q:${item.quantity}");
+    double total = item.price == item?.priceAfterDiscount
+        ? item.price * item.quantity
+        : item.priceAfterDiscount == null
+            ? item.price * item.quantity
+            : item.priceAfterDiscount * item.quantity;
+    print("after: $total");
+    return total;
+  }
 }

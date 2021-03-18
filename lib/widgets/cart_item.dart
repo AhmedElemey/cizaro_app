@@ -1,3 +1,4 @@
+import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -7,40 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CartItem extends StatefulWidget {
-  final String productName,
-      imgUrl,
-      colorSpecValue,
-      sizeSpecValue,
-      productCategory;
-  int productQuantity, totalAvailability, index, id;
-  final double totalPrice, productPrice, productPriceAfterDiscount;
-  var myController = TextEditingController();
-  final VoidCallback onDelete;
-  // final VoidCallback onPlusQuantity;
-  // final VoidCallback onMinusQuantity;
-  // final Function onUpdateQuantity;
+  final ProductCart item;
+  final int index;
   final CartViewModel cartProvider;
 
-  CartItem(
-      {Key key,
-      this.productName,
-      this.imgUrl,
-      this.productPrice,
-      this.productPriceAfterDiscount,
-      this.productCategory,
-      this.totalAvailability,
-      this.myController,
-      this.totalPrice,
-      this.productQuantity,
-      this.index,
-      this.id,
-      this.onDelete,
-      // this.onMinusQuantity,
-      this.colorSpecValue,
-      this.sizeSpecValue,
-      // this.onUpdateQuantity,
-      // this.onPlusQuantity,
-      this.cartProvider})
+  CartItem({Key key, this.item, this.index, this.cartProvider})
       : super(key: key);
 
   @override
@@ -48,32 +20,19 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
-  // TextEditingController quantityController = TextEditingController();
-  var cartProvider;
+  TextEditingController quantityController;
+  CartViewModel cartProvider;
   @override
   void initState() {
     super.initState();
-
     cartProvider = widget.cartProvider;
-    ///////listener of text input./////
-    // widget.myController.addListener(() {
-    //   print("value: ${widget.myController.text}");
-    //   // widget.productQuantity = int.parse(widget.myController.text)
-    //   // setState(() {});
-    //   widget.productQuantity = int.parse(widget.myController.text);
-    //
-    //   widget.cartProvider.updateQuantity(
-    //     index: widget.index,
-    //
-    //   );
-    // });
-    //  quantityController.text = 1.toString();
+    quantityController =
+        TextEditingController(text: widget.item.quantity.toString());
   }
 
   @override
   void dispose() {
-    //  quantityController.dispose();
-    widget.myController.dispose();
+    quantityController.dispose();
     super.dispose();
   }
 
@@ -101,7 +60,7 @@ class _CartItemState extends State<CartItem> {
                       child: Container(
                           width: SizeConfig.blockSizeHorizontal * 20,
                           height: SizeConfig.blockSizeVertical * 18,
-                          child: Image.network(widget.imgUrl,
+                          child: Image.network(widget.item.mainImg,
                               fit: BoxFit.fitHeight)))),
               Flexible(
                 child: Padding(
@@ -116,7 +75,7 @@ class _CartItemState extends State<CartItem> {
                             width: SizeConfig.blockSizeHorizontal * 40,
                             height: SizeConfig.blockSizeVertical * 5.5,
                             child: Text(
-                              widget.productName,
+                              widget.item.name,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600,
                                   fontSize:
@@ -130,20 +89,17 @@ class _CartItemState extends State<CartItem> {
                                   right: SizeConfig.blockSizeHorizontal * 3,
                                   left: SizeConfig.blockSizeHorizontal * 1),
                               child: Text(
-                                widget.productPriceAfterDiscount ==
-                                        widget.productPrice
-                                    ? widget.productPrice.toString() +
-                                        ' le'.tr()
-                                    : widget.productPriceAfterDiscount == null
-                                        ? widget.productPrice.toString() +
+                                widget.item.priceAfterDiscount ==
+                                        widget.item.price
+                                    ? widget.item.price.toString() + ' le'.tr()
+                                    : widget.item.priceAfterDiscount == null
+                                        ? widget.item.price.toString() +
                                             ' le'.tr()
-                                        : widget.productPriceAfterDiscount == 0
-                                            ? widget.productPrice
-                                            : widget.productPriceAfterDiscount
+                                        : widget.item.priceAfterDiscount == 0
+                                            ? widget.item.price
+                                            : widget.item.priceAfterDiscount
                                                     .toString() +
                                                 ' le'.tr(),
-                                // style: const TextStyle(
-                                //     fontWeight: FontWeight.bold),
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w700,
                                     fontSize:
@@ -161,7 +117,7 @@ class _CartItemState extends State<CartItem> {
                               width: SizeConfig.blockSizeHorizontal * 40,
                               height: SizeConfig.blockSizeVertical * 5,
                               child: Text(
-                                widget.productCategory,
+                                widget.item.categoryName,
 
                                 // style: const TextStyle(color: Colors.blueGrey)
                                 style: GoogleFonts.poppins(
@@ -176,7 +132,9 @@ class _CartItemState extends State<CartItem> {
                                 icon: Icon(Icons.delete,
                                     size: SizeConfig.safeBlockHorizontal * 6,
                                     color: Colors.red),
-                                onPressed: widget.onDelete)
+                                onPressed: () => cartProvider.deleteCartProduct(
+                                    index: widget.index,
+                                    productId: widget.item.id))
                           ],
                         ),
                       ),
@@ -185,31 +143,34 @@ class _CartItemState extends State<CartItem> {
                         child: Row(
                           children: [
                             Text(
-                              widget.sizeSpecValue == ""
+                              widget.item.sizeSpecValue == ""
                                   ? ''
-                                  : 'Size : ${widget.sizeSpecValue}',
+                                  : 'Size : ${widget.item.sizeSpecValue}',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: SizeConfig.safeBlockHorizontal * 4),
                             ),
-                            Text(widget.colorSpecValue == "" ? '' : ' , ',
+                            Text(widget.item.colorSpecValue == "" ? '' : ' , ',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize:
                                         SizeConfig.safeBlockHorizontal * 4)),
-                            Text(widget.colorSpecValue == "" ? '' : 'Color : ',
+                            Text(
+                                widget.item.colorSpecValue == ""
+                                    ? ''
+                                    : 'Color : ',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize:
                                         SizeConfig.safeBlockHorizontal * 4)),
-                            widget.colorSpecValue == ""
+                            widget.item.colorSpecValue == ""
                                 ? Container()
                                 : CircleAvatar(
                                     radius: 10,
                                     backgroundColor: Color(int.parse(
-                                        '0xff${widget.colorSpecValue}')),
+                                        '0xff${widget.item.colorSpecValue}')),
                                     foregroundColor: Color(int.parse(
-                                        '0xff${widget.colorSpecValue}'))),
+                                        '0xff${widget.item.colorSpecValue}'))),
                           ],
                         ),
                       ),
@@ -248,36 +209,22 @@ class _CartItemState extends State<CartItem> {
                                       left:
                                           SizeConfig.blockSizeHorizontal * .07),
                                   border: InputBorder.none,
-                                  hintText: widget.myController.text ??
-                                      widget.productQuantity.toString(),
                                   hintStyle: TextStyle(
                                       color: Colors.black,
                                       fontSize: SizeConfig.blockSizeHorizontal *
                                           .07)),
-                              controller: widget.myController,
+                              controller: TextEditingController(
+                                  text: widget.item.quantity.toString()),
                               onChanged: (value) {
-                                // widget.myController.addListener((){
-                                //   print("value: ${widget.myController.text}");
-                                //   widget.productQuantity = int.parse(value);
-                                //   print(widget.productQuantity);
-                                //   setState(() {});
-                                // });
-                                // widget.onUpdateQuantity(widget.index,widget.productQuantity);
-                                // setState(() {
-                                widget.myController.text = value;
-                                widget.productQuantity =
-                                    int.parse(widget.myController.text);
+                                widget.item.quantity = int.parse(value);
                                 cartProvider.updateQuantity(
                                     index: widget.index,
-                                    productId: widget.id,
-                                    quantity: widget.productQuantity);
-                                // });
-
-                                // widget.onUpdateQuantity();
+                                    productId: widget.item.id,
+                                    quantity: widget.item.quantity ?? 1);
                               },
                             ),
                           ),
-                          widget.totalAvailability - 1 >= widget.productQuantity
+                          widget.item.availability - 1 >= widget.item.quantity
                               ? GestureDetector(
                                   onTap: () => cartProvider
                                       .increaseQuantity(widget.index),
@@ -319,26 +266,22 @@ class _CartItemState extends State<CartItem> {
                                           SizeConfig.safeBlockHorizontal * 3.5),
                                 ),
                                 Text(
-                                  widget.totalPrice.toStringAsFixed(2) +
-                                      ' le'.tr(),
+                                  "${cartProvider.getTotalPriceOfItem(widget.item).toStringAsFixed(2) + ' le'.tr()}",
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w700,
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 4,
                                       color: Color(0xff3A559F)),
-
-                                  // style:
-                                  //     const TextStyle(color: Color(0xff3A559F)),
                                 )
                               ],
                             ),
                           ),
                         ],
                       ),
-                      widget.totalAvailability <= widget.productQuantity
+                      widget.item.availability <= widget.item.quantity ?? 1
                           ? Center(
                               child: Text(
-                                  "${widget.totalAvailability}" +
+                                  "${widget.item.availability}" +
                                           "available".tr() ??
                                       '',
                                   style: TextStyle(

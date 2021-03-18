@@ -215,9 +215,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade)
                                 : cart.cartProductModel.forEach((element) {
-                                    if (element.availability == 0 ||
-                                        element.availability <
-                                            element.quantity) {
+                                    if (element.availability == 0
+                                        // || element.availability < element.quantity
+                                        ) {
                                       isAvailable = false;
                                       showAvailabilityToast(context);
                                       return;

@@ -44,96 +44,93 @@ class _DrawerLayoutState extends State<DrawerLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          alignment: Alignment.topLeft,
-          margin: EdgeInsets.only(top: SizeConfig.blockSizeVertical * 10.6),
-          width: SizeConfig.blockSizeHorizontal * 50,
-          height: SizeConfig.blockSizeVertical * 36,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-          child: Drawer(
-            child: _isLoading
-                ? Center(
-                    child: CircularProgressIndicator(
-                        backgroundColor: Colors.white,
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.white)))
-                : SingleChildScrollView(
-                    physics: ScrollPhysics(),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          vertical: SizeConfig.blockSizeVertical * 3,
-                          horizontal: SizeConfig.blockSizeHorizontal * 3),
-                      child: Column(
-                        children: [
-                          Text('collection_title'.tr(),
-                              style: TextStyle(
-                                  color: Color(0xff294794),
-                                  fontSize: SizeConfig.safeBlockVertical * 3,
-                                  fontWeight: FontWeight.bold)),
-                          ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: collectionsList.length,
-                              itemBuilder: (ctx, index) => GestureDetector(
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        // alignment: Alignment.topLeft,
+        margin: EdgeInsets.only(
+            top: SizeConfig.blockSizeVertical * 10.6,
+            bottom: SizeConfig.blockSizeVertical * 40),
+        width: SizeConfig.blockSizeHorizontal * 50,
+        // height: SizeConfig.blockSizeVertical * 36,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+        child: Drawer(
+          child: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
+              : SingleChildScrollView(
+                  physics: ScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.blockSizeVertical * 3,
+                        horizontal: SizeConfig.blockSizeHorizontal * 3),
+                    child: Column(
+                      children: [
+                        Text('collection_title'.tr(),
+                            style: TextStyle(
+                                color: Color(0xff294794),
+                                fontSize: SizeConfig.safeBlockVertical * 3,
+                                fontWeight: FontWeight.bold)),
+                        ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: collectionsList.length,
+                            itemBuilder: (ctx, index) => GestureDetector(
+                                onTap: () => pushNewScreenWithRouteSettings(
+                                    context,
+                                    settings: RouteSettings(
+                                        name: ShopScreen.routeName,
+                                        arguments: {
+                                          'collection_id':
+                                              collectionsList[index].id
+                                        }),
+                                    screen: ShopScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade),
+                                child: Text(' - ' + collectionsList[index].name,
+                                    style: TextStyle(
+                                        fontSize: SizeConfig.safeBlockVertical *
+                                            2.5))),
+                            separatorBuilder: (BuildContext context, int index) =>
+                                SizedBox(height: SizeConfig.blockSizeVertical * 1.5)),
+                        SizedBox(height: SizeConfig.blockSizeVertical * 3),
+                        Text('hot_deals_title'.tr(),
+                            style: TextStyle(
+                                color: Color(0xff294794),
+                                fontSize: SizeConfig.safeBlockVertical * 3,
+                                fontWeight: FontWeight.bold)),
+                        ListView.separated(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: hotDeals.length,
+                            itemBuilder: (ctx, index) => GestureDetector(
                                   onTap: () => pushNewScreenWithRouteSettings(
                                       context,
                                       settings: RouteSettings(
                                           name: ShopScreen.routeName,
                                           arguments: {
-                                            'collection_id':
-                                                collectionsList[index].id
+                                            'category_id': hotDeals[index].id
                                           }),
                                       screen: ShopScreen(),
                                       withNavBar: true,
                                       pageTransitionAnimation:
                                           PageTransitionAnimation.fade),
-                                  child: Text(' - ' + collectionsList[index].name,
+                                  child: Text(' - ' + hotDeals[index].name,
                                       style: TextStyle(
-                                          fontSize: SizeConfig.safeBlockVertical *
-                                              2.5))),
-                              separatorBuilder: (BuildContext context, int index) =>
-                                  SizedBox(height: SizeConfig.blockSizeVertical * 1.5)),
-                          SizedBox(height: SizeConfig.blockSizeVertical * 3),
-                          Text('hot_deals_title'.tr(),
-                              style: TextStyle(
-                                  color: Color(0xff294794),
-                                  fontSize: SizeConfig.safeBlockVertical * 3,
-                                  fontWeight: FontWeight.bold)),
-                          ListView.separated(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: hotDeals.length,
-                              itemBuilder: (ctx, index) => GestureDetector(
-                                    onTap: () => pushNewScreenWithRouteSettings(
-                                        context,
-                                        settings: RouteSettings(
-                                            name: ShopScreen.routeName,
-                                            arguments: {
-                                              'category_id': hotDeals[index].id
-                                            }),
-                                        screen: ShopScreen(),
-                                        withNavBar: true,
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.fade),
-                                    child: Text(' - ' + hotDeals[index].name,
-                                        style: TextStyle(
-                                            fontSize:
-                                                SizeConfig.safeBlockVertical *
-                                                    2.5)),
-                                  ),
-                              separatorBuilder:
-                                  (BuildContext context, int index) => SizedBox(
-                                      height:
-                                          SizeConfig.blockSizeVertical * 1.5))
-                        ],
-                      ),
+                                          fontSize:
+                                              SizeConfig.safeBlockVertical *
+                                                  2.5)),
+                                ),
+                            separatorBuilder:
+                                (BuildContext context, int index) => SizedBox(
+                                    height: SizeConfig.blockSizeVertical * 1.5))
+                      ],
                     ),
                   ),
-          ),
+                ),
         ),
       ),
     );

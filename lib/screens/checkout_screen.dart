@@ -147,12 +147,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: Text('error'.tr()),
           content: Text('Mobile Number not Verified!',
               style: const TextStyle(fontWeight: FontWeight.bold)),
           actions: <Widget>[
             FlatButton(
-              child: Text('Close',
+              child: Text('close'.tr(),
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               onPressed: () {
                 Navigator.of(context).pop();
@@ -170,11 +170,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text('Error'),
-            content: Text('Mobile Number not Verified!'),
+            title: Text('error'.tr()),
+            content: Text('verify_mobile'.tr()),
             actions: <Widget>[
               FlatButton(
-                child: Text('Close'),
+                child: Text('close'.tr()),
                 onPressed: () {
                   Navigator.of(context).pop();
                   _isLoading = false;

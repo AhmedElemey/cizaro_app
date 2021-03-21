@@ -119,5 +119,6 @@
   "resend": "Resend",
   "send":"Send",
   "error": "Error",
-  "verification": "Verification"
+  "verification": "Verification",
+  "verify_mobile": "Mobile Number not Verified!"
 }

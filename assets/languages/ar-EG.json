@@ -119,5 +119,6 @@
   "resend": "اعاده الارسال",
   "send": "ارسال",
   "error": "خطا",
-  "verification": "التحقق"
+  "verification": "التحقق",
+  "verify_mobile": "لم يتم التحقق من رقم الهاتف المحمول!"
 }

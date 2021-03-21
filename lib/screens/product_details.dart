@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -228,32 +229,47 @@ class _ProductDetailsState extends State<ProductDetails> {
                           width: SizeConfig.blockSizeHorizontal * 100,
                           child: Swiper(
                               itemBuilder: (BuildContext context, int index) {
-                                return PinchZoomImage(
-                                  image: Center(
-                                    child: CachedNetworkImage(
-                                        imageUrl: productImages[index]?.image ??
-                                            imgUrl,
-                                        fit: BoxFit.fitWidth,
-                                        progressIndicatorBuilder: (context, url,
-                                                downloadProgress) =>
-                                            Platform.isAndroid
-                                                ? Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                            value:
-                                                                downloadProgress
-                                                                    .progress))
-                                                : Center(
-                                                    child:
-                                                        CupertinoActivityIndicator()),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error)),
-                                  ),
-                                  zoomedBackgroundColor: Colors.grey.shade300,
-                                  hideStatusBarWhileZooming: true,
-                                  onZoomStart: () => print('Zoom started'),
-                                  onZoomEnd: () => print('Zoom finished'),
-                                );
+                                return Container(
+                                    child: PhotoView(
+                                        backgroundDecoration: BoxDecoration(
+                                            color: Color(0xffFAFAFA)),
+                                        loadingBuilder: (ctx, event) => Platform
+                                                .isAndroid
+                                            ? Center(
+                                                child:
+                                                    CircularProgressIndicator())
+                                            : Center(
+                                                child:
+                                                    CupertinoActivityIndicator()),
+                                        imageProvider: NetworkImage(
+                                            productImages[index]?.image ??
+                                                imgUrl)));
+                                //   PinchZoomImage(
+                                //   image: Center(
+                                //     child: CachedNetworkImage(
+                                //         imageUrl: productImages[index]?.image ??
+                                //             imgUrl,
+                                //         fit: BoxFit.fitWidth,
+                                //         progressIndicatorBuilder: (context, url,
+                                //                 downloadProgress) =>
+                                //             Platform.isAndroid
+                                //                 ? Center(
+                                //                     child:
+                                //                         CircularProgressIndicator(
+                                //                             value:
+                                //                                 downloadProgress
+                                //                                     .progress))
+                                //                 : Center(
+                                //                     child:
+                                //                         CupertinoActivityIndicator()),
+                                //         errorWidget: (context, url, error) =>
+                                //             Icon(Icons.error)),
+                                //   ),
+                                //   zoomedBackgroundColor: Colors.grey.shade300,
+                                //   hideStatusBarWhileZooming: true,
+                                //   onZoomStart: () => print('Zoom started'),
+                                //   onZoomEnd: () => print('Zoom finished'),
+                                // );
                               },
                               itemCount: productImages.length,
                               pagination: SwiperPagination()),

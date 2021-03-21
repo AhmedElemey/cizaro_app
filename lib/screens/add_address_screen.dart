@@ -411,13 +411,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   pageTransitionAnimation:
                                       PageTransitionAnimation.fade);
                             } else {
-                              pushNewScreenWithRouteSettings(context,
-                                  settings: RouteSettings(
-                                      name: AddressBookScreen.routeName),
-                                  screen: AddressBookScreen(),
-                                  withNavBar: true,
-                                  pageTransitionAnimation:
-                                      PageTransitionAnimation.fade);
+                              return;
+                              // pushNewScreenWithRouteSettings(context,
+                              //     settings: RouteSettings(
+                              //         name: AddressBookScreen.routeName),
+                              //     screen: AddressBookScreen(),
+                              //     withNavBar: true,
+                              //     pageTransitionAnimation:
+                              //         PageTransitionAnimation.fade);
                             }
                           },
                           child: Container(

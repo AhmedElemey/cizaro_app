@@ -52,7 +52,13 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
     String token = await getToken();
     languageValue = await getLang();
     await getAddress
-        .fetchAddresses(token, languageValue == false ? 'en' : 'ar')
+        .fetchAddresses(
+            token,
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       addressModel = response;
       addressesList = addressModel.data;

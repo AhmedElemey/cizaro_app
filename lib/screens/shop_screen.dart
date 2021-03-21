@@ -13,6 +13,7 @@ import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +33,7 @@ class _ShopScreenState extends State<ShopScreen> {
   bool _isLoading = false;
   List<Products> productList = [];
   List<Products> productDealsList = [];
+  FToast fToast;
 
   bool languageValue = false;
   Future<bool> getLang() async {
@@ -50,7 +52,12 @@ class _ShopScreenState extends State<ShopScreen> {
     languageValue = await getLang();
     await getProducts
         .fetchShop(
-            arguments['collection_id'], languageValue == false ? 'en' : 'en')
+            arguments['collection_id'],
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       shopModel = response;
       productList = shopModel.data.products;
@@ -61,6 +68,29 @@ class _ShopScreenState extends State<ShopScreen> {
       setState(() {
         _isLoading = false;
       });
+  }
+
+  showCartToast(BuildContext context) {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
   }
 
   Future getDealsData() async {
@@ -97,6 +127,8 @@ class _ShopScreenState extends State<ShopScreen> {
     Future.microtask(() => getShopData());
     Future.microtask(() => getDealsData());
     super.initState(); // de 3ashan awel lama aload el screen t7mel el data
+    fToast = FToast();
+    fToast.init(context);
   }
 
   @override
@@ -163,28 +195,88 @@ class _ShopScreenState extends State<ShopScreen> {
                                   fav.addProductToFav(productFav);
                                 },
                                 onAddToCart: () {
-                                  final cart = Provider.of<CartViewModel>(
-                                      context,
-                                      listen: false);
-                                  final productCart = ProductCart(
-                                      id: productList[index].id,
-                                      name: productList[index].name,
-                                      mainImg: productList[index].mainImg,
-                                      price: productList[index].price,
-                                      priceAfterDiscount: productList[index]
-                                              .offer
-                                              ?.afterPrice ??
-                                          productList[index].price,
-                                      categoryName:
-                                          productList[index].category.name,
-                                      quantity: 1,
-                                      availability:
-                                          productList[index].availability,
-                                      inCart: 1,
-                                      colorSpecValue: '',
-                                      sizeSpecValue: '');
-                                  cart.addProductToCart(productCart);
+                                  if (productList[index].specs == false) {
+                                    //  final cart = Provider.of<CartViewModel>(
+                                    //       context,
+                                    //       listen: false);
+                                    //   final productCart = ProductCart(
+                                    //       id: productList[index].id,
+                                    //       name: productList[index].name,
+                                    //       mainImg: productList[index].mainImg,
+                                    //       price: productList[index].price,
+                                    //       priceAfterDiscount: productList[index]
+                                    //               .offer
+                                    //               ?.afterPrice ??
+                                    //           productList[index].price,
+                                    //       categoryName:
+                                    //           productList[index].category.name,
+                                    //       quantity: 1,
+                                    //       availability:
+                                    //           productList[index].availability,
+                                    //       inCart: 1,
+                                    //       colorSpecValue: '',
+                                    //       sizeSpecValue: '');
+                                    //   cart.addProductToCart(productCart);
+                                    // },
+                                    final cart = Provider.of<CartViewModel>(
+                                        context,
+                                        listen: false);
+                                    final productCart = ProductCart(
+                                        id: productList[index].id,
+                                        name: productList[index].name,
+                                        mainImg: productList[index].mainImg,
+                                        price: productList[index].price,
+                                        priceAfterDiscount: productList[index]
+                                                .offer
+                                                ?.afterPrice ??
+                                            productList[index].price,
+                                        categoryName:
+                                            productList[index].category.name,
+                                        quantity: 1,
+                                        availability:
+                                            productList[index].availability,
+                                        inCart: 1,
+                                        colorSpecValue: '',
+                                        sizeSpecValue: '');
+                                    showCartToast(_scaffoldKey.currentContext);
+                                    cart.addProductToCart(productCart);
+                                  } else {
+                                    pushNewScreenWithRouteSettings(context,
+                                        settings: RouteSettings(
+                                            name: ProductDetails.routeName,
+                                            arguments: {
+                                              'product_id':
+                                                  productList[index].id
+                                            }),
+                                        screen: ProductDetails(),
+                                        withNavBar: true,
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.fade);
+                                  }
                                 },
+                                // onAddToCart: () {
+                                //   final cart = Provider.of<CartViewModel>(
+                                //       context,
+                                //       listen: false);
+                                //   final productCart = ProductCart(
+                                //       id: productList[index].id,
+                                //       name: productList[index].name,
+                                //       mainImg: productList[index].mainImg,
+                                //       price: productList[index].price,
+                                //       priceAfterDiscount: productList[index]
+                                //               .offer
+                                //               ?.afterPrice ??
+                                //           productList[index].price,
+                                //       categoryName:
+                                //           productList[index].category.name,
+                                //       quantity: 1,
+                                //       availability:
+                                //           productList[index].availability,
+                                //       inCart: 1,
+                                //       colorSpecValue: '',
+                                //       sizeSpecValue: '');
+                                //   cart.addProductToCart(productCart);
+                                // },
                                 //  productQuantity: ,
                               ),
                               // ShopItem(

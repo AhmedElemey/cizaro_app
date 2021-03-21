@@ -138,7 +138,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       _paymentList = payments.data.availablePayments;
     }).catchError((error) => print(error));
-    fetchTotalOrder();
+    // fetchTotalOrder();
     if (this.mounted) setState(() => _isLoading = false);
   }
 
@@ -262,12 +262,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     obscureText: false,
                     readOnly: false,
                     hintText: 'Ex : 1234',
-                    onChange: (String value) {
-                      if (value.length == 4) {
-                        sendOtpVerification(false);
-                        print("code verified");
-                      }
-                    },
+                    // onChange: (String value) {
+                    //   if (value.length == 4) {
+                    //     sendOtpVerification(false);
+                    //     Navigator.pop(context);
+                    //     print("code verified");
+                    //   }
+                    // },
                     textStyle:
                         TextStyle(fontSize: SizeConfig.safeBlockVertical * 2.3),
                     textInputType: TextInputType.number,
@@ -286,12 +287,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       SizeConfig.safeBlockHorizontal * 4.1))),
                       color: Theme.of(context).primaryColor,
                       onPressed: () {
-                        _verificationCodeController.text == ''
-                            ? showToast(
-                                icon: Icons.error_outline,
-                                title: 'enter_verification_code'.tr())
-                            : sendOtpVerification(false);
-                        Navigator.pop(context);
+                        if (_verificationCodeController.text == '') {
+                          showToast(
+                              icon: Icons.error_outline,
+                              title: 'enter_verification_code'.tr());
+                        } else {
+                          sendOtpVerification(false);
+                          Navigator.pop(context);
+                        }
                       }),
                 )
               ],
@@ -402,8 +405,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             title: "Your Code Successfully Send.",
             icon: CupertinoIcons.checkmark_alt_circle,
             background: Color(0xff3A559F));
-        Navigator.pop(context);
-        sendCheckOut();
       }
     }).catchError((error) => print(error));
   }
@@ -411,10 +412,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   sendCheckOut() async {
     if (selectedRadio == 0 || selectedRadio == null)
       return Platform.isIOS ? _showIosErrorDialog() : _showAndroidErrorDialog();
-    if (isVerified == false)
-      return Platform.isIOS
-          ? _showIosVerifiedDialog()
-          : _showAndroidVerifiedDialog();
+    // if (isVerified == false)
+    //   return Platform.isIOS
+    //       ? _showIosVerifiedDialog()
+    //       : _showAndroidVerifiedDialog();
     if (this.mounted) setState(() => _isLoading = true);
 
     final getCheckout = Provider.of<OrdersViewModel>(context, listen: false);
@@ -502,6 +503,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       shippingFees = resultShoppingCartModel.data.shippingFees;
       totalCost = resultShoppingCartModel.data.totalCost;
       isVerified = resultShoppingCartModel.data.verified;
+      if (isVerified == false)
+        return Platform.isIOS
+            ? _showIosVerifiedDialog()
+            : _showAndroidVerifiedDialog();
     }).catchError((error) => print(error));
     if (this.mounted) setState(() => _isLoading = false);
   }
@@ -510,7 +515,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void initState() {
     super.initState();
     selectedRadio = 0;
-    Future.microtask(() => getAddress());
+    // Future.microtask(() => getAddress());
     Future.microtask(() => getAddress() == null
         ? fetchLastShippingAddress()
         : fetchSelectedShippingAddress());

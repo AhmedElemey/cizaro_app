@@ -244,7 +244,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                 right: SizeConfig.blockSizeHorizontal * 2,
                                 left: SizeConfig.blockSizeHorizontal * 1),
                             width: SizeConfig.blockSizeHorizontal * 35,
-                            height: SizeConfig.blockSizeVertical * 3,
+                            height: SizeConfig.blockSizeVertical * 2.5,
                             child: Text(
                               widget.categoryName ?? "",
                               overflow: TextOverflow.ellipsis,

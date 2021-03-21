@@ -150,43 +150,100 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.discount ??
                           0.0,
                       onAddToCart: () {
-                        final cart =
-                            Provider.of<CartViewModel>(context, listen: false);
-                        final productCart = ProductCart(
-                            id: newArrivalsList[initPosition > 0 ? 1 : 0]
+                        if (newArrivalsList[initPosition > 0 ? 1 : 0]
                                 ?.products[index]
-                                .id,
-                            name: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .name,
-                            mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .mainImg,
-                            price: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .price,
-                            priceAfterDiscount:
-                                newArrivalsList[initPosition > 0 ? 1 : 0]
-                                        ?.products[index]
-                                        .offer
-                                        ?.afterPrice ??
-                                    newArrivalsList[initPosition > 0 ? 1 : 0]
-                                        ?.products[index]
-                                        .price,
-                            categoryName:
-                                newArrivalsList[initPosition > 0 ? 1 : 0]
-                                    ?.products[index]
-                                    .category
-                                    .name,
-                            quantity: 1,
-                            inCart: 1,
-                            availability:
-                                newArrivalsList[initPosition > 0 ? 1 : 0]
-                                    ?.products[index]
-                                    .availability,
-                            colorSpecValue: '',
-                            sizeSpecValue: '');
-                        cart.addProductToCart(productCart);
+                                .specs ==
+                            false) {
+                          final cart = Provider.of<CartViewModel>(context,
+                              listen: false);
+                          final productCart = ProductCart(
+                              id: newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .id,
+                              name: newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .name,
+                              mainImg:
+                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                      ?.products[index]
+                                      .mainImg,
+                              price: newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .price,
+                              priceAfterDiscount:
+                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                          ?.products[index]
+                                          .offer
+                                          ?.afterPrice ??
+                                      newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                          ?.products[index]
+                                          .price,
+                              categoryName:
+                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                      ?.products[index]
+                                      .category
+                                      .name,
+                              quantity: 1,
+                              availability:
+                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                      ?.products[index]
+                                      .availability,
+                              inCart: 1,
+                              colorSpecValue: '',
+                              sizeSpecValue: '');
+                          cart.addProductToCart(productCart);
+                        } else {
+                          tab.pushNewScreenWithRouteSettings(context,
+                              settings: RouteSettings(
+                                  name: ProductDetails.routeName,
+                                  arguments: {
+                                    'product_id': newArrivalsList[
+                                            initPosition2 > 0 ? 1 : 0]
+                                        .products[index]
+                                        .id
+                                  }),
+                              screen: ProductDetails(),
+                              withNavBar: true,
+                              pageTransitionAnimation:
+                                  tab.PageTransitionAnimation.fade);
+                        }
+                        // final cart =
+                        //     Provider.of<CartViewModel>(context, listen: false);
+                        // final productCart = ProductCart(
+                        //     id: newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //         ?.products[index]
+                        //         .id,
+                        //     name: newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //         ?.products[index]
+                        //         .name,
+                        //     mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //         ?.products[index]
+                        //         .mainImg,
+                        //     price: newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //         ?.products[index]
+                        //         .price,
+                        //     priceAfterDiscount:
+                        //         newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //                 ?.products[index]
+                        //                 .offer
+                        //                 ?.afterPrice ??
+                        //             newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //                 ?.products[index]
+                        //                 .price,
+                        //     categoryName:
+                        //         newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //             ?.products[index]
+                        //             .category
+                        //             .name,
+                        //     quantity: 1,
+                        //     inCart: 1,
+                        //     availability:
+                        //         newArrivalsList[initPosition > 0 ? 1 : 0]
+                        //             ?.products[index]
+                        //             .availability,
+                        //     colorSpecValue: '',
+                        //     sizeSpecValue: '');
+                        // cart.addProductToCart(productCart);
                       },
                     ),
                   )),
@@ -272,43 +329,62 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.discount ??
                           0.0,
                       onAddToCart: () {
-                        final cart =
-                            Provider.of<CartViewModel>(context, listen: false);
-                        final productCart = ProductCart(
-                            id: topSellingList[initPosition2 > 0 ? 1 : 0]
+                        if (topSellingList[initPosition > 0 ? 1 : 0]
                                 ?.products[index]
-                                .id,
-                            name: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .name,
-                            mainImg: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .mainImg,
-                            price: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .price,
-                            priceAfterDiscount:
-                                topSellingList[initPosition2 > 0 ? 1 : 0]
-                                        ?.products[index]
-                                        .offer
-                                        ?.afterPrice ??
-                                    topSellingList[initPosition2 > 0 ? 1 : 0]
-                                        ?.products[index]
-                                        .price,
-                            categoryName:
-                                topSellingList[initPosition2 > 0 ? 1 : 0]
-                                    ?.products[index]
-                                    .category
-                                    .name,
-                            quantity: 1,
-                            availability:
-                                topSellingList[initPosition2 > 0 ? 1 : 0]
-                                    ?.products[index]
-                                    .availability,
-                            inCart: 1,
-                            colorSpecValue: '',
-                            sizeSpecValue: '');
-                        cart.addProductToCart(productCart);
+                                .specs ==
+                            false) {
+                          final cart = Provider.of<CartViewModel>(context,
+                              listen: false);
+                          final productCart = ProductCart(
+                              id: topSellingList[initPosition2 > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .id,
+                              name: topSellingList[initPosition2 > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .name,
+                              mainImg: topSellingList[initPosition2 > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .mainImg,
+                              price: topSellingList[initPosition2 > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .price,
+                              priceAfterDiscount:
+                                  topSellingList[initPosition2 > 0 ? 1 : 0]
+                                          ?.products[index]
+                                          .offer
+                                          ?.afterPrice ??
+                                      topSellingList[initPosition2 > 0 ? 1 : 0]
+                                          ?.products[index]
+                                          .price,
+                              categoryName:
+                                  topSellingList[initPosition2 > 0 ? 1 : 0]
+                                      ?.products[index]
+                                      .category
+                                      .name,
+                              quantity: 1,
+                              availability:
+                                  topSellingList[initPosition2 > 0 ? 1 : 0]
+                                      ?.products[index]
+                                      .availability,
+                              inCart: 1,
+                              colorSpecValue: '',
+                              sizeSpecValue: '');
+                          cart.addProductToCart(productCart);
+                        } else {
+                          tab.pushNewScreenWithRouteSettings(context,
+                              settings: RouteSettings(
+                                  name: ProductDetails.routeName,
+                                  arguments: {
+                                    'product_id': topSellingList[
+                                            initPosition2 > 0 ? 1 : 0]
+                                        .products[index]
+                                        .id
+                                  }),
+                              screen: ProductDetails(),
+                              withNavBar: true,
+                              pageTransitionAnimation:
+                                  tab.PageTransitionAnimation.fade);
+                        }
                       },
                       onAddToFavorite: () {
                         final productFav = ProductFav(

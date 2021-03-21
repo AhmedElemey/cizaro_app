@@ -49,11 +49,16 @@ class ListServices {
   }
 
   Future<ShopModel> fetchFilterItems(
-      var minimum, var maximum, var brand) async {
+      var minimum, var maximum, var brand, String lang) async {
     final response = await http.get(
-        API + '/products/?min_price=$minimum&max_price=$maximum&brand=$brand');
+        API + '/products/?min_price=$minimum&max_price=$maximum&brand=$brand',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept-Language': '$lang'
+        });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
+      // final body = jsonDecode(response.body);
       //   print(response.body);
       return ShopModel.fromJson(body);
     } else {
@@ -123,11 +128,16 @@ class ListServices {
     }
   }
 
-  Future<SearchModel> fetchSearchBar(String searchTxt) async {
-    final response = await http.get(API + '/products/?search=$searchTxt');
+  Future<SearchModel> fetchSearchBar(String searchTxt, String lang) async {
+    final response = await http.get(API + '/products/?search=$searchTxt',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Accept-Language': '$lang'
+        });
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
+      // final body = jsonDecode(response.body);
       // print(response.body);
+      final body = jsonDecodeUtf8(response.bodyBytes);
       return SearchModel.fromJson(body);
     } else {
       throw Exception("Unable to perform Request");

@@ -69,14 +69,6 @@ class FavoriteItem extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        child: Text(
-                          productCategory,
-                          style: TextStyle(
-                            fontSize: SizeConfig.safeBlockHorizontal * 4,
-                          ),
-                        ),
-                      ),
-                      Container(
                         child: Row(
                           children: [
                             Text(

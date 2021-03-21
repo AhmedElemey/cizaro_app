@@ -239,6 +239,20 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                   fontSize: SizeConfig.safeBlockHorizontal * 3),
                             ),
                           ),
+                          Container(
+                            padding: EdgeInsets.only(
+                                right: SizeConfig.blockSizeHorizontal * 2,
+                                left: SizeConfig.blockSizeHorizontal * 1),
+                            width: SizeConfig.blockSizeHorizontal * 35,
+                            height: SizeConfig.blockSizeVertical * 3,
+                            child: Text(
+                              widget.categoryName ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 3),
+                            ),
+                          ),
                           widget.productPriceAfter == widget.productPrice ||
                                   widget.offer == null ||
                                   widget.productPriceAfter == 0

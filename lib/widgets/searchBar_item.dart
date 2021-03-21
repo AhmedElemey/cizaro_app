@@ -181,8 +181,8 @@ class _SearchItemState extends State<SearchBarItem> {
                       children: [
                         Container(
                           width: SizeConfig.blockSizeHorizontal * 60,
-                          padding: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 2),
+                          // padding: EdgeInsets.only(
+                          //     top: SizeConfig.blockSizeVertical * 1),
                           child: Text(
                             widget.productName,
                             style: TextStyle(

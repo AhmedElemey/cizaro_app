@@ -96,7 +96,7 @@ class _CartItemState extends State<CartItem> {
                                         ? widget.item.price.toString() +
                                             ' le'.tr()
                                         : widget.item.priceAfterDiscount == 0
-                                            ? widget.item.price
+                                            ? widget.item.price.toString()
                                             : widget.item.priceAfterDiscount
                                                     .toString() +
                                                 ' le'.tr(),
@@ -143,27 +143,34 @@ class _CartItemState extends State<CartItem> {
                         child: Row(
                           children: [
                             Text(
-                              widget.item.sizeSpecValue == ""
+                              widget.item.sizeSpecValue == "" ||
+                                      widget.item.sizeSpecValue == null
                                   ? ''
                                   : 'Size : ${widget.item.sizeSpecValue}',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontSize: SizeConfig.safeBlockHorizontal * 4),
                             ),
-                            Text(widget.item.colorSpecValue == "" ? '' : ' , ',
+                            Text(
+                                widget.item.colorSpecValue == "" ||
+                                        widget.item.colorSpecValue == null
+                                    ? ''
+                                    : ' , ',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize:
                                         SizeConfig.safeBlockHorizontal * 4)),
                             Text(
-                                widget.item.colorSpecValue == ""
+                                widget.item.colorSpecValue == "" ||
+                                        widget.item.colorSpecValue == null
                                     ? ''
                                     : 'Color : ',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize:
                                         SizeConfig.safeBlockHorizontal * 4)),
-                            widget.item.colorSpecValue == ""
+                            widget.item.colorSpecValue == "" ||
+                                    widget.item.colorSpecValue == null
                                 ? Container()
                                 : CircleAvatar(
                                     radius: 10,
@@ -217,6 +224,11 @@ class _CartItemState extends State<CartItem> {
                                   text: widget.item.quantity.toString()),
                               onChanged: (value) {
                                 widget.item.quantity = int.parse(value);
+                                if (widget.item.quantity >=
+                                    widget.item.availability) {
+                                  widget.item.quantity =
+                                      widget.item.availability;
+                                }
                                 cartProvider.updateQuantity(
                                     index: widget.index,
                                     productId: widget.item.id,

@@ -119,10 +119,17 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = true;
       });
     final getFilter = Provider.of<ListViewModel>(context, listen: false);
-
+    languageValue = await getLang();
     await getFilter
-        .fetchFilter(valueMinPrice.text ?? "", valueMaxPrice.text ?? "",
-            valueBrand ?? "")
+        .fetchFilter(
+            valueMinPrice.text ?? "",
+            valueMaxPrice.text ?? "",
+            valueBrand ?? "",
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
         .then((response) {
       filter = response;
       filterList = filter.data.products;

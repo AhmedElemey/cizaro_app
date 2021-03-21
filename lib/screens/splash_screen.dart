@@ -1,10 +1,8 @@
 import 'dart:async';
 
-import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/tabs_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -27,20 +25,36 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPageHome() {
-    pushNewScreenWithRouteSettings(context,
-        settings: RouteSettings(name: TabsScreen.routeName),
-        screen: TabsScreen(),
-        withNavBar: true,
-        pageTransitionAnimation: PageTransitionAnimation.fade);
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return TabsScreen();
+        },
+      ),
+      (_) => false,
+    );
+    // pushNewScreenWithRouteSettings(context,
+    //     settings: RouteSettings(name: TabsScreen.routeName),
+    //     screen: TabsScreen(),
+    //     withNavBar: true,
+    //     pageTransitionAnimation: PageTransitionAnimation.fade);
   }
 
   void navigationPageWel() {
-    Navigator.pushReplacementNamed(context, TabsScreen.routeName);
-    pushNewScreenWithRouteSettings(context,
-        settings: RouteSettings(name: TabsScreen.routeName),
-        screen: TabsScreen(),
-        withNavBar: true,
-        pageTransitionAnimation: PageTransitionAnimation.fade);
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return TabsScreen();
+        },
+      ),
+      (_) => false,
+    );
+    // Navigator.pushReplacementNamed(context, TabsScreen.routeName);
+    // pushNewScreenWithRouteSettings(context,
+    //     settings: RouteSettings(name: TabsScreen.routeName),
+    //     screen: TabsScreen(),
+    //     withNavBar: true,
+    //     pageTransitionAnimation: PageTransitionAnimation.fade);
   }
 
   @override

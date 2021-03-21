@@ -48,6 +48,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       productDescription,
       specTitle,
       colorSpecValue,
+      productCategory,
       sizeSpecValue;
   double productPrice, productStar, productPriceAfter;
   List<RelatedProducts> productRelated = [];
@@ -82,6 +83,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
       productPriceAfter = productDetails.data.offer?.afterPrice ?? 0;
+      productCategory = productDetails.data.category.name;
 
       productStar = productDetails.data.stars ?? 0.0;
       productDescription = productDetails.data.shortDescription;
@@ -174,7 +176,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Color(0xffFF6969),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -590,74 +592,134 @@ class _ProductDetailsState extends State<ProductDetails> {
                               ),
                             )
                       : Container(),
-                  GestureDetector(
-                    onTap: () {
-                      if (productSpecs.length == 0) {
-                        final productCart = ProductCart(
-                            id: productId,
-                            name: productName,
-                            mainImg: imgUrl,
-                            price: productPrice,
-                            categoryName: productName,
-                            priceAfterDiscount: productPriceAfter,
-                            quantity: 1,
-                            availability: productAvailability,
-                            colorSpecValue: colorSpecValue,
-                            inCart: 1,
-                            sizeSpecValue: sizeSpecValue);
-                        cart.addProductToCart(productCart);
-                        showToast();
-                      } else {
-                        if (_selectedSize == -1 || _selectedColor == -1) {
-                          showErrorToast();
-                        } else {
-                          final productCart = ProductCart(
-                              id: productId,
-                              name: productName,
-                              mainImg: imgUrl,
-                              price: productPrice,
-                              categoryName: productName,
-                              priceAfterDiscount: productPriceAfter,
-                              quantity: 1,
-                              availability: productAvailability,
-                              colorSpecValue: colorSpecValue,
-                              inCart: 1,
-                              sizeSpecValue: sizeSpecValue);
-                          cart.addProductToCart(productCart);
-                          showToast();
-                        }
-                      }
-                    },
-                    child: Center(
-                      child: Container(
-                        width: SizeConfig.blockSizeHorizontal * 42,
-                        height: SizeConfig.blockSizeHorizontal * 10,
-                        decoration: BoxDecoration(
-                            color: Color(0xff3A559F),
-                            borderRadius: BorderRadius.circular(25.0)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              'add_to_cart'.tr(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  //  fontSize: 15,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 4,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            CircleAvatar(
-                              radius: 15,
-                              backgroundColor: Colors.white,
-                              child: Icon(
-                                Icons.arrow_forward_ios_rounded,
-                                size: SizeConfig.blockSizeHorizontal * 3,
-                                color: Colors.red.shade900,
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 4,
+                        right: SizeConfig.blockSizeHorizontal * 4),
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            if (productSpecs.length == 0) {
+                              final productCart = ProductCart(
+                                  id: productId,
+                                  name: productName,
+                                  mainImg: imgUrl,
+                                  price: productPrice,
+                                  categoryName: productCategory,
+                                  priceAfterDiscount: productPriceAfter,
+                                  quantity: 1,
+                                  availability: productAvailability,
+                                  colorSpecValue: colorSpecValue,
+                                  inCart: 1,
+                                  sizeSpecValue: sizeSpecValue);
+                              cart.addProductToCart(productCart);
+                              showToast();
+                            } else {
+                              if (_selectedSize == -1 || _selectedColor == -1) {
+                                showErrorToast();
+                              } else {
+                                final productCart = ProductCart(
+                                    id: productId,
+                                    name: productName,
+                                    mainImg: imgUrl,
+                                    price: productPrice,
+                                    categoryName: productCategory,
+                                    priceAfterDiscount: productPriceAfter,
+                                    quantity: 1,
+                                    availability: productAvailability,
+                                    colorSpecValue: colorSpecValue,
+                                    inCart: 1,
+                                    sizeSpecValue: sizeSpecValue);
+                                cart.addProductToCart(productCart);
+                                showToast();
+                              }
+                            }
+                          },
+                          child: Center(
+                            child: Container(
+                              width: SizeConfig.blockSizeHorizontal * 42,
+                              height: SizeConfig.blockSizeHorizontal * 10,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff3A559F),
+                                  borderRadius: BorderRadius.circular(25.0)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'add_to_cart'.tr(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        //  fontSize: 15,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: SizeConfig.blockSizeHorizontal * 3,
+                                      color: Colors.red.shade900,
+                                    ),
+                                  )
+                                ],
                               ),
-                            )
-                          ],
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          width: SizeConfig.blockSizeHorizontal * 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            final productFav = ProductFav(
+                                id: productId,
+                                name: productName,
+                                mainImg: imgUrl,
+                                price: productPrice,
+                                categoryName: productCategory,
+                                isFav: 1);
+                            fav.addProductToFav(productFav);
+                            showFavToast();
+                          },
+                          child: Center(
+                            child: Container(
+                              width: SizeConfig.blockSizeHorizontal * 40,
+                              height: SizeConfig.blockSizeHorizontal * 10,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffFF6969),
+                                  borderRadius: BorderRadius.circular(25.0)),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    'add_to_fav'.tr(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        //  fontSize: 15,
+                                        fontSize:
+                                            SizeConfig.safeBlockHorizontal * 4,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.white,
+                                    child: Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      size: SizeConfig.blockSizeHorizontal * 3,
+                                      color: Colors.red.shade900,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Padding(

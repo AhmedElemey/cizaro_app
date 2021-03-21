@@ -15,6 +15,7 @@
   "total" : "Total",
   "description" : "Description",
   "add_to_cart" : "ADD TO CART",
+  "add_to_fav": "ADD TO FAV",
   "related_products" : "Related Products",
   "sign_out" : "SignOut",
   "change_language" : "Change Language",

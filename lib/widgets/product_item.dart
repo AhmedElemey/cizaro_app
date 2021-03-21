@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cizaro_app/main.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -392,8 +391,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                   GestureDetector(
                                     onTap: () {
                                       widget.onAddToCart();
-                                      showCartToast(
-                                          globalScaffoldKey.currentContext);
+                                      // showCartToast(
+                                      //     globalScaffoldKey.currentContext);
                                     },
                                     child: Container(
                                       child: SvgPicture.asset(
@@ -598,16 +597,16 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                         onTap: () async {
                                           if (widget.inCart == 1) {
                                             setState(() {
-                                              showInCartAlreadyToast(
-                                                  globalScaffoldKey
-                                                      .currentContext);
+                                              // showInCartAlreadyToast(
+                                              //     globalScaffoldKey
+                                              //         .currentContext);
                                             });
                                           } else {
                                             setState(() {
                                               widget.inCart = 1;
                                               widget.onAddToCart();
-                                              showCartToast(globalScaffoldKey
-                                                  .currentContext);
+                                              // showCartToast(globalScaffoldKey
+                                              //     .currentContext);
                                             });
                                           }
                                         },

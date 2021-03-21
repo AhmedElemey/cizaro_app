@@ -19,6 +19,7 @@ import 'package:cizaro_app/widgets/product_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Products> newArrivalsProducts = [];
   List<TopSelling> topSellingList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  FToast fToast;
   Home home;
   int initPosition = 0;
   int initPosition2 = 0;
@@ -76,6 +77,31 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     Future.microtask(() => getHomeData());
     super.initState();
+    fToast = FToast();
+    fToast.init(context);
+  }
+
+  showCartToast(BuildContext context) {
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25.0),
+        color: Color(0xff3A559F),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check, color: Colors.white),
+          SizedBox(width: 12.0),
+          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+        ],
+      ),
+    );
+    fToast.showToast(
+      child: toast,
+      toastDuration: Duration(seconds: 2),
+      gravity: ToastGravity.BOTTOM,
+    );
   }
 
   Widget tabsWidgets(BuildContext context) {
@@ -157,40 +183,40 @@ class _HomeScreenState extends State<HomeScreen> {
                           final cart = Provider.of<CartViewModel>(context,
                               listen: false);
                           final productCart = ProductCart(
-                              id: newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                              id: newArrivalsList[initPosition > 0 ? 1 : 0]
                                   ?.products[index]
                                   .id,
-                              name: newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                              name: newArrivalsList[initPosition > 0 ? 1 : 0]
                                   ?.products[index]
                                   .name,
-                              mainImg:
-                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
-                                      ?.products[index]
-                                      .mainImg,
-                              price: newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                              mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
+                                  ?.products[index]
+                                  .mainImg,
+                              price: newArrivalsList[initPosition > 0 ? 1 : 0]
                                   ?.products[index]
                                   .price,
                               priceAfterDiscount:
-                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                  newArrivalsList[initPosition > 0 ? 1 : 0]
                                           ?.products[index]
                                           .offer
                                           ?.afterPrice ??
-                                      newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                      newArrivalsList[initPosition > 0 ? 1 : 0]
                                           ?.products[index]
                                           .price,
                               categoryName:
-                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                  newArrivalsList[initPosition > 0 ? 1 : 0]
                                       ?.products[index]
                                       .category
                                       .name,
                               quantity: 1,
                               availability:
-                                  newArrivalsList[initPosition2 > 0 ? 1 : 0]
+                                  newArrivalsList[initPosition > 0 ? 1 : 0]
                                       ?.products[index]
                                       .availability,
                               inCart: 1,
                               colorSpecValue: '',
                               sizeSpecValue: '');
+                          showCartToast(_scaffoldKey.currentContext);
                           cart.addProductToCart(productCart);
                         } else {
                           tab.pushNewScreenWithRouteSettings(context,
@@ -198,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: ProductDetails.routeName,
                                   arguments: {
                                     'product_id': newArrivalsList[
-                                            initPosition2 > 0 ? 1 : 0]
+                                            initPosition > 0 ? 1 : 0]
                                         .products[index]
                                         .id
                                   }),
@@ -329,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.discount ??
                           0.0,
                       onAddToCart: () {
-                        if (topSellingList[initPosition > 0 ? 1 : 0]
+                        if (topSellingList[initPosition2 > 0 ? 1 : 0]
                                 ?.products[index]
                                 .specs ==
                             false) {
@@ -369,6 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               inCart: 1,
                               colorSpecValue: '',
                               sizeSpecValue: '');
+                          showCartToast(_scaffoldKey.currentContext);
                           cart.addProductToCart(productCart);
                         } else {
                           tab.pushNewScreenWithRouteSettings(context,

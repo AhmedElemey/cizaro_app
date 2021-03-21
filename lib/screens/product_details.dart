@@ -83,7 +83,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       imgUrl = productDetails.data.mainImg;
       productPrice = productDetails.data.price;
       productPriceAfter = productDetails.data.offer?.afterPrice ?? 0;
-      productCategory = productDetails.data.category.name;
+      productCategory = productDetails.data.category.name ?? "";
 
       productStar = productDetails.data.stars ?? 0.0;
       productDescription = productDetails.data.shortDescription;
@@ -435,7 +435,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                           padding: EdgeInsets.only(
                               left: SizeConfig.blockSizeHorizontal * 7,
                               right: SizeConfig.blockSizeHorizontal * 7,
-                              top: SizeConfig.blockSizeVertical * 2),
+                              top: SizeConfig.blockSizeVertical * 2,
+                              bottom: SizeConfig.blockSizeVertical * 1),
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -481,9 +482,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                         )
                       : Container(
                           padding: EdgeInsets.only(
-                              left: SizeConfig.blockSizeHorizontal * 7,
-                              right: SizeConfig.blockSizeHorizontal * 7,
-                              top: SizeConfig.blockSizeVertical * 2),
+                            left: SizeConfig.blockSizeHorizontal * 7,
+                            right: SizeConfig.blockSizeHorizontal * 7,
+                            top: SizeConfig.blockSizeVertical * 2,
+                          ),
                           child: GridView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -541,7 +543,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                               padding: EdgeInsets.only(
                                   left: SizeConfig.blockSizeHorizontal * 7,
                                   right: SizeConfig.blockSizeHorizontal * 7,
-                                  top: SizeConfig.blockSizeVertical * 1),
+                                  top: SizeConfig.blockSizeVertical * 1,
+                                  bottom: SizeConfig.blockSizeVertical * 2),
                               child: GridView.builder(
                                 physics: NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
@@ -594,8 +597,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                       : Container(),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 4,
-                        right: SizeConfig.blockSizeHorizontal * 4),
+                        left: SizeConfig.blockSizeHorizontal * 5,
+                        right: SizeConfig.blockSizeHorizontal * 5),
                     child: Row(
                       children: [
                         GestureDetector(
@@ -671,7 +674,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ),
                         SizedBox(
-                          width: SizeConfig.blockSizeHorizontal * 10,
+                          width: SizeConfig.blockSizeHorizontal * 8,
                         ),
                         GestureDetector(
                           onTap: () {

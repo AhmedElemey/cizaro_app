@@ -27,8 +27,14 @@ class _DrawerLayoutState extends State<DrawerLayout> {
   Future getHomeData() async {
     if (this.mounted) setState(() => _isLoading = true);
     final getHome = Provider.of<ListViewModel>(context, listen: false);
-    bool lang = await getLang();
-    await getHome.fetchHomeList(lang == false ? 'en' : 'ar').then((response) {
+    bool languageValue = await getLang();
+    await getHome
+        .fetchHomeList(languageValue == null
+            ? 'en'
+            : languageValue == false
+                ? 'en'
+                : 'ar')
+        .then((response) {
       home = response;
       collectionsList = home.data.collections;
       hotDeals = home.data.hotDeals;

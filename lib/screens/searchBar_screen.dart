@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchBarScreen extends StatefulWidget {
   static final routeName = '/searchBar-screen';
@@ -58,6 +59,11 @@ class _SearchBarItemState extends State<SearchBarScreen> {
     addSearchTerm(term);
   }
 
+  Future<bool> getLang() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isArabic');
+  }
+
   Future getSearchData(String query) async {
     if (this.mounted)
       setState(() {
@@ -65,7 +71,16 @@ class _SearchBarItemState extends State<SearchBarScreen> {
       });
 
     final getProducts = Provider.of<ListViewModel>(context, listen: false);
-    await getProducts.fetchSearchBar(query).then((response) {
+    bool languageValue = await getLang();
+    await getProducts
+        .fetchSearchBar(
+            query,
+            languageValue == null
+                ? 'en'
+                : languageValue == false
+                    ? 'en'
+                    : 'ar')
+        .then((response) {
       searchBarModel = response;
       productList = searchBarModel.data.products;
       print(productList.length);

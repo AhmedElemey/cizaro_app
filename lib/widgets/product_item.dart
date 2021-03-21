@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cizaro_app/main.dart';
 import 'package:cizaro_app/model/home.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -239,6 +238,20 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                   fontSize: SizeConfig.safeBlockHorizontal * 3),
                             ),
                           ),
+                          Container(
+                            padding: EdgeInsets.only(
+                                right: SizeConfig.blockSizeHorizontal * 2,
+                                left: SizeConfig.blockSizeHorizontal * 1),
+                            width: SizeConfig.blockSizeHorizontal * 35,
+                            height: SizeConfig.blockSizeVertical * 2.5,
+                            child: Text(
+                              widget.categoryName ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: SizeConfig.safeBlockHorizontal * 3),
+                            ),
+                          ),
                           widget.productPriceAfter == widget.productPrice ||
                                   widget.offer == null ||
                                   widget.productPriceAfter == 0
@@ -378,8 +391,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                   GestureDetector(
                                     onTap: () {
                                       widget.onAddToCart();
-                                      showCartToast(
-                                          globalScaffoldKey.currentContext);
+                                      // showCartToast(
+                                      //     globalScaffoldKey.currentContext);
                                     },
                                     child: Container(
                                       child: SvgPicture.asset(
@@ -584,16 +597,16 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                         onTap: () async {
                                           if (widget.inCart == 1) {
                                             setState(() {
-                                              showInCartAlreadyToast(
-                                                  globalScaffoldKey
-                                                      .currentContext);
+                                              // showInCartAlreadyToast(
+                                              //     globalScaffoldKey
+                                              //         .currentContext);
                                             });
                                           } else {
                                             setState(() {
                                               widget.inCart = 1;
                                               widget.onAddToCart();
-                                              showCartToast(globalScaffoldKey
-                                                  .currentContext);
+                                              // showCartToast(globalScaffoldKey
+                                              //     .currentContext);
                                             });
                                           }
                                         },

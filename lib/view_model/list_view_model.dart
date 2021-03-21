@@ -35,9 +35,10 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<ShopModel> fetchFilter(var minimum, var maximum, var brand) async {
+  Future<ShopModel> fetchFilter(
+      var minimum, var maximum, var brand, String lang) async {
     final results =
-        await ListServices().fetchFilterItems(minimum, maximum, brand);
+        await ListServices().fetchFilterItems(minimum, maximum, brand, lang);
     notifyListeners();
     return results;
   }
@@ -96,8 +97,8 @@ class ListViewModel extends ChangeNotifier {
     return result;
   }
 
-  Future<SearchModel> fetchSearchBar(String searchTxt) async {
-    final result = await ListServices().fetchSearchBar(searchTxt);
+  Future<SearchModel> fetchSearchBar(String searchTxt, String lang) async {
+    final result = await ListServices().fetchSearchBar(searchTxt, lang);
     notifyListeners();
     return result;
   }

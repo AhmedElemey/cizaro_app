@@ -39,7 +39,11 @@ class _GradientAppBarState extends State<GradientAppBar> {
     final getHome = Provider.of<ListViewModel>(context, listen: false);
     languageValue = await getLang();
     await getHome
-        .fetchHomeList(languageValue == false ? 'en' : 'ar')
+        .fetchHomeList(languageValue == null
+            ? 'en'
+            : languageValue == false
+                ? 'en'
+                : 'ar')
         .then((response) {
       home = response;
       collectionsList = home.data.collections;

@@ -84,11 +84,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       pageTransitionAnimation:
                           tab.PageTransitionAnimation.fade),
                   child: FavoriteItem(
-                    imgUrl: fav.favProductModel[index].mainImg,
-                    productName: fav.favProductModel[index].name,
-                    productCategory: fav.favProductModel[index].categoryName,
+                    imgUrl: fav.favProductModel[index].mainImg ?? "",
+                    productName: fav.favProductModel[index].name ?? "",
+                    productCategory:
+                        fav.favProductModel[index].categoryName ?? "",
                     productStar: fav.favProductModel[index]?.stars ?? '0.0',
-                    productPrice: fav.favProductModel[index].price.toString(),
+                    productPrice:
+                        fav.favProductModel[index].price.toString() ?? "",
                     unFavorite: () {
                       fav.deleteFavProduct(
                           index, fav.favProductModel[index].id);

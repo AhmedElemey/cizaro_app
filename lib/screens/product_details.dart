@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/product_details.dart';
 import 'package:cizaro_app/model/related_spec.dart' as rs;
 import 'package:cizaro_app/model/specMdel.dart';
+import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
@@ -19,8 +19,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:photo_view/photo_view.dart';
-import 'package:pinch_zoom_image_last/pinch_zoom_image_last.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -217,62 +217,133 @@ class _ProductDetailsState extends State<ProductDetails> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   productImages?.length == 0
-                      ? Container(
-                          height: SizeConfig.blockSizeVertical * .4,
-                          width: SizeConfig.blockSizeHorizontal * 100,
-                          margin: EdgeInsets.only(
-                              top: SizeConfig.blockSizeVertical * 1),
-                          child: Image.network(imgUrl ?? ''),
+                      ? Stack(
+                          children: [
+                            Container(
+                              height: SizeConfig.blockSizeVertical * .4,
+                              width: SizeConfig.blockSizeHorizontal * 100,
+                              margin: EdgeInsets.only(
+                                  top: SizeConfig.blockSizeVertical * 1),
+                              child: Image.network(imgUrl ?? ''),
+                            ),
+                            Positioned(
+                              child: GestureDetector(
+                                onTap: () => tab.pushNewScreenWithRouteSettings(
+                                    context,
+                                    settings: RouteSettings(
+                                      name: HomeScreen.routeName,
+                                    ),
+                                    screen: HomeScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        tab.PageTransitionAnimation.fade),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.black12,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 2,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 3),
+                                    child: Icon(Icons.arrow_back_ios,
+                                        size:
+                                            SizeConfig.blockSizeHorizontal * 5,
+                                        color: Colors.black87),
+                                  ),
+                                ),
+                              ),
+                              top: SizeConfig.blockSizeVertical * 2,
+                              left: SizeConfig.blockSizeHorizontal * 5,
+                              right: SizeConfig.blockSizeHorizontal * 85,
+                            )
+                          ],
                         )
-                      : Container(
-                          height: SizeConfig.blockSizeVertical * 50,
-                          width: SizeConfig.blockSizeHorizontal * 100,
-                          child: Swiper(
-                              itemBuilder: (BuildContext context, int index) {
-                                return Container(
-                                    child: PhotoView(
-                                        backgroundDecoration: BoxDecoration(
-                                            color: Color(0xffFAFAFA)),
-                                        loadingBuilder: (ctx, event) => Platform
-                                                .isAndroid
-                                            ? Center(
-                                                child:
-                                                    CircularProgressIndicator())
-                                            : Center(
-                                                child:
-                                                    CupertinoActivityIndicator()),
-                                        imageProvider: NetworkImage(
-                                            productImages[index]?.image ??
-                                                imgUrl)));
-                                //   PinchZoomImage(
-                                //   image: Center(
-                                //     child: CachedNetworkImage(
-                                //         imageUrl: productImages[index]?.image ??
-                                //             imgUrl,
-                                //         fit: BoxFit.fitWidth,
-                                //         progressIndicatorBuilder: (context, url,
-                                //                 downloadProgress) =>
-                                //             Platform.isAndroid
-                                //                 ? Center(
-                                //                     child:
-                                //                         CircularProgressIndicator(
-                                //                             value:
-                                //                                 downloadProgress
-                                //                                     .progress))
-                                //                 : Center(
-                                //                     child:
-                                //                         CupertinoActivityIndicator()),
-                                //         errorWidget: (context, url, error) =>
-                                //             Icon(Icons.error)),
-                                //   ),
-                                //   zoomedBackgroundColor: Colors.grey.shade300,
-                                //   hideStatusBarWhileZooming: true,
-                                //   onZoomStart: () => print('Zoom started'),
-                                //   onZoomEnd: () => print('Zoom finished'),
-                                // );
-                              },
-                              itemCount: productImages.length,
-                              pagination: SwiperPagination()),
+                      : Stack(
+                          children: [
+                            Container(
+                              height: SizeConfig.blockSizeVertical * 50,
+                              width: SizeConfig.blockSizeHorizontal * 100,
+                              child: Swiper(
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                        child: PhotoView(
+                                            backgroundDecoration: BoxDecoration(
+                                                color: Color(0xffFAFAFA)),
+                                            loadingBuilder: (ctx, event) => Platform
+                                                    .isAndroid
+                                                ? Center(
+                                                    child:
+                                                        CircularProgressIndicator())
+                                                : Center(
+                                                    child:
+                                                        CupertinoActivityIndicator()),
+                                            imageProvider: NetworkImage(
+                                                productImages[index]?.image ??
+                                                    imgUrl)));
+                                    //   PinchZoomImage(
+                                    //   image: Center(
+                                    //     child: CachedNetworkImage(
+                                    //         imageUrl: productImages[index]?.image ??
+                                    //             imgUrl,
+                                    //         fit: BoxFit.fitWidth,
+                                    //         progressIndicatorBuilder: (context, url,
+                                    //                 downloadProgress) =>
+                                    //             Platform.isAndroid
+                                    //                 ? Center(
+                                    //                     child:
+                                    //                         CircularProgressIndicator(
+                                    //                             value:
+                                    //                                 downloadProgress
+                                    //                                     .progress))
+                                    //                 : Center(
+                                    //                     child:
+                                    //                         CupertinoActivityIndicator()),
+                                    //         errorWidget: (context, url, error) =>
+                                    //             Icon(Icons.error)),
+                                    //   ),
+                                    //   zoomedBackgroundColor: Colors.grey.shade300,
+                                    //   hideStatusBarWhileZooming: true,
+                                    //   onZoomStart: () => print('Zoom started'),
+                                    //   onZoomEnd: () => print('Zoom finished'),
+                                    // );
+                                  },
+                                  itemCount: productImages.length,
+                                  pagination: SwiperPagination()),
+                            ),
+                            Positioned(
+                              child: GestureDetector(
+                                onTap: () => tab.pushNewScreenWithRouteSettings(
+                                    context,
+                                    settings: RouteSettings(
+                                      name: HomeScreen.routeName,
+                                    ),
+                                    screen: HomeScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        tab.PageTransitionAnimation.fade),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.black12,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 3,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 2),
+                                    child: Icon(Icons.arrow_back,
+                                        size:
+                                            SizeConfig.blockSizeHorizontal * 5,
+                                        color: Colors.black87),
+                                  ),
+                                ),
+                              ),
+                              top: SizeConfig.blockSizeVertical * 2,
+                              left: SizeConfig.blockSizeHorizontal * 5,
+                              right: SizeConfig.blockSizeHorizontal * 80,
+                            )
+                          ],
                         ),
                   Padding(
                       padding: EdgeInsets.only(

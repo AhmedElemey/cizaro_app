@@ -412,229 +412,246 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                     )
                   : Stack(
                       children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          elevation: 10,
-                          shadowColor: Colors.grey[900],
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ClipRRect(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10)),
-                                  child: Image.network(
-                                    widget.imgUrl,
-                                    loadingBuilder: (BuildContext context,
-                                        Widget child,
-                                        ImageChunkEvent loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress
-                                                      .expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                    width: SizeConfig.blockSizeHorizontal * 33,
-                                    height: SizeConfig.blockSizeVertical * 19,
-                                    fit: BoxFit.fill,
-                                  )),
-                              Container(
-                                width: SizeConfig.blockSizeHorizontal * 35,
-                                height: SizeConfig.blockSizeVertical * 3,
-                                padding: EdgeInsets.only(
-                                    right: SizeConfig.blockSizeHorizontal * 2,
-                                    left: SizeConfig.blockSizeHorizontal * 2),
-                                child: Text(
-                                  widget.productName,
-                                  style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize:
-                                        SizeConfig.safeBlockHorizontal * 4,
+                        Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(70),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 17,
+                                  offset: Offset(
+                                      2, 10), // changes position of shadow
+                                ),
+                              ]),
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            // elevation: 10,
+                            // shadowColor: Colors.grey[900],
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10)),
+                                    child: Image.network(
+                                      widget.imgUrl,
+                                      loadingBuilder: (BuildContext context,
+                                          Widget child,
+                                          ImageChunkEvent loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes
+                                                : null,
+                                          ),
+                                        );
+                                      },
+                                      width:
+                                          SizeConfig.blockSizeHorizontal * 33,
+                                      height: SizeConfig.blockSizeVertical * 19,
+                                      fit: BoxFit.fill,
+                                    )),
+                                Container(
+                                  width: SizeConfig.blockSizeHorizontal * 35,
+                                  height: SizeConfig.blockSizeVertical * 3,
+                                  padding: EdgeInsets.only(
+                                      right: SizeConfig.blockSizeHorizontal * 2,
+                                      left: SizeConfig.blockSizeHorizontal * 2),
+                                  child: Text(
+                                    widget.productName,
+                                    style: GoogleFonts.poppins(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize:
+                                          SizeConfig.safeBlockHorizontal * 4,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              widget.productPriceAfter == widget.productPrice
-                                  ? Container(
-                                      padding: EdgeInsets.only(
-                                          right:
-                                              SizeConfig.blockSizeHorizontal *
-                                                  1,
-                                          left: SizeConfig.blockSizeHorizontal *
-                                              2),
-                                      child: Text(
-                                        widget.productPrice.toString() +
-                                            ' le'.tr(),
-                                        style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize:
-                                              SizeConfig.safeBlockHorizontal *
-                                                  4,
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: <Widget>[
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                right: SizeConfig
-                                                        .blockSizeHorizontal *
-                                                    2,
-                                                left: SizeConfig
-                                                        .blockSizeHorizontal *
+                                widget.productPriceAfter == widget.productPrice
+                                    ? Container(
+                                        padding: EdgeInsets.only(
+                                            right:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    1,
+                                            left:
+                                                SizeConfig.blockSizeHorizontal *
                                                     2),
-                                            child: Text(
-                                              widget.productPrice.toString() +
-                                                  ' le'.tr(),
-                                              style: GoogleFonts.poppins(
+                                        child: Text(
+                                          widget.productPrice.toString() +
+                                              ' le'.tr(),
+                                          style: GoogleFonts.poppins(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize:
+                                                SizeConfig.safeBlockHorizontal *
+                                                    4,
+                                          ),
+                                        ),
+                                      )
+                                    : Container(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  right: SizeConfig
+                                                          .blockSizeHorizontal *
+                                                      2,
+                                                  left: SizeConfig
+                                                          .blockSizeHorizontal *
+                                                      2),
+                                              child: Text(
+                                                widget.productPrice.toString() +
+                                                    ' le'.tr(),
+                                                style: GoogleFonts.poppins(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.red,
+                                                    fontSize: SizeConfig
+                                                            .safeBlockHorizontal *
+                                                        3,
+                                                    decoration: TextDecoration
+                                                        .lineThrough),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.only(
+                                                  right: SizeConfig
+                                                          .blockSizeHorizontal *
+                                                      2,
+                                                  left: SizeConfig
+                                                          .blockSizeHorizontal *
+                                                      2),
+                                              child: Text(
+                                                widget.productPriceAfter
+                                                        .toString() +
+                                                    ' le'.tr(),
+                                                style: GoogleFonts.poppins(
                                                   fontWeight: FontWeight.w600,
-                                                  color: Colors.red,
                                                   fontSize: SizeConfig
                                                           .safeBlockHorizontal *
                                                       3,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.only(
-                                                right: SizeConfig
-                                                        .blockSizeHorizontal *
-                                                    2,
-                                                left: SizeConfig
-                                                        .blockSizeHorizontal *
-                                                    2),
-                                            child: Text(
-                                              widget.productPriceAfter
-                                                      .toString() +
-                                                  ' le'.tr(),
-                                              style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: SizeConfig
-                                                        .safeBlockHorizontal *
-                                                    3,
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                              Container(
-                                  padding: EdgeInsets.only(
-                                      left: SizeConfig.blockSizeHorizontal * 1,
-                                      right:
-                                          SizeConfig.blockSizeHorizontal * 1),
-                                  width: SizeConfig.blockSizeHorizontal * 30,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // Consumer<FavViewModel>(
-                                      //     builder: (_, favProvider, child) {
-                                      //   bool isAdded = favProvider
-                                      //       .checkFavItems(widget.productId);
-                                      //   return IconButton(
-                                      //       onPressed: () {
-                                      //         if (isAdded) {
-                                      //           // favProvider.deleteFavProduct(index, productId)
-                                      //         } else {
-                                      //           final productFav = ProductFav(
-                                      //               id: widget.productId,
-                                      //               name: widget.productName,
-                                      //               mainImg: widget.imgUrl,
-                                      //               price: widget.productPrice,
-                                      //               categoryName:
-                                      //                   widget.categoryName,
-                                      //               isFav: 1);
-                                      //           favProvider.addProductToFav(
-                                      //               productFav);
-                                      //           showFavToast(globalScaffoldKey
-                                      //               .currentContext);
-                                      //         }
-                                      //       },
-                                      //       icon: Icon(
-                                      //         isAdded == false
-                                      //             ? Icons.favorite_border
-                                      //             : Icons.favorite,
-                                      //         color: isAdded == true
-                                      //             ? Colors.red
-                                      //             : Colors.grey,
-                                      //       ));
-                                      // }),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          if (widget.isFav == 1) {
-                                            setState(() {
-                                              showFavAlreadyToast(context);
-                                            });
-                                          } else {
-                                            setState(() {
-                                              widget.isFav = 1;
-                                              widget.onAddToFavorite();
-                                              showFavToast(context);
-                                            });
-                                          }
-                                        },
-                                        child: widget.isFav == 1
-                                            ? Icon(Icons.favorite,
-                                                color: Color(0xffFF6969))
-                                            : Icon(
-                                                Icons.favorite_border_outlined),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          if (widget.inCart == 1) {
-                                            setState(() {
-                                              // showInCartAlreadyToast(
-                                              //     globalScaffoldKey
-                                              //         .currentContext);
-                                            });
-                                          } else {
-                                            setState(() {
-                                              widget.inCart = 1;
-                                              widget.onAddToCart();
-                                              // showCartToast(globalScaffoldKey
-                                              //     .currentContext);
-                                            });
-                                          }
-                                        },
-                                        child: Container(
-                                          child: widget.inCart == 1
-                                              ? SvgPicture.asset(
-                                                  'assets/images/cart.svg',
-                                                  width: SizeConfig
-                                                          .blockSizeHorizontal *
-                                                      2.7,
-                                                  height: SizeConfig
-                                                          .blockSizeVertical *
-                                                      2.6,
-                                                  color: Colors.green[900])
-                                              : SvgPicture.asset(
-                                                  'assets/images/cart.svg',
-                                                  width: SizeConfig
-                                                          .blockSizeHorizontal *
-                                                      2.7,
-                                                  height: SizeConfig
-                                                          .blockSizeVertical *
-                                                      2.6,
-                                                  color: Colors.grey[900]),
+                                            )
+                                          ],
                                         ),
                                       ),
-                                    ],
-                                  )),
-                            ],
+                                Container(
+                                    padding: EdgeInsets.only(
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 1),
+                                    width: SizeConfig.blockSizeHorizontal * 30,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        // Consumer<FavViewModel>(
+                                        //     builder: (_, favProvider, child) {
+                                        //   bool isAdded = favProvider
+                                        //       .checkFavItems(widget.productId);
+                                        //   return IconButton(
+                                        //       onPressed: () {
+                                        //         if (isAdded) {
+                                        //           // favProvider.deleteFavProduct(index, productId)
+                                        //         } else {
+                                        //           final productFav = ProductFav(
+                                        //               id: widget.productId,
+                                        //               name: widget.productName,
+                                        //               mainImg: widget.imgUrl,
+                                        //               price: widget.productPrice,
+                                        //               categoryName:
+                                        //                   widget.categoryName,
+                                        //               isFav: 1);
+                                        //           favProvider.addProductToFav(
+                                        //               productFav);
+                                        //           showFavToast(globalScaffoldKey
+                                        //               .currentContext);
+                                        //         }
+                                        //       },
+                                        //       icon: Icon(
+                                        //         isAdded == false
+                                        //             ? Icons.favorite_border
+                                        //             : Icons.favorite,
+                                        //         color: isAdded == true
+                                        //             ? Colors.red
+                                        //             : Colors.grey,
+                                        //       ));
+                                        // }),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            if (widget.isFav == 1) {
+                                              setState(() {
+                                                showFavAlreadyToast(context);
+                                              });
+                                            } else {
+                                              setState(() {
+                                                widget.isFav = 1;
+                                                widget.onAddToFavorite();
+                                                showFavToast(context);
+                                              });
+                                            }
+                                          },
+                                          child: widget.isFav == 1
+                                              ? Icon(Icons.favorite,
+                                                  color: Color(0xffFF6969))
+                                              : Icon(Icons
+                                                  .favorite_border_outlined),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () async {
+                                            if (widget.inCart == 1) {
+                                              setState(() {
+                                                // showInCartAlreadyToast(
+                                                //     globalScaffoldKey
+                                                //         .currentContext);
+                                              });
+                                            } else {
+                                              setState(() {
+                                                widget.inCart = 1;
+                                                widget.onAddToCart();
+                                                // showCartToast(globalScaffoldKey
+                                                //     .currentContext);
+                                              });
+                                            }
+                                          },
+                                          child: Container(
+                                            child: widget.inCart == 1
+                                                ? SvgPicture.asset(
+                                                    'assets/images/cart.svg',
+                                                    width: SizeConfig
+                                                            .blockSizeHorizontal *
+                                                        2.7,
+                                                    height: SizeConfig
+                                                            .blockSizeVertical *
+                                                        2.6,
+                                                    color: Colors.green[900])
+                                                : SvgPicture.asset(
+                                                    'assets/images/cart.svg',
+                                                    width: SizeConfig
+                                                            .blockSizeHorizontal *
+                                                        2.7,
+                                                    height: SizeConfig
+                                                            .blockSizeVertical *
+                                                        2.6,
+                                                    color: Colors.grey[900]),
+                                          ),
+                                        ),
+                                      ],
+                                    )),
+                              ],
+                            ),
                           ),
                         ),
                         Positioned(

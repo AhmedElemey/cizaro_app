@@ -1,4 +1,3 @@
-import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -173,15 +172,16 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                         // || element.availability < element.quantity
                                         ) {
                                       isAvailable = false;
-                                      showAvailabilityToast(context);
+
                                       return;
                                     }
                                   });
-                        if (isAvailable) {
+                        if (isAvailable == false) {
+                          showAvailabilityToast(context);
                           pushNewScreenWithRouteSettings(context,
                               settings:
-                                  RouteSettings(name: CheckoutScreen.routeName),
-                              screen: CheckoutScreen(),
+                                  RouteSettings(name: MyCartScreen.routeName),
+                              screen: MyCartScreen(),
                               withNavBar: true,
                               pageTransitionAnimation:
                                   PageTransitionAnimation.fade);

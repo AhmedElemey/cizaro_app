@@ -129,6 +129,7 @@
   "enter_mail_pass": "Please enter you registered email or username.!",
   "added_cart":"Added to Cart",
   "added_fav": "Added to Favorite",
+  "already_fav": "Already in Favorites",
   "no_in_cart": "There is no items in cart !",
   "out_stock": "There is a Product out of Stock..",
   "select_specification": "Please, Select Specification of Product First!",

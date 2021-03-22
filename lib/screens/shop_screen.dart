@@ -11,6 +11,7 @@ import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
 import 'package:cizaro_app/widgets/search_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -82,7 +83,7 @@ class _ShopScreenState extends State<ShopScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("added_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );

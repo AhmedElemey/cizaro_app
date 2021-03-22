@@ -148,7 +148,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('error'.tr()),
-          content: Text('Mobile Number not Verified!',
+          content: Text('mobile_not_verified'.tr(),
               style: const TextStyle(fontWeight: FontWeight.bold)),
           actions: <Widget>[
             FlatButton(

@@ -138,7 +138,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("added_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -161,7 +161,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Please, Select Specification of Project First!",
+          Text("select_specification".tr(),
               style: const TextStyle(color: Colors.white))
         ],
       ),
@@ -184,7 +184,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+          Text("added_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );

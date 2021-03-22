@@ -41,8 +41,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Removed from Favorite",
-              style: const TextStyle(color: Colors.white))
+          Text("remove_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );

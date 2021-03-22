@@ -106,8 +106,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Your Password Changed .!",
-              style: const TextStyle(color: Colors.white))
+          Text("pass_change".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -130,8 +129,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         children: [
           Icon(Icons.close, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Password Not matching !",
-              style: const TextStyle(color: Colors.white))
+          Text("pass_match".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -154,8 +152,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Your Personal Data Updated",
-              style: const TextStyle(color: Colors.white))
+          Text("data_updated".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );

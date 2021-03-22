@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("added_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -682,49 +682,49 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-class CustomTabBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: BoxDecoration(color: Color(0xff3A559F)),
-      child: Container(
-        height: MediaQuery.of(context).size.height * .2,
-        width: double.infinity,
-        child: Expanded(
-            child: CustomTabBarButton(
-          text: "CHATS",
-          textColor: Colors.white,
-          borderColor: Colors.transparent,
-          borderWidth: 0.0,
-        )),
-      ),
-    );
-  }
-}
-
-class CustomTabBarButton extends StatelessWidget {
-  final String text;
-  final Color borderColor, textColor;
-  final double borderWidth;
-
-  const CustomTabBarButton(
-      {Key key, this.text, this.borderColor, this.textColor, this.borderWidth})
-      : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        border:
-            Border(bottom: BorderSide(color: borderColor, width: borderWidth)),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-            fontWeight: FontWeight.w500, fontSize: 16, color: textColor),
-      ),
-    );
-  }
-}
+//
+// class CustomTabBar extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       height: 50,
+//       decoration: BoxDecoration(color: Color(0xff3A559F)),
+//       child: Container(
+//         height: MediaQuery.of(context).size.height * .2,
+//         width: double.infinity,
+//         child: Expanded(
+//             child: CustomTabBarButton(
+//           text: "CHATS",
+//           textColor: Colors.white,
+//           borderColor: Colors.transparent,
+//           borderWidth: 0.0,
+//         )),
+//       ),
+//     );
+//   }
+// }
+//
+// class CustomTabBarButton extends StatelessWidget {
+//   final String text;
+//   final Color borderColor, textColor;
+//   final double borderWidth;
+//
+//   const CustomTabBarButton(
+//       {Key key, this.text, this.borderColor, this.textColor, this.borderWidth})
+//       : super(key: key);
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       alignment: Alignment.center,
+//       decoration: BoxDecoration(
+//         border:
+//             Border(bottom: BorderSide(color: borderColor, width: borderWidth)),
+//       ),
+//       child: Text(
+//         text,
+//         style: TextStyle(
+//             fontWeight: FontWeight.w500, fontSize: 16, color: textColor),
+//       ),
+//     );
+//   }
+// }

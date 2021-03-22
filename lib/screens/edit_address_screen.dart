@@ -68,7 +68,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Your Address Updated",
+          Text("address_updated".tr(),
               style: const TextStyle(color: Colors.white))
         ],
       ),

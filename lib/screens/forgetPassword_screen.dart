@@ -63,7 +63,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
-          Text("Mail Sent ..!",
+          Text("mail_sent".tr(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: SizeConfig.safeBlockHorizontal * 4,
@@ -90,7 +90,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         children: [
           Icon(Icons.close, color: Colors.white),
           SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
-          Text(" Please enter you registered email or username.!",
+          Text(" enter_mail_pass".tr(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: SizeConfig.safeBlockHorizontal * 3,

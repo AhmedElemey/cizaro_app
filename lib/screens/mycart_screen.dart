@@ -54,8 +54,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         children: [
           Icon(Icons.close, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("There is no items in cart !",
-              style: const TextStyle(color: Colors.white))
+          Text("no_in_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -78,8 +77,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         children: [
           Icon(Icons.close, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("There is a Product out of Stock..",
-              style: const TextStyle(color: Colors.white))
+          Text("out_stock".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -114,51 +112,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                   return CartItem(
                       item: cart.cartProductModel[index],
                       index: index,
-                      cartProvider: cart
-
-                      // id: cart.cartProductModel[index].id,
-                      // imgUrl: cart.cartProductModel[index].mainImg,
-                      // productName: cart.cartProductModel[index].name,
-                      // productCategory:
-                      //     cart.cartProductModel[index].categoryName,
-                      // productPrice: cart.cartProductModel[index].price,
-                      // productPriceAfterDiscount:
-                      //     cart.cartProductModel[index].priceAfterDiscount,
-                      // totalAvailability:
-                      //     cart.cartProductModel[index].availability,
-                      // totalPrice: cart.cartProductModel[index].price ==
-                      //         cart.cartProductModel[index]?.priceAfterDiscount
-                      //     ? cart.cartProductModel[index].price *
-                      //         cart.cartProductModel[index].quantity
-                      //     : cart.cartProductModel[index].priceAfterDiscount ==
-                      //             null
-                      //         ? cart.cartProductModel[index].price *
-                      //             cart.cartProductModel[index].quantity
-                      //         : cart.cartProductModel[index]
-                      //                 .priceAfterDiscount *
-                      //             cart.cartProductModel[index].quantity,
-                      // productQuantity:
-                      //     cart.cartProductModel[index].quantity ?? 1,
-                      // sizeSpecValue:
-                      //     cart.cartProductModel[index]?.sizeSpecValue ?? '',
-                      // colorSpecValue:
-                      //     cart.cartProductModel[index]?.colorSpecValue ?? '',
-                      // myController: TextEditingController(text: cart.cartProductModel[index].quantity.toString()),
-                      // onDelete: () {
-                      //   cart.deleteCartProduct(
-                      //       index, cart.cartProductModel[index].id);
-                      //   setState(() {
-                      //     cart.cartProductModel?.removeAt(index);
-                      //   });
-                      // },
-
-                      // onUpdateQuantity: () => cart.updateQuantity(
-                      //     index: index,
-                      //     productId: cart.cartProductModel[index].id,
-                      //     quantity: cart.cartProductModel[index].quantity),
-                      // onPlusQuantity: () => cart.increaseQuantity(index),
-                      // onMinusQuantity: () => cart.decreaseQuantity(index)
-                      );
+                      cartProvider: cart);
                 }));
   }
 

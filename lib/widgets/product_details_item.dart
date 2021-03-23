@@ -72,7 +72,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Already In Cart", style: const TextStyle(color: Colors.white))
+          Text("already_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -95,7 +95,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+          Text("added_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -118,8 +118,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Already in Favorites",
-              style: const TextStyle(color: Colors.white))
+          Text("already_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -142,7 +141,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("added_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -206,7 +205,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                       child: Text(
                         widget.productName,
                         style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                           fontSize: SizeConfig.safeBlockHorizontal * 4,
                         ),
                       ),
@@ -390,7 +389,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                             )),
                         Container(
                           width: SizeConfig.blockSizeHorizontal * 35,
-                          height: SizeConfig.blockSizeVertical * 4,
+                          height: SizeConfig.blockSizeVertical * 4.5,
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 1,
                               right: SizeConfig.blockSizeHorizontal * 2,
@@ -398,7 +397,7 @@ class _ProductDetailItemState extends State<ProductDetailItem> {
                           child: Text(
                             widget.productName,
                             style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.bold,
                               fontSize: SizeConfig.safeBlockHorizontal * 4,
                             ),
                           ),

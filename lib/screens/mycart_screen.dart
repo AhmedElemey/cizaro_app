@@ -98,7 +98,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
             child: Center(
                 child: Text(
               'no_cart'.tr(),
-              style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  fontWeight: FontWeight.bold),
             )))
         : Container(
             height: SizeConfig.blockSizeVertical * 72,
@@ -144,6 +147,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           Text(
                             'total'.tr(),
                             style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                           ),
                           Text(

@@ -1,7 +1,6 @@
 import 'package:cizaro_app/model/countries.dart' as country;
 import 'package:cizaro_app/model/createAdressModel.dart';
 import 'package:cizaro_app/model/getAddressModel.dart';
-import 'package:cizaro_app/screens/addressbook_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';

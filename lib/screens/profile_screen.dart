@@ -133,6 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
+                                  width: SizeConfig.blockSizeHorizontal * 40,
                                   padding: EdgeInsets.only(
                                       top: SizeConfig.blockSizeVertical * 1,
                                       left: SizeConfig.blockSizeHorizontal * 5,
@@ -148,6 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Container(
+                                  width: SizeConfig.blockSizeHorizontal * 50,
                                   padding: EdgeInsets.only(
                                       left: SizeConfig.blockSizeVertical * 3,
                                       right:
@@ -177,9 +179,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         PageTransitionAnimation.fade),
                                 child: Container(
                                   padding: EdgeInsets.only(
-                                      top: SizeConfig.blockSizeVertical * 1,
-                                      right: SizeConfig.blockSizeHorizontal * 4,
-                                      left: SizeConfig.blockSizeHorizontal * 5),
+                                    top: SizeConfig.blockSizeVertical * 1,
+                                    // right: SizeConfig.blockSizeHorizontal * 4,
+                                    // left: SizeConfig.blockSizeHorizontal * 5
+                                  ),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius:
@@ -187,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       color: Color(0xff3A559F),
                                     ),
                                     height: SizeConfig.blockSizeVertical * 5,
-                                    width: SizeConfig.blockSizeHorizontal * 35,
+                                    width: SizeConfig.blockSizeHorizontal * 27,
                                     child: Center(
                                       child: Text(
                                         'edit_profile'.tr(),
@@ -343,7 +346,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
-                                                  5,
+                                                  4.7,
                                             ),
                                           ),
                                         ),
@@ -575,7 +578,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
-                                                  5,
+                                                  4.7,
                                             ),
                                           ),
                                         ),

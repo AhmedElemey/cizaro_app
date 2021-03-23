@@ -62,6 +62,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 horizontal: SizeConfig.blockSizeHorizontal * 3),
             child: Center(
                 child: Text('no_fav'.tr(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: SizeConfig.safeBlockHorizontal * 4,
                     ),

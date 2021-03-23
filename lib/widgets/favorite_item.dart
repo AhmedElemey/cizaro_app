@@ -37,9 +37,9 @@ class FavoriteItem extends StatelessWidget {
             height: SizeConfig.blockSizeVertical * 20,
             padding: EdgeInsets.only(
                 left: SizeConfig.blockSizeHorizontal * 1,
-                right: SizeConfig.blockSizeHorizontal * 4,
+                right: SizeConfig.blockSizeHorizontal * 1,
                 top: SizeConfig.blockSizeVertical * 1,
-                bottom: SizeConfig.blockSizeVertical * 1.5),
+                bottom: SizeConfig.blockSizeVertical * 1),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

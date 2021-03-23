@@ -64,8 +64,7 @@ class _SearchItemState extends State<SearchItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Already in Favorites",
-              style: const TextStyle(color: Colors.white))
+          Text("already_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -88,7 +87,7 @@ class _SearchItemState extends State<SearchItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Already In Cart", style: const TextStyle(color: Colors.white))
+          Text("already_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -111,7 +110,7 @@ class _SearchItemState extends State<SearchItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+          Text("added_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -134,7 +133,7 @@ class _SearchItemState extends State<SearchItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("added_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -201,36 +200,47 @@ class _SearchItemState extends State<SearchItem> {
                         }, fit: BoxFit.fitHeight)))),
             Container(
               padding: EdgeInsets.only(
-                  right: SizeConfig.blockSizeHorizontal * 3,
-                  left: SizeConfig.blockSizeHorizontal * 3,
+                  right: SizeConfig.blockSizeHorizontal * 2,
+                  left: SizeConfig.blockSizeHorizontal * 2,
                   top: SizeConfig.blockSizeVertical * 1),
-              width: SizeConfig.blockSizeHorizontal * 60,
+              width: SizeConfig.blockSizeHorizontal * 50,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.productName,
-                    style: TextStyle(
-                      fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  Container(
+                    width: SizeConfig.blockSizeHorizontal * 60,
+                    child: Text(
+                      widget.productName,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeConfig.safeBlockHorizontal * 4,
+                      ),
                     ),
                   ),
                   SizedBox(height: SizeConfig.blockSizeVertical * .5),
-                  Text(
-                    widget.productCategory ?? '',
-                    style: TextStyle(
-                      fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  Container(
+                    width: SizeConfig.blockSizeHorizontal * 50,
+                    child: Text(
+                      widget.productCategory ?? '',
+                      style: TextStyle(
+                        fontSize: SizeConfig.safeBlockHorizontal * 4,
+                      ),
                     ),
                   ),
-                  SizedBox(height: SizeConfig.blockSizeVertical * .5),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 1),
                   widget.productPriceAfter == widget.productPrice ||
                           widget.productPriceAfter == 0
                       ? Text(
                           widget.productPrice.toString() + ' le'.tr(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                           // style: TextStyle(
                           //   fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                           // ),
                         )
                       : Container(
+                          width: SizeConfig.blockSizeHorizontal * 50,
                           child: Row(
                             children: <Widget>[
                               Container(
@@ -261,62 +271,67 @@ class _SearchItemState extends State<SearchItem> {
                             ],
                           ),
                         ),
-                  SizedBox(height: SizeConfig.blockSizeVertical * .1),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () async {
-                          if (widget.isFav == 1) {
-                            setState(() {
-                              showFavAlreadyToast();
-                            });
-                          } else {
-                            setState(() {
-                              widget.isFav = 1;
-                              widget.onAddToFavorite();
-                              //  print(" here");
-                              showFavToast();
-                            });
-                          }
-                        },
-                        child: widget.isFav == 1
-                            ? Icon(Icons.favorite,
-                                color: Color(0xffFF6969),
-                                size: SizeConfig.blockSizeHorizontal * 5)
-                            : Icon(Icons.favorite_border_outlined,
-                                size: SizeConfig.blockSizeHorizontal * 5),
-                      ),
-                      SizedBox(width: SizeConfig.blockSizeHorizontal * 4),
-                      GestureDetector(
-                        onTap: () async {
-                          if (widget.inCart == 1) {
-                            setState(() {
-                              showInCartAlreadyToast();
-                            });
-                          } else {
-                            setState(() {
-                              widget.inCart = 1;
-                              widget.onAddToCart();
-                              showCartToast();
-                            });
-                          }
-                        },
-                        child: Container(
-                          child: widget.inCart == 1
-                              ? SvgPicture.asset('assets/images/cart.svg',
-                                  width: SizeConfig.blockSizeHorizontal * 2.7,
-                                  height: SizeConfig.blockSizeVertical * 2.6,
-                                  color: Colors.green[900])
-                              : SvgPicture.asset('assets/images/cart.svg',
-                                  width: SizeConfig.blockSizeHorizontal * 2.7,
-                                  height: SizeConfig.blockSizeVertical * 2.6,
-                                  color: Colors.grey[900]),
+                  SizedBox(height: SizeConfig.blockSizeVertical * 1),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: SizeConfig.blockSizeHorizontal * 2,
+                        right: SizeConfig.blockSizeHorizontal * 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Spacer(),
+                        GestureDetector(
+                          onTap: () async {
+                            if (widget.isFav == 1) {
+                              setState(() {
+                                showFavAlreadyToast();
+                              });
+                            } else {
+                              setState(() {
+                                widget.isFav = 1;
+                                widget.onAddToFavorite();
+                                //  print(" here");
+                                showFavToast();
+                              });
+                            }
+                          },
+                          child: widget.isFav == 1
+                              ? Icon(Icons.favorite,
+                                  color: Color(0xffFF6969),
+                                  size: SizeConfig.blockSizeHorizontal * 5)
+                              : Icon(Icons.favorite_border_outlined,
+                                  size: SizeConfig.blockSizeHorizontal * 5),
                         ),
-                      ),
-                    ],
+                        SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
+                        GestureDetector(
+                          onTap: () async {
+                            if (widget.inCart == 1) {
+                              setState(() {
+                                showInCartAlreadyToast();
+                              });
+                            } else {
+                              setState(() {
+                                widget.inCart = 1;
+                                widget.onAddToCart();
+                                showCartToast();
+                              });
+                            }
+                          },
+                          child: Container(
+                            child: widget.inCart == 1
+                                ? SvgPicture.asset('assets/images/cart.svg',
+                                    width: SizeConfig.blockSizeHorizontal * 2.7,
+                                    height: SizeConfig.blockSizeVertical * 2.6,
+                                    color: Colors.green[900])
+                                : SvgPicture.asset('assets/images/cart.svg',
+                                    width: SizeConfig.blockSizeHorizontal * 2.7,
+                                    height: SizeConfig.blockSizeVertical * 2.6,
+                                    color: Colors.grey[900]),
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),

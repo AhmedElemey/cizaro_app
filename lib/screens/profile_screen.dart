@@ -62,14 +62,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (this.mounted) setState(() => _isLoading = true);
     String token = await getToken();
     int userId = await getId();
-    if (token == null || userId == null) {
-      if (this.mounted) setState(() => _isLoading = false);
-      pushNewScreenWithRouteSettings(context,
-          settings: RouteSettings(name: LoginScreen.routeName),
-          screen: LoginScreen(),
-          withNavBar: true,
-          pageTransitionAnimation: PageTransitionAnimation.fade);
-    }
     final getProfile = Provider.of<ListViewModel>(context, listen: false);
     languageValue = await getLang();
     await getProfile

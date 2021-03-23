@@ -1,4 +1,5 @@
 import 'package:cizaro_app/screens/home_screen.dart';
+import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/screens/mycart_screen.dart';
 import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/screens/search_screen.dart';
@@ -6,6 +7,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
@@ -51,12 +53,25 @@ class TabsScreen extends StatelessWidget {
   }
 }
 
+Future<String> getToken() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString('token');
+}
+
 List<Widget> _buildScreens() {
   return [
     HomeScreen(),
     SearchScreen(),
     MyCartScreen(),
-    ProfileScreen(),
+    FutureBuilder<String>(
+        future: getToken(),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+          if (snapshot.data == '' || snapshot.data == null) {
+            return LoginScreen();
+          } else {
+            return ProfileScreen();
+          }
+        }),
   ];
 }
 

@@ -1,3 +1,4 @@
+import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -172,7 +173,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade)
                                 : cart.cartProductModel.forEach((element) {
-                                    if (element.availability == 0
+                                    if (element.availability == 0 ||
+                                            element.quantity == 0
                                         // || element.availability < element.quantity
                                         ) {
                                       isAvailable = false;
@@ -189,11 +191,20 @@ class _MyCartScreenState extends State<MyCartScreen> {
                               withNavBar: true,
                               pageTransitionAnimation:
                                   PageTransitionAnimation.fade);
+                        } else {
+                          //showAvailabilityToast(context);
+                          pushNewScreenWithRouteSettings(context,
+                              settings:
+                                  RouteSettings(name: CheckoutScreen.routeName),
+                              screen: CheckoutScreen(),
+                              withNavBar: true,
+                              pageTransitionAnimation:
+                                  PageTransitionAnimation.fade);
                         }
                       },
                       child: Container(
                         width: SizeConfig.blockSizeHorizontal * 40,
-                        height: SizeConfig.blockSizeVertical * 30,
+                        height: SizeConfig.blockSizeVertical * 10,
                         decoration: BoxDecoration(
                             color: Color(0xff3A559F),
                             borderRadius: BorderRadius.circular(25.0)),

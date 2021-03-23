@@ -156,7 +156,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ? CupertinoActivityIndicator()
                         : CircularProgressIndicator())
                 : Container(
-                    height: MediaQuery.of(context).size.height * .8,
+                    height: SizeConfig.blockSizeVertical * 60,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -165,11 +165,22 @@ class _SearchScreenState extends State<SearchScreen> {
                               left: SizeConfig.blockSizeHorizontal * 5,
                               right: SizeConfig.blockSizeHorizontal * 5,
                               top: SizeConfig.blockSizeVertical * 5),
-                          child: Text(
-                            "filter_by".tr(),
-                            style: TextStyle(
-                              fontSize: SizeConfig.safeBlockHorizontal * 5,
-                            ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.filter_alt_outlined,
+                                size: SizeConfig.blockSizeVertical * 4,
+                              ),
+                              SizedBox(
+                                width: SizeConfig.blockSizeHorizontal * 2,
+                              ),
+                              Text(
+                                "filter_by".tr(),
+                                style: TextStyle(
+                                  fontSize: SizeConfig.safeBlockHorizontal * 5,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
@@ -387,7 +398,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               right: SizeConfig.blockSizeHorizontal * 2,
                               left: SizeConfig.blockSizeHorizontal * 2),
                           child: Text(
-                            "There is no Available Items Matches Your Filter ",
+                            "no_filter".tr(),
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: SizeConfig.safeBlockHorizontal * 4,
@@ -419,7 +430,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 color: Color(0xff3A559F),
                                                 fontSize: SizeConfig
                                                         .safeBlockHorizontal *
-                                                    6),
+                                                    5),
                                           ),
                                           SizedBox(
                                             width:

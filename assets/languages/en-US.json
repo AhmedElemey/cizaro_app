@@ -137,5 +137,6 @@
   "select_specification": "Please, Select Specification of Product First!",
   "pass_change": "Your Password Changed .!",
   "pass_match": "Password Not matching !",
-  "data_updated": "Your Personal Data Updated"
+  "data_updated": "Your Personal Data Updated",
+  "no_filter": "There is no Available Items Matches Your Filter "
 }

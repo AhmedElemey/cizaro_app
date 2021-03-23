@@ -65,7 +65,7 @@ class CollectionItem extends StatelessWidget {
                 style: TextStyle(
                     fontFamily: 'Poppins',
                     fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                     fontSize: SizeConfig.safeBlockHorizontal * 4.5,
                     color: Color(0xff515C6F)),
               ),

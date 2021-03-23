@@ -580,7 +580,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   left: SizeConfig.blockSizeHorizontal * 2,
                                   right: SizeConfig.blockSizeHorizontal * 2,
                                 ),
-                                height: SizeConfig.blockSizeVertical * 25,
+                                height: SizeConfig.blockSizeVertical * 24,
                                 //    width: deviceInfo.localWidth * .2,
                                 child: ListView.builder(
                                     itemCount: collectionsList.length,

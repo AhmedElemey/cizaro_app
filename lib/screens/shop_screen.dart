@@ -344,29 +344,92 @@ class _ShopScreenState extends State<ShopScreen> {
                                   fav.addProductToFav(productFav);
                                 },
                                 onAddToCart: () {
-                                  final cart = Provider.of<CartViewModel>(
-                                      context,
-                                      listen: false);
-                                  final productCart = ProductCart(
-                                      id: productDealsList[index].id,
-                                      name: productDealsList[index].name,
-                                      mainImg: productDealsList[index].mainImg,
-                                      price: productDealsList[index].price,
-                                      priceAfterDiscount:
-                                          productDealsList[index]
-                                                  .offer
-                                                  ?.afterPrice ??
-                                              productDealsList[index].price,
-                                      categoryName:
-                                          productDealsList[index].category.name,
-                                      quantity: 1,
-                                      availability:
-                                          productDealsList[index].availability,
-                                      inCart: 1,
-                                      colorSpecValue: '',
-                                      sizeSpecValue: '');
-                                  cart.addProductToCart(productCart);
+                                  if (productList[index].specs == false) {
+                                    //  final cart = Provider.of<CartViewModel>(
+                                    //       context,
+                                    //       listen: false);
+                                    //   final productCart = ProductCart(
+                                    //       id: productList[index].id,
+                                    //       name: productList[index].name,
+                                    //       mainImg: productList[index].mainImg,
+                                    //       price: productList[index].price,
+                                    //       priceAfterDiscount: productList[index]
+                                    //               .offer
+                                    //               ?.afterPrice ??
+                                    //           productList[index].price,
+                                    //       categoryName:
+                                    //           productList[index].category.name,
+                                    //       quantity: 1,
+                                    //       availability:
+                                    //           productList[index].availability,
+                                    //       inCart: 1,
+                                    //       colorSpecValue: '',
+                                    //       sizeSpecValue: '');
+                                    //   cart.addProductToCart(productCart);
+                                    // },
+                                    final cart = Provider.of<CartViewModel>(
+                                        context,
+                                        listen: false);
+                                    final productCart = ProductCart(
+                                        id: productDealsList[index].id,
+                                        name: productDealsList[index].name,
+                                        mainImg:
+                                            productDealsList[index].mainImg,
+                                        price: productDealsList[index].price,
+                                        priceAfterDiscount:
+                                            productDealsList[index]
+                                                    .offer
+                                                    ?.afterPrice ??
+                                                productDealsList[index].price,
+                                        categoryName: productDealsList[index]
+                                            .category
+                                            .name,
+                                        quantity: 1,
+                                        availability: productDealsList[index]
+                                            .availability,
+                                        inCart: 1,
+                                        colorSpecValue: '',
+                                        sizeSpecValue: '');
+                                    showCartToast(_scaffoldKey.currentContext);
+                                    cart.addProductToCart(productCart);
+                                  } else {
+                                    pushNewScreenWithRouteSettings(context,
+                                        settings: RouteSettings(
+                                            name: ProductDetails.routeName,
+                                            arguments: {
+                                              'product_id':
+                                                  productList[index].id
+                                            }),
+                                        screen: ProductDetails(),
+                                        withNavBar: true,
+                                        pageTransitionAnimation:
+                                            PageTransitionAnimation.fade);
+                                  }
                                 },
+                                // onAddToCart: () {
+                                //   final cart = Provider.of<CartViewModel>(
+                                //       context,
+                                //       listen: false);
+                                //   final productCart = ProductCart(
+                                //       id: productDealsList[index].id,
+                                //       name: productDealsList[index].name,
+                                //       mainImg: productDealsList[index].mainImg,
+                                //       price: productDealsList[index].price,
+                                //       priceAfterDiscount:
+                                //           productDealsList[index]
+                                //                   .offer
+                                //                   ?.afterPrice ??
+                                //               productDealsList[index].price,
+                                //       categoryName:
+                                //           productDealsList[index].category.name,
+                                //       quantity: 1,
+                                //       availability:
+                                //           productDealsList[index].availability,
+                                //       inCart: 1,
+                                //       colorSpecValue: '',
+                                //       sizeSpecValue: '');
+                                //   cart.addProductToCart(productCart);
+                                // },
                                 //  productQuantity: ,
                               ),
                             ),

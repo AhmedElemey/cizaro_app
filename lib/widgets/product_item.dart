@@ -74,8 +74,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
         children: [
           Icon(Icons.error_outline, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Already in Favorites",
-              style: const TextStyle(color: Colors.white))
+          Text("already_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -113,7 +112,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+          Text("already_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -136,7 +135,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Already In Cart", style: const TextStyle(color: Colors.white))
+          Text("already_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -159,7 +158,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("added_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -226,17 +225,20 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                               )),
                           Container(
                             padding: EdgeInsets.only(
+                                top: SizeConfig.blockSizeVertical * 1,
                                 right: SizeConfig.blockSizeHorizontal * 2,
                                 left: SizeConfig.blockSizeHorizontal * 1),
                             width: SizeConfig.blockSizeHorizontal * 35,
                             height: SizeConfig.blockSizeVertical * 3,
-                            child: Text(
-                              widget.productName,
-                              overflow: TextOverflow.ellipsis,
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: SizeConfig.safeBlockHorizontal * 3),
-                            ),
+                            child: Text(widget.productName,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                )
+                                // GoogleFonts.poppins(
+                                //     fontWeight: FontWeight.w500,
+                                //     fontSize: SizeConfig.safeBlockHorizontal * 3),
+                                ),
                           ),
                           Container(
                             padding: EdgeInsets.only(

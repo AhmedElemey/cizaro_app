@@ -302,7 +302,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   right: SizeConfig.blockSizeHorizontal * 2,
                                   left: SizeConfig.blockSizeHorizontal * 2,
                                 ),
-                                width: SizeConfig.blockSizeHorizontal * 80,
+                                width: SizeConfig.blockSizeHorizontal * 65,
                                 height: SizeConfig.blockSizeVertical * 05,
                                 child: TextFieldBuild(
                                   obscureText: false,
@@ -360,7 +360,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     left: SizeConfig.blockSizeHorizontal * 1.5,
                                     right: SizeConfig.blockSizeHorizontal * 2,
                                     top: SizeConfig.blockSizeVertical * 1),
-                                width: SizeConfig.blockSizeHorizontal * 80,
+                                width: SizeConfig.blockSizeHorizontal * 65,
                                 height: SizeConfig.blockSizeHorizontal * 10,
                                 child: TextFieldBuild(
                                   obscureText: false,
@@ -419,8 +419,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     left: SizeConfig.blockSizeHorizontal * 1.5,
                                     right: SizeConfig.blockSizeHorizontal * 2,
                                     top: SizeConfig.blockSizeVertical * 1),
-                                width: SizeConfig.blockSizeHorizontal * 80,
-                                height: SizeConfig.blockSizeVertical * 7,
+                                width: SizeConfig.blockSizeHorizontal * 65,
+                                height: SizeConfig.blockSizeVertical * 6,
                                 child: TextFieldBuild(
                                   obscureText: false,
                                   readOnly: false,
@@ -467,7 +467,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       left:
                                           SizeConfig.blockSizeHorizontal * 1.5,
                                       top: SizeConfig.blockSizeVertical * 1),
-                                  width: SizeConfig.blockSizeHorizontal * 80,
+                                  width: SizeConfig.blockSizeHorizontal * 65,
                                   height: SizeConfig.blockSizeVertical * 7,
                                   child: TextFieldBuild(
                                     obscureText: false,
@@ -628,7 +628,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     right: SizeConfig.blockSizeHorizontal * 2,
                                     left: SizeConfig.blockSizeHorizontal * 2,
                                     top: SizeConfig.blockSizeVertical * 1),
-                                width: SizeConfig.blockSizeHorizontal * 80,
+                                width: SizeConfig.blockSizeHorizontal * 65,
                                 height: SizeConfig.blockSizeVertical * 7,
                                 child: TextField(
                                   obscureText: true,
@@ -673,7 +673,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     right: SizeConfig.blockSizeHorizontal * 2,
                                     left: SizeConfig.blockSizeHorizontal * 1.5,
                                     top: SizeConfig.blockSizeVertical * 1),
-                                width: SizeConfig.blockSizeHorizontal * 80,
+                                width: SizeConfig.blockSizeHorizontal * 65,
                                 height: SizeConfig.blockSizeVertical * 7,
                                 child: TextField(
                                   obscureText: true,

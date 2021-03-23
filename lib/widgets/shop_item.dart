@@ -48,8 +48,7 @@ class _ShopItemState extends State<ShopItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Already in Favorites",
-              style: const TextStyle(color: Colors.white))
+          Text("already_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -72,7 +71,7 @@ class _ShopItemState extends State<ShopItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Favorite", style: const TextStyle(color: Colors.white))
+          Text("added_fav".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -95,7 +94,7 @@ class _ShopItemState extends State<ShopItem> {
         children: [
           Icon(Icons.check, color: Colors.white),
           SizedBox(width: 12.0),
-          Text("Added to Cart", style: const TextStyle(color: Colors.white))
+          Text("added_cart".tr(), style: const TextStyle(color: Colors.white))
         ],
       ),
     );
@@ -131,7 +130,7 @@ class _ShopItemState extends State<ShopItem> {
 
   @override
   Widget build(BuildContext context) {
-    final fav = Provider.of<FavViewModel>(context, listen: false);
+    // final fav = Provider.of<FavViewModel>(context, listen: false);
 
     return Padding(
       padding: EdgeInsets.only(

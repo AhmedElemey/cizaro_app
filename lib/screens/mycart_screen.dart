@@ -1,4 +1,3 @@
-import 'package:cizaro_app/screens/checkout_screen.dart';
 import 'package:cizaro_app/screens/login_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -99,7 +98,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
             child: Center(
                 child: Text(
               'no_cart'.tr(),
-              style: TextStyle(fontSize: SizeConfig.safeBlockHorizontal * 4),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: SizeConfig.safeBlockHorizontal * 4,
+                  fontWeight: FontWeight.bold),
             )))
         : Container(
             height: SizeConfig.blockSizeVertical * 72,
@@ -145,6 +147,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                           Text(
                             'total'.tr(),
                             style: TextStyle(
+                                fontWeight: FontWeight.bold,
                                 fontSize: SizeConfig.safeBlockHorizontal * 3.5),
                           ),
                           Text(
@@ -173,15 +176,16 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                         // || element.availability < element.quantity
                                         ) {
                                       isAvailable = false;
-                                      showAvailabilityToast(context);
+
                                       return;
                                     }
                                   });
-                        if (isAvailable) {
+                        if (isAvailable == false) {
+                          showAvailabilityToast(context);
                           pushNewScreenWithRouteSettings(context,
                               settings:
-                                  RouteSettings(name: CheckoutScreen.routeName),
-                              screen: CheckoutScreen(),
+                                  RouteSettings(name: MyCartScreen.routeName),
+                              screen: MyCartScreen(),
                               withNavBar: true,
                               pageTransitionAnimation:
                                   PageTransitionAnimation.fade);

@@ -275,9 +275,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
         ),
         onPositionChange: (index) {
-          setState(() {
-            initPosition = index;
-          });
+          if (this.mounted)
+            setState(() {
+              initPosition = index;
+            });
         },
         onScroll: (position) => print('$position'),
       ),
@@ -439,9 +440,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
         ),
         onPositionChange: (index) {
-          setState(() {
-            initPosition2 = index;
-          });
+          if (this.mounted)
+            setState(() {
+              initPosition2 = index;
+            });
         },
         onScroll: (position) => print('$position'),
       ),
@@ -580,7 +582,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   left: SizeConfig.blockSizeHorizontal * 2,
                                   right: SizeConfig.blockSizeHorizontal * 2,
                                 ),
-                                height: SizeConfig.blockSizeVertical * 24,
+                                height: SizeConfig.blockSizeVertical * 23,
                                 //    width: deviceInfo.localWidth * .2,
                                 child: ListView.builder(
                                     itemCount: collectionsList.length,

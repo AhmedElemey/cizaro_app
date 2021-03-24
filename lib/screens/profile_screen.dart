@@ -570,7 +570,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             style: TextStyle(
                                               fontSize: SizeConfig
                                                       .safeBlockHorizontal *
-                                                  4.7,
+                                                  4.6,
                                             ),
                                           ),
                                         ),

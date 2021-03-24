@@ -26,8 +26,8 @@ class FavoriteItem extends StatelessWidget {
     // TODO: implement build
     return Padding(
       padding: EdgeInsets.only(
-          left: SizeConfig.blockSizeHorizontal * 5,
-          right: SizeConfig.blockSizeHorizontal * 5,
+          left: SizeConfig.blockSizeHorizontal * 3,
+          right: SizeConfig.blockSizeHorizontal * 3,
           top: SizeConfig.blockSizeVertical * 2),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15.0),
@@ -43,18 +43,18 @@ class FavoriteItem extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
+                Container(
+                  width: SizeConfig.blockSizeHorizontal * 25,
                   padding: EdgeInsets.only(
-                      left: SizeConfig.blockSizeHorizontal * 1,
                       top: SizeConfig.blockSizeVertical * 1,
                       bottom: SizeConfig.blockSizeVertical * .5),
                   child: Image.network(imgUrl),
                 ),
                 Container(
-                  width: SizeConfig.blockSizeHorizontal * 40,
+                  width: SizeConfig.blockSizeHorizontal * 30,
                   padding: EdgeInsets.only(
                       top: SizeConfig.blockSizeVertical * .05,
-                      left: SizeConfig.blockSizeHorizontal * 7),
+                      left: SizeConfig.blockSizeHorizontal * 1),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,6 +64,7 @@ class FavoriteItem extends StatelessWidget {
                         child: Text(
                           productName,
                           style: TextStyle(
+                            fontWeight: FontWeight.bold,
                             fontSize: SizeConfig.safeBlockHorizontal * 4,
                           ),
                         ),
@@ -75,18 +76,19 @@ class FavoriteItem extends StatelessWidget {
                               productPrice + ' le'.tr(),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: SizeConfig.safeBlockHorizontal * 3,
+                                fontSize: SizeConfig.safeBlockHorizontal * 4,
                               ),
                             ),
                             Spacer(),
                             Container(
-                              width: SizeConfig.blockSizeVertical * 9,
+                              width: SizeConfig.blockSizeVertical * 7,
                               height: SizeConfig.blockSizeVertical * 3,
                               decoration: BoxDecoration(
                                   color: Color(0xffFF6969),
                                   borderRadius: BorderRadius.circular(20)),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Container(
                                     child: Icon(
@@ -95,13 +97,11 @@ class FavoriteItem extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: SizeConfig.blockSizeHorizontal * 1,
-                                  ),
                                   Text(
                                     productStar ?? '0.0',
                                     style: TextStyle(
                                       color: Colors.white,
+                                      fontWeight: FontWeight.bold,
                                       fontSize:
                                           SizeConfig.safeBlockHorizontal * 4,
                                     ),

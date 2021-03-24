@@ -228,6 +228,8 @@ class _CartItemState extends State<CartItem> {
                                     widget.item.availability) {
                                   widget.item.quantity =
                                       widget.item.availability;
+                                } else if (widget.item.quantity == 0) {
+                                  widget.item.quantity = 1;
                                 }
                                 cartProvider.updateQuantity(
                                     index: widget.index,

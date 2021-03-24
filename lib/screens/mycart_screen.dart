@@ -172,35 +172,36 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     withNavBar: false,
                                     pageTransitionAnimation:
                                         PageTransitionAnimation.fade)
-                                : cart.cartProductModel.forEach((element) {
-                                    if (element.availability == 0 ||
-                                            element.quantity == 0
-                                        // || element.availability < element.quantity
-                                        ) {
-                                      isAvailable = false;
-
-                                      return;
-                                    }
-                                  });
-                        if (isAvailable == false) {
-                          showAvailabilityToast(context);
-                          pushNewScreenWithRouteSettings(context,
-                              settings:
-                                  RouteSettings(name: MyCartScreen.routeName),
-                              screen: MyCartScreen(),
-                              withNavBar: true,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.fade);
-                        } else {
-                          //showAvailabilityToast(context);
-                          pushNewScreenWithRouteSettings(context,
-                              settings:
-                                  RouteSettings(name: CheckoutScreen.routeName),
-                              screen: CheckoutScreen(),
-                              withNavBar: true,
-                              pageTransitionAnimation:
-                                  PageTransitionAnimation.fade);
-                        }
+                                :
+                                // cart.cartProductModel.forEach((element) {
+                                //             if (element.availability == 0 ||
+                                //                     element.quantity == 0
+                                //                 // || element.availability < element.quantity
+                                //                 ) {
+                                //               isAvailable = false;
+                                //
+                                //               return;
+                                //             }
+                                //           });
+                                // if (isAvailable == false) {
+                                //   showAvailabilityToast(context);
+                                //   pushNewScreenWithRouteSettings(context,
+                                //       settings:
+                                //           RouteSettings(name: MyCartScreen.routeName),
+                                //       screen: MyCartScreen(),
+                                //       withNavBar: true,
+                                //       pageTransitionAnimation:
+                                //           PageTransitionAnimation.fade);
+                                // } else {
+                                //showAvailabilityToast(context);
+                                pushNewScreenWithRouteSettings(context,
+                                    settings: RouteSettings(
+                                        name: CheckoutScreen.routeName),
+                                    screen: CheckoutScreen(),
+                                    withNavBar: true,
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.fade);
+                        //}
                       },
                       child: Container(
                         width: SizeConfig.blockSizeHorizontal * 40,

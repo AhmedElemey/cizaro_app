@@ -706,7 +706,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               cart.addProductToCart(productCart);
                               showToast();
                             } else {
-                              if (_selectedSize == -1 || _selectedColor == -1) {
+                              if (_selectedSize == -1 && _selectedColor == -1) {
                                 showErrorToast();
                               } else {
                                 final productCart = ProductCart(

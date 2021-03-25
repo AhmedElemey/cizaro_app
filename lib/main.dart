@@ -82,7 +82,7 @@ void main() async {
           ChangeNotifierProvider.value(value: OrdersViewModel())
         ],
         child: DevicePreview(
-          enabled: true,
+          enabled: false,
           builder: (context) => Provider<AuthServices>(
             create: (_) => AuthServices(),
             child: MaterialApp(

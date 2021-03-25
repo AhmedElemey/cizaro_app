@@ -74,7 +74,7 @@ class ListServices {
     });
     if (response.statusCode == 200) {
       // final body = jsonDecode(response.body);
-      //  print(response.body);
+      print(response.body);
       final body = jsonDecodeUtf8(response.bodyBytes);
       return ProductDetailsModel.fromJson(body);
     } else {

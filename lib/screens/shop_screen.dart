@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
 import 'package:cizaro_app/model/shopModel.dart';
+import 'package:cizaro_app/screens/home_screen.dart';
 import 'package:cizaro_app/screens/product_details.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
@@ -15,6 +16,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -151,6 +153,43 @@ class _ShopScreenState extends State<ShopScreen> {
               child: productDealsList.length == 0
                   ? Column(
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () => tab.pushNewScreenWithRouteSettings(
+                                  context,
+                                  settings: RouteSettings(
+                                    name: HomeScreen.routeName,
+                                  ),
+                                  screen: HomeScreen(),
+                                  withNavBar: true,
+                                  pageTransitionAnimation:
+                                      tab.PageTransitionAnimation.fade),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: SizeConfig.blockSizeVertical * 2,
+                                    left: SizeConfig.blockSizeHorizontal * 5,
+                                    right: SizeConfig.blockSizeHorizontal * 5),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.black12,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 3,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1),
+                                    child: Icon(Icons.arrow_back,
+                                        size:
+                                            SizeConfig.blockSizeHorizontal * 5,
+                                        color: Colors.black87),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         Container(
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 1,
@@ -297,6 +336,43 @@ class _ShopScreenState extends State<ShopScreen> {
                     )
                   : Column(
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () => tab.pushNewScreenWithRouteSettings(
+                                  context,
+                                  settings: RouteSettings(
+                                    name: HomeScreen.routeName,
+                                  ),
+                                  screen: HomeScreen(),
+                                  withNavBar: true,
+                                  pageTransitionAnimation:
+                                      tab.PageTransitionAnimation.fade),
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: SizeConfig.blockSizeVertical * 2,
+                                    left: SizeConfig.blockSizeHorizontal * 5,
+                                    right: SizeConfig.blockSizeHorizontal * 5),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.black12,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 3,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 1),
+                                    child: Icon(Icons.arrow_back,
+                                        size:
+                                            SizeConfig.blockSizeHorizontal * 5,
+                                        color: Colors.black87),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         Container(
                           padding: EdgeInsets.only(
                               top: SizeConfig.blockSizeVertical * 1,

@@ -16,6 +16,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -130,94 +131,158 @@ class _AddressBookScreenState extends State<AddressBookScreen> {
                                       SizeConfig.safeBlockHorizontal * 4.5),
                             )),
                           )
-                        : ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: addressesList.length,
-                            itemBuilder: (ctx, index) => GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      indexOfSelectedItemAddress =
-                                          addressesList[index].id;
-                                    });
-                                    pushNewScreenWithRouteSettings(context,
-                                        settings: RouteSettings(
-                                            name: CheckoutScreen.routeName,
-                                            arguments: {
-                                              'address_id':
-                                                  indexOfSelectedItemAddress,
-                                              'street_name':
-                                                  addressesList[index]
-                                                      .streetAddress,
-                                              'country_name':
-                                                  addressesList[index]
-                                                      .country
-                                                      .name,
-                                              'city_name': addressesList[index]
-                                                  .city
-                                                  .name,
-                                              'region_name':
-                                                  addressesList[index].region,
-                                              'from_added': fromAdded
-                                            }),
-                                        screen: CheckoutScreen(),
-                                        withNavBar: true,
-                                        pageTransitionAnimation:
-                                            PageTransitionAnimation.fade);
-                                  },
-                                  child: AddressItem(
-                                    strName:
-                                        addressesList[index].streetAddress ??
-                                            "John Doe",
-                                    strNumber: addressesList[index].zipCode ??
-                                        "No 123",
-                                    strMain: addressesList[index].region ??
-                                        "Main Street",
-                                    cityName: addressesList[index].city.name ??
-                                        "City Name",
-                                    countryName:
-                                        addressesList[index].country.name ??
-                                            "Country",
-                                    bgColor: addressesList[index].id ==
-                                            indexOfSelectedItemAddress
-                                        ? Colors.blue
-                                        : Colors.white,
-                                    onEdit: () {
-                                      setState(() {
-                                        indexOfSelectedItemAddress =
-                                            addressesList[index].id;
-                                      });
-                                      pushNewScreenWithRouteSettings(context,
-                                          settings: RouteSettings(arguments: {
-                                            'address_id':
-                                                indexOfSelectedItemAddress,
-                                            'street_name': addressesList[index]
-                                                .streetAddress,
-                                            'country_name': addressesList[index]
-                                                .country
-                                                .name,
-                                            'city_name':
-                                                addressesList[index].city.name,
-                                            'region_name':
-                                                addressesList[index].region,
-                                            'phone_number':
-                                                addressesList[index].phone,
-                                            'zip_code':
-                                                addressesList[index].zipCode
-                                          }),
-                                          screen: EditAddressScreen(),
-                                          withNavBar: true,
-                                          pageTransitionAnimation:
-                                              PageTransitionAnimation.fade);
-                                    },
-                                    onDelete: () {
-                                      deleteAddressesData(
-                                          addressesList[index].id);
-                                      setState(
-                                          () => addressesList.removeAt(index));
-                                    },
+                        : Column(
+                            children: [
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => tab
+                                        .pushNewScreenWithRouteSettings(context,
+                                            settings: RouteSettings(
+                                              name: ProfileScreen.routeName,
+                                            ),
+                                            screen: ProfileScreen(),
+                                            withNavBar: true,
+                                            pageTransitionAnimation: tab
+                                                .PageTransitionAnimation.fade),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: SizeConfig.blockSizeVertical * 2,
+                                          left: SizeConfig.blockSizeHorizontal *
+                                              5,
+                                          right:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  5),
+                                      child: CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Colors.black12,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              right: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  3,
+                                              left: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  1),
+                                          child: Icon(Icons.arrow_back,
+                                              size: SizeConfig
+                                                      .blockSizeHorizontal *
+                                                  5,
+                                              color: Colors.black87),
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                )),
+                                ],
+                              ),
+                              ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: addressesList.length,
+                                  itemBuilder: (ctx, index) => GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            indexOfSelectedItemAddress =
+                                                addressesList[index].id;
+                                          });
+                                          pushNewScreenWithRouteSettings(
+                                              context,
+                                              settings: RouteSettings(
+                                                  name:
+                                                      CheckoutScreen.routeName,
+                                                  arguments: {
+                                                    'address_id':
+                                                        indexOfSelectedItemAddress,
+                                                    'street_name':
+                                                        addressesList[index]
+                                                            .streetAddress,
+                                                    'country_name':
+                                                        addressesList[index]
+                                                            .country
+                                                            .name,
+                                                    'city_name':
+                                                        addressesList[index]
+                                                            .city
+                                                            .name,
+                                                    'region_name':
+                                                        addressesList[index]
+                                                            .region,
+                                                    'from_added': fromAdded
+                                                  }),
+                                              screen: CheckoutScreen(),
+                                              withNavBar: true,
+                                              pageTransitionAnimation:
+                                                  PageTransitionAnimation.fade);
+                                        },
+                                        child: AddressItem(
+                                          strName: addressesList[index]
+                                                  .streetAddress ??
+                                              "John Doe",
+                                          strNumber:
+                                              addressesList[index].zipCode ??
+                                                  "No 123",
+                                          strMain:
+                                              addressesList[index].region ??
+                                                  "Main Street",
+                                          cityName:
+                                              addressesList[index].city.name ??
+                                                  "City Name",
+                                          countryName: addressesList[index]
+                                                  .country
+                                                  .name ??
+                                              "Country",
+                                          bgColor: addressesList[index].id ==
+                                                  indexOfSelectedItemAddress
+                                              ? Colors.blue
+                                              : Colors.white,
+                                          onEdit: () {
+                                            setState(() {
+                                              indexOfSelectedItemAddress =
+                                                  addressesList[index].id;
+                                            });
+                                            pushNewScreenWithRouteSettings(
+                                                context,
+                                                settings:
+                                                    RouteSettings(arguments: {
+                                                  'address_id':
+                                                      indexOfSelectedItemAddress,
+                                                  'street_name':
+                                                      addressesList[index]
+                                                          .streetAddress,
+                                                  'country_name':
+                                                      addressesList[index]
+                                                          .country
+                                                          .name,
+                                                  'city_name':
+                                                      addressesList[index]
+                                                          .city
+                                                          .name,
+                                                  'region_name':
+                                                      addressesList[index]
+                                                          .region,
+                                                  'phone_number':
+                                                      addressesList[index]
+                                                          .phone,
+                                                  'zip_code':
+                                                      addressesList[index]
+                                                          .zipCode
+                                                }),
+                                                screen: EditAddressScreen(),
+                                                withNavBar: true,
+                                                pageTransitionAnimation:
+                                                    PageTransitionAnimation
+                                                        .fade);
+                                          },
+                                          onDelete: () {
+                                            deleteAddressesData(
+                                                addressesList[index].id);
+                                            setState(() =>
+                                                addressesList.removeAt(index));
+                                          },
+                                        ),
+                                      )),
+                            ],
+                          ),
                     Row(
                       children: [
                         Spacer(),

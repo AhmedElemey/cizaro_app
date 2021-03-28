@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cizaro_app/model/pendingShipment.dart';
 import 'package:cizaro_app/screens/order_details_screen.dart';
+import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/orders_view_model.dart';
 import 'package:cizaro_app/widgets/gradientAppBar.dart';
@@ -10,6 +11,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart' as tab;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -86,37 +88,89 @@ class _PendingShipmentScreenState extends State<PendingShipmentScreen> {
                           style: TextStyle(
                               fontSize: SizeConfig.safeBlockHorizontal * 5),
                         ))
-                      : ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: _ordersList.length,
-                          itemBuilder: (ctx, index) => GestureDetector(
-                                onTap: () => pushNewScreenWithRouteSettings(
-                                    context,
-                                    settings: RouteSettings(
-                                        name: OrderDetailsScreen.routeName,
-                                        arguments: {
-                                          'order_id': _ordersList[index].id
-                                        }),
-                                    screen: OrderDetailsScreen(),
-                                    withNavBar: true,
-                                    pageTransitionAnimation:
-                                        PageTransitionAnimation.fade),
-                                child: OrderItem(
-                                    orderId: _ordersList[index].id,
-                                    orderNumber: _ordersList[index].orderNumber,
-                                    orderDate: _ordersList[index].deliveredDate,
-                                    orderPaymentMethod:
-                                        _ordersList[index].paymentMethod.value,
-                                    orderStatusId:
-                                        _ordersList[index].status.key,
-                                    orderShippingAddress:
-                                        _ordersList[index].address,
-                                    orderStatus:
-                                        _ordersList[index].status.value,
-                                    orderTotal: _ordersList[index].cashAmount +
-                                        _ordersList[index].shippingFees),
-                              ))
+                      : Column(
+                          children: [
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () => tab
+                                      .pushNewScreenWithRouteSettings(context,
+                                          settings: RouteSettings(
+                                            name: ProfileScreen.routeName,
+                                          ),
+                                          screen: ProfileScreen(),
+                                          withNavBar: true,
+                                          pageTransitionAnimation:
+                                              tab.PageTransitionAnimation.fade),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: SizeConfig.blockSizeVertical * 2,
+                                        left:
+                                            SizeConfig.blockSizeHorizontal * 5,
+                                        right:
+                                            SizeConfig.blockSizeHorizontal * 5),
+                                    child: CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor: Colors.black12,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            right:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    3,
+                                            left:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    1),
+                                        child: Icon(Icons.arrow_back,
+                                            size:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    5,
+                                            color: Colors.black87),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: _ordersList.length,
+                                itemBuilder: (ctx, index) => GestureDetector(
+                                      onTap: () =>
+                                          pushNewScreenWithRouteSettings(
+                                              context,
+                                              settings: RouteSettings(
+                                                  name: OrderDetailsScreen
+                                                      .routeName,
+                                                  arguments: {
+                                                    'order_id':
+                                                        _ordersList[index].id
+                                                  }),
+                                              screen: OrderDetailsScreen(),
+                                              withNavBar: true,
+                                              pageTransitionAnimation:
+                                                  PageTransitionAnimation.fade),
+                                      child: OrderItem(
+                                          orderId: _ordersList[index].id,
+                                          orderNumber:
+                                              _ordersList[index].orderNumber,
+                                          orderDate:
+                                              _ordersList[index].deliveredDate,
+                                          orderPaymentMethod: _ordersList[index]
+                                              .paymentMethod
+                                              .value,
+                                          orderStatusId:
+                                              _ordersList[index].status.key,
+                                          orderShippingAddress:
+                                              _ordersList[index].address,
+                                          orderStatus:
+                                              _ordersList[index].status.value,
+                                          orderTotal: _ordersList[index]
+                                                  .cashAmount +
+                                              _ordersList[index].shippingFees),
+                                    )),
+                          ],
+                        )
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:cizaro_app/screens/product_details.dart';
+import 'package:cizaro_app/screens/profile_screen.dart';
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/widgets/drawer_layout.dart';
@@ -55,53 +56,126 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   Widget favProductList() {
     final fav = Provider.of<FavViewModel>(context, listen: true);
     return fav.favProductModel.length == 0
-        ? Container(
-            height: SizeConfig.blockSizeVertical * 90,
-            padding: EdgeInsets.symmetric(
-                vertical: SizeConfig.blockSizeVertical * 3,
-                horizontal: SizeConfig.blockSizeHorizontal * 3),
-            child: Center(
-                child: Text('no_fav'.tr(),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: SizeConfig.safeBlockHorizontal * 4,
+        ? Column(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                        settings: RouteSettings(
+                          name: ProfileScreen.routeName,
+                        ),
+                        screen: ProfileScreen(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            tab.PageTransitionAnimation.fade),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 2,
+                          left: SizeConfig.blockSizeHorizontal * 5,
+                          right: SizeConfig.blockSizeHorizontal * 5),
+                      child: CircleAvatar(
+                        radius: 15,
+                        backgroundColor: Colors.black12,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: SizeConfig.blockSizeHorizontal * 3,
+                              left: SizeConfig.blockSizeHorizontal * 1),
+                          child: Icon(Icons.arrow_back,
+                              size: SizeConfig.blockSizeHorizontal * 5,
+                              color: Colors.black87),
+                        ),
+                      ),
                     ),
-                    textScaleFactor:
-                        MediaQuery.of(context).textScaleFactor * 1.3)))
-        : ListView.builder(
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: fav.favProductModel?.length ?? 0,
-            itemBuilder: (ctx, index) => GestureDetector(
-                  onTap: () => tab.pushNewScreenWithRouteSettings(context,
-                      settings: RouteSettings(
-                          name: ProductDetails.routeName,
-                          arguments: {
-                            'product_id': fav.favProductModel[index]?.id
-                          }),
-                      screen: ProductDetails(),
-                      withNavBar: true,
-                      pageTransitionAnimation:
-                          tab.PageTransitionAnimation.fade),
-                  child: FavoriteItem(
-                    imgUrl: fav.favProductModel[index].mainImg ?? "",
-                    productName: fav.favProductModel[index].name ?? "",
-                    productCategory:
-                        fav.favProductModel[index].categoryName ?? "",
-                    productStar: fav.favProductModel[index]?.stars ?? '0.0',
-                    productPrice:
-                        fav.favProductModel[index].price.toString() ?? "",
-                    unFavorite: () {
-                      fav.deleteFavProduct(
-                          index, fav.favProductModel[index].id);
-                      setState(() {
-                        fav.favProductModel?.removeAt(index);
-                        // fav.favProductModel[index].isFav = 0;
-                      });
-                      showUnFavToast();
-                    },
                   ),
-                ));
+                ],
+              ),
+              Container(
+                  height: SizeConfig.blockSizeVertical * 90,
+                  padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.blockSizeVertical * 3,
+                      horizontal: SizeConfig.blockSizeHorizontal * 3),
+                  child: Center(
+                      child: Text('no_fav'.tr(),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: SizeConfig.safeBlockHorizontal * 4,
+                          ),
+                          textScaleFactor:
+                              MediaQuery.of(context).textScaleFactor * 1.3))),
+            ],
+          )
+        : Column(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                        settings: RouteSettings(
+                          name: ProfileScreen.routeName,
+                        ),
+                        screen: ProfileScreen(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            tab.PageTransitionAnimation.fade),
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: SizeConfig.blockSizeVertical * 2,
+                          left: SizeConfig.blockSizeHorizontal * 5,
+                          right: SizeConfig.blockSizeHorizontal * 5),
+                      child: CircleAvatar(
+                        radius: 15,
+                        backgroundColor: Colors.black12,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: SizeConfig.blockSizeHorizontal * 3,
+                              left: SizeConfig.blockSizeHorizontal * 1),
+                          child: Icon(Icons.arrow_back,
+                              size: SizeConfig.blockSizeHorizontal * 5,
+                              color: Colors.black87),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: fav.favProductModel?.length ?? 0,
+                  itemBuilder: (ctx, index) => GestureDetector(
+                        onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                            settings: RouteSettings(
+                                name: ProductDetails.routeName,
+                                arguments: {
+                                  'product_id': fav.favProductModel[index]?.id
+                                }),
+                            screen: ProductDetails(),
+                            withNavBar: true,
+                            pageTransitionAnimation:
+                                tab.PageTransitionAnimation.fade),
+                        child: FavoriteItem(
+                          imgUrl: fav.favProductModel[index].mainImg ?? "",
+                          productName: fav.favProductModel[index].name ?? "",
+                          productCategory:
+                              fav.favProductModel[index].categoryName ?? "",
+                          productStar:
+                              fav.favProductModel[index]?.stars ?? '0.0',
+                          productPrice:
+                              fav.favProductModel[index].price.toString() ?? "",
+                          unFavorite: () {
+                            fav.deleteFavProduct(
+                                index, fav.favProductModel[index].id);
+                            setState(() {
+                              fav.favProductModel?.removeAt(index);
+                              // fav.favProductModel[index].isFav = 0;
+                            });
+                            showUnFavToast();
+                          },
+                        ),
+                      )),
+            ],
+          );
   }
 
   @override

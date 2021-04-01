@@ -6,7 +6,7 @@ import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/cart_view_model.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:cizaro_app/view_model/list_view_model.dart';
-import 'package:cizaro_app/widgets/searchBar_item.dart';
+import 'package:cizaro_app/widgets/search_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
@@ -267,18 +267,21 @@ class SearchResultsListView extends StatelessWidget {
           itemBuilder: (ctx, index) => GestureDetector(
             onTap: () => pushNewScreenWithRouteSettings(
               context,
-              settings: RouteSettings(
-                  name: ProductDetails.routeName,
-                  arguments: {'product_id': productList[index].id}),
+              settings:
+                  RouteSettings(name: ProductDetails.routeName, arguments: {
+                'product_id': productList[index].id,
+                // 'after_price': productList[index]?.offer?.afterPrice ?? 0.0,
+              }),
               screen: ProductDetails(),
               withNavBar: true,
               pageTransitionAnimation: PageTransitionAnimation.fade,
             ),
-            child: SearchBarItem(
+            child: SearchItem(
               imgUrl: productList[index].mainImg,
               productName: productList[index].name,
               productPrice: productList[index].price,
               productCategory: productList[index].category.name,
+              productPriceAfter: productList[index].offer?.afterPrice ?? 0.0,
               onAddToFavorite: () {
                 final fav = Provider.of<FavViewModel>(context, listen: false);
                 final productFav = ProductFav(

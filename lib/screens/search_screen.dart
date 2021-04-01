@@ -185,7 +185,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                            top: SizeConfig.blockSizeVertical * 3,
+                            // top: SizeConfig.blockSizeVertical * 1,
                             left: SizeConfig.blockSizeHorizontal * 5,
                             right: SizeConfig.blockSizeHorizontal * 5,
                           ),
@@ -212,16 +212,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                         return Text(snapshot.error.toString());
                                       else
                                         return Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                .1,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                .5,
+                                            height:
+                                                SizeConfig.blockSizeVertical *
+                                                    10,
+                                            width:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    50,
                                             padding: EdgeInsets.only(
-                                                top: 10, left: 20),
+                                                top: SizeConfig
+                                                        .blockSizeVertical *
+                                                    1,
+                                                left: SizeConfig
+                                                        .blockSizeHorizontal *
+                                                    5),
                                             child: DropdownButton(
                                               hint: Text("select_brand".tr()),
                                               value: valueBrand,
@@ -248,17 +251,18 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                              left: SizeConfig.blockSizeHorizontal * 7,
-                              right: SizeConfig.blockSizeHorizontal * 7,
-                              bottom: SizeConfig.blockSizeVertical * 2),
+                            left: SizeConfig.blockSizeHorizontal * 7,
+                            right: SizeConfig.blockSizeHorizontal * 7,
+                            // bottom: SizeConfig.blockSizeVertical * 1
+                          ),
                           child: Divider(
                               height: SizeConfig.blockSizeVertical * .1,
                               color: Color(0xff727C8E)),
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height * 0.07,
+                          height: SizeConfig.blockSizeVertical * 10,
                           padding: EdgeInsets.only(
-                            top: SizeConfig.blockSizeVertical * 2,
+                            // top: SizeConfig.blockSizeVertical * 1,
                             left: SizeConfig.blockSizeHorizontal * 5,
                             right: SizeConfig.blockSizeHorizontal * 5,
                           ),
@@ -325,12 +329,12 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: SizeConfig.blockSizeVertical * 5,
+                          height: SizeConfig.blockSizeVertical * 1,
                         ),
                         Padding(
                           padding: EdgeInsets.only(
                             bottom: SizeConfig.blockSizeVertical * 5,
-                            left: SizeConfig.blockSizeHorizontal * 15,
+                            left: SizeConfig.blockSizeHorizontal * 5,
                             right: SizeConfig.blockSizeHorizontal * 5,
                           ),
                           child: GestureDetector(
@@ -340,8 +344,8 @@ class _SearchScreenState extends State<SearchScreen> {
                               wannaFilter = true
                             },
                             child: Container(
-                              width: MediaQuery.of(context).size.width * .25,
-                              height: MediaQuery.of(context).size.height * .06,
+                              width: SizeConfig.blockSizeHorizontal * 25,
+                              height: SizeConfig.blockSizeVertical * 6,
                               decoration: BoxDecoration(
                                   color: Color(0xff3A559F),
                                   borderRadius: BorderRadius.circular(25.0)),

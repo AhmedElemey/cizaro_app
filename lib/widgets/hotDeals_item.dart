@@ -14,10 +14,11 @@ class HotDealsItem extends StatelessWidget {
     return Stack(children: [
       Container(
         padding: EdgeInsets.only(left: 1, right: 1),
+        margin: EdgeInsets.only(bottom: SizeConfig.blockSizeVertical * 2),
         child: Image.network(
           imgUrl,
           width: SizeConfig.blockSizeHorizontal * 100,
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
           loadingBuilder: (BuildContext context, Widget child,
               ImageChunkEvent loadingProgress) {
             if (loadingProgress == null) return child;
@@ -36,20 +37,21 @@ class HotDealsItem extends StatelessWidget {
       ),
       // Positioned(top: 1, left: 10, child: Image.network(imgUrl)),
       Positioned(
-          bottom: 1,
-          right: 10,
+          bottom: SizeConfig.blockSizeVertical * 0.5,
+          right: SizeConfig.blockSizeHorizontal * 4,
           child: Container(
             width: SizeConfig.blockSizeHorizontal * 41,
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: Offset(0, 1), // changes position of shadow
               ),
             ], color: Colors.white, borderRadius: BorderRadius.circular(18.0)),
             child: Padding(
-              padding: EdgeInsets.only(right: 8),
+              padding:
+                  EdgeInsets.only(right: SizeConfig.blockSizeHorizontal * 2),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -58,15 +60,14 @@ class HotDealsItem extends StatelessWidget {
                       child: Text(
                         'see_more'.tr(),
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
+                            fontSize: SizeConfig.safeBlockVertical * 2.1,
+                            fontWeight: FontWeight.bold),
                       )),
                   CircleAvatar(
-                    radius: 15,
+                    radius: SizeConfig.safeBlockVertical * 2,
                     backgroundColor: Colors.blue.shade900,
-                    child: Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 15,
-                    ),
+                    child: Icon(Icons.arrow_forward_ios_rounded,
+                        size: SizeConfig.safeBlockVertical * 2),
                   )
                 ],
               ),

@@ -13,26 +13,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class ProductItem extends StatefulWidget {
-  final String productName, imgUrl, categoryName, offerImg;
-  final int productId;
-  final double productPrice, productPriceAfter, discount;
+  // final String productName, imgUrl, categoryName, offerImg;
+  // final int productId;
+  // final double productPrice, productPriceAfter, discount;
   final double stars;
   int isFav = 0;
   int inCart = 0;
   final VoidCallback onAddToCart;
   final VoidCallback onAddToFavorite;
   Offer offer;
+  Products item;
 
   ProductItem(
       {Key key,
-      this.productId,
-      this.productName,
-      this.categoryName,
-      this.imgUrl,
-      this.offerImg,
-      this.discount,
-      this.productPrice,
-      this.productPriceAfter,
+      this.item,
       this.stars,
       this.isFav,
       this.inCart,
@@ -88,7 +82,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
   checkCartItems(BuildContext context) async {
     final cart = Provider.of<CartViewModel>(context, listen: false);
     cart.cartProductModel.forEach((element) {
-      if (widget.productId == element.id) {
+      if (widget.item.id == element.id) {
         setState(() {
           widget.inCart = 1;
         });
@@ -184,7 +178,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
           width: SizeConfig.blockSizeHorizontal * 33,
           child: Column(
             children: [
-              widget.discount == 0.0 || widget.discount == null
+              widget.item?.offer?.discount == 0.0 ||
+                      widget.item?.offer?.discount == null
                   ? Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
@@ -199,7 +194,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                   topLeft: Radius.circular(10),
                                   topRight: Radius.circular(10)),
                               child: Image.network(
-                                widget.imgUrl,
+                                widget.item.mainImg,
                                 loadingBuilder: (BuildContext context,
                                     Widget child,
                                     ImageChunkEvent loadingProgress) {
@@ -230,7 +225,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                 left: SizeConfig.blockSizeHorizontal * 1),
                             width: SizeConfig.blockSizeHorizontal * 35,
                             height: SizeConfig.blockSizeVertical * 3,
-                            child: Text(widget.productName,
+                            child: Text(widget.item.name,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -247,23 +242,24 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                             width: SizeConfig.blockSizeHorizontal * 35,
                             height: SizeConfig.blockSizeVertical * 2.5,
                             child: Text(
-                              widget.categoryName ?? "",
+                              widget.item.category.name ?? "",
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
                                   fontSize: SizeConfig.safeBlockHorizontal * 3),
                             ),
                           ),
-                          widget.productPriceAfter == widget.productPrice ||
+                          widget.item?.offer?.afterPrice ==
+                                      widget.item?.price ||
                                   widget.offer == null ||
-                                  widget.productPriceAfter == 0
+                                  widget.item?.offer?.afterPrice == 0
                               ? Container(
                                   padding: EdgeInsets.only(
                                       top: SizeConfig.blockSizeVertical * .005,
                                       right: SizeConfig.blockSizeHorizontal * 2,
                                       left: SizeConfig.blockSizeHorizontal * 1),
                                   child: Text(
-                                    widget.productPrice.toString() + ' le'.tr(),
+                                    widget.item.price.toString() + ' le'.tr(),
                                     style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w500,
                                         fontSize:
@@ -285,7 +281,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                 SizeConfig.blockSizeHorizontal *
                                                     1),
                                         child: Text(
-                                          widget.productPrice.toString() +
+                                          widget.item.price.toString() +
                                               ' le'.tr(),
                                           style: TextStyle(
                                               fontFamily: 'NeusaNextStd',
@@ -309,7 +305,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                 SizeConfig.blockSizeHorizontal *
                                                     1),
                                         child: Text(
-                                          widget.productPriceAfter.toString() +
+                                          widget.item.offer.afterPrice
+                                                  .toString() +
                                               ' le'.tr(),
                                           style: TextStyle(
                                             fontFamily: 'NeusaNextStd',
@@ -440,7 +437,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                         topLeft: Radius.circular(10),
                                         topRight: Radius.circular(10)),
                                     child: Image.network(
-                                      widget.imgUrl,
+                                      widget.item.mainImg,
                                       loadingBuilder: (BuildContext context,
                                           Widget child,
                                           ImageChunkEvent loadingProgress) {
@@ -471,7 +468,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                       right: SizeConfig.blockSizeHorizontal * 2,
                                       left: SizeConfig.blockSizeHorizontal * 2),
                                   child: Text(
-                                    widget.productName,
+                                    widget.item.name,
                                     style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
                                       fontSize:
@@ -479,7 +476,8 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                     ),
                                   ),
                                 ),
-                                widget.productPriceAfter == widget.productPrice
+                                widget.item.offer.afterPrice ==
+                                        widget.item.price
                                     ? Container(
                                         padding: EdgeInsets.only(
                                             right:
@@ -489,7 +487,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                 SizeConfig.blockSizeHorizontal *
                                                     2),
                                         child: Text(
-                                          widget.productPrice.toString() +
+                                          widget.item.price.toString() +
                                               ' le'.tr(),
                                           style: GoogleFonts.poppins(
                                             fontWeight: FontWeight.w600,
@@ -513,7 +511,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                           .blockSizeHorizontal *
                                                       2),
                                               child: Text(
-                                                widget.productPrice.toString() +
+                                                widget.item.price.toString() +
                                                     ' le'.tr(),
                                                 style: GoogleFonts.poppins(
                                                     fontWeight: FontWeight.w600,
@@ -534,7 +532,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                                                           .blockSizeHorizontal *
                                                       2),
                                               child: Text(
-                                                widget.productPriceAfter
+                                                widget.item.offer.afterPrice
                                                         .toString() +
                                                     ' le'.tr(),
                                                 style: GoogleFonts.poppins(
@@ -672,7 +670,7 @@ class _ProductItemState extends State<ProductItem> with WidgetsBindingObserver {
                               padding: EdgeInsets.only(
                                   top: SizeConfig.safeBlockVertical * .4),
                               child: Text(
-                                widget.discount.toString() + "%",
+                                widget.item.offer.discount.toString() + "%",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: SizeConfig.safeBlockVertical * 2.3,

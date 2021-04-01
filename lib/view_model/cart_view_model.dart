@@ -111,7 +111,7 @@ class CartViewModel extends ChangeNotifier {
     print("getTotalPriceOfItem: p:${item.price} q:${item.quantity}");
     double total = item.price == item?.priceAfterDiscount
         ? item.price * item.quantity
-        : item.priceAfterDiscount == null
+        : item.priceAfterDiscount == null || item.priceAfterDiscount == 0.0
             ? item.price * item.quantity
             : item.priceAfterDiscount * item.quantity;
     print("after: $total");

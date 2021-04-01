@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cizaro_app/model/cartModel.dart';
 import 'package:cizaro_app/model/favModel.dart';
@@ -119,174 +118,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.w700,
                   fontSize: SizeConfig.safeBlockHorizontal * 4)),
         ),
-        pageBuilder: (context, index) => Container(
-          child: ListView.builder(
-              padding: EdgeInsets.only(
-                  left: SizeConfig.blockSizeHorizontal * .5,
-                  top: SizeConfig.blockSizeVertical * 2),
-              itemCount:
-                  newArrivalsList[initPosition > 0 ? 1 : 0].products.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx, index) => GestureDetector(
-                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
-                        settings: RouteSettings(
-                            name: ProductDetails.routeName,
-                            arguments: {
-                              'product_id':
-                                  newArrivalsList[initPosition > 0 ? 1 : 0]
-                                      ?.products[index]
-                                      .id
-                            }),
-                        screen: ProductDetails(),
-                        // withNavBar: true,
-                        pageTransitionAnimation:
-                            tab.PageTransitionAnimation.fade),
-                    child: ProductItem(
-                      key: ObjectKey(newArrivalsList[initPosition > 0 ? 1 : 0]),
-                      productId: newArrivalsList[initPosition > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.id ??
-                          0,
-                      productName: newArrivalsList[initPosition > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.name ??
-                          '',
-                      imgUrl: newArrivalsList[initPosition > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.mainImg ??
-                          '',
-                      categoryName: newArrivalsList[initPosition > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.category
-                              ?.name ??
-                          '',
-                      productPrice: newArrivalsList[initPosition > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.price ??
-                          0.0,
-                      productPriceAfter:
-                          newArrivalsList[initPosition > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  ?.offer
-                                  ?.afterPrice ??
-                              0.0,
-                      discount: newArrivalsList[initPosition > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.offer
-                              ?.discount ??
-                          0.0,
-                      onAddToCart: () {
-                        if (newArrivalsList[initPosition > 0 ? 1 : 0]
-                                ?.products[index]
-                                .specs ==
-                            false) {
-                          final cart = Provider.of<CartViewModel>(context,
-                              listen: false);
-                          final productCart = ProductCart(
-                              id: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .id,
-                              name: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .name,
-                              mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .mainImg,
-                              price: newArrivalsList[initPosition > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .price,
-                              priceAfterDiscount:
-                                  newArrivalsList[initPosition > 0 ? 1 : 0]
-                                          ?.products[index]
-                                          .offer
-                                          ?.afterPrice ??
-                                      newArrivalsList[initPosition > 0 ? 1 : 0]
-                                          ?.products[index]
-                                          .price,
-                              categoryName:
-                                  newArrivalsList[initPosition > 0 ? 1 : 0]
-                                      ?.products[index]
-                                      .category
-                                      .name,
-                              quantity: 1,
-                              availability:
-                                  newArrivalsList[initPosition > 0 ? 1 : 0]
-                                      ?.products[index]
-                                      .availability,
-                              inCart: 1,
-                              colorSpecValue: '',
-                              sizeSpecValue: '');
-                          showCartToast(_scaffoldKey.currentContext);
-                          cart.addProductToCart(productCart);
-                        } else {
-                          tab.pushNewScreenWithRouteSettings(context,
-                              settings: RouteSettings(
-                                  name: ProductDetails.routeName,
-                                  arguments: {
-                                    'product_id': newArrivalsList[
-                                            initPosition > 0 ? 1 : 0]
-                                        .products[index]
-                                        .id
-                                  }),
-                              screen: ProductDetails(),
-                              withNavBar: true,
-                              pageTransitionAnimation:
-                                  tab.PageTransitionAnimation.fade);
-                        }
-                        // final cart =
-                        //     Provider.of<CartViewModel>(context, listen: false);
-                        // final productCart = ProductCart(
-                        //     id: newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //         ?.products[index]
-                        //         .id,
-                        //     name: newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //         ?.products[index]
-                        //         .name,
-                        //     mainImg: newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //         ?.products[index]
-                        //         .mainImg,
-                        //     price: newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //         ?.products[index]
-                        //         .price,
-                        //     priceAfterDiscount:
-                        //         newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //                 ?.products[index]
-                        //                 .offer
-                        //                 ?.afterPrice ??
-                        //             newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //                 ?.products[index]
-                        //                 .price,
-                        //     categoryName:
-                        //         newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //             ?.products[index]
-                        //             .category
-                        //             .name,
-                        //     quantity: 1,
-                        //     inCart: 1,
-                        //     availability:
-                        //         newArrivalsList[initPosition > 0 ? 1 : 0]
-                        //             ?.products[index]
-                        //             .availability,
-                        //     colorSpecValue: '',
-                        //     sizeSpecValue: '');
-                        // cart.addProductToCart(productCart);
-                      },
-                    ),
-                  )),
-        ),
+        pageBuilder: (context, i) =>
+            newArrivalProductsView(newArrivalsList[i].products),
         onPositionChange: (index) {
           if (this.mounted)
             setState(() {
               initPosition = index;
             });
         },
-        onScroll: (position) => print('$position'),
       ),
     );
   }
 
   Widget topSellingWidgets(BuildContext context) {
-    final fav = Provider.of<FavViewModel>(context, listen: false);
     return Padding(
       padding: EdgeInsets.only(
           right: SizeConfig.blockSizeHorizontal * 2,
@@ -298,155 +142,153 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Text(
             topSellingList[index].name,
             style: GoogleFonts.poppins(
-              fontWeight: FontWeight.w700,
-              fontSize: SizeConfig.safeBlockHorizontal * 4,
-            ),
+                fontWeight: FontWeight.w700,
+                fontSize: SizeConfig.safeBlockHorizontal * 4),
           ),
         ),
-        pageBuilder: (context, index) => Container(
-          child: ListView.builder(
-              padding: EdgeInsets.only(
-                right: SizeConfig.blockSizeHorizontal * .5,
-                top: SizeConfig.blockSizeVertical * 1,
-              ),
-              itemCount:
-                  topSellingList[initPosition2 > 0 ? 1 : 0]?.products?.length ??
-                      0,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (ctx, index) => GestureDetector(
-                    onTap: () => tab.pushNewScreenWithRouteSettings(context,
-                        settings: RouteSettings(
-                            name: ProductDetails.routeName,
-                            arguments: {
-                              'product_id':
-                                  topSellingList[initPosition2 > 0 ? 1 : 0]
-                                      .products[index]
-                                      .id
-                            }),
-                        screen: ProductDetails(),
-                        withNavBar: true,
-                        pageTransitionAnimation:
-                            tab.PageTransitionAnimation.fade),
-                    child: ProductItem(
-                      productId: topSellingList[initPosition2 > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.id ??
-                          0,
-                      productName: topSellingList[initPosition2 > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.name ??
-                          '',
-                      imgUrl: topSellingList[initPosition2 > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.mainImg ??
-                          '',
-                      productPrice: topSellingList[initPosition2 > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.price ??
-                          0.0,
-                      productPriceAfter:
-                          topSellingList[initPosition2 > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  ?.offer
-                                  ?.afterPrice ??
-                              0.0,
-                      discount: topSellingList[initPosition2 > 0 ? 1 : 0]
-                              ?.products[index]
-                              ?.offer
-                              ?.discount ??
-                          0.0,
-                      onAddToCart: () {
-                        if (topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .specs ==
-                            false) {
-                          final cart = Provider.of<CartViewModel>(context,
-                              listen: false);
-                          final productCart = ProductCart(
-                              id: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .id,
-                              name: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .name,
-                              mainImg: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .mainImg,
-                              price: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                  ?.products[index]
-                                  .price,
-                              priceAfterDiscount:
-                                  topSellingList[initPosition2 > 0 ? 1 : 0]
-                                          ?.products[index]
-                                          .offer
-                                          ?.afterPrice ??
-                                      topSellingList[initPosition2 > 0 ? 1 : 0]
-                                          ?.products[index]
-                                          .price,
-                              categoryName:
-                                  topSellingList[initPosition2 > 0 ? 1 : 0]
-                                      ?.products[index]
-                                      .category
-                                      .name,
-                              quantity: 1,
-                              availability:
-                                  topSellingList[initPosition2 > 0 ? 1 : 0]
-                                      ?.products[index]
-                                      .availability,
-                              inCart: 1,
-                              colorSpecValue: '',
-                              sizeSpecValue: '');
-                          showCartToast(_scaffoldKey.currentContext);
-                          cart.addProductToCart(productCart);
-                        } else {
-                          tab.pushNewScreenWithRouteSettings(context,
-                              settings: RouteSettings(
-                                  name: ProductDetails.routeName,
-                                  arguments: {
-                                    'product_id': topSellingList[
-                                            initPosition2 > 0 ? 1 : 0]
-                                        .products[index]
-                                        .id
-                                  }),
-                              screen: ProductDetails(),
-                              withNavBar: true,
-                              pageTransitionAnimation:
-                                  tab.PageTransitionAnimation.fade);
-                        }
-                      },
-                      onAddToFavorite: () {
-                        final productFav = ProductFav(
-                            id: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .id,
-                            name: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .name,
-                            mainImg: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .mainImg,
-                            price: topSellingList[initPosition2 > 0 ? 1 : 0]
-                                ?.products[index]
-                                .price,
-                            categoryName:
-                                topSellingList[initPosition2 > 0 ? 1 : 0]
-                                    ?.products[index]
-                                    .category
-                                    .name,
-                            isFav: 1);
-                        fav.addProductToFav(productFav);
-                      },
-                    ),
-                  )),
-        ),
+        pageBuilder: (context, index) =>
+            topSellingProductsView(topSellingList[index].products),
         onPositionChange: (index) {
           if (this.mounted)
             setState(() {
               initPosition2 = index;
             });
         },
-        onScroll: (position) => print('$position'),
       ),
+    );
+  }
+
+  Widget newArrivalProductsView(List<Products> products) {
+    return ListView.builder(
+        padding: EdgeInsets.only(
+            left: SizeConfig.blockSizeHorizontal * .5,
+            top: SizeConfig.blockSizeVertical * 2),
+        itemCount: products.length,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (ctx, index) => GestureDetector(
+              onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                  settings: RouteSettings(
+                      name: ProductDetails.routeName,
+                      arguments: {'product_id': products[index]?.id}),
+                  screen: ProductDetails(),
+                  // withNavBar: true,
+                  pageTransitionAnimation: tab.PageTransitionAnimation.fade),
+              child: ProductItem(
+                key: ObjectKey(products[index]),
+                item: products[index],
+                onAddToCart: () {
+                  if (products[index].specs == false) {
+                    final cart =
+                        Provider.of<CartViewModel>(context, listen: false);
+                    final productCart = ProductCart(
+                        id: products[index].id,
+                        name: products[index].name,
+                        mainImg: products[index].mainImg,
+                        price: products[index].price,
+                        priceAfterDiscount: products[index].offer?.afterPrice ??
+                            products[index].price,
+                        categoryName: products[index].category.name,
+                        quantity: 1,
+                        availability: products[index].availability,
+                        inCart: 1,
+                        colorSpecValue: '',
+                        sizeSpecValue: '');
+                    showCartToast(_scaffoldKey.currentContext);
+                    cart.addProductToCart(productCart);
+                  } else {
+                    tab.pushNewScreenWithRouteSettings(context,
+                        settings: RouteSettings(
+                            name: ProductDetails.routeName,
+                            arguments: {'product_id': products[index].id}),
+                        screen: ProductDetails(),
+                        withNavBar: true,
+                        pageTransitionAnimation:
+                            tab.PageTransitionAnimation.fade);
+                  }
+                  final cart =
+                      Provider.of<CartViewModel>(context, listen: false);
+                  final productCart = ProductCart(
+                      id: products[index].id,
+                      name: products[index].name,
+                      mainImg: products[index].mainImg,
+                      price: products[index].price,
+                      priceAfterDiscount: products[index].offer?.afterPrice ??
+                          products[index].price,
+                      categoryName: products[index].category.name,
+                      quantity: 1,
+                      inCart: 1,
+                      availability: products[index].availability,
+                      colorSpecValue: '',
+                      sizeSpecValue: '');
+                  cart.addProductToCart(productCart);
+                },
+              ),
+            ));
+  }
+
+  Widget topSellingProductsView(List<Products> products) {
+    final fav = Provider.of<FavViewModel>(context, listen: false);
+    return Container(
+      child: ListView.builder(
+          padding: EdgeInsets.only(
+            right: SizeConfig.blockSizeHorizontal * .5,
+            top: SizeConfig.blockSizeVertical * 1,
+          ),
+          itemCount: products?.length ?? 0,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (ctx, index) => GestureDetector(
+                onTap: () => tab.pushNewScreenWithRouteSettings(context,
+                    settings: RouteSettings(
+                        name: ProductDetails.routeName,
+                        arguments: {'product_id': products[index].id}),
+                    screen: ProductDetails(),
+                    withNavBar: true,
+                    pageTransitionAnimation: tab.PageTransitionAnimation.fade),
+                child: ProductItem(
+                  item: products[index],
+                  onAddToCart: () {
+                    if (products[index].specs == false) {
+                      final cart =
+                          Provider.of<CartViewModel>(context, listen: false);
+                      final productCart = ProductCart(
+                          id: products[index].id,
+                          name: products[index].name,
+                          mainImg: products[index].mainImg,
+                          price: products[index].price,
+                          priceAfterDiscount:
+                              products[index].offer?.afterPrice ??
+                                  products[index].price,
+                          categoryName: products[index].category.name,
+                          quantity: 1,
+                          availability: products[index].availability,
+                          inCart: 1,
+                          colorSpecValue: '',
+                          sizeSpecValue: '');
+                      showCartToast(_scaffoldKey.currentContext);
+                      cart.addProductToCart(productCart);
+                    } else {
+                      tab.pushNewScreenWithRouteSettings(context,
+                          settings: RouteSettings(
+                              name: ProductDetails.routeName,
+                              arguments: {'product_id': products[index].id}),
+                          screen: ProductDetails(),
+                          withNavBar: true,
+                          pageTransitionAnimation:
+                              tab.PageTransitionAnimation.fade);
+                    }
+                  },
+                  onAddToFavorite: () {
+                    final productFav = ProductFav(
+                        id: products[index].id,
+                        name: products[index].name,
+                        mainImg: products[index].mainImg,
+                        price: products[index].price,
+                        categoryName: products[index].category.name,
+                        isFav: 1);
+                    fav.addProductToFav(productFav);
+                  },
+                ),
+              )),
     );
   }
 
@@ -474,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? Container()
                         : Container(
                             width: SizeConfig.blockSizeHorizontal * 100,
-                            height: SizeConfig.blockSizeVertical * 38,
+                            height: SizeConfig.blockSizeVertical * 40,
                             child: Column(
                               children: [
                                 Center(
@@ -497,15 +339,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 1,
-                                        blurRadius: 5,
-                                        // changes position of shadow
-                                      ),
+                                          color: Colors.grey.withOpacity(0.08),
+                                          spreadRadius: 1,
+                                          offset: Offset(0, -10),
+                                          blurRadius: 5),
                                     ],
                                   ),
                                   margin: EdgeInsets.only(
-                                    top: SizeConfig.blockSizeVertical * 2,
+                                    top: SizeConfig.blockSizeVertical * 1.5,
                                   ),
                                   height: SizeConfig.blockSizeVertical * 28,
                                   width: SizeConfig.blockSizeHorizontal * 100,
@@ -684,49 +525,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-//
-// class CustomTabBar extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: 50,
-//       decoration: BoxDecoration(color: Color(0xff3A559F)),
-//       child: Container(
-//         height: MediaQuery.of(context).size.height * .2,
-//         width: double.infinity,
-//         child: Expanded(
-//             child: CustomTabBarButton(
-//           text: "CHATS",
-//           textColor: Colors.white,
-//           borderColor: Colors.transparent,
-//           borderWidth: 0.0,
-//         )),
-//       ),
-//     );
-//   }
-// }
-//
-// class CustomTabBarButton extends StatelessWidget {
-//   final String text;
-//   final Color borderColor, textColor;
-//   final double borderWidth;
-//
-//   const CustomTabBarButton(
-//       {Key key, this.text, this.borderColor, this.textColor, this.borderWidth})
-//       : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       alignment: Alignment.center,
-//       decoration: BoxDecoration(
-//         border:
-//             Border(bottom: BorderSide(color: borderColor, width: borderWidth)),
-//       ),
-//       child: Text(
-//         text,
-//         style: TextStyle(
-//             fontWeight: FontWeight.w500, fontSize: 16, color: textColor),
-//       ),
-//     );
-//   }
-// }

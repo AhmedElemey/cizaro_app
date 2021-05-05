@@ -205,22 +205,33 @@ class _HomeScreenState extends State<HomeScreen> {
                         pageTransitionAnimation:
                             tab.PageTransitionAnimation.fade);
                   }
-                  final cart =
-                      Provider.of<CartViewModel>(context, listen: false);
-                  final productCart = ProductCart(
+                  // final cart =
+                  //     Provider.of<CartViewModel>(context, listen: false);
+                  // final productCart = ProductCart(
+                  //     id: products[index].id,
+                  //     name: products[index].name,
+                  //     mainImg: products[index].mainImg,
+                  //     price: products[index].price,
+                  //     priceAfterDiscount: products[index].offer?.afterPrice ??
+                  //         products[index].price,
+                  //     categoryName: products[index].category.name,
+                  //     quantity: 1,
+                  //     inCart: 1,
+                  //     availability: products[index].availability,
+                  //     colorSpecValue: '',
+                  //     sizeSpecValue: '');
+                  // cart.addProductToCart(productCart);
+                },
+                onAddToFavorite: () {
+                  final fav = Provider.of<FavViewModel>(context, listen: false);
+                  final productFav = ProductFav(
                       id: products[index].id,
                       name: products[index].name,
                       mainImg: products[index].mainImg,
                       price: products[index].price,
-                      priceAfterDiscount: products[index].offer?.afterPrice ??
-                          products[index].price,
                       categoryName: products[index].category.name,
-                      quantity: 1,
-                      inCart: 1,
-                      availability: products[index].availability,
-                      colorSpecValue: '',
-                      sizeSpecValue: '');
-                  cart.addProductToCart(productCart);
+                      isFav: 1);
+                  fav.addProductToFav(productFav);
                 },
               ),
             ));
@@ -316,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? Container()
                         : Container(
                             width: SizeConfig.blockSizeHorizontal * 100,
-                            height: SizeConfig.blockSizeVertical * 40,
+                            height: SizeConfig.blockSizeVertical * 38,
                             child: Column(
                               children: [
                                 Center(

@@ -18,6 +18,7 @@ class HotDealsItem extends StatelessWidget {
         child: Image.network(
           imgUrl,
           width: SizeConfig.blockSizeHorizontal * 100,
+          height: SizeConfig.blockSizeVertical * 30,
           fit: BoxFit.fill,
           loadingBuilder: (BuildContext context, Widget child,
               ImageChunkEvent loadingProgress) {
@@ -35,7 +36,6 @@ class HotDealsItem extends StatelessWidget {
           },
         ),
       ),
-      // Positioned(top: 1, left: 10, child: Image.network(imgUrl)),
       Positioned(
           bottom: SizeConfig.blockSizeVertical * 0.5,
           right: SizeConfig.blockSizeHorizontal * 4,
@@ -43,10 +43,10 @@ class HotDealsItem extends StatelessWidget {
             width: SizeConfig.blockSizeHorizontal * 41,
             decoration: BoxDecoration(boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 2,
+                color: Colors.grey.withOpacity(0.15),
+                spreadRadius: 1.5,
                 blurRadius: 2,
-                offset: Offset(0, 1), // changes position of shadow
+                offset: Offset(0, 0), // changes position of shadow
               ),
             ], color: Colors.white, borderRadius: BorderRadius.circular(18.0)),
             child: Padding(

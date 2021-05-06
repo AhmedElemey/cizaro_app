@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -57,7 +56,7 @@ class _SearchItemState extends State<SearchItem> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Color(0xffFF6969),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -103,7 +102,7 @@ class _SearchItemState extends State<SearchItem> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Color(0xffFF6969),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -126,7 +125,7 @@ class _SearchItemState extends State<SearchItem> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Color(0xff1367AF),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -203,9 +202,11 @@ class _SearchItemState extends State<SearchItem> {
                   right: SizeConfig.blockSizeHorizontal * 2,
                   left: SizeConfig.blockSizeHorizontal * 2,
                   top: SizeConfig.blockSizeVertical * 1),
-              width: SizeConfig.blockSizeHorizontal * 50,
+              width: SizeConfig.blockSizeHorizontal * 65,
+              height: SizeConfig.blockSizeVertical * 20,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     width: SizeConfig.blockSizeHorizontal * 60,
@@ -223,6 +224,7 @@ class _SearchItemState extends State<SearchItem> {
                     child: Text(
                       widget.productCategory ?? '',
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: SizeConfig.safeBlockHorizontal * 4,
                       ),
                     ),
@@ -234,10 +236,8 @@ class _SearchItemState extends State<SearchItem> {
                           widget.productPrice.toString() + ' le'.tr(),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
+                            fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                           ),
-                          // style: TextStyle(
-                          //   fontSize: SizeConfig.safeBlockHorizontal * 3.5,
-                          // ),
                         )
                       : Container(
                           width: SizeConfig.blockSizeHorizontal * 50,
@@ -248,14 +248,15 @@ class _SearchItemState extends State<SearchItem> {
                                     widget.productPrice.toString() + ' le'.tr(),
                                     style: TextStyle(
                                         color: Colors.red,
+                                        fontWeight: FontWeight.bold,
                                         fontSize:
-                                            SizeConfig.safeBlockHorizontal * 4,
+                                            SizeConfig.safeBlockHorizontal *
+                                                3.5,
                                         decoration:
                                             TextDecoration.lineThrough)),
                               ),
                               SizedBox(
-                                width: SizeConfig.blockSizeHorizontal * 3,
-                              ),
+                                  width: SizeConfig.blockSizeHorizontal * 3),
                               Container(
                                 padding: EdgeInsets.only(
                                     right: SizeConfig.blockSizeHorizontal * 5),
@@ -263,8 +264,9 @@ class _SearchItemState extends State<SearchItem> {
                                   widget.productPriceAfter.toString() +
                                       ' le'.tr(),
                                   style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     fontSize:
-                                        SizeConfig.safeBlockHorizontal * 4,
+                                        SizeConfig.safeBlockHorizontal * 3.5,
                                   ),
                                 ),
                               )
@@ -272,66 +274,61 @@ class _SearchItemState extends State<SearchItem> {
                           ),
                         ),
                   SizedBox(height: SizeConfig.blockSizeVertical * 1),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: SizeConfig.blockSizeHorizontal * 2,
-                        right: SizeConfig.blockSizeHorizontal * 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () async {
-                            if (widget.isFav == 1) {
-                              setState(() {
-                                showFavAlreadyToast();
-                              });
-                            } else {
-                              setState(() {
-                                widget.isFav = 1;
-                                widget.onAddToFavorite();
-                                //  print(" here");
-                                showFavToast();
-                              });
-                            }
-                          },
-                          child: widget.isFav == 1
-                              ? Icon(Icons.favorite,
-                                  color: Color(0xffFF6969),
-                                  size: SizeConfig.blockSizeHorizontal * 5)
-                              : Icon(Icons.favorite_border_outlined,
-                                  size: SizeConfig.blockSizeHorizontal * 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Spacer(),
+                      GestureDetector(
+                        onTap: () async {
+                          if (widget.isFav == 1) {
+                            setState(() {
+                              showFavAlreadyToast();
+                            });
+                          } else {
+                            setState(() {
+                              widget.isFav = 1;
+                              widget.onAddToFavorite();
+                              //  print(" here");
+                              showFavToast();
+                            });
+                          }
+                        },
+                        child: widget.isFav == 1
+                            ? Icon(Icons.favorite,
+                                color: Color(0xffFF6969),
+                                size: SizeConfig.blockSizeHorizontal * 5)
+                            : Icon(Icons.favorite_border_outlined,
+                                size: SizeConfig.blockSizeHorizontal * 5),
+                      ),
+                      SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
+                      GestureDetector(
+                        onTap: () async {
+                          if (widget.inCart == 1) {
+                            setState(() {
+                              showInCartAlreadyToast();
+                            });
+                          } else {
+                            setState(() {
+                              widget.inCart = 1;
+                              widget.onAddToCart();
+                              showCartToast();
+                            });
+                          }
+                        },
+                        child: Container(
+                          child: widget.inCart == 1
+                              ? SvgPicture.asset('assets/images/cart.svg',
+                                  width: SizeConfig.blockSizeHorizontal * 2.7,
+                                  height: SizeConfig.blockSizeVertical * 2.6,
+                                  color: Colors.green[900])
+                              : SvgPicture.asset('assets/images/cart.svg',
+                                  width: SizeConfig.blockSizeHorizontal * 2.7,
+                                  height: SizeConfig.blockSizeVertical * 2.6,
+                                  color: Colors.grey[900]),
                         ),
-                        SizedBox(width: SizeConfig.blockSizeHorizontal * 2),
-                        GestureDetector(
-                          onTap: () async {
-                            if (widget.inCart == 1) {
-                              setState(() {
-                                showInCartAlreadyToast();
-                              });
-                            } else {
-                              setState(() {
-                                widget.inCart = 1;
-                                widget.onAddToCart();
-                                showCartToast();
-                              });
-                            }
-                          },
-                          child: Container(
-                            child: widget.inCart == 1
-                                ? SvgPicture.asset('assets/images/cart.svg',
-                                    width: SizeConfig.blockSizeHorizontal * 2.7,
-                                    height: SizeConfig.blockSizeVertical * 2.6,
-                                    color: Colors.green[900])
-                                : SvgPicture.asset('assets/images/cart.svg',
-                                    width: SizeConfig.blockSizeHorizontal * 2.7,
-                                    height: SizeConfig.blockSizeVertical * 2.6,
-                                    color: Colors.grey[900]),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   )
                 ],
               ),

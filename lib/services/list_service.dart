@@ -32,7 +32,7 @@ import 'package:cizaro_app/widgets/json_util.dart';
 import 'package:http/http.dart' as http;
 
 class ListServices {
-  static const API = 'http://cizaro.tree-code.com/api/v1';
+  static const API = 'https://cizaro.net/api/v1';
 
   Future<Home> fetchHome(String lang) async {
     final response = await http.get(API + '/home/', headers: {

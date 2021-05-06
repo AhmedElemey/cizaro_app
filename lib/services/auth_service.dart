@@ -12,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
-  static const API = 'http://cizaro.tree-code.com/api/v1';
+  static const API = 'https://cizaro.net/api/v1';
 
   Future<void> registerCustomerData(SignUp signUp, String lang) async {
     final response = await http.post(

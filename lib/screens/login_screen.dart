@@ -975,7 +975,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               width: SizeConfig
                                                       .blockSizeHorizontal *
                                                   4),
-                                          Text('login_google'.tr(),
+                                          Text('sign_up_google'.tr(),
                                               style: TextStyle(
                                                   fontSize: SizeConfig
                                                           .safeBlockHorizontal *
@@ -1016,7 +1016,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               width: SizeConfig
                                                       .blockSizeHorizontal *
                                                   4),
-                                          Text('login_facebook'.tr(),
+                                          Text('sign_up_facebook'.tr(),
                                               style: TextStyle(
                                                   fontSize: SizeConfig
                                                           .safeBlockHorizontal *

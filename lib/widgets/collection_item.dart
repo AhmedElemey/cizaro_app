@@ -29,13 +29,14 @@ class CollectionItem extends StatelessWidget {
         shadowColor: Colors.grey[900],
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.all(
-                Radius.circular(10),
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
               child: Image.network(
                 imgUrl,
+                errorBuilder: (context, exception, stackTrack) =>
+                    Center(child: Icon(Icons.error)),
                 loadingBuilder: (BuildContext context, Widget child,
                     ImageChunkEvent loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -66,7 +67,7 @@ class CollectionItem extends StatelessWidget {
                     fontFamily: 'Poppins',
                     fontStyle: FontStyle.normal,
                     fontWeight: FontWeight.bold,
-                    fontSize: SizeConfig.safeBlockHorizontal * 4.5,
+                    fontSize: SizeConfig.safeBlockHorizontal * 3.5,
                     color: Color(0xff515C6F)),
               ),
             ),

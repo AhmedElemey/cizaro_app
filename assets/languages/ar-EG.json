@@ -89,6 +89,8 @@
   "sign_up": "اشتراك",
   "login_google": "تسجيل الدخول جوجل",
   "login_facebook": "تسجيل الدخول فيس بوك",
+  "sign_up_google" : "تسجيل من خلال جوجل",
+  "sign_up_facebook" : "تسجيل من خلال فيس بوك",
   "male": "ذكر",
   "female": "انثي",
   "complete_order": "انهاء الطلب",

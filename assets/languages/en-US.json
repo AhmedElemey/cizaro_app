@@ -90,6 +90,8 @@
   "sign_up": "SignUp",
   "login_google": "Login With Google",
   "login_facebook": "Login With Facebook",
+  "sign_up_google" : "Sign Up With Google",
+  "sign_up_facebook" : "Sign Up With Facebook",
   "male": "Male",
   "female": "Female",
   "complete_order": "Complete Order",

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cizaro_app/size_config.dart';
 import 'package:cizaro_app/view_model/fav_iew_model.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -41,7 +40,7 @@ class _ShopItemState extends State<ShopItem> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Color(0xff1367AF),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -64,7 +63,7 @@ class _ShopItemState extends State<ShopItem> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Color(0xff1367AF),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -87,7 +86,7 @@ class _ShopItemState extends State<ShopItem> {
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
-        color: Color(0xff3A559F),
+        color: Color(0xff1367AF),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -241,7 +240,8 @@ class _ShopItemState extends State<ShopItem> {
                                       style: TextStyle(
                                           fontSize:
                                               SizeConfig.safeBlockHorizontal *
-                                                  4,
+                                                  3.5,
+                                          fontWeight: FontWeight.bold,
                                           color: Colors.red,
                                           decoration:
                                               TextDecoration.lineThrough),
@@ -256,8 +256,10 @@ class _ShopItemState extends State<ShopItem> {
                                       widget.productPriceAfter.toString() +
                                           ' le'.tr(),
                                       style: TextStyle(
+                                        fontWeight: FontWeight.bold,
                                         fontSize:
-                                            SizeConfig.safeBlockHorizontal * 4,
+                                            SizeConfig.safeBlockHorizontal *
+                                                3.5,
                                       ),
                                       // textScaleFactor: MediaQuery.of(context)
                                       //         .textScaleFactor *
